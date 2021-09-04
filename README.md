@@ -1,5 +1,6 @@
 # mishanya-bot-project
-Project of human-like bot named Mishanya
+
+Проект по разработке/оживлению человекоподного робота Мишаня -> [Описание робота](docs/equipment.md)
 
 ## Пара моментов по разработке
 
