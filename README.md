@@ -34,4 +34,4 @@
 
 ## Ресурсы
 
-- [Хранилище больших файлов](https://disk.yandex.ru/d/VdiUvhrjdGQnWQ) (за доступом обращайтесь к @Kail4ek)
+- [Хранилище больших файлов](https://disk.yandex.ru/d/VdiUvhrjdGQnWQ) (за доступом обращайтесь к [@KaiL4eK](https://github.com/KaiL4eK))
