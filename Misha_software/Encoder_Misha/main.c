@@ -2,7 +2,14 @@
 #include "hal.h"
 #include "chprintf.h"
 
-#define k 0.5
+#define OCF 0b00000100
+#define COF 0b00000010
+#define LIN 0b00000001
+#define MagINC 0b10000000
+#define MagDEC 0b01000000
+#define EvenPAR 0b01000000
+
+
 
 
 
@@ -48,8 +55,8 @@ SPIDriver* spi1 = &SPID1;
     .end_cb = NULL,
     // CS вешаем на ногу B6
     .ssline = PAL_LINE(GPIOB, 6),
-	// Значение предделителя 16; длина 16 бит; только прием данных SPI_CR1_DFF
-	.cr1 = SPI_CR1_BIDIOE | SPI_CR1_SPE | SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
+	// Значение предделителя 16; длина 16 бит; только прием данных
+	.cr1 = SPI_CR1_BIDIOE | SPI_CR1_SPE | SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0 | SPI_CR1_CRCEN | SPI_CR1_CRCNEXT
 };
 
 
@@ -75,16 +82,25 @@ int main(void) {
 
     uint8_t rxbuf[2] = {0};
     uint16_t result = 0;
+//    uint16_t crc = 0;
     while (1)
     {
-    	chThdSleepMilliseconds(500);
+    	chThdSleepMilliseconds(100);
 		spiSelect(spi1);
 		spiReceive(spi1, 3, rxbuf);
 		spiUnselect(spi1);
-		rxbuf[1]=(rxbuf[1] >> 4) & 0b00001111;
-		result = rxbuf[1] | (rxbuf[0] << 4);
-//		result = (result*360)/4095;
-		dbgprintf("angle=%d\r\n", result);
+		if((rxbuf[1]&OCF) && !(rxbuf[1]&COF) && !(rxbuf[1]&LIN))
+		{
+			dbgprintf("check is ok\r\n");
+			rxbuf[1]=(rxbuf[1] >> 5) & 0b00011111;
+			result = rxbuf[1] | ((rxbuf[0] & 0b01111111) << 5);
+//			result = (result*360)/4096;
+			dbgprintf("angle=%d\r\n", result);
+		}
+
+//		dbgprintf("checksum=%d\r\n", SPI1->TXCRCR);
+//		dbgprintf("checksum=%d\r\n", (rxbuf[1]&0b00111111));
+
 
     }
 }
