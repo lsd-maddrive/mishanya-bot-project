@@ -1,8 +1,11 @@
-# C source files
-PROJECT_CSRC 	= src/main.c \
-				  src/encoder.c \
+PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
-				  src/test_encoder.c \
+
+PROJECT_TESTS   = tests/test_encoder.c \
+
+# C source files
+PROJECT_CSRC 	=  src/main.c \
+					$(PROJECT_MODULES) $(PROJECT_TESTS)			 
 # C++ source files
 PROJECT_CPPSRC 	= 
 # Directories to search headers in

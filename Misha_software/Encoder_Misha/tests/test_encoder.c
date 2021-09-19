@@ -19,4 +19,3 @@ void test_abs_encoder(void)
 
     }
 }
-
