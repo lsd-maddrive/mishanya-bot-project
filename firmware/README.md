@@ -1,4 +1,3 @@
-# Template of Eclipse project for STM32 Nucleo144-F767ZI board with ChibiOS
 
 ### TARGET
 
@@ -12,3 +11,8 @@ The template runs on an STM32 Nucleo64-F411RE board.
 ### Notes
 
 Based on demos from https://github.com/ChibiOS/ChibiOS
+
+
+### Information for developers
+
+* При работе с энкодером было замечено, что первый полученный бит является незначащим, эта информация не указана в DataSheet на данный энкодер.

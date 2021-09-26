@@ -15,13 +15,13 @@
 /**
  * @brief   Initialize periphery connected to encoder
  */
-void SPI_init(void);
+void Encoder_init(void);
 
 /**
  * @brief recieve data from encoder
  * @return  angle of rotation
  * @return error
  */
-int SPI_RX(void);
+float Encoder_RX(void);
 
 #endif

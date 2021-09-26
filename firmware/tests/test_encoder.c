@@ -5,16 +5,16 @@
 
 void test_abs_encoder(void)
 {
-	int angle = 0;
-	SPI_init();
+	float angle = 0;
+	Encoder_init();
 	debug_stream_init();
 
     while (1)
     {
     	chThdSleepMilliseconds(100);
-    	angle = SPI_RX();
+    	angle = Encoder_RX();
     	if(angle>=0)
-    		dbgprintf("angle=%d\r\n", angle);
+    		dbgprintf("angle=%.4f\r\n", angle);
 
 
     }

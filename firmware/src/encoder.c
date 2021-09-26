@@ -5,36 +5,36 @@
 /* LINE CONFIGURATION                                                         */
 /*============================================================================*/
 
-#define MISO_SPI1 PAL_LINE(GPIOA, 6)
-#define MOSI_SPI1 PAL_LINE(GPIOA, 7)
-#define CLK_SPI1 PAL_LINE(GPIOA, 5)
-#define CS_SPI1 PAL_LINE(GPIOB, 6)
+#define MISO_ENCODER PAL_LINE(GPIOA, 6)
+#define MOSI_ENCODER PAL_LINE(GPIOA, 7)
+#define CLK_ENCODER PAL_LINE(GPIOA, 5)
+#define CS_ENCODER PAL_LINE(GPIOB, 6)
 
 
 
-static SPIDriver* spi1 = &SPID1;
+static SPIDriver* Encoder = &SPID1;
 
 /*** SPI config ***/
 static SPIConfig conf = {
 	/*** interrupt off ***/
-    .end_cb = NULL,
+	.end_cb = NULL,
 	/*** CS ***/
-    .ssline = PAL_LINE(GPIOB, 6),
+	.ssline = CS_ENCODER,
 	/***  SPI enable, fclk/256 ***/
-	.cr1 = SPI_CR1_SPE | SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
+	.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
 };
 
 
 /**
  * @brief   Initialize periphery connected to encoder
  */
-void SPI_init(void)
+void Encoder_init(void)
 {
-	spiStart(spi1, &conf);
-	palSetLineMode(CS_SPI1, PAL_MODE_OUTPUT_PUSHPULL);
-	palSetLineMode(CLK_SPI1, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-	palSetLineMode(MISO_SPI1, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-	palSetLineMode(MOSI_SPI1, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+	spiStart(Encoder, &conf);
+	palSetLineMode(CS_ENCODER, PAL_MODE_OUTPUT_PUSHPULL);
+	palSetLineMode(CLK_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+	palSetLineMode(MISO_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+	palSetLineMode(MOSI_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
 
 }
 
@@ -43,14 +43,14 @@ void SPI_init(void)
  * @return  angle of rotation
  * @return error
  */
-int SPI_RX(void)
+float Encoder_RX(void)
 {
-    uint8_t rx_encoder_buf[2] = {0};
-    int angle = 0;
+	uint8_t rx_encoder_buf[3] = {0};
+	float angle = 0;
 
-	spiSelect(spi1);
-	spiReceive(spi1, 3, rx_encoder_buf);
-	spiUnselect(spi1);
+	spiSelect(Encoder);
+	spiReceive(Encoder, 3, rx_encoder_buf);
+	spiUnselect(Encoder);
 
 	/*** check data ***/
 	if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))

@@ -1,4 +1,3 @@
-//#include <common.h>
 #include <test.h>
 
 static void search_test(void)
@@ -13,7 +12,7 @@ static void search_test(void)
 
 int main(void)
 {
-
+	debug_stream_init();
     halInit();
     chSysInit();
 	#if(MAIN_PROGRAM!=PROGRAM_MASTER)
