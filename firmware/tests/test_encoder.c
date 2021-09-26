@@ -12,7 +12,7 @@ void test_abs_encoder(void)
     while (1)
     {
     	chThdSleepMilliseconds(100);
-    	angle = Encoder_RX();
+    	angle = Encoder_Read();
     	if(angle>=0)
     		dbgprintf("angle=%.4f\r\n", angle);
 

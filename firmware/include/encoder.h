@@ -22,6 +22,6 @@ void Encoder_init(void);
  * @return  angle of rotation
  * @return error
  */
-float Encoder_RX(void);
+float Encoder_Read(void);
 
 #endif

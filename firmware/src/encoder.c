@@ -43,7 +43,7 @@ void Encoder_init(void)
  * @return  angle of rotation
  * @return error
  */
-float Encoder_RX(void)
+float Encoder_Read(void)
 {
 	uint8_t rx_encoder_buf[3] = {0};
 	float angle = 0;
@@ -55,7 +55,7 @@ float Encoder_RX(void)
 	/*** check data ***/
 	if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
 	{
-		rx_encoder_buf[1]=(rx_encoder_buf[1] >> 5) & 0b00011111;
+		rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
 		angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5);
 		angle = (angle*360)/4096;
 		return angle;
