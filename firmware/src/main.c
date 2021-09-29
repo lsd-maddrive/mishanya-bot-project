@@ -1,8 +1,8 @@
 #include <test.h>
 
-static void search_test(void)
+static void testsRoutines(void)
 {
-	#if(MAIN_PROGRAM==PROGRAM_ENCODER)
+	#if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
 		test_abs_encoder();
 	#endif
 }
@@ -12,12 +12,11 @@ static void search_test(void)
 
 int main(void)
 {
-	debug_stream_init();
     halInit();
     chSysInit();
-	#if(MAIN_PROGRAM!=PROGRAM_MASTER)
-		search_test();
-	#endif
+    #if(MAIN_PROGRAM!=PROGRAM_MASTER)
+        testsRoutines();
+    #endif
 
 
 }
