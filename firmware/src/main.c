@@ -2,9 +2,9 @@
 
 static void testsRoutines(void)
 {
-	#if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
-		test_abs_encoder();
-	#endif
+    #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
+        test_abs_encoder();
+    #endif
 }
 
 
@@ -17,6 +17,4 @@ int main(void)
     #if(MAIN_PROGRAM!=PROGRAM_MASTER)
         testsRoutines();
     #endif
-
-
 }
