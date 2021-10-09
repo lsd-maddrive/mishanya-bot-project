@@ -4,7 +4,10 @@ import codecs
 
 num_data = 100 # number of measurements 
 
-sensor_data=serial.Serial(port='/dev/ttyACM1',baudrate=115200) # open serial
+name_port = input('Port name: ') # port name
+baudrate = int(input('Baud speed: ')) # baud speed
+
+sensor_data=serial.Serial(name_port, baudrate) # open serial
 data_file = open("sensor_data.txt", "a") # open file
 
 
