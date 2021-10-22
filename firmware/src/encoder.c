@@ -1,5 +1,5 @@
 #include <encoder.h>
-#include <common.h>
+
 
 /*============================================================================*/
 /* LINE CONFIGURATION                                                         */
