@@ -1,11 +1,22 @@
+# Кинематика омниколесного робота
+
 <p align="center">
 <img src="Base_kinematic.png">
 </p>
+
+## тест таблицы
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 <details>
 <summary>Обозначения и значения параметров</summary>
 <a href="https://www.codecogs.com/eqnedit.php?latex=XY&space;\text{&space;--&space;абсолютная&space;система&space;координат,&space;}X'Y'&space;\text{&space;--&space;связанная&space;система&space;координат,&space;}\\\alpha&space;\text{&space;--&space;угол&space;поворота&space;основания,&space;}&space;\Omega&space;\text{&space;--&space;угловая&space;скорость&space;основания,&space;}L&space;\text{&space;--&space;радиус&space;основания,&space;}V_{x},V_{y}&space;\text{&space;--&space;линейные&space;скорости&space;основания&space;в&space;абсолютной&space;системе,&space;}\\V_{a},V_{b},V_{c}&space;\text{&space;--&space;линейные&space;скорости&space;омниколёс,&space;}\omega_{a},\omega_{b},\omega_{c}&space;\text{&space;--&space;угловые&space;скорости&space;омниколёс,&space;}r&space;\text{&space;--&space;радиус&space;омниколёс}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?XY&space;\text{&space;--&space;абсолютная&space;система&space;координат,&space;}X'Y'&space;\text{&space;--&space;связанная&space;система&space;координат,&space;}\\\alpha&space;\text{&space;--&space;угол&space;поворота&space;основания,&space;}&space;\Omega&space;\text{&space;--&space;угловая&space;скорость&space;основания,&space;}L&space;\text{&space;--&space;радиус&space;основания,&space;}V_{x},V_{y}&space;\text{&space;--&space;линейные&space;скорости&space;основания&space;в&space;абсолютной&space;системе,&space;}\\V_{a},V_{b},V_{c}&space;\text{&space;--&space;линейные&space;скорости&space;омниколёс,&space;}\omega_{a},\omega_{b},\omega_{c}&space;\text{&space;--&space;угловые&space;скорости&space;омниколёс,&space;}r&space;\text{&space;--&space;радиус&space;омниколёс}" title="XY \text{ -- абсолютная система координат, }X'Y' \text{ -- связанная система координат, }\\\alpha \text{ -- угол поворота основания, } \Omega \text{ -- угловая скорость основания, }L \text{ -- радиус основания, }V_{x},V_{y} \text{ -- линейные скорости основания в абсолютной системе, }\\V_{a},V_{b},V_{c} \text{ -- линейные скорости омниколёс, }\omega_{a},\omega_{b},\omega_{c} \text{ -- угловые скорости омниколёс, }r \text{ -- радиус омниколёс}" /></a>
 </details>
-###
+
 Прямая кинематика:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{bmatrix}V_{x}\\V_{y}&space;\\&space;\omega&space;\end{bmatrix}&space;=&space;\begin{bmatrix}cos(&space;\alpha&space;)&-cos(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{3}&space;)&-sin(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{6}&space;)\\&space;sin(&space;\alpha)&-sin(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{3}&space;)&cos(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{6}&space;)&space;\\&space;L&L&L&space;\end{bmatrix}&space;\begin{bmatrix}V_{x}\\V_{y}&space;\\&space;\omega\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}V_{x}\\V_{y}&space;\\&space;\omega&space;\end{bmatrix}&space;=&space;\begin{bmatrix}cos(&space;\alpha&space;)&-cos(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{3}&space;)&-sin(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{6}&space;)\\&space;sin(&space;\alpha)&-sin(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{3}&space;)&cos(&space;\alpha&plus;&space;\frac{&space;\pi&space;}{6}&space;)&space;\\&space;L&L&L&space;\end{bmatrix}&space;\begin{bmatrix}V_{a}\\V_{b}&space;\\&space;V_{c}\end{bmatrix}" title="\begin{bmatrix}V_{x}\\V_{y} \\ \omega \end{bmatrix} = \begin{bmatrix}cos( \alpha )&-cos( \alpha+ \frac{ \pi }{3} )&-sin( \alpha+ \frac{ \pi }{6} )\\ sin( \alpha)&-sin( \alpha+ \frac{ \pi }{3} )&cos( \alpha+ \frac{ \pi }{6} ) \\ L&L&L \end{bmatrix} \begin{bmatrix}V_{a}\\V_{b} \\ \omega\end{bmatrix}" /></a>
