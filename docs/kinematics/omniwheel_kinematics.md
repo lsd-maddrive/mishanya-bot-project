@@ -47,6 +47,7 @@ XY \text{ -- абсолютная система координат, }X'Y' \text
 Чтобы получить результирующую скорость по каждой из осей - просто сложим проекции по соответсвующим осям:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=V_{x'}=V_{a}-V_{b}\cdot&space;\cos(&space;\theta&space;_{1})-V_{c}\cdot&space;\sin(&space;\theta&space;_{2})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{x'}=V_{a}-V_{b}\cdot&space;\cos(&space;\theta&space;_{1})-V_{c}\cdot&space;\sin(&space;\theta&space;_{2})" title="V_{x'}=V_{a}-V_{b}\cdot \cos( \theta _{1})-V_{c}\cdot \sin( \theta _{2})" /></a>
+
 <a href="https://www.codecogs.com/eqnedit.php?latex=V_{y'}=-V_{b}\cdot&space;\sin(&space;\theta&space;_{1})&plus;V_{c}\cdot&space;\cos(&space;\theta&space;_{2})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{y'}=-V_{b}\cdot&space;\sin(&space;\theta&space;_{1})&plus;V_{c}\cdot&space;\cos(&space;\theta&space;_{2})" title="V_{y'}=-V_{b}\cdot \sin( \theta _{1})+V_{c}\cdot \cos( \theta _{2})" /></a>
 
 Данные уравнения можно представить в матричной форме:
