@@ -3,7 +3,21 @@
 </p>
 <details>
 <summary>Обозначения и значения параметров</summary>
-XY \text{ -- абсолютная система координат, }X'Y' \text{ -- связанная система координат, }\\\alpha \text{ -- угол поворота основания, }  \Omega  \text{ -- угловая скорость основания, }L  \text{ -- радиус основания, }V_{x},V_{y} \text{ -- линейные скорости основания в абсолютной системе, }\\V_{a},V_{b},V_{c} \text{ -- линейные скорости омниколёс, }\omega_{a},\omega_{b},\omega_{c} \text{ -- угловые скорости омниколёс, }r \text{ -- радиус омниколёс}
+
+Значение параметров взяты [отсюда](https://github.com/lsd-maddrive/mishanya-bot-project/blob/develop/docs/kinematics/dimensions.md)
+
+| Обозначение| Смысл| Значение, ед. изм.|
+| -------------------|:---------------:| ---------:|
+| *XY*      | абсолютная система координат | м |
+| *X'Y'*      | связанная система координат      |   м |
+| <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a> | угол поворота основания      |    рад |
+| <a href="https://www.codecogs.com/eqnedit.php?latex=\Omega" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Omega" title="\Omega" /></a>      | угловая скорость основания | рад/с |
+| *L*      | радиус основания | 0.40643 м |
+| <a href="https://www.codecogs.com/eqnedit.php?latex=V_{x},V_{y}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{x},V_{y}" title="V_{x},V_{y}" /></a>      | линейные скорости основания в абсолютной системе | м/с |
+|<a href="https://www.codecogs.com/eqnedit.php?latex=V_{a},V_{b},V_{c}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{a},V_{b},V_{c}" title="V_{a},V_{b},V_{c}" /></a>|линейные скорости омниколёс|м/с|
+|<a href="https://www.codecogs.com/eqnedit.php?latex=\omega_{a},\omega_{b},\omega_{c}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\omega_{a},\omega_{b},\omega_{c}" title="\omega_{a},\omega_{b},\omega_{c}" /></a>|угловые скорости омниколёс|рад/с|
+|*r*|радиус омниколёс|0.061 м|
+
 </details>
 
 ###
@@ -30,7 +44,7 @@ XY \text{ -- абсолютная система координат, }X'Y' \text
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=v=r\cdot\omega" target="_blank"><img src="https://latex.codecogs.com/gif.latex?v=r\cdot\omega" title="v=r\cdot\omega" /></a>
 
-Данное выражение для угловой скорости, выраженной в рад/с. Чтобы использовать скорость, выраженной в <a href="https://www.codecogs.com/eqnedit.php?latex={^\circ}/c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?{^\circ}/c" title="{^\circ}/c" /></a> нужно домножить правую часть домножить на <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{&space;\pi}{&space;{180^\circ}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{&space;\pi}{&space;{180^\circ}}" title="\frac{ \pi}{ {180^\circ}}" /></a>. Теперь зная это мы можем спокойной работать пока с линейными скоростями, так как они линейно связаны с угловыми.
+Данное выражение для угловой скорости, выраженной в рад/с. Чтобы использовать скорость, выраженной в <a href="https://www.codecogs.com/eqnedit.php?latex={^\circ}/c" target="_blank"><img src="https://latex.codecogs.com/gif.latex?{^\circ}/c" title="{^\circ}/c" /></a> нужно домножить правую часть на <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{&space;\pi}{&space;{180^\circ}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{&space;\pi}{&space;{180^\circ}}" title="\frac{ \pi}{ {180^\circ}}" /></a>. Теперь зная это мы можем спокойной работать пока с линейными скоростями, так как они линейно связаны с угловыми.
 
 Теперь выразим линейные скорости платформы через проекции скоростей колёс на оси связанной системы координат. Пусть линейная скорость одного из колёс всегда соноправлена с одной из осей(в нашем случае - скорость колеса `a` с осью X'). Тогда вектор скорости колеса `b` будет отстоять от оси X'(если точнос - от -X') на угол <a href="https://www.codecogs.com/eqnedit.php?latex=\theta&space;_{1}=&space;60^\circ" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\theta&space;_{1}=&space;60^\circ" title="\theta _{1}= 60^\circ" /></a>(или <a href="https://www.codecogs.com/eqnedit.php?latex=\pi/3" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\pi/3" title="\pi/3" /></a>), что не сложно рассчитать, если учитывать, что угол между осями колёс = <a href="https://www.codecogs.com/eqnedit.php?latex=120^\circ" target="_blank"><img src="https://latex.codecogs.com/gif.latex?120^\circ" title="120^\circ" /></a>. Значит проекции скорости колеса `b` по осям будут соответственно:
 
