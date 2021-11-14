@@ -2,10 +2,12 @@ PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
 				  src/arm_driver.c \
 				  src/close_sys_arm.c \
+				  src/PID.c \
 
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_arm.c \
                   tests/test_close_sys.c \
+             
                   
 
 # C source files
