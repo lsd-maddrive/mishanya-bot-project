@@ -4,12 +4,6 @@
 #include <common.h>
 
 /*
- * @brief Test absolute encoder
-
- */
-void test_abs_encoder(void);
-
-/*
  * @brief Test servo in hand
  */
 void test_lld_servo_hand(void);

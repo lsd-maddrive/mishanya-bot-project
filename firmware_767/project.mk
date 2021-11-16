@@ -1,9 +1,7 @@
-PROJECT_MODULES = src/encoder.c \
-		  src/serial.c \
-		  src/lld_control_servo.c \
+PROJECT_MODULES = src/serial.c \
+		          src/lld_control_servo.c \
 
-PROJECT_TESTS   = tests/test_encoder.c \
-		  tests/test_lld_control_servo.c \
+PROJECT_TESTS   = tests/test_lld_control_servo.c \
 
 # C source files
 PROJECT_CSRC 	=  src/main.c src/common.c \
