@@ -13,7 +13,7 @@ int32_t Check(int32_t duty_cycle, int32_t low,int32_t high)
     {
         duty_cycle = low;
     }
-    else if(duty_cycle>=high)
+    else if(duty_cycle>high)
     {
         duty_cycle = high;
     }
