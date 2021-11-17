@@ -1,5 +1,6 @@
 PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
+				  src/PID.c \
 
 PROJECT_TESTS   = tests/test_encoder.c \
 
