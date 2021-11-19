@@ -1,42 +1,50 @@
 #include <close_sys_arm.h>
 
-
-#define down_period 3000
-
 #define dead_zone 0.5
 
-#define time_pref 0.00001
+#define time_pref 1/CH_CFG_ST_FREQUENCY
 
 #define dt 100
 
 static virtual_timer_t encoder;
 
-struct PID ARM_PID = {580, 80, 0};
+PID_t ARM_PID = {580, 80, 0};
 
+float min_angle_left = 334.9511;
 
-void close_left_arm(double goal_angle)
+float max_angle_left = 18.2812;
+
+float min_angle_right = 0;
+
+float max_angle_right = 0;
+
+void close_sys_arm(float goal_angle, arm_t ARM)
 {
-	struct error_type error = {0, 0, 0, 0};
-	struct normalize_angle left_arm_angle = {0, 0, 0, false};
+	float prev_time = 0;
+	error_type_t error = {0, 0, 0, 0};
+	normalize_angle_t arm_angle = {0, 0, 0, false};
+	close_sys_t arm = {0, 0, 0, 0};
+	lim_angle_t lim_angle = {0, 0};
 
 	chVTObjectInit(&encoder);
 
-	double min_left = 334.9511;
-    double max_left = 18.2812;
+	if(ARM==RIGHT_ARM)
+	{
 
-	double current_angle_left = 0;
-	double period = 0;
+		lim_angle.min_angle = min_angle_right;
+		lim_angle.max_angle = max_angle_right;
 
-	double ref_error = 0;
+	}
 
+	if(ARM==LEFT_ARM)
+	{
 
-	double prev_time = 0;
+		lim_angle.min_angle = min_angle_left;
+		lim_angle.max_angle = max_angle_left;
 
+	}
 
-	double delta_t = 0;
-
-
-	normalize_interval (min_left, max_left, &left_arm_angle);
+	normalize_interval (lim_angle.min_angle, lim_angle.max_angle, &arm_angle);
 
 	prev_time = chVTGetSystemTime();
 
@@ -44,66 +52,106 @@ void close_left_arm(double goal_angle)
 
 	while(1)
 	{
-		current_angle_left = normalize_angle (min_left, &left_arm_angle);
+		arm.current_angle = normalize_angle (lim_angle.min_angle, &arm_angle);
 
-		error_calculate (&error, goal_angle, current_angle_left);
+		error_calculate (&error, goal_angle, arm.current_angle);
 
-		delta_t = chVTGetSystemTime()-prev_time;
-		if(delta_t>=dt)
+		arm.delta_t = chVTGetSystemTime()-prev_time;
+		if(arm.delta_t>=dt)
 		{
+
 			prev_time = chVTGetSystemTime();
-			period = PID_out(&error, ARM_PID, delta_t*time_pref);
+			arm.period = PID_out(&error, ARM_PID, arm.delta_t*time_pref);
+
 		}
 
-
-		if(current_angle_left<goal_angle)
+		if(ARM==LEFT_ARM)
 		{
-			ARM_down(LEFT_ARM, period);
+
+			if(arm.current_angle<goal_angle)
+				{
+
+					ARM_down(ARM, arm.period);
+
+				}
+
+			else
+
+				{
+
+					ARM_up(ARM, arm.period);
+
+				}
+
 		}
-		else
+
+		if(ARM==RIGHT_ARM)
 		{
-			ARM_up(LEFT_ARM, period);
+
+			if(arm.current_angle<goal_angle)
+				{
+
+					ARM_up(ARM, arm.period);
+
+				}
+
+			else
+
+				{
+
+					ARM_down(ARM, arm.period);
+
+				}
+
 		}
 
-		dbgprintf("%.4f\r\n", current_angle_left);
+		arm.ref_error = 100*error.P/goal_angle;
 
-		ref_error = 100*error.P/goal_angle;
-
-		if(ref_error<=dead_zone)
+		if(arm.ref_error<=dead_zone)
 		{
+
 			break;
+
 		}
+
 
 	}
-	Off_ARM(LEFT_ARM);
 
+	Off_ARM(ARM);
 
 }
 
-void normalize_interval (double min_angle, double max_angle, normalize_angle_t *arm_angle)
+
+void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle)
 {
 		if(min_angle>max_angle)
 		{
+
 			arm_angle->shift = 360 - min_angle;
 			arm_angle->max_norm_angle = 360 - (min_angle-max_angle);
 			arm_angle->zero_cross = true;
+
 		}
 		else
 		{
+
 			arm_angle->max_norm_angle = max_angle - min_angle;
 			arm_angle->shift = min_angle;
+
 		}
 		arm_angle->min_norm_angle = 0;
 }
 
-double normalize_angle (double min_angle, normalize_angle_t *arm_angle)
+double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
 {
 	double current_angle = Encoder_Read();
 	if(arm_angle->zero_cross)
 	{
 		if((current_angle+arm_angle->shift)>=360)
 		{
+
 			current_angle = current_angle - min_angle;
+
 		}
 
 		else
@@ -111,10 +159,11 @@ double normalize_angle (double min_angle, normalize_angle_t *arm_angle)
 	}
 	else
 		current_angle = current_angle - arm_angle->shift;
+
 	return current_angle;
 }
 
-void error_calculate (error_type_t *err_reg, double angle, double current_angle)
+void error_calculate (error_type_t *err_reg, float angle, float current_angle)
 {
 	err_reg->P = angle-current_angle;
 
@@ -123,7 +172,9 @@ void error_calculate (error_type_t *err_reg, double angle, double current_angle)
 
 	if(err_reg->P>17)
 	{
+
 		err_reg->P = 17;
+
 	}
 
 }

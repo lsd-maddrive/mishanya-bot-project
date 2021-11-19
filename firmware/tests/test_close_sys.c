@@ -11,5 +11,5 @@ void test_close_sys(void)
     ARM_DRIVER_init();
     debug_stream_init();
     double angle = 35;
-    close_left_arm(angle);
+    close_sys_arm(angle, LEFT_ARM);
 }

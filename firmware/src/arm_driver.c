@@ -44,7 +44,7 @@ void ARM_DRIVER_init(void)
  * @brief recieve the hand number and the filling period
  * the function controls the raising of the hand up
  */
-void ARM_up(int ARM, uint16_t PWM_period)
+void ARM_up(arm_t ARM, uint16_t PWM_period)
 {
     pwmEnableChannel(ARM_DRIVER, ARM, PWM_period);
     palWriteLine(UP_ARM, PAL_HIGH);
@@ -55,7 +55,7 @@ void ARM_up(int ARM, uint16_t PWM_period)
  * @brief recieve the hand number and the filling period
  * the function controls the raising of the hand down
  */
-void ARM_down(int ARM, uint16_t PWM_period)
+void ARM_down(arm_t ARM, uint16_t PWM_period)
 {
     pwmEnableChannel(ARM_DRIVER, ARM, PWM_period);
     palWriteLine(DOWN_ARM, PAL_HIGH);
@@ -66,7 +66,7 @@ void ARM_down(int ARM, uint16_t PWM_period)
  * @brief recieve the hand number
  * the function disables the selected hand
  */
-void Off_ARM (int ARM)
+void Off_ARM (arm_t ARM)
 {
     pwmDisableChannel(ARM_DRIVER, ARM);
 }
