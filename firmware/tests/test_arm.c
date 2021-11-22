@@ -3,8 +3,8 @@
 #include <serial.h>
 #include <encoder.h>
 
-#define up_period   	3000
-#define down_period 	3000
+#define up_period   	5000
+#define down_period 	5000
 
 
 void test_arm(void)
@@ -14,14 +14,14 @@ void test_arm(void)
     debug_stream_init();
 
 
-    ARM_up(LEFT_ARM, up_period);
-    chThdSleepSeconds(3);
+    ARM_up(RIGHT_ARM, up_period);
+    chThdSleepSeconds(5);
     dbgprintf("%.4f\r\n", Encoder_Read());
-    Off_ARM(LEFT_ARM);
+    Off_ARM(RIGHT_ARM);
 
 
-    ARM_down(LEFT_ARM, down_period);
-    chThdSleepSeconds(3);
+    ARM_down(RIGHT_ARM, down_period);
+    chThdSleepSeconds(5);
     dbgprintf("%.4f\r\n", Encoder_Read());
-    Off_ARM(LEFT_ARM);
+    Off_ARM(RIGHT_ARM);
 }

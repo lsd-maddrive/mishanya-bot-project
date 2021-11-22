@@ -1,6 +1,6 @@
 #include <close_sys_arm.h>
 
-#define dead_zone 0.5
+#define dead_zone 1
 
 #define time_pref 1/CH_CFG_ST_FREQUENCY
 
@@ -8,22 +8,22 @@
 
 static virtual_timer_t encoder;
 
-PID_t ARM_PID = {580, 80, 0};
+PID_t ARM_PID = {3000, 500, 0};
 
 float min_angle_left = 334.9511;
 
 float max_angle_left = 18.2812;
 
-float min_angle_right = 0;
+float min_angle_right = 22.9394;
 
-float max_angle_right = 0;
+float max_angle_right = 62.6660;
 
 void close_sys_arm(float goal_angle, arm_t ARM)
 {
 	float prev_time = 0;
 	error_type_t error = {0, 0, 0, 0};
 	normalize_angle_t arm_angle = {0, 0, 0, false};
-	close_sys_t arm = {0, 0, 0, 0};
+	close_sys_t arm = {0, 0, 0};
 	lim_angle_t lim_angle = {0, 0};
 
 	chVTObjectInit(&encoder);
@@ -63,7 +63,12 @@ void close_sys_arm(float goal_angle, arm_t ARM)
 			prev_time = chVTGetSystemTime();
 			arm.period = PID_out(&error, ARM_PID, arm.delta_t*time_pref);
 
+			if(arm.period > PWM1_period)
+				arm.period = PWM1_period;
+
 		}
+
+		dbgprintf("%.4f\n", arm.current_angle);
 
 		if(ARM==LEFT_ARM)
 		{
@@ -105,9 +110,7 @@ void close_sys_arm(float goal_angle, arm_t ARM)
 
 		}
 
-		arm.ref_error = 100*error.P/goal_angle;
-
-		if(arm.ref_error<=dead_zone)
+		if(error.P<=dead_zone)
 		{
 
 			break;
@@ -116,6 +119,8 @@ void close_sys_arm(float goal_angle, arm_t ARM)
 
 
 	}
+	for(int i=0;i<3000;i++)
+		dbgprintf("%.4f\n", arm.current_angle);
 
 	Off_ARM(ARM);
 
@@ -170,12 +175,12 @@ void error_calculate (error_type_t *err_reg, float angle, float current_angle)
 	if(err_reg->P<0)
 		err_reg->P *=-1;
 
-	if(err_reg->P>17)
-	{
-
-		err_reg->P = 17;
-
-	}
+//	if(err_reg->P>10)
+//	{
+//
+//		err_reg->P = 10;
+//
+//	}
 
 }
 

@@ -10,6 +10,15 @@ void test_close_sys(void)
     Encoder_init();
     ARM_DRIVER_init();
     debug_stream_init();
-    double angle = 35;
-    close_sys_arm(angle, LEFT_ARM);
+    double angle = 0;
+	close_sys_arm(angle, RIGHT_ARM);
+	chThdSleepMilliseconds(100);
+    angle = 20;
+	close_sys_arm(angle, RIGHT_ARM);
+	chThdSleepMilliseconds(100);
+	angle = 0;
+	close_sys_arm(angle, RIGHT_ARM);
+	chThdSleepMilliseconds(100);
+	angle = 20;
+	close_sys_arm(angle, RIGHT_ARM);
 }

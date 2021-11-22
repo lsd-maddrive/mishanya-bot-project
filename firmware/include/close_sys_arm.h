@@ -23,8 +23,7 @@ typedef struct lim_angle{
 typedef struct close_sys{
     float  current_angle;
     float  period;
-    float ref_error;
-    float delta_t;
+    float  delta_t;
 }close_sys_t;
 
 
