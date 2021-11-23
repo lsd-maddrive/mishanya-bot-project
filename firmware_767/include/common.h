@@ -5,23 +5,22 @@
 #include "hal.h"
 #include "chprintf.h"
 
-
-
 #define PROGRAM_MASTER 0
-/***    SERVO FOR HAND       ***/
-#define PROGRAM_TEST_SERVO_HAND 1
-/***    SERVO FOR WRIST       ***/
-#define PROGRAM_TEST_SERVO_WRIST 2
 
-#define MAIN_PROGRAM PROGRAM_TEST_SERVO_HAND
+#define PROGRAM_TEST_SERVO_LEFT_HAND 1
 
-/**
- * @brief Overflow protection
- * @args duty_cycle is varible to be checked
- * @args low is minimum value
- * @args high is maximum value
- * @return duty_cycle
- */
-int32_t Check(int32_t duty_cycle, int32_t low,int32_t high);
+#define PROGRAM_TEST_SERVO_RIGHT_HAND 2
+
+#define PROGRAM_TEST_SERVO_LEFT_WRIST 3
+
+#define PROGRAM_TEST_SERVO_RIGHT_WRIST 4
+
+#define MAIN_PROGRAM PROGRAM_TEST_SERVO_RIGHT_WRIST
+
+/*============================================================================*/
+/* MACROS     Overflow protection                                             */
+/*============================================================================*/
+#define CLIP_VALUE(x, min, max) ((x) < (min) ? (min) :      \
+                                 (x) > (max) ? (max) : (x))
 
 #endif
