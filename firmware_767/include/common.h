@@ -13,7 +13,7 @@
 /***    SERVO FOR WRIST       ***/
 #define PROGRAM_TEST_SERVO_WRIST 2
 
-#define MAIN_PROGRAM PROGRAM_TEST_SERVO_WRIST
+#define MAIN_PROGRAM PROGRAM_TEST_SERVO_HAND
 
 /**
  * @brief Overflow protection

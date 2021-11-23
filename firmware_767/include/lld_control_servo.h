@@ -6,10 +6,24 @@
 /*============================================================================*/
 /* LIMITS FOR SERVO                                                           */
 /*============================================================================*/
-#define LEFT_SERVO_HAND 1110
-#define RIGHT_SERVO_HAND 1620
+//#define LEFT_SERVO_HAND 1110
+//#define RIGHT_SERVO_HAND 1620
 #define LEFT_SERVO_WRIST 900
 #define RIGHT_SERVO_WRIST 2100
+
+#define CLIP_VALUE(x, min, max) ((x) < (min) ? (min) :      \
+                                 (x) > (max) ? (max) : (x))
+
+
+typedef struct
+{
+  GPIO_TypeDef *GPIOx;
+  uint8_t pin;
+  uint16_t left_hand_limits;
+  uint16_t right_hand_limits;
+
+} lhs;
+
 
 /**
  *  @brief Initialize PWM and pin

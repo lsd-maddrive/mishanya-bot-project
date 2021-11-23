@@ -4,7 +4,7 @@ PROJECT_MODULES = src/serial.c \
 PROJECT_TESTS   = tests/test_lld_control_servo.c \
 
 # C source files
-PROJECT_CSRC 	=  src/main.c src/common.c \
+PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)			 
 # C++ source files
 PROJECT_CPPSRC 	= 
