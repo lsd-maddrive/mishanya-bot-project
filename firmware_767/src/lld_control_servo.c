@@ -1,7 +1,7 @@
 #include <lld_control_servo.h>
 
-#define T 10000
-#define F 1000000
+#define T 10000 //period pwm
+#define F 1000000 //frequency Tim
 
 int16_t duty_cycle = 0;
 bool init = false;
