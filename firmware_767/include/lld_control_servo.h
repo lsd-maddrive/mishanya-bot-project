@@ -19,61 +19,20 @@ typedef struct
 
 } servo_arm;
 
-/**
- *  @servo in the left hand
- */
-static const servo_arm left_hand =
-{
-      .channel = 0,
-      .line = PAL_LINE(GPIOE,9),
-      .left_hand_limit = 1110,
-      .right_hand_limit = 1620
-};
-
-/**
- *  @servo in the left wrist
- */
-static const servo_arm left_wrist =
-{
-      .channel = 1,
-      .line = PAL_LINE(GPIOE, 11),
-      .left_hand_limit = 900,
-      .right_hand_limit = 2100
-};
-/**
- *  @servo in the right hand
- */
-static const servo_arm right_hand =
-{
-      .channel = 2,
-      .line = PAL_LINE(GPIOE, 13),
-      .left_hand_limit = 1110,
-      .right_hand_limit = 1620
-};
-
-/**
- *  @servo in the right wrist
- */
-static const servo_arm right_wrist =
-{
-      .channel = 3,
-      .line = PAL_LINE(GPIOE, 14),
-      .left_hand_limit = 900,
-      .right_hand_limit = 2100
-};
-
+extern servo_arm left_hand;
+extern servo_arm left_wrist;
+extern servo_arm right_hand;
+extern servo_arm right_wrist;
 /**
  *  @brief Initialize PWM and pin
  *  @note variable init for protection
- *  @arg PAL_LINE(GPIOx,pin)
  */
-void lld_control_servo_init(ioline_t line);
+void lld_control_servo_init(void);
 
 /**
  * @brief Set raw duty cycle for servo in hand
- * @args duty_cycle is raw value, left_limit is servo limit on the left,
- *  right_limit is servo limit on the right, channel is pwm channel number
+ * @args duty_cycle is raw value,
+ * servo is pointer to struct left/right_hand/wrist
  */
-void lld_control_servo_hand(int16_t duty_cycle, uint16_t left_limit,
-                            uint16_t right_limit, uint8_t channel);
+void lld_control_servo_hand(int16_t duty_cycle, servo_arm *servo);
 #endif

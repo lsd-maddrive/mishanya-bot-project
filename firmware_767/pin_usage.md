@@ -1,7 +1,9 @@
 
 # Использование модулей периферии контроллера
 
-* PE9 - servo in left hand
-* PE11 - servo in left wrist
-* PE13 - servo in right hand
-* PE14 - servo in right wrist
+| Pin |    Назначение   |
+|:---:|:---------------:|
+| PC6 |   левая кисть   |
+| PC7 |  левое запястье |
+| PC8 |   правая кисть  |
+| PC9 | правое запястье |

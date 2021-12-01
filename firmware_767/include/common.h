@@ -9,13 +9,7 @@
 
 #define PROGRAM_TEST_SERVO_LEFT_HAND 1
 
-#define PROGRAM_TEST_SERVO_RIGHT_HAND 2
-
-#define PROGRAM_TEST_SERVO_LEFT_WRIST 3
-
-#define PROGRAM_TEST_SERVO_RIGHT_WRIST 4
-
-#define MAIN_PROGRAM PROGRAM_TEST_SERVO_RIGHT_WRIST
+#define MAIN_PROGRAM PROGRAM_TEST_SERVO_LEFT_HAND
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */
