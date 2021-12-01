@@ -5,7 +5,7 @@
 #include <lld_control_servo.h>
 
 /*
- * @brief Test servo in left hand
+ * @brief Test servo
  * @note value raw duty cycle
  * @args servo is pointer to struct left/right_hand/wrist
  */
