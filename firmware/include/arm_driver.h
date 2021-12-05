@@ -6,6 +6,30 @@
 #define PWM1_frequency	500000
 #define PWM1_period		10000
 
+typedef enum {
+	LEFT = 0,
+	RIGHT = 1
+} ARM_SIDE_t;
+
+
+typedef enum {
+	BB = 0,
+	RED = 1
+} DRIVER_t;
+
+typedef struct {
+	PWMDriver 		*driver_ptr;
+	PWMConfig 		pwm_conf;
+	bool 			is_started;
+} pwm_ctx_t;
+
+typedef struct {
+	DRIVER_t 		type;
+	pwm_ctx_t		*pwm_ctx;
+	channels_side_t ch_side;
+	arm_t			pins;
+} driver_ctx_t;
+
 
 typedef struct {
 	uint8_t ch1_pwm;
