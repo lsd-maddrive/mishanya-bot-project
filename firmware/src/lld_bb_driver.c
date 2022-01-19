@@ -1,22 +1,8 @@
+#include <lld_bb_driver.h>
 
 
-
-
-void lld_bb_init_driver(driver_ctx_t *ctx) {
-
-    PWMConfig pwm_conf = {
-        .frequency = ctx->freq,
-        .period    = ctx->period,
-        .callback  = NULL,
-        .channels  = {
-                    {.mode = RIGHT_ACTIVE_1	,   .callback = NULL},
-                    {.mode = LEFT_ACTIVE_1,     .callback = NULL},
-                    {.mode = RIGHT_ACTIVE_2,    .callback = NULL},
-                    {.mode = LEFT_ACTIVE_2,     .callback = NULL}
-                    },
-        .cr2        = 0,
-        .dier       = 0
-    };
+void lld_bb_init_driver(driver_ctx_t *ctx) 
+{
 
     arm_t pins = ctx->pins;
 
@@ -40,5 +26,10 @@ void lld_bb_init_driver(driver_ctx_t *ctx) {
         pins.up, (1 << 0) // TODO - refactor
     );
 
-    pwmStart(ctx->driver_ptr, &pwm_conf);
+    pwm_ctx_t &pwm_ctx = ctx->pwm_ctx;
+    if (!pwm_ctx->is_started) 
+    {
+        pwmStart(pwm_ctx->driver_ptr, &pwm_ctx->pwm_conf);
+        pwm_ctx->is_started = true;
+    }
 }
