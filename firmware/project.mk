@@ -1,6 +1,9 @@
 PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
 				  src/arm_driver.c \
+				  src/lld_bb_driver.c \
+				  src/lld_red_driver.c \
+				  src/elbow_driver.c \
 
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_arm.c

@@ -1,10 +1,10 @@
 #include <lld_bb_driver.h>
 
 
-void lld_bb_init_driver(driver_ctx_t *ctx) 
+void lld_bb_init_driver(arm_t *arm)
 {
 
-    arm_t pins = ctx->pins;
+	control_driver_t pins = arm->arm_control;
 
     palSetLineMode(
         pins.PWM_1, (2 << 0) | (1 << 7)
@@ -26,10 +26,10 @@ void lld_bb_init_driver(driver_ctx_t *ctx)
         pins.up, (1 << 0) // TODO - refactor
     );
 
-    pwm_ctx_t &pwm_ctx = ctx->pwm_ctx;
-    if (!pwm_ctx->is_started) 
+    pwm_ctx_t pwm_ctx = arm->arm_ctx;
+    if (!pwm_ctx.is_started)
     {
-        pwmStart(pwm_ctx->driver_ptr, &pwm_ctx->pwm_conf);
-        pwm_ctx->is_started = true;
+        pwmStart(pwm_ctx.driver_ptr, &pwm_ctx.pwm_conf);
+        pwm_ctx.is_started = true;
     }
 }

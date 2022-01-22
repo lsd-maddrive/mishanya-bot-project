@@ -1,23 +1,23 @@
-#include <arm_control.h>
+#include <arm_driver.h>
 
 
 /**
  * @brief   Initialize arm driver
  */
-void ARM_DRIVERS_init()
+void driver_init(driver_ctx_t *arm_driver)
 {
-	if (left_arm.type == RED) 
+	if (arm_driver->type == RED)
 	{
 
-		lld_red_init_driver(&left_arm);
-		lld_red_init_driver(&right_arm);
+		lld_red_init_driver(&arm_driver->left);
+		lld_red_init_driver(&arm_driver->right);
 
 	}
 	else
 	{
 
-		lld_red_init_driver(&left_arm);
-		lld_red_init_driver(&right_arm);
+		lld_bb_init_driver(&arm_driver->left);
+		lld_bb_init_driver(&arm_driver->right);
 		
 	}
 

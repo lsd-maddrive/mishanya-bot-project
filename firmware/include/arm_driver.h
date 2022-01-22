@@ -24,19 +24,25 @@ typedef struct {
 } pwm_ctx_t;
 
 typedef struct {
+	ioline_t up;
+	ioline_t down;
+	ioline_t PWM_1;
+	ioline_t PWM_2;
+} control_driver_t;
+
+typedef struct{
+	pwm_ctx_t arm_ctx;
+	control_driver_t arm_control;
+} arm_t;
+
+typedef struct {
 	DRIVER_t 		type;
-	pwm_ctx_t		*pwm_ctx;
 	arm_t			left;
 	arm_t			right;
 } driver_ctx_t;
 
 
-typedef struct {
-	ioline_t up;
-	ioline_t down;
-	ioline_t PWM_1;
-	ioline_t PWM_2;
-} arm_t;
+void driver_init(driver_ctx_t *arm_driver);
 
 
 

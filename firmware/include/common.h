@@ -6,7 +6,6 @@
 #include "chprintf.h"
 
 
-
 #define PROGRAM_MASTER 0
 
 #define PROGRAM_TEST_ENCODER 1

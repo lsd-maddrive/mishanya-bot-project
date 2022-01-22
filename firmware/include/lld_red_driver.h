@@ -3,6 +3,6 @@
 
 #include <common.h>
 
-void lld_red_init_driver(driver_ctx_t *ctx);
+void lld_red_init_driver(arm_t *arm);
 
 #endif
