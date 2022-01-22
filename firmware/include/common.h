@@ -4,6 +4,7 @@
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
+#include "stdbool.h"
 
 
 #define PROGRAM_MASTER 0

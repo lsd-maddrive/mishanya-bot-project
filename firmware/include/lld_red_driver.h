@@ -2,6 +2,8 @@
 #define INCLUDE_LLD_RED_DRIVER_H
 
 #include <common.h>
+#include <arm_driver.h>
+
 
 void lld_red_init_driver(arm_t *arm);
 

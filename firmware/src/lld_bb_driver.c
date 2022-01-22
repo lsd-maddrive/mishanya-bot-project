@@ -6,25 +6,11 @@ void lld_bb_init_driver(arm_t *arm)
 
 	control_driver_t pins = arm->arm_control;
 
-    palSetLineMode(
-        pins.PWM_1, (2 << 0) | (1 << 7)
-    );
-    palSetLineMode(
-        pins.PWM_1, (2 << 0) | (1 << 7) // TODO - refactor
-    );
-    palSetLineMode(
-        pins.PWM_2, (2 << 0) | (1 << 7)
-    );
-    palSetLineMode(
-        pins.PWM_2, (2 << 0) | (1 << 7) // TODO - refactor
-    );
+    palSetLineMode(pins.PWM_1, PAL_MODE_ALTERNATE(1));
+    palSetLineMode(pins.PWM_2, PAL_MODE_ALTERNATE(1));
 
-    palSetLineMode(
-        pins.down, (1 << 0) // TODO - refactor
-    );
-    palSetLineMode(
-        pins.up, (1 << 0) // TODO - refactor
-    );
+    palSetLineMode(pins.down, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(pins.up, PAL_MODE_OUTPUT_PUSHPULL);
 
     pwm_ctx_t pwm_ctx = arm->arm_ctx;
     if (!pwm_ctx.is_started)

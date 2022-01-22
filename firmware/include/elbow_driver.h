@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ARM_DRIVER_H
-#define INCLUDE_ARM_DRIVER_H
+#ifndef INCLUDE_ELBOW_DRIVER_H
+#define INCLUDE_ELBOW_DRIVER_H
 
 #include <common.h>
 #include <arm_driver.h>
