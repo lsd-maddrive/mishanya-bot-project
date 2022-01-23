@@ -1,24 +1,25 @@
 #include <arm_driver.h>
-
-
+#include "lld_bb_driver.h"
+#include "lld_red_driver.h"
 /**
  * @brief   Initialize arm driver
  */
-void driver_init(driver_ctx_t *arm_driver)
+void driver_init(const driver_ctx_t *arm_driver)
 {
+
 	if (arm_driver->type == RED)
 	{
 
-		lld_red_init_driver(&arm_driver->left);
-		lld_red_init_driver(&arm_driver->right);
+		lld_red_init_driver(&arm_driver->arm[LEFT]);
+//		lld_red_init_driver(&arm_driver->arm[RIGHT]);
 
 	}
 	else
 	{
 
-		lld_bb_init_driver(&arm_driver->left);
-		lld_bb_init_driver(&arm_driver->right);
-		
+		lld_bb_init_driver(&arm_driver->arm[LEFT]);
+		lld_bb_init_driver(&arm_driver->arm[RIGHT]);
+
 	}
 
 }
@@ -27,16 +28,16 @@ void driver_init(driver_ctx_t *arm_driver)
  * @brief recieve the hand number and the filling period
  * the function controls the raising of the hand up
  */
-// void ARM_up(ARM_SIDE_t side, uint16_t PWM_period)
-// {
-	// driver_ctx_t *ctx = arms_ctxs[side];
+void arm_up(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period)
+{
+	arm_t control = arm_driver->arm[side];
 
-//   pwmEnableChannel(ARM_DRIVER, ARM.arm, PWM_period);
-//   palWriteLine(ARM.up, PAL_HIGH);
-//   palWriteLine(ARM.down, PAL_LOW);
-// }
-
+	palWriteLine(control.arm_control.up, PAL_LOW);
+	palWriteLine(control.arm_control.down, PAL_HIGH);
+	pwmEnableChannel(control.arm_ctx.driver_ptr, side, period);
+}
 //
+////
 // void test_new_driver(arm_t ARM, uint16_t PWM_period)
 // {
 //     pwmEnableChannel(ARM_DRIVER, ARM, PWM_period);

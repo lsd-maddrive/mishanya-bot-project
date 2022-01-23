@@ -4,6 +4,6 @@
 #include <common.h>
 #include <arm_driver.h>
 
-void lld_bb_init_driver(arm_t *arm);
+void lld_bb_init_driver(const arm_t *arm);
 
 #endif

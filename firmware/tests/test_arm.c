@@ -1,11 +1,17 @@
-#include <arm_driver.h>
+#include <elbow_driver.h>
 #include <test.h>
+#include "serial.h"
 
-#define up_period   	7000
-#define down_period 	5000
+
 
 
 void test_arm(void)
 {
+
+elbow_init();
+
+elbow_up(LEFT, 5000);
+
+
 
 }

@@ -5,14 +5,14 @@
 
 #define BB_DRIVER 			1
 #define RED_DRIVER 			2
-#define DRIVER 				BB_DRIVER
+#define DRIVER 				RED_DRIVER
 
-const PWMDriver *ELBOW_DRIVER = &PWMD3;
+const PWMDriver *ELBOW_DRIVER_PTR = &PWMD3;
 
 #if(DRIVER == RED_DRIVER)
 
-	#define LEFT_UP 		PAL_LINE(GPIOB,4)
-	#define LEFT_DOWN 		PAL_LINE(GPIOB,10)
+	#define LEFT_UP 		PAL_LINE(GPIOB,10)
+	#define LEFT_DOWN 		PAL_LINE(GPIOB,4)
 	#define LEFT_PWM 		PAL_LINE(GPIOA,6) // TIM3 CH1
 
 	#define RIGHT_UP 		PAL_LINE(GPIOB,5)
@@ -40,7 +40,6 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 #if(DRIVER == RED_DRIVER)
 
 	const pwm_ctx_t left_pwm_ctx = {
-		.is_started = false,
 		.driver_ptr = &PWMD3,
 		.pwm_conf = {
 			.frequency = PWM_frequency,
@@ -62,7 +61,6 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 	};
 
 	const pwm_ctx_t right_pwm_ctx = {
-		.is_started = false,
 		.driver_ptr = &PWMD3,
 		.pwm_conf = {
 			.frequency = PWM_frequency,
@@ -72,9 +70,9 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 						
 						{.mode = PWM_OUTPUT_DISABLED, .callback = NULL}, // RIGHT_PWM
 						
-						{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-						
 						{.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+
+						{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
 						
 						{.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
 						},
@@ -107,8 +105,8 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 
 	const driver_ctx_t elbow_driver = {
 		.type = RED,
-		.left = left_arm,
-		.right = right_arm
+		.arm[0] = left_arm,
+		.arm[1] = right_arm
 	};
 
 #endif
@@ -116,7 +114,6 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 #if(DRIVER == BB_DRIVER)
 
 	const pwm_ctx_t left_pwm_ctx = {
-		.is_started = false,
 		.driver_ptr = &PWMD3,
 		.pwm_conf = {
 			.frequency = PWM_frequency,
@@ -138,7 +135,6 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 	};
 
 	const pwm_ctx_t right_pwm_ctx = {
-		.is_started = false,
 		.driver_ptr = &PWMD3,
 		.pwm_conf = {
 			.frequency = PWM_frequency,
@@ -185,12 +181,23 @@ const PWMDriver *ELBOW_DRIVER = &PWMD3;
 
 	const driver_ctx_t elbow_driver = {
 		.type = BB,
-		.left = left_arm,
-		.right = right_arm
+		.arm[0] = left_arm,
+		.arm[1] = right_arm
 	};
 
 #endif
 
 
+/**
+ * @brief   Initialize arm driver
+ */
+void elbow_init(void)
+{
+	driver_init(&elbow_driver);
+}
 
+void elbow_up(arm_side_t side, uint16_t period)
+{
+	arm_up(side, &elbow_driver, period);
+}
 

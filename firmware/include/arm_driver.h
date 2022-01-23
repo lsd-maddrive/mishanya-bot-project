@@ -4,23 +4,22 @@
 #include <common.h>
 
 
-#define PWM_frequency	500000
-#define PWM_period		10000
+#define PWM_FREQUENCY	500000
+#define PWM_PERIOD		10000
 
 typedef enum {
 	LEFT = 0,
 	RIGHT = 1
-} ARM_SIDE_t;
+} arm_side_t;
 
 typedef enum {
 	BB = 0,
 	RED = 1
-} DRIVER_t;
+} driver_t;
 
 typedef struct {
 	PWMDriver 		*driver_ptr;
 	PWMConfig 		pwm_conf;
-	bool 			is_started;
 } pwm_ctx_t;
 
 typedef struct {
@@ -36,14 +35,13 @@ typedef struct{
 } arm_t;
 
 typedef struct {
-	DRIVER_t 		type;
-	arm_t			left;
-	arm_t			right;
+	driver_t 		type;
+	arm_t			arm[];
 } driver_ctx_t;
 
 
-void driver_init(driver_ctx_t *arm_driver);
-
+void driver_init(const driver_ctx_t *arm_driver);
+void arm_up(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period);
 
 
 #endif

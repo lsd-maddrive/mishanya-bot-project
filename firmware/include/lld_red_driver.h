@@ -5,6 +5,6 @@
 #include <arm_driver.h>
 
 
-void lld_red_init_driver(arm_t *arm);
+void lld_red_init_driver(const arm_t *arm);
 
 #endif
