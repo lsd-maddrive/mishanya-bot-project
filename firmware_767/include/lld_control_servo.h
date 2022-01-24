@@ -2,7 +2,6 @@
 #define INCLUDE_LLD_CONTROL_SERVO_H_
 
 #include <common.h>
-
 /**
  *  @brief structure for servos in arm
  *  @identifier1 pwm channel number
@@ -14,15 +13,11 @@ typedef struct
 {
   uint8_t channel;
   ioline_t line;
-  uint16_t left_hand_limit;
-  uint16_t right_hand_limit;
+  uint16_t low_hand_limit;
+  uint16_t high_hand_limit;
 
 } servo_arm;
 
-extern servo_arm left_hand;
-extern servo_arm left_wrist;
-extern servo_arm right_hand;
-extern servo_arm right_wrist;
 /**
  *  @brief Initialize PWM and pin
  *  @note variable init for protection
@@ -30,9 +25,17 @@ extern servo_arm right_wrist;
 void lld_control_servo_init(void);
 
 /**
- * @brief Set raw duty cycle for servo in hand
+ * @brief Set raw duty cycle for servo
  * @args duty_cycle is raw value,
  * servo is pointer to struct left/right_hand/wrist
  */
-void lld_control_servo_hand(int16_t duty_cycle, servo_arm *servo);
+void lld_control_servo(int16_t duty_cycle, servo_arm *servo);
+
+/**
+ * @brief Set raw duty cycle for servo
+ * @args duty_cycle is raw value,
+ * servo_t is a variable from the enum type_servo
+ */
+void setServoPtr(int16_t duty_cycle, int8_t servo_t);
+
 #endif

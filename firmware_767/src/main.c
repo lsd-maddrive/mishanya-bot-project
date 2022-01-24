@@ -1,9 +1,10 @@
+#include <common.h>
 #include <test.h>
 
 static void testsRoutines(void)
 {
-    #if(MAIN_PROGRAM == PROGRAM_TEST_SERVO_LEFT_HAND)
-        test_lld_servo_left_hand(&left_wrist);
+    #if(MAIN_PROGRAM == PROGRAM_TEST_SERVO)
+        test_lld_servo(RIGHT_HAND);
     #endif
 }
 
@@ -12,7 +13,7 @@ int main(void)
 {
     halInit();
     chSysInit();
-    #if(MAIN_PROGRAM!=PROGRAM_MASTER)
+    #if(MAIN_PROGRAM != PROGRAM_MASTER)
         testsRoutines();
     #endif
 }

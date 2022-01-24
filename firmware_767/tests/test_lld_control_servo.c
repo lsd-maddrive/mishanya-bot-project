@@ -1,8 +1,9 @@
 #include <test.h>
 #include <lld_control_servo.h>
 #include <serial.h>
+#include <common.h>
 
-void test_lld_servo_left_hand(servo_arm *servo)
+void test_lld_servo(int8_t servo)
 {
     int16_t delta = 100;
     int16_t duty_cycle = 0;
@@ -23,10 +24,8 @@ void test_lld_servo_left_hand(servo_arm *servo)
                  break;
             default: ;
         }
-        duty_cycle = CLIP_VALUE(duty_cycle,servo->left_hand_limit,
-                                servo->right_hand_limit);
-        lld_control_servo_hand(duty_cycle, servo);
-        dbgprintf("Angle:%d\n\r",(int)duty_cycle);
+        setServoPtr(duty_cycle, servo);
+        dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
         time = chThdSleepUntilWindowed (time, TIME_MS2I(100)+time);
 
     }
