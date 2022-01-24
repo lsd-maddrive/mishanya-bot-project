@@ -6,5 +6,7 @@
 
 void elbow_init(void);
 void elbow_up(arm_side_t side, uint16_t period);
+void elbow_down(arm_side_t side, uint16_t period);
+void elbow_off(arm_side_t side);
 
 #endif

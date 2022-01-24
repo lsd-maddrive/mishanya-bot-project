@@ -18,8 +18,16 @@ typedef enum {
 } driver_t;
 
 typedef struct {
+	uint8_t ch_pwm_1;
+	uint8_t ch_pwm_2;
+	uint8_t alt_func_1;
+	uint8_t alt_func_2;
+} pwm_channel_t;
+
+typedef struct {
 	PWMDriver 		*driver_ptr;
 	PWMConfig 		pwm_conf;
+	pwm_channel_t   pwm_ch;
 } pwm_ctx_t;
 
 typedef struct {
@@ -28,6 +36,7 @@ typedef struct {
 	ioline_t PWM_1;
 	ioline_t PWM_2;
 } control_driver_t;
+
 
 typedef struct{
 	pwm_ctx_t arm_ctx;
@@ -42,6 +51,8 @@ typedef struct {
 
 void driver_init(const driver_ctx_t *arm_driver);
 void arm_up(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period);
+void arm_down(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period);
+void arm_off (arm_side_t side, const driver_ctx_t *arm_driver);
 
 
 #endif

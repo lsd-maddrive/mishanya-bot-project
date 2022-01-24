@@ -5,9 +5,10 @@ void lld_bb_init_driver(const arm_t *arm)
 {
 
 	control_driver_t pins = arm->arm_control;
+	pwm_channel_t pwm_ch = arm->arm_ctx.pwm_ch;
 
-    palSetLineMode(pins.PWM_1, PAL_MODE_ALTERNATE(1));
-    palSetLineMode(pins.PWM_2, PAL_MODE_ALTERNATE(1));
+    palSetLineMode(pins.PWM_1, PAL_MODE_ALTERNATE(pwm_ch.alt_func_1));
+    palSetLineMode(pins.PWM_2, PAL_MODE_ALTERNATE(pwm_ch.alt_func_2));
 
     palSetLineMode(pins.down, PAL_MODE_OUTPUT_PUSHPULL);
     palSetLineMode(pins.up, PAL_MODE_OUTPUT_PUSHPULL);
