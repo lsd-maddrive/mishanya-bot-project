@@ -43,12 +43,12 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	const pwm_channel_t ch_left_pwm = {
 		.alt_func_1 = 2,
-		.ch_pwm_1 = 1
+		.ch_pwm_1 = 0
 	};
 
 	const pwm_channel_t ch_right_pwm = {
 		.alt_func_1 = 2,
-		.ch_pwm_1 = 2
+		.ch_pwm_1 = 1
 	};
 
 	const pwm_ctx_t left_pwm_ctx = {
@@ -95,29 +95,29 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 		}
 	};
 
-	const control_driver_t left_control = {
+	const line_driver_t left_control = {
 			.PWM_1 = LEFT_PWM,
-			.down = LEFT_DOWN,
-			.up = LEFT_UP
+			.digit_2 = LEFT_DOWN,
+			.digit_1 = LEFT_UP
 	};
 
-	const control_driver_t right_control = {
+	const line_driver_t right_control = {
 			.PWM_1 = RIGHT_PWM,
-			.down = RIGHT_DOWN,
-			.up = RIGHT_UP
+			.digit_2 = RIGHT_DOWN,
+			.digit_1 = RIGHT_UP
 	};
 
-	const arm_t left_arm = {
-		.arm_control = left_control,
+	const control_driver_t left_arm = {
+		.line_control = left_control,
 		.arm_ctx = left_pwm_ctx,
 	};
 
-	const arm_t right_arm = {
-		.arm_control = right_control,
+	const control_driver_t right_arm = {
+		.line_control = right_control,
 		.arm_ctx = right_pwm_ctx,
 	};
 
-	const driver_ctx_t elbow_driver = {
+	const arm_driver_ctx_t elbow_driver = {
 		.type = RED,
 		.arm[0] = left_arm,
 		.arm[1] = right_arm
@@ -126,6 +126,16 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 #endif
 
 #if(DRIVER == BB_DRIVER)
+
+	const pwm_channel_t ch_left_pwm = {
+		.alt_func_1 = 2,
+		.ch_pwm_1 = 0
+	};
+
+	const pwm_channel_t ch_right_pwm = {
+		.alt_func_1 = 2,
+		.ch_pwm_1 = 1
+	};
 
 	const pwm_ctx_t left_pwm_ctx = {
 		.driver_ptr = &PWMD3,
@@ -169,39 +179,31 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 		}
 	};
 
-	const control_driver_t left_control = {
-			.ch_pwm_1 = 1,
-			.ch_pwm_2 = 2,
+	const line_driver_t left_control = {
 			.PWM_1 = LEFT_PWM_1,
 			.PWM_2 = LEFT_PWM_2,
-			.down = LEFT_DOWN,
-			.up = LEFT_UP
+			.digit_2 = LEFT_DOWN,
+			.digit_1 = LEFT_UP
 	};
 
-	const control_driver_t right_control = {
-			.ch_pwm_1 = 1,
-			.ch_pwm_2 = 2,
+	const line_driver_t right_control = {
 			.PWM_1 = RIGHT_PWM_1,
 			.PWM_2 = RIGHT_PWM_2,
-			.down = RIGHT_DOWN,
-			.up = RIGHT_UP
+			.digit_2 = RIGHT_DOWN,
+			.digit_1 = RIGHT_UP
 	};
 
-	const arm_t left_arm = {
-		.arm_control = left_control,
-		.arm_ctx = left_pwm_ctx,
-		.ch_pwm_1 = 1,
-		.ch_pwm_2 = 2
+	const control_driver_t left_arm = {
+		.line_control = left_control,
+		.arm_ctx = left_pwm_ctx
 	};
 
-	const arm_t right_arm = {
-		.arm_control = right_control,
+	const control_driver_t right_arm = {
+		.line_control = right_control,
 		.arm_ctx = right_pwm_ctx
-		.ch_pwm_1 = 1,
-		.ch_pwm_2 = 2
 	};
 
-	const driver_ctx_t elbow_driver = {
+	const arm_driver_ctx_t elbow_driver = {
 		.type = BB,
 		.arm[0] = left_arm,
 		.arm[1] = right_arm

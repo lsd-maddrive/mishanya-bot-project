@@ -10,7 +10,11 @@ void test_arm(void)
 
 elbow_init();
 
-elbow_up(LEFT, 100);
+elbow_up(LEFT, 10);
+chThdSleepMilliseconds(5000);
+elbow_off(LEFT);
+
+elbow_down(LEFT, 10);
 chThdSleepMilliseconds(5000);
 elbow_off(LEFT);
 

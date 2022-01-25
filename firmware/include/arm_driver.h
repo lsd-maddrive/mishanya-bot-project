@@ -3,7 +3,6 @@
 
 #include <common.h>
 
-
 #define PWM_FREQUENCY	500000
 #define PWM_PERIOD		10000
 
@@ -31,28 +30,28 @@ typedef struct {
 } pwm_ctx_t;
 
 typedef struct {
-	ioline_t up;
-	ioline_t down;
-	ioline_t PWM_1;
-	ioline_t PWM_2;
-} control_driver_t;
+	ioline_t 			digit_1;
+	ioline_t 			digit_2;
+	ioline_t 			PWM_1;
+	ioline_t 			PWM_2;
+} line_driver_t;
 
 
 typedef struct{
-	pwm_ctx_t arm_ctx;
-	control_driver_t arm_control;
-} arm_t;
+	pwm_ctx_t 			arm_ctx;
+	line_driver_t 		line_control;
+} control_driver_t;
 
 typedef struct {
-	driver_t 		type;
-	arm_t			arm[];
-} driver_ctx_t;
+	driver_t 			type;
+	control_driver_t	arm[];
+} arm_driver_ctx_t;
 
 
-void driver_init(const driver_ctx_t *arm_driver);
-void arm_up(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period);
-void arm_down(arm_side_t side, const driver_ctx_t *arm_driver, uint16_t period);
-void arm_off (arm_side_t side, const driver_ctx_t *arm_driver);
+void driver_init(const arm_driver_ctx_t *arm_driver);
+void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period);
+void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period);
+void arm_off (arm_side_t side, const arm_driver_ctx_t *arm_driver);
 
 
 #endif
