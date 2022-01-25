@@ -85,7 +85,7 @@ void lld_control_servo(int16_t duty_cycle, servo_arm *servo)
     pwmEnableChannel(&PWMD3,servo->channel,duty_cycle);
 }
 
-void setServoPtr(int16_t duty_cycle, int8_t servo_t)
+void lld_set_dutycycle_servo(int16_t duty_cycle, type_servo servo_t)
 {
     switch(servo_t)
     {
@@ -103,4 +103,57 @@ void setServoPtr(int16_t duty_cycle, int8_t servo_t)
             break;
         default: ;
     }
+}
+
+uint16_t get_servo_low_limit(type_servo servo_t)
+{
+    uint16_t low = 0;
+    servo_arm *servo;
+    switch(servo_t)
+    {
+        case LEFT_HAND:
+             servo = &left_hand;
+             low = servo->low_hand_limit;
+             break;
+        case LEFT_WRIST:
+             servo = &left_wrist;
+             low = servo->low_hand_limit;
+             break;
+        case RIGHT_WRIST:
+             servo = &right_wrist;
+             low = servo->low_hand_limit;
+             break;
+        case RIGHT_HAND:
+             servo = &right_hand;
+             low = servo->low_hand_limit;
+             break;
+
+    }
+    return low;
+}
+
+uint16_t get_servo_high_limit(type_servo servo_t)
+{
+    uint16_t high = 0;
+    servo_arm *servo;
+    switch(servo_t)
+    {
+        case LEFT_HAND:
+             servo = &left_hand;
+             high = servo->high_hand_limit;
+             break;
+        case LEFT_WRIST:
+             servo = &left_wrist;
+             high = servo->high_hand_limit;
+             break;
+        case RIGHT_WRIST:
+             servo = &right_wrist;
+             high = servo->high_hand_limit;
+             break;
+        case RIGHT_HAND:
+             servo = &right_hand;
+             high = servo->high_hand_limit;
+             break;
+    }
+    return high;
 }

@@ -36,6 +36,20 @@ void lld_control_servo(int16_t duty_cycle, servo_arm *servo);
  * @args duty_cycle is raw value,
  * servo_t is a variable from the enum type_servo
  */
-void setServoPtr(int16_t duty_cycle, int8_t servo_t);
+void lld_set_dutycycle_servo(int16_t duty_cycle, type_servo servo_t);
+
+/**
+ * @brief get high limit of the servo
+ * @args servo_t is a variable from the enum type_servo
+ * @return high limit of the servo
+ */
+uint16_t get_servo_high_limit(type_servo servo_t);
+
+/**
+ * @brief get low limit of the servo
+ * @args servo_t is a variable from the enum type_servo
+ * @return low limit of the servo
+ */
+uint16_t get_servo_low_limit(type_servo servo_t);
 
 #endif

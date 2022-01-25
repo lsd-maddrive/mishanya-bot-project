@@ -8,7 +8,7 @@
  * @note value raw duty cycle
  * @args servo is pointer to struct left/right_hand/wrist
  */
-void test_lld_servo(int8_t servo);
+void test_lld_servo(type_servo servo);
 
 
 #endif
