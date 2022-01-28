@@ -7,7 +7,7 @@ static void testsRoutines(void)
     #endif
 
     #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
-        test_arm();
+        test_elbow();
     #endif
 }
 

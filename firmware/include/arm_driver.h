@@ -3,8 +3,6 @@
 
 #include <common.h>
 
-#define PWM_FREQUENCY	500000
-#define PWM_PERIOD		10000
 
 typedef enum {
 	LEFT = 0,
