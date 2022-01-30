@@ -7,12 +7,12 @@ static void testsRoutines(void)
     #endif
 
     #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
-        test_arm();
+        test_elbow();
     #endif
 
-	#if(MAIN_PROGRAM==PROGRAM_TEST_CLOSE_SYS)
-        test_close_sys();
-	#endif
+//	#if(MAIN_PROGRAM==PROGRAM_TEST_CLOSE_SYS)
+//        test_close_sys();
+//	#endif
 }
 
 

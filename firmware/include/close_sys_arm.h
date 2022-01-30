@@ -9,25 +9,15 @@
 #include <stdbool.h>
 
 typedef struct normalize_angle{
-    float  max_norm_angle;
-    float  min_norm_angle;
-    float  shift;
-    bool 	zero_cross;
+	float	max_norm_angle;
+	float	min_norm_angle;
+	float	shift;
+	bool	zero_cross;
 }normalize_angle_t;
 
-typedef struct lim_angle{
-    float  max_angle;
-    float  min_angle;
-}lim_angle_t;
-
-typedef struct close_sys{
-    float  current_angle;
-    float  period;
-    float  delta_t;
-}close_sys_t;
 
 
-void close_sys_arm(float goal_angle, arm_t ARM);
+void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *arm_driver, PID_t *PID);
 
 void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle);
 

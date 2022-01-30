@@ -4,20 +4,24 @@
 #include <common.h>
 
 
-typedef struct PID{
+typedef struct{
     double  kp;
     double  ki;
     double  kd;
-}PID_t;
+}coef_t;
 
-typedef struct error_type{
+typedef struct{
     double  P;
     double  prev_P;
     double  I;
     double  D;
 }error_type_t;
 
+typedef struct{
+	error_type_t error;
+	coef_t coef;
+}PID_t;
 
-double PID_out(error_type_t *err_reg, PID_t coef_reg, double dt);
+double PID_out(PID_t* reg, double dt);
 
 #endif

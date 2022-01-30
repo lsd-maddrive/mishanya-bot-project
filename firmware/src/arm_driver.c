@@ -1,73 +1,89 @@
 #include <arm_driver.h>
-
-#define UP_ARM 			PAL_LINE(GPIOB,4)
-#define DOWN_ARM 		PAL_LINE(GPIOB,10)
-
-#define LEFT_ARM_PWM 	PAL_LINE(GPIOA,8)
-#define RIGHT_ARM_PWM 	PAL_LINE(GPIOA,9)
-
-#define LEFT_ACTIVE		PWM_OUTPUT_ACTIVE_HIGH
-#define RIGHT_ACTIVE	PWM_OUTPUT_ACTIVE_HIGH
-
-
-static PWMDriver *ARM_DRIVER = &PWMD1;
-
-/*** arm driver config ***/
-PWMConfig ARM_CONF = {
-    .frequency = PWM1_frequency,
-    .period    = PWM1_period,
-    .callback  = NULL,
-    .channels  = {
-                  {.mode = RIGHT_ACTIVE, .callback = NULL},
-                  {.mode = LEFT_ACTIVE, .callback = NULL},
-                  {.mode = PWM_OUTPUT_DISABLED,    .callback = NULL},
-                  {.mode = PWM_OUTPUT_DISABLED,    .callback = NULL}
-                  },
-    .cr2        = 0,
-    .dier       = 0
-};
+#include "lld_bb_driver.h"
+#include "lld_red_driver.h"
 
 /**
- * @brief   Initialize arm driver
+ * @brief   initialize arm driver
+ * @brief   recieve arm struct
  */
-void ARM_DRIVER_init(void)
+void driver_init(const arm_driver_ctx_t *arm_driver)
 {
-    palSetLineMode(RIGHT_ARM_PWM, PAL_MODE_ALTERNATE(1));
-    palSetLineMode(LEFT_ARM_PWM, PAL_MODE_ALTERNATE(1));
-    palSetLineMode(DOWN_ARM, PAL_MODE_OUTPUT_PUSHPULL);
-    palSetLineMode(UP_ARM, PAL_MODE_OUTPUT_PUSHPULL);
 
-    pwmStart(ARM_DRIVER, &ARM_CONF);
+	line_driver_t pins_right = arm_driver->arm[LEFT].line_control;
+	pwm_ctx_t pwm_ctx_right = arm_driver->arm[LEFT].arm_ctx;
+
+	line_driver_t pins_left = arm_driver->arm[RIGHT].line_control;
+	pwm_ctx_t pwm_ctx_left = arm_driver->arm[RIGHT].arm_ctx;
+
+
+	if (arm_driver->type == RED)
+	{
+
+		lld_red_init_driver(&pins_right, &pwm_ctx_right);
+		lld_red_init_driver(&pins_left, &pwm_ctx_left);
+
+	}
+	else
+	{
+
+		lld_bb_init_driver(&pins_right, &pwm_ctx_right);
+		lld_bb_init_driver(&pins_left, &pwm_ctx_left);
+
+	}
+
 }
 
 /**
- * @brief recieve the hand number and the filling period
- * the function controls the raising of the hand up
+ * @brief the function controls the raising of the hand up
+ * @brief recieve the hand side, arm struct and the filling period
  */
-void ARM_up(arm_t ARM, uint16_t PWM_period)
+void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period)
 {
-    pwmEnableChannel(ARM_DRIVER, ARM, PWM_period);
-    palWriteLine(UP_ARM, PAL_HIGH);
-    palWriteLine(DOWN_ARM, PAL_LOW);
+
+	control_driver_t control = arm_driver->arm[side];
+	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
+
+	if (arm_driver->type == RED)
+		lld_red_driver_first_direction(&control, &pwm_ch, period);
+	else
+		lld_bb_driver_first_direction(&control, &pwm_ch, period);
+
 }
 
-/**
- * @brief recieve the hand number and the filling period
- * the function controls the raising of the hand down
- */
-void ARM_down(arm_t ARM, uint16_t PWM_period)
-{
-    pwmEnableChannel(ARM_DRIVER, ARM, PWM_period);
-    palWriteLine(DOWN_ARM, PAL_HIGH);
-    palWriteLine(UP_ARM, PAL_LOW);
-}
 
 /**
- * @brief recieve the hand number
- * the function disables the selected hand
+ * @brief the function controls the raising of the hand down
+ * @brief recieve the hand side, arm struct and the filling period
  */
-void Off_ARM (arm_t ARM)
+void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period)
 {
-    pwmDisableChannel(ARM_DRIVER, ARM);
+
+	control_driver_t control = arm_driver->arm[side];
+	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
+
+	if (arm_driver->type == RED)
+		lld_red_driver_second_direction(&control, &pwm_ch, period);
+	else
+		lld_bb_driver_second_direction(&control, &pwm_ch, period);
+
 }
+
+
+/**
+ * @brief the function disables the selected hand
+ * @brief recieve the hand side, arm struct
+ */
+void arm_off (arm_side_t side, const arm_driver_ctx_t *arm_driver)
+{
+
+	control_driver_t control = arm_driver->arm[side];
+	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
+
+	if (arm_driver->type == RED)
+		lld_red_driver_off(&control, &pwm_ch);
+	else
+		lld_bb_driver_off(&control, &pwm_ch);
+
+}
+
 

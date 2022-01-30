@@ -23,9 +23,7 @@ void test_abs_encoder(void);
 
  */
 
-void test_arm(void);
-
-void test_close_sys(void);
+void test_elbow(void);
 
 
 #endif

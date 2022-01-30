@@ -1,12 +1,15 @@
 #include <PID.h>
 
-double PID_out(error_type_t *err_reg, PID_t coef_reg, double dt)
+double PID_out(PID_t reg, double dt)
 {
+
 	double control=0;
-	err_reg->I += err_reg->P*dt;
-	err_reg->D = (err_reg->P - err_reg->prev_P)/dt;
-	err_reg->prev_P = err_reg->P;
-	control = err_reg->P*coef_reg.kp + err_reg->I*coef_reg.ki + err_reg->D*coef_reg.kd;
+
+	reg->error.I += reg->error.P*dt;
+	reg->error.D = (reg->error.P - reg->error.prev_P)/dt;
+	reg->error.prev_P = reg->error.P;
+	control = reg->error.P*reg->coef.kp + reg->error.I*reg->coef.ki + reg->error.D*reg->coef.kd;
+
 	return control;
 
 }
