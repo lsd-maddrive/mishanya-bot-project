@@ -54,7 +54,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 	#define RIGHT_UP		PAL_LINE(GPIOB,5)
 	#define RIGHT_DOWN		PAL_LINE(GPIOB,3)
 	#define RIGHT_PWM_1		PAL_LINE(GPIOB,6) // TIM4 CH1
-	#define RIGHT_PWM_2		PAL_LINE(GPIOB,7) // TIM3 CH2
+	#define RIGHT_PWM_2		PAL_LINE(GPIOB,7) // TIM4 CH2
 
 #endif
 
@@ -71,7 +71,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	const pwm_channel_t ch_right_pwm = {
 			.alt_func_1 = 2,
-			.ch_pwm_1 = 1
+			.ch_pwm_1 = 0
 	};
 
 	const pwm_ctx_t left_pwm_ctx = {
@@ -153,16 +153,21 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 #if(DRIVER == BB_DRIVER)
 
 	const pwm_channel_t ch_left_pwm = {
+			.ch_pwm_1 = 0,
+			.ch_pwm_2 = 1,
 			.alt_func_1 = 2,
-			.ch_pwm_1 = 0
+			.alt_func_2 = 2
 	};
 
 	const pwm_channel_t ch_right_pwm = {
+			.ch_pwm_1 = 0,
+			.ch_pwm_2 = 1,
 			.alt_func_1 = 2,
-			.ch_pwm_1 = 1
+			.alt_func_2 = 2
 	};
 
 	const pwm_ctx_t left_pwm_ctx = {
+			.pwm_ch = ch_left_pwm,
 			.driver_ptr = &PWMD3,
 			.pwm_conf = {
 					.frequency = PWM_frequency,
@@ -179,11 +184,17 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
 					},
 					.cr2        = 0,
+
+		// !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+									.bdtr 		= 0b10011100,
+		// !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+
 					.dier       = 0
 			}
 	};
 
 	const pwm_ctx_t right_pwm_ctx = {
+			.pwm_ch = ch_right_pwm,
 			.driver_ptr = &PWMD4,
 			.pwm_conf = {
 					.frequency = PWM_frequency,
@@ -200,6 +211,11 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
 					},
 					.cr2        = 0,
+
+	// !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+					.bdtr 		= 0b10011100,
+	// !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+
 					.dier       = 0
 			}
 	};
@@ -207,15 +223,16 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 	const line_driver_t left_control = {
 			.PWM_1 = LEFT_PWM_1,
 			.PWM_2 = LEFT_PWM_2,
-			.digit_2 = LEFT_DOWN,
-			.digit_1 = LEFT_UP
+			.digit_1 = LEFT_UP,
+			.digit_2 = LEFT_DOWN
+
 	};
 
 	const line_driver_t right_control = {
 			.PWM_1 = RIGHT_PWM_1,
 			.PWM_2 = RIGHT_PWM_2,
-			.digit_2 = RIGHT_DOWN,
-			.digit_1 = RIGHT_UP
+			.digit_1 = RIGHT_UP,
+			.digit_2 = RIGHT_DOWN
 	};
 
 	const control_driver_t left_arm = {

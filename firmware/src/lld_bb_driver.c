@@ -10,11 +10,13 @@ void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
 	palSetLineMode(pins->PWM_1, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_1));
 	palSetLineMode(pins->PWM_2, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_2));
 
+
 	palSetLineMode(pins->digit_2, PAL_MODE_OUTPUT_PUSHPULL);
 	palSetLineMode(pins->digit_1, PAL_MODE_OUTPUT_PUSHPULL);
 
 
 	pwmStart(pwm_ctx->driver_ptr, &pwm_ctx->pwm_conf);
+
 
 }
 
