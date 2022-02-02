@@ -64,12 +64,9 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 #if(DRIVER == RED_DRIVER)
 
-	const pwm_channel_t ch_left_pwm = {
-			.alt_func_1 = 2,
-			.ch_pwm_1 = 0
-	};
+// ***********************left arm config*********************** //
 
-	const pwm_channel_t ch_right_pwm = {
+	const pwm_channel_t ch_left_pwm = {
 			.alt_func_1 = 2,
 			.ch_pwm_1 = 0
 	};
@@ -83,7 +80,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 					.callback  = NULL,
 					.channels  = {
 						 
-						{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // LEFT_PWM
+						{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
 						
 						{.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 						
@@ -97,6 +94,27 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			}
 	};
 
+	const line_driver_t left_control = {
+			.PWM_1 = LEFT_PWM,
+			.digit_2 = LEFT_DOWN,
+			.digit_1 = LEFT_UP
+	};
+
+	const control_driver_t left_arm = {
+			.line_control = left_control,
+			.arm_ctx = left_pwm_ctx,
+	};
+
+// ***********************left arm config*********************** //
+
+
+// ***********************right arm config*********************** //
+
+	const pwm_channel_t ch_right_pwm = {
+			.alt_func_1 = 2,
+			.ch_pwm_1 = 0
+	};
+
 	const pwm_ctx_t right_pwm_ctx = {
 			.pwm_ch = ch_right_pwm,
 			.driver_ptr = &PWMD4,
@@ -106,7 +124,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 					.callback  = NULL,
 					.channels  = {
 
-							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // RIGHT_PWM
+							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
 
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
@@ -120,21 +138,10 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			}
 	};
 
-	const line_driver_t left_control = {
-			.PWM_1 = LEFT_PWM,
-			.digit_2 = LEFT_DOWN,
-			.digit_1 = LEFT_UP
-	};
-
 	const line_driver_t right_control = {
 			.PWM_1 = RIGHT_PWM,
 			.digit_2 = RIGHT_DOWN,
 			.digit_1 = RIGHT_UP
-	};
-
-	const control_driver_t left_arm = {
-			.line_control = left_control,
-			.arm_ctx = left_pwm_ctx,
 	};
 
 	const control_driver_t right_arm = {
@@ -142,24 +149,25 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			.arm_ctx = right_pwm_ctx,
 	};
 
+// ***********************right arm config*********************** //
+
+// ***********************final config struct*********************** //
+
 	const arm_driver_ctx_t elbow_driver = {
 			.type = RED,
 			.arm[0] = left_arm,
 			.arm[1] = right_arm
 	};
 
+// ***********************final config struct*********************** //
+
 #endif
 
 #if(DRIVER == BB_DRIVER)
 
-	const pwm_channel_t ch_left_pwm = {
-			.ch_pwm_1 = 0,
-			.ch_pwm_2 = 1,
-			.alt_func_1 = 2,
-			.alt_func_2 = 2
-	};
+// ***********************left arm config*********************** //
 
-	const pwm_channel_t ch_right_pwm = {
+	const pwm_channel_t ch_left_pwm = {
 			.ch_pwm_1 = 0,
 			.ch_pwm_2 = 1,
 			.alt_func_1 = 2,
@@ -174,10 +182,10 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 					.period    = PWM_period,
 					.callback  = NULL,
 					.channels  = {
-							// LEFT_PWM_1
-							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-							// LEFT_PWM_2
-							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+							
+							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_1
+							
+							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_2
 
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
@@ -193,6 +201,30 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			}
 	};
 
+	const line_driver_t left_control = {
+			.PWM_1 = LEFT_PWM_1,
+			.PWM_2 = LEFT_PWM_2,
+			.digit_1 = LEFT_UP,
+			.digit_2 = LEFT_DOWN
+
+	};
+
+	const control_driver_t left_arm = {
+			.line_control = left_control,
+			.arm_ctx = left_pwm_ctx
+	};
+
+// ***********************left arm config*********************** //
+
+// ***********************right arm config*********************** //
+
+	const pwm_channel_t ch_right_pwm = {
+			.ch_pwm_1 = 0,
+			.ch_pwm_2 = 1,
+			.alt_func_1 = 2,
+			.alt_func_2 = 2
+	};
+
 	const pwm_ctx_t right_pwm_ctx = {
 			.pwm_ch = ch_right_pwm,
 			.driver_ptr = &PWMD4,
@@ -202,12 +234,12 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 					.callback  = NULL,
 					.channels  = {
 
-							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM_1
 
-							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-							// RIGHT_PWM_1
+							{.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM_2
+							
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-							// RIGHT_PWM_2
+							
 							{.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
 					},
 					.cr2        = 0,
@@ -220,14 +252,6 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			}
 	};
 
-	const line_driver_t left_control = {
-			.PWM_1 = LEFT_PWM_1,
-			.PWM_2 = LEFT_PWM_2,
-			.digit_1 = LEFT_UP,
-			.digit_2 = LEFT_DOWN
-
-	};
-
 	const line_driver_t right_control = {
 			.PWM_1 = RIGHT_PWM_1,
 			.PWM_2 = RIGHT_PWM_2,
@@ -235,21 +259,22 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 			.digit_2 = RIGHT_DOWN
 	};
 
-	const control_driver_t left_arm = {
-			.line_control = left_control,
-			.arm_ctx = left_pwm_ctx
-	};
-
 	const control_driver_t right_arm = {
 			.line_control = right_control,
 			.arm_ctx = right_pwm_ctx
 	};
+
+// ***********************right arm config*********************** //
+
+// ***********************final config struct*********************** //
 
 	const arm_driver_ctx_t elbow_driver = {
 			.type = BB,
 			.arm[0] = left_arm,
 			.arm[1] = right_arm
 	};
+
+// ***********************final config struct*********************** //
 
 #endif
 
