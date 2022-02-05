@@ -1,9 +1,13 @@
 #include <PID.h>
 
-double PID_out(PID_t reg, double dt)
+/**
+ * @brief PID function
+ * @brief recieve time step and PID struct
+ */
+double PID_out(PID_t* reg, double dt)
 {
 
-	double control=0;
+	double control = 0;
 
 	reg->error.I += reg->error.P*dt;
 	reg->error.D = (reg->error.P - reg->error.prev_P)/dt;

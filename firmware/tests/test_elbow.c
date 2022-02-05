@@ -9,10 +9,10 @@ char rcv_data;
 uint8_t arm = 0;
 uint8_t test = 0;
 int16_t period = 0;
+debug_stream_init();
+elbow_init();
 elbow_off(RIGHT);
 elbow_off(LEFT);
-elbow_init();
-debug_stream_init();
 while(1)
 {
 	dbgprintf("--------------------\r\n");
@@ -44,8 +44,10 @@ while(1)
 	{
 		if(period>0)
 			elbow_up(arm, period);
-		else
+		else if(period<0)
 			elbow_down(arm, period*-1);
+		else
+			elbow_off(arm);
 
 		dbgprintf("--------------------\r\n");
 		dbgprintf("PWM period(z: +500, x: -500):\r\n");

@@ -5,14 +5,14 @@
 /* LINE CONFIGURATION                                                         */
 /*============================================================================*/
 
-#define MISO_ENCODER PAL_LINE(GPIOA, 6)
-#define MOSI_ENCODER PAL_LINE(GPIOA, 7)
-#define CLK_ENCODER PAL_LINE(GPIOA, 5)
-#define CS_ENCODER PAL_LINE(GPIOB, 6)
+#define MISO_ENCODER PAL_LINE(GPIOC, 2)
+#define MOSI_ENCODER PAL_LINE(GPIOC, 3)
+#define CLK_ENCODER PAL_LINE(GPIOC, 7)
+#define CS_ENCODER PAL_LINE(GPIOC, 9)
 
 
 
-static SPIDriver* Encoder = &SPID1;
+static SPIDriver* Encoder = &SPID2;
 
 /*** SPI config ***/
 static SPIConfig conf = {

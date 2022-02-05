@@ -9,11 +9,11 @@
 void driver_init(const arm_driver_ctx_t *arm_driver)
 {
 
-	line_driver_t pins_right = arm_driver->arm[LEFT].line_control;
-	pwm_ctx_t pwm_ctx_right = arm_driver->arm[LEFT].arm_ctx;
+	line_driver_t pins_right = arm_driver->arm[RIGHT].line_control;
+	pwm_ctx_t pwm_ctx_right = arm_driver->arm[RIGHT].arm_ctx;
 
-	line_driver_t pins_left = arm_driver->arm[RIGHT].line_control;
-	pwm_ctx_t pwm_ctx_left = arm_driver->arm[RIGHT].arm_ctx;
+	line_driver_t pins_left = arm_driver->arm[LEFT].line_control;
+	pwm_ctx_t pwm_ctx_left = arm_driver->arm[LEFT].arm_ctx;
 
 
 	if (arm_driver->type == RED)
@@ -85,5 +85,3 @@ void arm_off (arm_side_t side, const arm_driver_ctx_t *arm_driver)
 		lld_bb_driver_off(&control, &pwm_ch);
 
 }
-
-

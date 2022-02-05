@@ -1,45 +1,52 @@
 #include <close_sys_arm.h>
 
+
 #define DEAD_ZONE 1
 
 #define TIME_PREF 1/CH_CFG_ST_FREQUENCY
 
 #define dt 100
 
-static virtual_timer_t encoder;
-
+/**
+ * @brief lowlevel function sets the specified angle
+ * @brief recieve the hand side, the goal angle, PID struct and arm driver struct
+ */
 void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *arm_driver, PID_t *PID)
 {
+
+	control_driver_t control = arm_driver->arm[side];
+
+	// reset the error coefficients of the regulator
 	PID->error.D = 0;
 	PID->error.I = 0;
 	PID->error.P = 0;
 	PID->error.prev_P = 0;
 
-	control_driver_t control = arm_driver->arm[side];
-
 	normalize_angle_t arm_angle = {
-			.max_norm_angle = 0,
-			.min_norm_angle = 0,
-			.min_norm_angle = 0,
-			.zero_cross = false
+		.max_norm_angle = 0,
+		.min_norm_angle = 0,
+		.shift = 0,
+		.zero_cross = false
 	};
 
+	virtual_timer_t encoder_timer;
+	
 	float prev_time = 0;
 	float current_angle = 0;
 	float period = 0;
 	float delta_t = 0;
 
+	chVTObjectInit(&encoder_timer);
 
-	chVTObjectInit(&encoder);
-
-	normalize_interval(control->angle_lim.min_angle, control->angle_lim.max_angle, &arm_angle);
+	// convert the angle range so that it starts from zero
+	normalize_interval(control.angle_lim.min_angle, control.angle_lim.max_angle, &arm_angle);
 
 	prev_time = chVTGetSystemTime();
 
-
 	while(1)
 	{
-		current_angle = normalize_angle(control->angle_lim.min_angle, &arm_angle);
+		// bring the angle into the normalized range
+		current_angle = normalize_angle(control.angle_lim.min_angle, &arm_angle);
 
 		error_calculate (&PID->error, goal_angle, current_angle);
 
@@ -49,7 +56,7 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 		{
 
 			prev_time = chVTGetSystemTime();
-			period = PID_out(&PID, delta_t*TIME_PREF);
+			period = PID_out(PID, delta_t*TIME_PREF);
 
 			if(period > ARM_PERIOD)
 				period = ARM_PERIOD;
@@ -84,11 +91,14 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 	}
 
 	arm_driver->off(side);
-	chVTDoResetI (&encoder);
+	chVTDoResetI (&encoder_timer);
 
 }
 
-
+/**
+ * @brief the function normalizes the angle interval
+ * @brief recieve the initial angles and nirmalize struct
+ */
 void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle)
 {
 
@@ -112,10 +122,16 @@ void normalize_interval (float min_angle, float max_angle, normalize_angle_t *ar
 
 }
 
+/**
+ * @brief the function brings the resulting angle into the normalized range
+ * @brief recieve the initial minimum angle and nirmalize struct
+ * @return angle inside the normalized interval
+ */
 double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
 {
 
 	double current_angle = Encoder_Read();
+
 
 	if(arm_angle->zero_cross)
 	{
@@ -132,6 +148,10 @@ double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
 
 }
 
+/**
+ * @brief error calculation function
+ * @brief recieve the goal angle, current angle and error struct
+ */
 void error_calculate (error_type_t *err_reg, float angle, float current_angle)
 {
 
