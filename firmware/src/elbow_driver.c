@@ -67,7 +67,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 // ***********************left arm config*********************** //
 
 	const pwm_channel_t ch_left_pwm = {
-			.alt_func_1 = 2,
+            .alt_func_1 = 2,
 			.ch_pwm_1 = 0
 	};
 

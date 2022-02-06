@@ -1,7 +1,7 @@
 
 ### TARGET
 
-The template runs on an STM32 Nucleo64-F411RE board.
+The firmware runs on an STM32 Nucleo64-F411RE board.
 
 ### Useful links
 * [Reference manual (RM)](https://www.st.com/resource/en/user_manual/um1724-stm32-nucleo64-boards-mb1136-stmicroelectronics.pdf)

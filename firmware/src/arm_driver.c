@@ -16,10 +16,11 @@ void driver_init(const arm_driver_ctx_t *arm_driver)
 	pwm_ctx_t pwm_ctx_left = arm_driver->arm[LEFT].arm_ctx;
 
 
+
 	if (arm_driver->type == RED)
 	{
 
-		lld_red_init_driver(&pins_right, &pwm_ctx_right);
+        lld_red_init_driver(&pins_right, &pwm_ctx_right);
 		lld_red_init_driver(&pins_left, &pwm_ctx_left);
 
 	}
@@ -44,9 +45,9 @@ void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period
 	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
 
 	if (arm_driver->type == RED)
-		lld_red_driver_first_direction(&control, &pwm_ch, period);
+        lld_red_driver_direct(&control, &pwm_ch, period);
 	else
-		lld_bb_driver_first_direction(&control, &pwm_ch, period);
+        lld_bb_driver_direct(&control, &pwm_ch, period);
 
 }
 
@@ -62,9 +63,9 @@ void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t peri
 	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
 
 	if (arm_driver->type == RED)
-		lld_red_driver_second_direction(&control, &pwm_ch, period);
+        lld_red_driver_reverse(&control, &pwm_ch, period);
 	else
-		lld_bb_driver_second_direction(&control, &pwm_ch, period);
+		lld_bb_driver_reverse(&control, &pwm_ch, period);
 
 }
 
