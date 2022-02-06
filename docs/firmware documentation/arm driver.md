@@ -175,6 +175,6 @@ void elbow_up(arm_side_t side, uint16_t period)
 
 Автор не утверждает, что данная реализация идеальна) Поэтому при наличии идей по доработке welcome.
 
-По всем поросам обращаться к [adhelll](https://github.com/adhelll).
+По всем вопросам обращаться к [adhelll](https://github.com/adhelll).
 
 
