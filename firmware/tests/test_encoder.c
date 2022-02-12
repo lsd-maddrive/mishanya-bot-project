@@ -6,15 +6,15 @@
 
 void test_abs_encoder(void)
 {
-    float angle = 0;
-    Encoder_init();
-    debug_stream_init();
+  float angle = 0;
+  Encoder_init();
+  debug_stream_init();
 
-    while (1)
-    {
-        chThdSleepMilliseconds(100);
-        angle = Encoder_Read();
+  while (1)
+  {
+    chThdSleepMilliseconds(100);
+    angle = Encoder_Read();
 
-        dbgprintf("angle=%.4f\r\n", angle);
-    }
+    dbgprintf("angle=%.4f\r\n", angle);
+  }
 }
