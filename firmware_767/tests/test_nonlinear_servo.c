@@ -22,6 +22,7 @@ void test_lld_nonlinear(type_servo servo)
             duty_cycle = CLIP_VALUE(duty_cycle,low,high);
             lld_set_dutycycle_servo(duty_cycle, servo);
             dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
+            //delay for fixing the angle
             time = chThdSleepUntilWindowed (time, TIME_MS2I(4000)+time);
 
         }
@@ -30,6 +31,7 @@ void test_lld_nonlinear(type_servo servo)
            duty_cycle = CLIP_VALUE(duty_cycle,low,high);
            lld_set_dutycycle_servo(duty_cycle, servo);
            dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
+           //delay for fixing the angle
            time = chThdSleepUntilWindowed (time, TIME_MS2I(4000)+time);
        }
     }

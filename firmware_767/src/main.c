@@ -11,7 +11,7 @@ static void testsRoutines(void)
         test_lld_servo(RIGHT_HAND);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_RIGHT_WRIST)
        test_lld_servo(RIGHT_WRIST);
-    #elif(MAIN_PROGRAM == PROGRAM_TEST_NONLINEAR)
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_NONLINEAR)
        test_lld_nonlinear(LEFT_WRIST);
     #endif
 }
