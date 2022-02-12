@@ -5,7 +5,7 @@
 
 void test_lld_servo(type_servo servo)
 {
-    int16_t delta = 100;
+    int16_t delta = 50;
     int16_t duty_cycle = 0;
     int16_t high = 0;
     int16_t low = 0;
