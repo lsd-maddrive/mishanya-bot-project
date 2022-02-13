@@ -16,15 +16,6 @@
 
 // *******************elbow driver PWM config******************* //
 
-// *******************elbow driver TIM config******************* //
-
-const PWMDriver *ELBOW_DRIVER_PTR_1_TIM = &PWMD1;
-
-const PWMDriver *ELBOW_DRIVER_PTR_3_TIM = &PWMD3;
-
-// *******************elbow driver TIM config******************* //
-
-
 
 // *******************elbow driver pin config******************* //
 
