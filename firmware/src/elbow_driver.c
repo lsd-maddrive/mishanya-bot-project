@@ -1,6 +1,14 @@
 #include <elbow_driver.h>
 
 
+// *******************elbow driver type config******************* //
+
+#define BB_DRIVER       1
+#define RED_DRIVER      2
+#define DRIVER          BB_DRIVER
+
+// *******************elbow driver type config******************* //
+
 // *******************elbow driver PWM config******************* //
 
 #define PWM_frequency		500000
@@ -8,23 +16,11 @@
 
 // *******************elbow driver PWM config******************* //
 
-
-
-// *******************elbow driver type config******************* //
-
-#define BB_DRIVER       1
-#define RED_DRIVER      2
-#define DRIVER          RED_DRIVER
-
-// *******************elbow driver type config******************* //
-
-
-
 // *******************elbow driver TIM config******************* //
 
-const PWMDriver *ELBOW_DRIVER_PTR_3_TIM = &PWMD3;
+const PWMDriver *ELBOW_DRIVER_PTR_1_TIM = &PWMD1;
 
-const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
+const PWMDriver *ELBOW_DRIVER_PTR_3_TIM = &PWMD3;
 
 // *******************elbow driver TIM config******************* //
 
@@ -40,7 +36,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	#define RIGHT_UP		PAL_LINE(GPIOB,5)
 	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
-	#define RIGHT_PWM		PAL_LINE(GPIOB,6) // TIM4 CH1
+	#define RIGHT_PWM		PAL_LINE(GPIOC,7) // TIM3 CH2
 
 #endif
 
@@ -48,13 +44,13 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	#define LEFT_UP			PAL_LINE(GPIOB,4)
 	#define LEFT_DOWN		PAL_LINE(GPIOB,10)
-	#define LEFT_PWM_1		PAL_LINE(GPIOA,6) // TIM3 CH1
-	#define LEFT_PWM_2		PAL_LINE(GPIOA,7) // TIM3 CH2
+	#define LEFT_PWM_1	PAL_LINE(GPIOA,8) // TIM1 CH1
+	#define LEFT_PWM_2	PAL_LINE(GPIOA,7) // TIM1 CH1N
 
 	#define RIGHT_UP		PAL_LINE(GPIOB,5)
-	#define RIGHT_DOWN		PAL_LINE(GPIOB,3)
-	#define RIGHT_PWM_1		PAL_LINE(GPIOB,6) // TIM4 CH1
-	#define RIGHT_PWM_2		PAL_LINE(GPIOB,7) // TIM4 CH2
+	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
+	#define RIGHT_PWM_1	PAL_LINE(GPIOA,9) // TIM1 CH2
+	#define RIGHT_PWM_2	PAL_LINE(GPIOB,0) // TIM1 CH2N
 
 #endif
 
@@ -82,7 +78,7 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
     {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
 
-    {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+    {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
 
     {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
@@ -112,21 +108,21 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	const pwm_channel_t ch_right_pwm = {
     .alt_func_1 = 2,
-    .ch_pwm_1 = 0
+    .ch_pwm_1 = 1
 	};
 
 	const pwm_ctx_t right_pwm_ctx = {
     .pwm_ch = ch_right_pwm,
-    .driver_ptr = &PWMD4,
+    .driver_ptr = &PWMD3,
     .pwm_conf = {
       .frequency = PWM_frequency,
       .period    = PWM_period,
       .callback  = NULL,
       .channels  = {
 
-    {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
+    {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
 
-    {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+    {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
 
     {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
@@ -169,23 +165,23 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
 	const pwm_channel_t ch_left_pwm = {
     .ch_pwm_1 = 0,
-    .ch_pwm_2 = 1,
-    .alt_func_1 = 2,
-    .alt_func_2 = 2
+    .ch_pwm_2 = 0,
+    .alt_func_1 = 1,
+    .alt_func_2 = 1
 	};
 
 	const pwm_ctx_t left_pwm_ctx = {
     .pwm_ch = ch_left_pwm,
-    .driver_ptr = &PWMD3,
+    .driver_ptr = &PWMD1,
     .pwm_conf = {
       .frequency = PWM_frequency,
       .period    = PWM_period,
       .callback  = NULL,
       .channels  = {
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_1
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_2
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT_PWM
 
         {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
@@ -193,11 +189,9 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 
       },
       .cr2        = 0,
-
     // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-              .bdtr 		= 0b10011100,
+      .bdtr 		= 0b10011100,
     // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-
       .dier       = 0
     }
 	};
@@ -219,24 +213,24 @@ const PWMDriver *ELBOW_DRIVER_PTR_4_TIM = &PWMD4;
 // ***********************right arm config*********************** //
 
 	const pwm_channel_t ch_right_pwm = {
-    .ch_pwm_1 = 0,
+    .ch_pwm_1 = 1,
     .ch_pwm_2 = 1,
-    .alt_func_1 = 2,
-    .alt_func_2 = 2
+    .alt_func_1 = 1,
+    .alt_func_2 = 1
 	};
 
 	const pwm_ctx_t right_pwm_ctx = {
     .pwm_ch = ch_right_pwm,
-    .driver_ptr = &PWMD4,
+    .driver_ptr = &PWMD1,
     .pwm_conf = {
       .frequency = PWM_frequency,
       .period    = PWM_period,
       .callback  = NULL,
       .channels  = {
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM_1
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM_2
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
 
         {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 

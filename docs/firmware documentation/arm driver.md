@@ -86,63 +86,62 @@ void arm_off (arm_side_t side, const arm_driver_ctx_t *arm_driver);
 В качестве примера рассмотрим применение модуля для описания локтевого сустава для BB-драйвера. 
 Описание приведено для левой руки.
 
-На момент написания, в локетвом суставе применялся 3 и 4 таймер STM32F411.
+На момент написания, в локетвом суставе применялся 1 таймер STM32F411.
 
 Для начала определим номера каналов, а также номер альтернативной функции. Используем 1 и 2 канал таймера. 
-Номер альтернативной функции для 3 и 4 таймера в данном случае равен двум.
+Номер альтернативной функции для 1 таймера в данном случае равен единице.
 
 ```c
 const pwm_channel_t ch_left_pwm = {
-    .ch_pwm_1 = 0,
-    .ch_pwm_2 = 1,
-    .alt_func_1 = 2,
-    .alt_func_2 = 2
+  .ch_pwm_1 = 0,
+  .ch_pwm_2 = 0,
+  .alt_func_1 = 1,
+  .alt_func_2 = 1
 };
 ```
 
 Определим структуру с настройками ШИМ:
 ```c
 const pwm_ctx_t left_pwm_ctx = {
-        .pwm_ch = ch_left_pwm,
-        .driver_ptr = &PWMD3,
-        .pwm_conf = {
-                .frequency = PWM_frequency,
-                .period    = PWM_period,
-                .callback  = NULL,
-                .channels  = {
-                        
-                        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_1
-                        
-                        {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM_2
+  .pwm_ch = ch_left_pwm,
+  .driver_ptr = &PWMD1,
+  .pwm_conf = {
+    .frequency = PWM_frequency,
+    .period    = PWM_period,
+    .callback  = NULL,
+    .channels  = {
 
-                        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-
-                        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
-                },
-                .cr2        = 0,
-
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-                                .bdtr 		= 0b10011100,
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-
-                .dier       = 0
-        }
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
+        
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT_PWM
+        
+        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+        
+        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
+        
+        },
+        
+        .cr2        = 0,
+        // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+        .bdtr 		= 0b10011100,
+        // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+        .dier       = 0
+  }
 };
 ```
 
 Далее определяем выводы управления и формируем описание для левого локтевого сустава:
 ```c
 const line_driver_t left_control = {
-        .PWM_1 = LEFT_PWM_1,
-        .PWM_2 = LEFT_PWM_2,
-        .digit_1 = LEFT_UP,
-        .digit_2 = LEFT_DOWN
-
+  .PWM_1 = LEFT_PWM_1,
+  .PWM_2 = LEFT_PWM_2,
+  .digit_1 = LEFT_UP,
+  .digit_2 = LEFT_DOWN
 };
 
 const control_driver_t left_arm = {
-        .line_control = left_control,
-        .arm_ctx = left_pwm_ctx
+  .line_control = left_control,
+  .arm_ctx = left_pwm_ctx
 };
 ```
 
@@ -151,9 +150,9 @@ const control_driver_t left_arm = {
 
 ```c
 const arm_driver_ctx_t elbow_driver = {
-        .type = BB,
-        .arm[0] = left_arm,
-        .arm[1] = right_arm
+  .type = BB,
+  .arm[0] = left_arm,
+  .arm[1] = right_arm
 };
 ```
 
@@ -163,11 +162,10 @@ const arm_driver_ctx_t elbow_driver = {
 Мы просто выбирает соответствующую функцию и необходимую руку.
 
 
-
 ```c
 void elbow_up(arm_side_t side, uint16_t period)
 {
-    arm_up(side, &elbow_driver, period);
+  arm_up(side, &elbow_driver, period);
 }
 ```
 

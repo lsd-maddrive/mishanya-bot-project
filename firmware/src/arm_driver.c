@@ -1,6 +1,7 @@
 #include <arm_driver.h>
 #include "lld_bb_driver.h"
 #include "lld_red_driver.h"
+#include "serial.h"
 
 /**
  * @brief   initialize arm driver
@@ -32,6 +33,8 @@ void driver_init(const arm_driver_ctx_t *arm_driver)
 
 	}
 
+  pwmStart(pwm_ctx_left.driver_ptr, &pwm_ctx_left.pwm_conf);
+
 }
 
 /**
@@ -42,7 +45,7 @@ void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period
 {
 
 	control_driver_t control = arm_driver->arm[side];
-	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
+	pwm_channel_t pwm_ch = arm_driver->arm[side].arm_ctx.pwm_ch;
 
 	if (arm_driver->type == RED)
     lld_red_driver_direct(&control, &pwm_ch, period);
@@ -60,12 +63,17 @@ void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t peri
 {
 
 	control_driver_t control = arm_driver->arm[side];
-	pwm_channel_t pwm_ch = arm_driver->arm->arm_ctx.pwm_ch;
+  pwm_channel_t pwm_ch = arm_driver->arm[side].arm_ctx.pwm_ch;
 
 	if (arm_driver->type == RED)
     lld_red_driver_reverse(&control, &pwm_ch, period);
 	else
-		lld_bb_driver_reverse(&control, &pwm_ch, period);
+  {
+    uint16_t  max_period = arm_driver->arm->arm_ctx.pwm_conf.period;
+
+    lld_bb_driver_reverse(&control, &pwm_ch, max_period-period);
+  }
+
 
 }
 

@@ -13,9 +13,6 @@ void lld_red_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
   palSetLineMode(pins->digit_2, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(pins->digit_1, PAL_MODE_OUTPUT_PUSHPULL);
 
-
-  pwmStart(pwm_ctx->driver_ptr, &pwm_ctx->pwm_conf);
-
 }
 
 /**
