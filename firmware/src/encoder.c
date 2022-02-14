@@ -16,12 +16,14 @@ static SPIDriver* Encoder = &SPID1;
 
 /*** SPI config ***/
 static SPIConfig conf = {
-    /*** interrupt off ***/
-    .end_cb = NULL,
-    /*** CS ***/
-    .ssline = CS_ENCODER,
-    /***  SPI enable, fclk/256 ***/
-    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
+
+  /*** interrupt off ***/
+  .end_cb = NULL,
+  /*** CS ***/
+  .ssline = CS_ENCODER,
+  /***  SPI enable, fclk/256 ***/
+  .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
+
 };
 
 
@@ -35,7 +37,6 @@ void Encoder_init(void)
     palSetLineMode(CLK_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
     palSetLineMode(MISO_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
     palSetLineMode(MOSI_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-
 }
 
 /**
