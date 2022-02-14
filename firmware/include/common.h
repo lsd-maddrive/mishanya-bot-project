@@ -4,6 +4,7 @@
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
+
 #include "stdbool.h"
 
 
@@ -14,5 +15,6 @@
 #define PROGRAM_TEST_ARM_DRIVER 2
 
 #define MAIN_PROGRAM PROGRAM_TEST_ARM_DRIVER
+
 
 #endif
