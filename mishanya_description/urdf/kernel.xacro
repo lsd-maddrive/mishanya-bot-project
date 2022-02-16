@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- kernel property -->
+  
+  <xacro:property name="kernel_mass" value="1" />
+  <xacro:property name="kernel_rad" value="0.05" />
+  <xacro:property name="kernel_length" value="1" />
+  
+  <!-- kernel property -->
+
+
+  <!-- inertial macros -->
+
+   <xacro:macro name="solid_cylinder_inertial"
+               params="r h mass *origin">
+    <inertial>
+      <xacro:insert_block name="origin"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${(mass * h * h)/12 + (mass * r * r)/4}" ixy="0.0" ixz="0.0"
+               iyy="${(mass * h * h)/12 + (mass * r * r)/4}" iyz="0.0"
+               izz="${mass / 2 * r * r}" />
+    </inertial>
+  </xacro:macro>
+
+  <!-- inertial macros -->
+
+  <xacro:macro name="link_kernel" params="name">
+    <link name="${name}">
+      <xacro:solid_cylinder_inertial
+          r="${kernel_rad}" h="${kernel_length}"
+          mass="${kernel_mass}" >
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </xacro:solid_cylinder_inertial>
+      <collision name="link_kernel_collision">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${kernel_length}" radius="${kernel_rad}"/>
+        </geometry>
+      </collision>
+      <visual name="${name}_visual">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <cylinder length="${kernel_length}" radius="${kernel_rad}"/>
+        </geometry>
+      </visual>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="joint_kernel" params="name child origin_xyz">
+    <joint name="${name}" type="fixed">
+      <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+      <child link="${child}"/>
+      <parent link="base_link"/>
+      <axis rpy="0 0 0" xyz="${origin_xyz}"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+  </xacro:macro>
+
+  
+
+</robot>

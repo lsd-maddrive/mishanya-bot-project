@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<robot name="mishanya" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:include filename="$(find mishanya_description)/urdf/omni.xacro" />
+  <xacro:include filename="$(find mishanya_description)/urdf/kernel.xacro" />
+  <xacro:include filename="$(find mishanya_description)/urdf/base.xacro" />
+
+  <xacro:link_kernel name="kernel" />
+	<xacro:joint_kernel name="joint_kernel" child="kernel" origin_xyz="0 0 ${2*base_height}" />
+
+  
+ </robot>
