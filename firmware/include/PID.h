@@ -4,17 +4,18 @@
 #include <common.h>
 
 
+
 typedef struct{
-    double  kp;         // the value of the P coefficient
-    double  ki;         // the value of the I coefficient
-    double  kd;         // the value of the D coefficient
+  double  kp;         // the value of the P coefficient
+  double  ki;         // the value of the I coefficient
+  double  kd;         // the value of the D coefficient
 }coef_t;
 
 typedef struct{
-    double  P;          // P component
-    double  prev_P;     // prev P component
-    double  I;          // I component
-    double  D;          // D component
+  double  P;          // P component
+  double  prev_P;     // prev P component
+  double  I;          // I component
+  double  D;          // D component
 }error_type_t;
 
 typedef struct{

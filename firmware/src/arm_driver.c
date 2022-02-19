@@ -53,7 +53,6 @@ void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period
 
 }
 
-
 /**
  * @brief the function controls the raising of the hand down
  * @brief recieve the hand side, arm struct and the filling period
@@ -74,7 +73,6 @@ void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t peri
   }
 
 }
-
 
 /**
  * @brief the function disables the selected hand

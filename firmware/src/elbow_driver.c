@@ -224,8 +224,9 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t left_arm = {
     .line_control = left_control,
-    .arm_ctx = left_pwm_ctx
-	};
+    .arm_ctx = left_pwm_ctx,
+    .angle_lim = left_angle_lim
+  };
 
 // ***********************left arm config*********************** //
 
@@ -275,7 +276,8 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t right_arm = {
     .line_control = right_control,
-    .arm_ctx = right_pwm_ctx
+    .arm_ctx = right_pwm_ctx,
+    .angle_lim = right_angle_lim
 	};
 
 // ***********************right arm config*********************** //

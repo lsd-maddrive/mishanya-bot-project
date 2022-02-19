@@ -8,12 +8,6 @@
 #include <PID.h>
 #include <stdbool.h>
 
-typedef struct normalize_angle{
-	float	max_norm_angle;
-	float	min_norm_angle;
-	float	shift;
-	bool	zero_cross;
-}normalize_angle_t;
 
 void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *arm_driver, PID_t *PID);
 

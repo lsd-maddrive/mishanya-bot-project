@@ -10,7 +10,7 @@ typedef enum {
 } arm_side_t;
 
 typedef enum {
-    BB = 0,								                      // this type of driver requires two channel PWM
+  BB = 0,								                        // this type of driver requires two channel PWM
 	RED = 1								                        // this type of driver requires one channel of PWM
 } driver_t;
 
@@ -42,15 +42,15 @@ typedef struct {
 typedef struct{
 	pwm_ctx_t 			  arm_ctx;		                  // typedef (search for description in this file)
 	line_driver_t 	  line_control;	                // typedef (search for description in this file)
-  angle_lim_t			angle_lim;                      // typedef angle limit
+  angle_lim_t			  angle_lim;                    // typedef angle limit
 } control_driver_t;
 
 typedef struct {
-    driver_t type;                                 // typedef (search for description in this file)
-    void (* up) (arm_side_t, uint16_t);            // ptr function up
-    void (* down) (arm_side_t, uint16_t);          // ptr function down
-    void (* off) (arm_side_t);                     // ptr function off arm
-    control_driver_t arm[];			                   // array because there is a right hand and a left hand
+  driver_t type;                                  // typedef (search for description in this file)
+  void (* up) (arm_side_t, uint16_t);             // ptr function up
+  void (* down) (arm_side_t, uint16_t);           // ptr function down
+  void (* off) (arm_side_t);                      // ptr function off arm
+  control_driver_t arm[];			                    // array because there is a right hand and a left hand
 } arm_driver_ctx_t;
 
 

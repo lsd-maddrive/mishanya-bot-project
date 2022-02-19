@@ -31,11 +31,11 @@ static SPIConfig conf = {
  */
 void Encoder_init(void)
 {
-    spiStart(Encoder, &conf);
-    palSetLineMode(CS_ENCODER, PAL_MODE_OUTPUT_PUSHPULL);
-    palSetLineMode(CLK_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    palSetLineMode(MISO_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    palSetLineMode(MOSI_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+  spiStart(Encoder, &conf);
+  palSetLineMode(CS_ENCODER, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(CLK_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+  palSetLineMode(MISO_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+  palSetLineMode(MOSI_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
 }
 
 /**
@@ -45,24 +45,24 @@ void Encoder_init(void)
  */
 float Encoder_Read(void)
 {
-    uint8_t rx_encoder_buf[3] = {0};
-    float angle = 0;
+  uint8_t rx_encoder_buf[3] = {0};
+  float angle = 0;
 
-    spiSelect(Encoder);
-    spiReceive(Encoder, 3, rx_encoder_buf);
-    spiUnselect(Encoder);
+  spiSelect(Encoder);
+  spiReceive(Encoder, 3, rx_encoder_buf);
+  spiUnselect(Encoder);
 
-	/*** check data ***/
-    if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
-    {
-        rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
-        angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5);
-        angle = (angle*360)/4096;
-        return angle;
-    }
-    /*** error data ***/
-    else
-        return -1;
+/*** check data ***/
+  if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
+  {
+    rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
+    angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5);
+    angle = (angle*360)/4096;
+    return angle;
+  }
+  /*** error data ***/
+  else
+    return -1;
 }
 
 

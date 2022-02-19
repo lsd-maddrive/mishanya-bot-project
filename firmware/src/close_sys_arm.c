@@ -1,9 +1,15 @@
 #include <close_sys_arm.h>
 
-
 #define DEAD_ZONE 1
 #define TIME_PREF 1/CH_CFG_ST_FREQUENCY
 #define dt 100
+
+typedef struct normalize_angle{
+    float	max_norm_angle;
+    float	min_norm_angle;
+    float	shift;
+    bool	zero_cross;
+}normalize_angle_t;
 
 
 static double normalize_angle (float min_angle, normalize_angle_t *arm_angle);
@@ -163,5 +169,3 @@ static void error_calculate (error_type_t *err_reg, float angle, float current_a
 		err_reg->P *=-1;
 
 }
-
-
