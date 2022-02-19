@@ -31,11 +31,13 @@ static SPIConfig conf = {
  */
 void Encoder_init(void)
 {
+
   spiStart(Encoder, &conf);
   palSetLineMode(CS_ENCODER, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(CLK_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
   palSetLineMode(MISO_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
   palSetLineMode(MOSI_ENCODER, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+
 }
 
 /**

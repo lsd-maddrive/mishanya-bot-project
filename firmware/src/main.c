@@ -2,6 +2,7 @@
 
 static void testsRoutines(void)
 {
+
 #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
     test_abs_encoder();
 #endif
@@ -13,6 +14,7 @@ static void testsRoutines(void)
 #if(MAIN_PROGRAM==PROGRAM_TEST_CLOSE_SYS)
     test_close_sys();
 #endif
+
 }
 
 

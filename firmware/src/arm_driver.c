@@ -2,6 +2,7 @@
 #include "lld_bb_driver.h"
 #include "lld_red_driver.h"
 
+
 /**
  * @brief   initialize arm driver
  * @brief   recieve arm struct
@@ -73,6 +74,7 @@ void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t peri
   }
 
 }
+
 
 /**
  * @brief the function disables the selected hand

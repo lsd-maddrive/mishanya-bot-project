@@ -26,7 +26,8 @@
 	#define LEFT_PWM		PAL_LINE(GPIOA,6) // TIM3 CH1
 
 	#define RIGHT_UP		PAL_LINE(GPIOB,5)
-	#define RIGHT_DOWN	    PAL_LINE(GPIOB,3)
+	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
+
 	#define RIGHT_PWM		PAL_LINE(GPIOC,7) // TIM3 CH2
 
 #endif
@@ -46,6 +47,7 @@
 #endif
 
 // *******************elbow driver pin config******************* //
+
 
 // ***************************PID coef************************** //
 
@@ -69,6 +71,7 @@ const angle_lim_t left_angle_lim = {
 };
 
 // ***************************angle lim************************** //
+
 
 
 #if(DRIVER == RED_DRIVER)
@@ -161,6 +164,7 @@ const angle_lim_t left_angle_lim = {
 	};
 
 // ***********************right arm config*********************** //
+
 
 
 // ***********************final config struct*********************** //
