@@ -10,8 +10,8 @@ PROJECT_MODULES = src/encoder.c \
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_elbow.c \
                   tests/test_close_sys.c \
-             
-                  
+
+
 
 # C source files
 PROJECT_CSRC 	=  src/main.c \

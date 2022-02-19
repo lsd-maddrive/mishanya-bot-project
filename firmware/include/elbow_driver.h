@@ -2,8 +2,8 @@
 #define INCLUDE_ELBOW_DRIVER_H
 
 #include <common.h>
-#include <arm_driver.h>
 #include <PID.h>
+#include <arm_driver.h>
 #include <close_sys_arm.h>
 
 void elbow_init(void);

@@ -1,4 +1,5 @@
 #include <serial.h>
+#include <common.h>
 
 /*============================================================================*/
 /* LINE CONFIGURATION                                                         */
@@ -12,8 +13,10 @@ static BaseSequentialStream *debug_stream = NULL;
 
 
 static const SerialConfig sd_st_cfg = {
-    .speed = 115200,
-    .cr1 = 0, .cr2 = 0, .cr3 = 0
+
+  .speed = 115200,
+  .cr1 = 0, .cr2 = 0, .cr3 = 0
+
 };
 
 /**
@@ -21,11 +24,13 @@ static const SerialConfig sd_st_cfg = {
  */
 void debug_stream_init( void )
 {
-    sdStart( debug_serial, &sd_st_cfg);
-    palSetLineMode(SerialRX,  PAL_MODE_ALTERNATE(7));
-    palSetLineMode(SerialTX,  PAL_MODE_ALTERNATE(7));
 
-    debug_stream = (BaseSequentialStream *)debug_serial;
+  sdStart( debug_serial, &sd_st_cfg);
+  palSetLineMode(SerialRX,  PAL_MODE_ALTERNATE(7));
+  palSetLineMode(SerialTX,  PAL_MODE_ALTERNATE(7));
+
+  debug_stream = (BaseSequentialStream *)debug_serial;
+
 }
 
 /**
@@ -33,11 +38,13 @@ void debug_stream_init( void )
 */
 void dbgprintf( const char* format, ... )
 {
-    if ( !debug_stream )
-        return;
 
-    va_list ap;
-    va_start(ap, format);
-    chvprintf(debug_stream, format, ap);
-    va_end(ap);
+  if ( !debug_stream )
+    return;
+
+  va_list ap;
+  va_start(ap, format);
+  chvprintf(debug_stream, format, ap);
+  va_end(ap);
+
 }

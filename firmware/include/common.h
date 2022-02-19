@@ -5,6 +5,7 @@
 #include "hal.h"
 #include "chprintf.h"
 
+#include "stdbool.h"
 
 
 #define PROGRAM_MASTER 0
@@ -20,5 +21,6 @@
 //#define MAIN_PROGRAM PROGRAM_TEST_ARM_DRIVER
 
 #define MAIN_PROGRAM PROGRAM_TEST_CLOSE_SYS
+
 
 #endif
