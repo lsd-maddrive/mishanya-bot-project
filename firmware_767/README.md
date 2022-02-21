@@ -13,4 +13,3 @@ The template runs on an STM32 Nucleo64-F767ZI board.
 Based on demos from https://github.com/ChibiOS/ChibiOS
 
 ### Information for developers
-

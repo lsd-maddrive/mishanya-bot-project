@@ -1,0 +1,83 @@
+default_stages: [commit, push]
+
+fail_fast: false
+repos:
+  # https://pre-commit.com/hooks.html
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+        exclude: LICENSE
+      - id: trailing-whitespace
+        exclude: ^exports/
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-merge-conflict
+      - id: check-ast
+      - id: check-executables-have-shebangs
+      - id: debug-statements
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: check-case-conflict
+
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v13.0.0
+    hooks:
+      - id: clang-format
+
+
+  # - repo: local
+  #   hooks:
+  #     # keep this before clang-tidy, it generates compile_commands.json for it.
+  #     # requires the 'compiledb' tool, 'pip install compiledb'
+  #     - id: compiledb
+  #       name: compiledb
+  #       entry: compiledb
+  #       language: system
+  #       args: [--overwrite, make, -n, -B]
+  #       always_run: true
+  #       require_serial: true
+  #       pass_filenames: false
+
+  # - repo: https://github.com/pocc/pre-commit-hooks
+  #   rev: v1.3.5
+  #   hooks:
+  #     - id: clang-tidy
+  #       args: [-checks=clang-diagnostic-return-type]
+  #       files: src/.*\.c
+
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: master
+    hooks:
+      # - id: clang-format
+      #   args: [--style=Google]
+      # - id: clang-tidy
+      # - id: oclint
+      # - id: uncrustify
+      # - id: cppcheck
+      - id: cpplint
+      # - id: include-what-you-use
+
+
+  - repo: https://github.com/humitos/mirrors-autoflake
+    rev: v1.3
+    hooks:
+      - id: autoflake
+        args:
+          [
+            "--in-place",
+            "--remove-all-unused-imports",
+            "--remove-unused-variable",
+            "--remove-duplicate-keys",
+          ]
+
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        additional_dependencies: [flake8-docstrings, flake8-print]
