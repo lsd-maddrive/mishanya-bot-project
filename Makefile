@@ -8,3 +8,4 @@ prepare-project:
 	PYTHONPATH=venv ; . venv/bin/activate
 	pip install -r requirements.txt
 	pipx install clang-format
+	pre-commit install
