@@ -1,7 +1,8 @@
-#ifndef INCLUDE_LLD_CONTROL_SERVO_H_
-#define INCLUDE_LLD_CONTROL_SERVO_H_
+#ifndef FIRMWARE_767_INCLUDE_LLD_CONTROL_SERVO_H_
+#define FIRMWARE_767_INCLUDE_LLD_CONTROL_SERVO_H_
 
-#include <common.h>
+#include "common.h"
+
 /**
  *  @brief structure for servos in arm
  *  @identifier1 pwm channel number
@@ -15,7 +16,6 @@ typedef struct
   ioline_t line;
   uint16_t low_hand_limit;
   uint16_t high_hand_limit;
-
 } servo_arm;
 
 /**
@@ -52,4 +52,4 @@ uint16_t get_servo_high_limit(type_servo servo_t);
  */
 uint16_t get_servo_low_limit(type_servo servo_t);
 
-#endif
+#endif  // FIRMWARE_767_INCLUDE_LLD_CONTROL_SERVO_H_

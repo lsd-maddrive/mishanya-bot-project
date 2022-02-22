@@ -60,7 +60,6 @@ const pwm_ctx_t left_pwm_ctx = {
         .callback = NULL,
         .channels =
             {
-
                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // LEFT_PWM
 
                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // RIGHT_PWM
@@ -68,7 +67,6 @@ const pwm_ctx_t left_pwm_ctx = {
                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
-
             },
         .cr2 = 0,
         .dier = 0}};
@@ -96,7 +94,6 @@ const pwm_ctx_t right_pwm_ctx = {
         .callback = NULL,
         .channels =
             {
-
                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // LEFT_PWM
 
                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL}, // RIGHT_PWM
@@ -104,7 +101,6 @@ const pwm_ctx_t right_pwm_ctx = {
                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
 
                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
-
             },
         .cr2 = 0,
         .dier = 0}};

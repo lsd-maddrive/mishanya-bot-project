@@ -13,27 +13,25 @@ void test_lld_nonlinear(type_servo servo)
       debug_stream_init();
       systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         high = get_servo_high_limit(servo);
         low = get_servo_low_limit(servo);
-        for(duty_cycle = low; duty_cycle <= high; duty_cycle += delta)
+        for (duty_cycle = low; duty_cycle <= high; duty_cycle += delta)
         {
-            duty_cycle = CLIP_VALUE(duty_cycle,low,high);
+            duty_cycle = CLIP_VALUE(duty_cycle, low, high);
             lld_set_dutycycle_servo(duty_cycle, servo);
-            dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
+            dbgprintf("duty_cycle:%d\n\r", (int)duty_cycle);
             //delay for fixing the angle
-            time = chThdSleepUntilWindowed (time, TIME_MS2I(4000)+time);
-
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(4000)+time);
         }
-       for(duty_cycle = high; duty_cycle >= low; duty_cycle -= delta)
+       for (duty_cycle = high; duty_cycle >= low; duty_cycle -= delta)
        {
-           duty_cycle = CLIP_VALUE(duty_cycle,low,high);
+           duty_cycle = CLIP_VALUE(duty_cycle, low, high);
            lld_set_dutycycle_servo(duty_cycle, servo);
-           dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
+           dbgprintf("duty_cycle:%d\n\r", (int)duty_cycle);
            //delay for fixing the angle
-           time = chThdSleepUntilWindowed (time, TIME_MS2I(4000)+time);
+           time = chThdSleepUntilWindowed(time, TIME_MS2I(4000)+time);
        }
     }
-
 }

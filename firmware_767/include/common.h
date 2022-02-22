@@ -22,6 +22,6 @@
 #define CLIP_VALUE(x, min, max) ((x) < (min) ? (min) :      \
                                  (x) > (max) ? (max) : (x))
 
-typedef enum {LEFT_HAND,LEFT_WRIST,RIGHT_HAND,RIGHT_WRIST}type_servo;
+typedef enum {LEFT_HAND, LEFT_WRIST, RIGHT_HAND, RIGHT_WRIST}type_servo;
 
 #endif

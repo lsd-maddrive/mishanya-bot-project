@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ENCODER_H
-#define INCLUDE_ENCODER_H
+#ifndef FIRMWARE_INCLUDE_ENCODER_H_
+#define FIRMWARE_INCLUDE_ENCODER_H_
 
 /*============================================================================*/
 /* STATUS BITS                                                                */
@@ -24,4 +24,4 @@ void Encoder_init(void);
  */
 float Encoder_Read(void);
 
-#endif
+#endif  // FIRMWARE_INCLUDE_ENCODER_H_

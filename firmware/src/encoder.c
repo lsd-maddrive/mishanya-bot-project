@@ -1,5 +1,5 @@
-#include <common.h>
-#include <encoder.h>
+#include "common.h"
+#include "encoder.h"
 
 /*============================================================================*/
 /* LINE CONFIGURATION                                                         */
@@ -14,14 +14,12 @@ static SPIDriver *Encoder = &SPID1;
 
 /*** SPI config ***/
 static SPIConfig conf = {
-
     /*** interrupt off ***/
     .end_cb = NULL,
     /*** CS ***/
     .ssline = CS_ENCODER,
     /***  SPI enable, fclk/256 ***/
     .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0
-
 };
 
 /**

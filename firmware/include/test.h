@@ -1,7 +1,7 @@
-#ifndef INCLUDE_TEST_H
-#define INCLUDE_TEST_H
+#ifndef FIRMWARE_INCLUDE_TEST_H_
+#define FIRMWARE_INCLUDE_TEST_H_
 
-#include <common.h>
+#include "common.h"
 
 
 /*============================================================================*/
@@ -27,6 +27,4 @@ void test_abs_encoder(void);
  */
 void test_elbow(void);
 
-
-
-#endif
+#endif  // FIRMWARE_INCLUDE_TEST_H_

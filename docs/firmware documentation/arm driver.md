@@ -111,7 +111,7 @@ const pwm_ctx_t left_pwm_ctx = {
     .callback  = NULL,
     .channels  = {
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // LEFT_PWM
 
         {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT_PWM
 
@@ -123,7 +123,7 @@ const pwm_ctx_t left_pwm_ctx = {
 
         .cr2        = 0,
         // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-        .bdtr 		= 0b10011100,
+        .bdtr     = 0b10011100,
         // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
         .dier       = 0
   }

@@ -24,21 +24,38 @@ repos:
       - id: detect-private-key
       - id: check-case-conflict
 
-  # - repo: https://github.com/pre-commit/mirrors-clang-format
-  #   rev: v13.0.0
-  #   hooks:
-  #     - id: clang-format
-
   - repo: https://github.com/pocc/pre-commit-hooks
     rev: master
     hooks:
-      - id: clang-format
-      - id: clang-tidy
-      - id: oclint
-      - id: uncrustify
-      - id: cppcheck
+      # - id: clang-format
+      # - id: clang-tidy
+      # - id: oclint
+      # - id: uncrustify
+      # - id: cppcheck
       - id: cpplint
-      - id: include-what-you-use
+        args:
+          [
+            "--filter=
+              -legal/copyright,
+              -build/include_subdir,
+              -whitespace/braces,
+              -readability/casting,
+              -build/header_guard,
+              -whitespace/comments,
+              -whitespace/newline",
+            "--linelength=150"
+          ]
+      # # - id: include-what-you-use
+
+  -   repo: https://github.com/Lucas-C/pre-commit-hooks
+      rev: v1.1.12
+      hooks:
+      -   id: forbid-crlf
+      -   id: remove-crlf
+      -   id: forbid-tabs
+      -   id: remove-tabs
+          args: [ '--whitespaces-count', '4' ]  # defaults to: 4
+
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3

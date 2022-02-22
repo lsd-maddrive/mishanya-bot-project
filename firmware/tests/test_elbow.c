@@ -13,7 +13,7 @@ void test_elbow(void)
   elbow_init();
   elbow_off(RIGHT);
   elbow_off(LEFT);
-  while(1)
+  while (1)
   {
     dbgprintf("--------------------\r\n");
     dbgprintf("elbow side(r - right; l - left):\r\n");
@@ -40,11 +40,11 @@ void test_elbow(void)
 
     test = 0;
 
-    while(!test)
+    while (!test)
     {
-      if(period>0)
+      if (period > 0)
         elbow_up(arm, period);
-      else if(period<0)
+      else if (period < 0)
         elbow_down(arm, period*-1);
       else
         elbow_off(arm);
@@ -56,13 +56,13 @@ void test_elbow(void)
       {
         case 'z':
           period += 500;
-          if(period > 10000)
+          if (period > 10000)
             period = 10000;
           break;
 
         case 'x':
           period -= 500;
-          if(period < -10000)
+          if (period < -10000)
             period = -10000;
           break;
 
@@ -78,7 +78,6 @@ void test_elbow(void)
       dbgprintf("PWM period=%d\r\n", period);
       dbgprintf("--------------------\r\n");
       dbgprintf("\r\n");
-
     }
   }
 }

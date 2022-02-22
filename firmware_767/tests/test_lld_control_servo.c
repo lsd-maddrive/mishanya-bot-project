@@ -13,10 +13,10 @@ void test_lld_servo(type_servo servo)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         char sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym)
+        switch (sym)
         {
             case 'a':
                 duty_cycle += delta;
@@ -24,16 +24,14 @@ void test_lld_servo(type_servo servo)
             case 'd':
                 duty_cycle -= delta;
                 break;
-            default: ;
+            default: {};
         }
 
         high = get_servo_high_limit(servo);
         low = get_servo_low_limit(servo);
-        duty_cycle = CLIP_VALUE(duty_cycle,low,high);
+        duty_cycle = CLIP_VALUE(duty_cycle, low, high);
         lld_set_dutycycle_servo(duty_cycle, servo);
-        dbgprintf("duty_cycle:%d\n\r",(int)duty_cycle);
-        time = chThdSleepUntilWindowed (time, TIME_MS2I(100)+time);
-
+        dbgprintf("duty_cycle:%d\n\r", (int)duty_cycle);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
-
 }

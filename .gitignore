@@ -34,3 +34,7 @@
 # Virtual Environments
 venv
 .venv
+
+
+# VS Code system files
+.vscode

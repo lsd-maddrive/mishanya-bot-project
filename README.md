@@ -2,6 +2,68 @@
 
 Проект по разработке/оживлению человекоподного робота Мишаня -> [Описание робота](docs/equipment/equipment.md)
 
+## Настройка рабочего окружения
+
+1. Устанавливаем `make`
+   - Windows:
+
+     Устанавливаем [chocolatey](https://chocolatey.org/install) и устанавливаем `make` с помощью команды:
+
+      ```powershell
+      choco install make
+      ```
+   - Linux:
+      ```bash
+      sudo apt-get install build-essential
+      ```
+
+2. Устанавливаем `python 3.8`
+    - Windows
+
+      Устанавливаем через [официальный установщик](https://www.python.org/downloads/)
+
+    - Linux
+      ```bash
+      sudo apt install python3.8-dev
+      ```
+
+3. Устанавливаем пакет "clang-tidy"
+   - Linux
+        ```
+        sudo apt-get update -y
+        ```
+        ```
+        sudo apt-get install -y clang-tidy
+        ```
+
+5. Устанавливаем пакет "uncrustify"
+    - Linux
+        ```
+        sudo apt-get update -y
+        ```
+        ```
+        sudo apt-get install -y uncrustify
+        ```
+
+6. Устанавливаем пакет "cppcheck"
+     - Linux
+        ```
+        sudo apt-get update -y
+        ```
+        ```
+        sudo apt-get install -y cppcheck
+        ```
+
+
+7. Устанавливаем пакет "Include-What-You-Use" для проверки header-файлов
+     - Linux
+        ```
+        sudo apt-get update -y
+        ```
+        ```
+        sudo apt-get install -y iwyu
+        ```
+
 ## Пара моментов по разработке
 
 - Основная разработка ведется через ветку `develop`
@@ -16,7 +78,7 @@
 - Файлы больше 100 KB храним в [Git LFS](https://git-lfs.github.com/)
 - Для каждой разработанной подсистемы требуется написать маленький тест, который будет запускать простую программу, использующую разработанные функции и демонстрировать работоспособность
 
-## Заметки по работе в-целом
+## Заметки по работе в целом
 
 - Не стесняемся задавать вопросы по *любой* теме насчет проекта - лучше, чтобы все понимали, в каком состоянии что сейчас находится, чем что-то скрывать
 - Чат не для хранения - его может заваливать переписками и общением!

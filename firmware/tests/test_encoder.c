@@ -3,10 +3,8 @@
 #include <encoder.h>
 
 
-
 void test_abs_encoder(void)
 {
-
   float angle = 0;
   Encoder_init();
   debug_stream_init();
@@ -18,5 +16,4 @@ void test_abs_encoder(void)
 
     dbgprintf("angle=%.4f\r\n", angle);
   }
-
 }
