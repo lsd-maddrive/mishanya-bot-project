@@ -2,7 +2,6 @@ default_stages: [commit, push]
 
 fail_fast: false
 repos:
-  # https://pre-commit.com/hooks.html
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
@@ -30,39 +29,10 @@ repos:
     hooks:
       - id: clang-format
 
-
-  # - repo: local
-  #   hooks:
-  #     # keep this before clang-tidy, it generates compile_commands.json for it.
-  #     # requires the 'compiledb' tool, 'pip install compiledb'
-  #     - id: compiledb
-  #       name: compiledb
-  #       entry: compiledb
-  #       language: system
-  #       args: [--overwrite, make, -n, -B]
-  #       always_run: true
-  #       require_serial: true
-  #       pass_filenames: false
-
-  # - repo: https://github.com/pocc/pre-commit-hooks
-  #   rev: v1.3.5
-  #   hooks:
-  #     - id: clang-tidy
-  #       args: [-checks=clang-diagnostic-return-type]
-  #       files: src/.*\.c
-
   - repo: https://github.com/pocc/pre-commit-hooks
     rev: master
     hooks:
-      # - id: clang-format
-      #   args: [--style=Google]
-      # - id: clang-tidy
-      # - id: oclint
-      # - id: uncrustify
-      # - id: cppcheck
       - id: cpplint
-      # - id: include-what-you-use
-
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3
