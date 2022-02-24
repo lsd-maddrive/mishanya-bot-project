@@ -7,12 +7,10 @@
 
   <!-- base property -->
 
-  <xacro:property name="base_mass" value="1" />
-  <xacro:property name="base_length" value="0.81" />
-  <xacro:property name="base_width" value="0.81" />
+
   <xacro:property name="base_height" value="0.21" />
 
-  <xacro:property name="base_mass" value="10" />
+  <xacro:property name="base_mass" value="2" />
   <xacro:property name="base_rad" value="0.4" />
   <xacro:property name="base_length" value="0.21" />
 
@@ -37,16 +35,16 @@
 
   <!-- inertial macros -->
 
-
+  <link name="origin_link"/>
   <link name="base_link">
     <collision name="collision_chassis">
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0.15"/>
       <geometry>
         <cylinder length="${base_length}" radius="${base_rad}"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0.15"/>
       <geometry>
         <cylinder length="${base_length}" radius="${base_rad}"/>
       </geometry>

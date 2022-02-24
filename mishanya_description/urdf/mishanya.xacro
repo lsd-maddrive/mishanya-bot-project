@@ -2,12 +2,54 @@
 
 <robot name="mishanya" xmlns:xacro="http://www.ros.org/wiki/xacro">
   
-  <xacro:include filename="$(find mishanya_description)/urdf/omni.xacro" />
+  <xacro:include filename="$(find mishanya_description)/urdf/rim.xacro"/>
   <xacro:include filename="$(find mishanya_description)/urdf/kernel.xacro" />
   <xacro:include filename="$(find mishanya_description)/urdf/base.xacro" />
 
-  <xacro:link_kernel name="kernel" />
-	<xacro:joint_kernel name="joint_kernel" child="kernel" origin_xyz="0 0 ${2*base_height}" />
 
-  
+	<joint
+		name="base_joint"
+		type="fixed"
+	>
+
+		<parent link="origin_link" />
+		<child link="base_link" />
+		<origin
+			xyz="0 0 0.01905"
+		/>
+
+	</joint>
+	<xacro:rim_macro
+		name="left"
+		color="0.3 0 0"
+		xyz="-0.3464101615 0.2 0"
+		rpy="1.570796326794896 0 1.047197551196597"
+	/>
+	<xacro:rim_macro
+		name="back"
+		color="0 0.3 0"
+		xyz="0 -0.4 0"
+		rpy="1.570796326794896 0 3.141592653589793"
+	/>
+	<xacro:rim_macro
+		name="right"
+		color="0 0 0.3"
+		xyz="0.3464101615 0.2 0"
+		rpy="1.570796326794896 0 -1.047197551196597"
+	/>
+
+  <!-- <xacro:link_kernel name="kernel" />
+	<xacro:joint_kernel name="joint_kernel" child="kernel" origin_xyz="0 0 ${base_height}" /> -->
+
+  <gazebo>
+
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+
+			<robotNamespace>/open_base</robotNamespace>
+
+		</plugin>
+
+	</gazebo>
+
+
  </robot>
