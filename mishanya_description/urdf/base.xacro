@@ -10,7 +10,7 @@
 
   <xacro:property name="base_height" value="0.21" />
 
-  <xacro:property name="base_mass" value="2" />
+  <xacro:property name="base_mass" value="5" />
   <xacro:property name="base_rad" value="0.4" />
   <xacro:property name="base_length" value="0.21" />
 
@@ -38,13 +38,13 @@
   <link name="origin_link"/>
   <link name="base_link">
     <collision name="collision_chassis">
-      <origin rpy="0 0 0" xyz="0 0 0.15"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
       <geometry>
         <cylinder length="${base_length}" radius="${base_rad}"/>
       </geometry>
     </collision>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.15"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
       <geometry>
         <cylinder length="${base_length}" radius="${base_rad}"/>
       </geometry>

@@ -1,56 +1,66 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <launch>
-    
-        <arg name="debug" default="false" />
-        <arg name="gui" default="true" />
-        <arg name="pause" default="false" />
-        <arg name="world" default="$(find mishanya_description)/worlds/mishanya.world" />
-	
-	<param name="robot_description" command="$(find xacro)/xacro '$(find mishanya_description)/urdf/mishanya.xacro'" />
 
-    	<arg name="x" default="0"/>
-	<arg name="y" default="-2"/>
-	<arg name="z" default="2"/>
-    
-        <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" respawn="false" output="screen">
-                <param name="robot_description" command="$(find xacro)/xacro '$(find mishanya_description)/urdf/mishanya.xacro'"/>
-                <remap from="/joint_states" to="/eSAUl/joint_states" />
-        </node>   -->
-        
-        <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model robot -x $(arg x) -y $(arg y) -z $(arg z)" />
+	<rosparam
+		file="$(find mishanya_description)/config/joint_velocity.yaml"
+		command="load"
+	/>
+	<arg
+		name="paused"
+		default="true"
+	/>
+	<arg
+		name="height"
+		default="0"
+	/>
+	<include file="$(find mishanya_description)/launch/gazebo controller.launch">
 
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-                <arg name="world_name" value="$(find mishanya_description)/worlds/mishanya.world" />
-                <arg name="debug" value="$(arg debug)" />
-                <arg name="gui" value="$(arg gui)" />
-                <arg name="paused" value="$(arg pause)" />
-                <arg name="use_sim_time" value="true" />
-        </include>
+		<arg
+			name="paused"
+			value="$(arg paused)"
+		/>
+		<arg
+			name="height"
+			value="$(arg height)"
+		/>
 
+	</include>
+	<node
+		name="controller_spawner"
+		pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		args="joint_state_controller left_joint_velocity_controller back_joint_velocity_controller right_joint_velocity_controller"
+		ns="/open_base"
+	/>
+	<node
+		name="odometry"
+		pkg="open_base"
+		type="open_base_odometry"
+		ns="open_base"
+		output="screen"
+		args="pose_cheat"
+	></node><!-- args="pose_cheat" -->
+	<node
+		name="kinematics"
+		pkg="open_base"
+		type="open_base_kinematics"
+		ns="open_base"
+		output="screen"
+	></node>
+	<node
+		name="encoder"
+		pkg="open_base"
+		type="open_base_sensor_encoder"
+		ns="open_base/sensor"
+		output="screen"
+	></node>
+	<node
+		name="main"
+		pkg="open_base"
+		type="open_base_main"
+		ns="open_base"
+		output="screen"
+	></node>
 
-        <!-- <node
-                pkg="robot_state_publisher"
-                type="robot_state_publisher"
-                name="robot_state_publisher"
-                respawn="false"
-                output="screen"
-                ns="stand"
-        >
-
-                <param
-                        name="publish_frequency"
-                        type="double"
-                        value="30.0"
-                />
-
-                <remap
-                        from="/joint_states"
-                        to="/stand/joint_states"
-                />
-
-        </node> -->
-
-
-
-        
 </launch>

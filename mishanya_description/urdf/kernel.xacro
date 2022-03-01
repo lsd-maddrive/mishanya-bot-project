@@ -3,9 +3,9 @@
 
   <!-- kernel property -->
   
-  <xacro:property name="kernel_mass" value="1" />
+  <xacro:property name="kernel_mass" value="0.5" />
   <xacro:property name="kernel_rad" value="0.03" />
-  <xacro:property name="kernel_length" value="0.053" />
+  <xacro:property name="kernel_length" value="0.53" />
   
   <!-- kernel property -->
 
