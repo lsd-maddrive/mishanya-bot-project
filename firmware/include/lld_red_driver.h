@@ -2,7 +2,7 @@
 #define INCLUDE_LLD_RED_DRIVER_H
 
 #include <common.h>
-#include <arm_driver.h>
+#include "lld_bridge_system.h"
 
 
 void lld_red_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx);

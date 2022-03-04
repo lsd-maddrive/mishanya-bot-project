@@ -5,7 +5,7 @@
 
 #define BB_DRIVER       1
 #define RED_DRIVER      2
-#define DRIVER          BB_DRIVER
+#define DRIVER          RED_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -16,6 +16,13 @@
 
 // *******************elbow driver PWM config******************* //
 
+
+// **********************close sys config********************** //
+
+#define ENCODER_DEADZONE 1
+#define INTEGRAL_PERIOD 100
+
+// **********************close sys config********************** //
 
 // *******************elbow driver pin config******************* //
 
@@ -112,11 +119,21 @@ const angle_lim_t left_angle_lim = {
     .digit_1 = LEFT_UP
 	};
 
-	const control_driver_t left_arm = {
+  const control_driver_t left_arm = {
     .line_control = left_control,
-    .arm_ctx = left_pwm_ctx,
-    .angle_lim = left_angle_lim
-	};
+    .arm_ctx = left_pwm_ctx
+  };
+
+  const close_conf_t left_close_conf = {
+    .angle_lim = left_angle_lim,
+    .angle_dead_zone = ENCODER_DEADZONE,
+    .dt = INTEGRAL_PERIOD
+  };
+
+  const arm_system_t left_system = {
+    .close_conf = left_close_conf,
+    .control = left_arm
+  };
 
 // ***********************left arm config*********************** //
 
@@ -159,9 +176,19 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t right_arm = {
     .line_control = right_control,
-    .arm_ctx = right_pwm_ctx,
-    .angle_lim = right_angle_lim
+    .arm_ctx = right_pwm_ctx
 	};
+
+  const close_conf_t right_close_conf = {
+    .angle_lim = right_angle_lim,
+    .angle_dead_zone = ENCODER_DEADZONE,
+    .dt = INTEGRAL_PERIOD
+  };
+
+  const arm_system_t right_system = {
+    .close_conf = right_close_conf,
+    .control = right_arm
+  };
 
 // ***********************right arm config*********************** //
 
@@ -169,14 +196,15 @@ const angle_lim_t left_angle_lim = {
 
 // ***********************final config struct*********************** //
 
-	const arm_driver_ctx_t elbow_driver = {
-    .type = RED,
+  const arm_driver_ctx_t elbow_driver = {
+    .type = BB,
     .down = &elbow_down,
     .up = &elbow_up,
     .off = &elbow_off,
-    .arm[0] = left_arm,
-    .arm[1] = right_arm
-	};
+    .arm[0] = left_system,
+    .arm[1] = right_system
+  };
+
 
 // ***********************final config struct*********************** //
 
@@ -226,10 +254,20 @@ const angle_lim_t left_angle_lim = {
     .digit_2 = LEFT_DOWN
 	};
 
-	const control_driver_t left_arm = {
+  const control_driver_t left_arm = {
     .line_control = left_control,
-    .arm_ctx = left_pwm_ctx,
-    .angle_lim = left_angle_lim
+    .arm_ctx = left_pwm_ctx
+  };
+
+  const close_conf_t left_close_conf = {
+    .angle_lim = left_angle_lim,
+    .angle_dead_zone = ENCODER_DEADZONE,
+    .dt = INTEGRAL_PERIOD
+  };
+
+  const arm_system_t left_system = {
+    .close_conf = left_close_conf,
+    .control = left_arm
   };
 
 // ***********************left arm config*********************** //
@@ -280,9 +318,19 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t right_arm = {
     .line_control = right_control,
-    .arm_ctx = right_pwm_ctx,
-    .angle_lim = right_angle_lim
+    .arm_ctx = right_pwm_ctx
 	};
+
+  const close_conf_t right_close_conf = {
+    .angle_lim = right_angle_lim,
+    .angle_dead_zone = ENCODER_DEADZONE,
+    .dt = INTEGRAL_PERIOD
+  };
+
+  const arm_system_t right_system = {
+    .close_conf = right_close_conf,
+    .control = right_arm
+  };
 
 // ***********************right arm config*********************** //
 
@@ -293,8 +341,8 @@ const angle_lim_t left_angle_lim = {
     .down = &elbow_down,
     .up = &elbow_up,
     .off = &elbow_off,
-    .arm[0] = left_arm,
-    .arm[1] = right_arm
+    .arm[0] = left_system,
+    .arm[1] = right_system
 	};
 
 // ***********************final config struct*********************** //

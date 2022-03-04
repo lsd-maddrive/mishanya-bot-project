@@ -11,7 +11,7 @@ static void testsRoutines(void)
     test_elbow();
 #endif
 
-#if(MAIN_PROGRAM==PROGRAM_TEST_CLOSE_SYS)
+#if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CLOSE_SYS)
     test_close_sys();
 #endif
 

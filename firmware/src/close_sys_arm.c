@@ -1,8 +1,7 @@
 #include <close_sys_arm.h>
 
-#define DEAD_ZONE 1
 #define TIME_PREF 1/CH_CFG_ST_FREQUENCY
-#define dt 100
+
 
 typedef struct normalize_angle{
     float	max_norm_angle;
@@ -17,6 +16,7 @@ static void normalize_interval (float min_angle, float max_angle, normalize_angl
 static void error_calculate (error_type_t *err_reg, float angle, float current_angle);
 
 
+
 /**
  * @brief lowlevel function sets the specified angle
  * @brief recieve the hand side, the goal angle, PID struct and arm driver struct
@@ -24,13 +24,7 @@ static void error_calculate (error_type_t *err_reg, float angle, float current_a
 void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *arm_driver, PID_t *PID)
 {
 
-	control_driver_t control = arm_driver->arm[side];
-
-	// reset the error coefficients of the regulator
-	PID->error.D = 0;
-	PID->error.I = 0;
-	PID->error.P = 0;
-	PID->error.prev_P = 0;
+  PID_reset(PID);
 
 	normalize_angle_t arm_angle = {
 		.max_norm_angle = 0,
@@ -40,30 +34,34 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 	};
 
 	virtual_timer_t encoder_timer;
-	
+
+  float pwm_period = arm_driver->arm[side].control.arm_ctx.pwm_conf.period;
+  float dead_zone = arm_driver->arm[side].close_conf.angle_dead_zone;
+  float dt = arm_driver->arm[side].close_conf.dt;
+  float min_angle = arm_driver->arm[side].close_conf.angle_lim.min_angle;
+  float max_angle = arm_driver->arm[side].close_conf.angle_lim.max_angle;
 	float prev_time = 0;
 	float current_angle = 0;
 	float period = 0;
-  float pwm_period = control.arm_ctx.pwm_conf.period;
 	float delta_t = 0;
 
 	chVTObjectInit(&encoder_timer);
 
 	// convert the angle range so that it starts from zero
-	normalize_interval(control.angle_lim.min_angle, control.angle_lim.max_angle, &arm_angle);
+	normalize_interval(min_angle, max_angle, &arm_angle);
 
 	prev_time = chVTGetSystemTime();
 
 	while(1)
 	{
 		// bring the angle into the normalized range
-		current_angle = normalize_angle(control.angle_lim.min_angle, &arm_angle);
+		current_angle = normalize_angle(min_angle, &arm_angle);
 
 		error_calculate(&PID->error, goal_angle, current_angle);
 
 		delta_t = chVTGetSystemTime()-prev_time;
 
-		if(delta_t>=dt)
+		if(delta_t >= dt)
 		{
 
 			prev_time = chVTGetSystemTime();
@@ -95,7 +93,7 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 
 		}
 
-		if(PID->error.P<=DEAD_ZONE) break;
+		if(PID->error.P <= dead_zone) break;
 
 	}
 

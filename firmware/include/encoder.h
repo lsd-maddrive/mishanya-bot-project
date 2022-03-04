@@ -3,7 +3,7 @@
 
 
 
-/************ Status bita ************/
+/************ Status bits ************/
 
 #define OCF 0b00000100
 #define COF 0b00000010
@@ -12,7 +12,7 @@
 #define MagDEC 0b01000000
 #define EvenPAR 0b01000000
 
-/************ Status bita ************/
+/************ Status bits ************/
 
 
 /**

@@ -24,5 +24,6 @@ typedef struct{
 }PID_t;
 
 double PID_out(PID_t* reg, double dt);
+void PID_reset(PID_t* reg);
 
 #endif

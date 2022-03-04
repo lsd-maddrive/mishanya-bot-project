@@ -7,10 +7,6 @@ PROJECT_MODULES = src/encoder.c \
 				  src/close_sys_arm.c \
 				  src/PID.c \
 
-				  src/arm_driver.c \
-				  src/lld_bb_driver.c \
-				  src/lld_red_driver.c \
-				  src/elbow_driver.c \
 
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_elbow.c \

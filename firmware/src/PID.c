@@ -17,3 +17,18 @@ double PID_out(PID_t* reg, double dt)
 	return control;
 
 }
+
+/**
+ * @brief PID coefficients reset
+ * @brief recieve time PID struct
+ */
+void PID_reset(PID_t* reg)
+{
+
+  // reset the error coefficients of the regulator
+  reg->error.D = 0;
+  reg->error.I = 0;
+  reg->error.P = 0;
+  reg->error.prev_P = 0;
+
+}
