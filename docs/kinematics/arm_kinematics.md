@@ -27,13 +27,18 @@
 Обратная кинематика:
 
 Для начала введём несколько обозначений:
-<img src="http://latex.codecogs.com/svg.latex?A&space;=&space;-2\cdot&space;x_{0}" title="http://latex.codecogs.com/svg.latex?A = -2\cdot x_{0}" />
+<img src="http://latex.codecogs.com/svg.latex?A&space;=&space;-2\cdot&space;x_{0}" title="http://latex.codecogs.com/svg.latex?A = -2\cdot x_{0}" /> , <img src="http://latex.codecogs.com/svg.latex?B&space;=&space;-2\cdot&space;y_{0}" title="http://latex.codecogs.com/svg.latex?B = -2\cdot y_{0}" /> , <img src="http://latex.codecogs.com/svg.latex?C&space;=&space;-2\cdot&space;z_{0}" title="http://latex.codecogs.com/svg.latex?C = -2\cdot z_{0}" /> , <img src="http://latex.codecogs.com/svg.latex?d&space;=&space;x_{0}^{2}&space;&plus;&space;y_{0}^{2}&space;&plus;&space;z_{0}^{2}" title="http://latex.codecogs.com/svg.latex?d = x_{0}^{2} + y_{0}^{2} + z_{0}^{2}" /> , где <img src="http://latex.codecogs.com/svg.latex?x_{0},&space;y_{0},&space;z_{0}" title="http://latex.codecogs.com/svg.latex?x_{0}, y_{0}, z_{0}" /> - координаты желаемой точки.
+Далее обозначим:
 
-<img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}\theta&space;_{1}=\arccos(\frac{y}{\sqrt{x^{2}&plus;y^{2}}})&plus;\arccos(\frac{L_{1}^{2}-L_{2}^{2}&plus;(x^{2}&plus;y^{2})}{2L_{1}\sqrt{x^{2}&plus;y^{2}}})\\\theta&space;_{2}=\pi&space;-\arccos(\frac{L_{1}^{2}&plus;L_{2}^{2}-(x^{2}&plus;y^{2})}{2L_{1}L_{2}})\\\theta&space;_{3}=\arcsin(\frac{z}{\sqrt{x^{2}&plus;y^{2}&plus;z^{2}}})\end{matrix}\right." title="\left\{\begin{matrix}\theta _{1}=\arccos(\frac{y}{\sqrt{x^{2}+y^{2}}})+\arccos(\frac{L_{1}^{2}-L_{2}^{2}+(x^{2}+y^{2})}{2L_{1}\sqrt{x^{2}+y^{2}}})\\\theta _{2}=\pi -\arccos(\frac{L_{1}^{2}+L_{2}^{2}-(x^{2}+y^{2})}{2L_{1}L_{2}})\\\theta _{3}=\arcsin(\frac{z}{\sqrt{x^{2}+y^{2}+z^{2}}})\end{matrix}\right." />
+<img src="http://latex.codecogs.com/svg.latex?D&space;=&space;L_{1}^{2}&space;-&space;L_{2}^{2}&space;&plus;&space;d" title="http://latex.codecogs.com/svg.latex?D = L_{1}^{2} - L_{2}^{2} + d" />
 
-Также уравнение для <img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}" title="\theta _{3}" /> может быть задано в виде:
+<img src="http://latex.codecogs.com/svg.latex?y_{m_{1,2}}&space;=&space;\frac{-2DB\pm&space;\sqrt{(2DB)^{2}-4(A^{2}&plus;B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}&plus;B^{2})}" title="http://latex.codecogs.com/svg.latex?y_{m_{1,2}} = \frac{-2DB\pm \sqrt{(2DB)^{2}-4(A^{2}+B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}+B^{2})}" />
 
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}=\arctan(\frac{z}{\sqrt{x^{2}&plus;y^{2}}})" title="\theta _{3}=\arctan(\frac{z}{\sqrt{x^{2}+y^{2}}})" />
+<img src="http://latex.codecogs.com/svg.latex?x_{m_{1,2}}&space;=&space;\frac{-2D-By_{m_{1,2}}}{A}" title="http://latex.codecogs.com/svg.latex?x_{m_{1,2}} = \frac{-2D-By_{m_{1,2}}}{A}" />
+
+Окончательно:
+
+<img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}\theta&space;_{1}=\arctan(\frac{y_{m}}{x_{m}})\\\\\theta&space;_{2}=\pi&space;-\arccos(\frac{L_{1}^{2}&plus;L_{2}^{2}-d}{2L_{1}L_{2}})\\\\\theta&space;_{3}=-\pi&space;&plus;&space;\arctan(\frac{(x_{0}y_{m}&plus;x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}\theta _{1}=\arctan(\frac{y_{m}}{x_{m}})\\\\\theta _{2}=\pi -\arccos(\frac{L_{1}^{2}+L_{2}^{2}-d}{2L_{1}L_{2}})\\\\\theta _{3}=-\pi + \arctan(\frac{(x_{0}y_{m}+x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})\end{matrix}\right." />
 
 ###
 <details>
