@@ -34,7 +34,7 @@
 
 <img src="http://latex.codecogs.com/svg.latex?y_{m_{1,2}}&space;=&space;\frac{-2DB\pm&space;\sqrt{(2DB)^{2}-4(A^{2}&plus;B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}&plus;B^{2})}" title="http://latex.codecogs.com/svg.latex?y_{m_{1,2}} = \frac{-2DB\pm \sqrt{(2DB)^{2}-4(A^{2}+B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}+B^{2})}" />
 
-<img src="http://latex.codecogs.com/svg.latex?x_{m_{1,2}}&space;=&space;\frac{-2D-By_{m_{1,2}}}{A}" title="http://latex.codecogs.com/svg.latex?x_{m_{1,2}} = \frac{-2D-By_{m_{1,2}}}{A}" />
+<img src="http://latex.codecogs.com/svg.latex?x_{m_{1,2}}&space;=&space;\frac{-D-By_{m_{1,2}}}{A}" title="http://latex.codecogs.com/svg.latex?x_{m_{1,2}} = \frac{-D-By_{m_{1,2}}}{A}" />
 
 Окончательно:
 
@@ -86,65 +86,43 @@
 
 Для обратной кинематики:
 
-Углы мы можем задавать независимо друг от друга. Угол <img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}" title="\theta _{3}" /> - это, по сути, угол поворота плоскости всего манипулятора до пересечения с желаемой точкой. Этот угол равен углу между текущим положением плоскости(считаем за нулевое) и проекцией на эту плоскость вектора, направленного на желаемую точку. Для задания угла нам нужно знать координаты нормали к нашей плоскости(которая по сути задаёт плоскость) и координаты направляющего вектора(по сути координаты точки), тогда по формуле:
+Для начала упростим задачу. Представим, что звено L1 может двигаться не только в плоскости но и вообще во всём пространстве(относительно точки плеча), тогда все возможные положения конца звена - точки локтя будут описывать сферу с радиусом L1 и центром в точке плеча(в центре системы координат). Далее, мы знаем, что точка хвата должна оказаться в желаемой точке, чьи координаты заданы, при этом точку хвата описывает координаты конца звена L2, которые в свою очередь определяются координатами локтя. Представим, что точка хвата достигла желаемой точки, тогда всё возможные положения точки локтя лежат на сфере радиуса L2 и с центром - желаемой точкой(мысленно поставим точку хвата в желамую точку и покрутим предплечьем(звеном L2) во все стороны). Таким образом положения точки локтя при осуществелении обеих условий(1. начало звена L1 зафиксировано в начале координат, 2. точка хвата лежит в желаемой точке, а точка локтя жёстко связана с ней через звено L2) будет лежать на перечении этих двух сфер. Найдём координаты этих точек, для этого нужно решить систему:
 
-<img src="https://latex.codecogs.com/svg.image?\sin(m\hat{}\gamma)=\frac{x_{m}x_{n}&plus;y_{m}y_{n}&plus;z_{m}z_{n}}{\sqrt{x_{m}^{2}&plus;y_{m}^{2}&plus;z_{m}^{2}}\sqrt{x_{n}^{2}&plus;y_{n}^{2}&plus;z_{n}^{2}}}" title="\sin(m\hat{}\gamma)=\frac{x_{m}x_{n}+y_{m}y_{n}+z_{m}z_{n}}{\sqrt{x_{m}^{2}+y_{m}^{2}+z_{m}^{2}}\sqrt{x_{n}^{2}+y_{n}^{2}+z_{n}^{2}}}" />,
+<img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\(x-x_{0})^{2}&plus;(y-y_{0})^{2}&plus;(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." />
 
-где m - направляющий вектор, а, соответственно,  <img src="https://latex.codecogs.com/svg.image?\begin{Bmatrix}x_{m},&space;y_{m},z_{m}\end{Bmatrix}" title="\begin{Bmatrix}x_{m}, y_{m},z_{m}\end{Bmatrix}" /> - его координаты, <img src="https://latex.codecogs.com/svg.image?\begin{Bmatrix}x_{n},&space;y_{n},z_{n}\end{Bmatrix}" title="\begin{Bmatrix}x_{n}, y_{n},z_{n}\end{Bmatrix}" />- координаты нормали к плоскости <img src="https://latex.codecogs.com/svg.image?\gamma&space;" title="\gamma " />
+где первое уравнение описывает первую сферу, второе - вторую. <img src="http://latex.codecogs.com/svg.latex?x_{0},&space;y_{0},&space;z_{0}" title="http://latex.codecogs.com/svg.latex?x_{0}, y_{0}, z_{0}" /> - координаты желаемой точки.
 
-Координаты точки считаем заданными. Так как отсчитываем мы от нулевого положения, то координаты нормали будут выглядить:
+Раскроем во втором уравнении скобки:
 
-<img src="https://latex.codecogs.com/svg.image?\vec{n}&space;=&space;\begin{Bmatrix}0,&space;0,&space;1\end{Bmatrix}" title="\vec{n} = \begin{Bmatrix}0, 0, 1\end{Bmatrix}" />
+<img src="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}&plus;x_{0}^{2}&plus;y^{2}-2yy_{0}&plus;y_{0}^{2}&plus;z^{2}-2zz_{0}&plus;z_{0}^{2}=L_{2}^{2}" title="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}+x_{0}^{2}+y^{2}-2yy_{0}+y_{0}^{2}+z^{2}-2zz_{0}+z_{0}^{2}=L_{2}^{2}" />
 
-Отсюда(далее координаты точки будут обозначаться просто x, y, z):
+Вместо суммы квадратов координат можно поставить первое уравнение. Сумму квадратов координат желаемой точки обозначим за d. С учтом подстановок и обозначение перенесём всё влево:
 
-<img src="https://latex.codecogs.com/svg.image?\sin(\theta&space;_{3})=\frac{z}{\sqrt{x^{2}&plus;y^{2}&plus;z^{2}}}" title="\sin(\theta _{3})=\frac{z}{\sqrt{x^{2}+y^{2}+z^{2}}}" />
+<img src="http://latex.codecogs.com/svg.latex?-2xx_{0}-2yy_{0}-2zz_{0}&space;-&space;L_{2}^{2}&space;&plus;&space;L_{1}^{2}&space;&plus;&space;d=0" title="http://latex.codecogs.com/svg.latex?-2xx_{0}-2yy_{0}-2zz_{0} - L_{2}^{2} + L_{1}^{2} + d=0" />
 
-Тогда:
+Обозначим <img src="http://latex.codecogs.com/svg.latex?&space;-&space;L_{2}^{2}&space;&plus;&space;L_{1}^{2}&space;&plus;&space;d" title="http://latex.codecogs.com/svg.latex? - L_{2}^{2} + L_{1}^{2} + d" /> за D. В итоге получим уравнение плоскости вида:
 
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}=\arcsin(\frac{z}{\sqrt{x^{2}&plus;y^{2}&plus;z^{2}}})" title="\theta _{3}=\arcsin(\frac{z}{\sqrt{x^{2}+y^{2}+z^{2}}})" />
+<img src="http://latex.codecogs.com/svg.latex?Ax&space;&plus;&space;By&space;&plus;&space;Cz&space;&plus;&space;D=0" title="http://latex.codecogs.com/svg.latex?Ax + By + Cz + D=0" />,
 
-Другая формула получается, если в формуле синуса вынести <img src="https://latex.codecogs.com/svg.image?x^{2}&plus;y^{2}" title="x^{2}+y^{2}" /> из под корня в знаменателя, тогда получим:
+где <img src="http://latex.codecogs.com/svg.latex?A&space;=&space;-2\cdot&space;x_{0}" title="http://latex.codecogs.com/svg.latex?A = -2\cdot x_{0}" /> , <img src="http://latex.codecogs.com/svg.latex?B&space;=&space;-2\cdot&space;y_{0}" title="http://latex.codecogs.com/svg.latex?B = -2\cdot y_{0}" /> , <img src="http://latex.codecogs.com/svg.latex?C&space;=&space;-2\cdot&space;z_{0}" title="http://latex.codecogs.com/svg.latex?C = -2\cdot z_{0}" /> соответственно.
 
-<img src="https://latex.codecogs.com/svg.image?\sin(\theta&space;_{3})=\frac{\frac{z}{\sqrt{x^{2}&plus;y^{2}}}}{\sqrt{1&plus;\frac{z^{2}}{x^{2}&plus;y^{2}}}}=\frac{\frac{z}{\sqrt{x^{2}&plus;y^{2}}}}{\sqrt{1&plus;(\frac{z}{\sqrt{x^{2}&plus;y^{2}}})^{2}}" title="\sin(\theta _{3})=\frac{\frac{z}{\sqrt{x^{2}+y^{2}}}}{\sqrt{1+\frac{z^{2}}{x^{2}+y^{2}}}}=\frac{\frac{z}{\sqrt{x^{2}+y^{2}}}}{\sqrt{1+(\frac{z}{\sqrt{x^{2}+y^{2}}})^{2}}" />
+Вообще пересечением сфер является окружность, но так как сложно описать уравнение окружности, произвольно лежащей в пространстве, мы получили уравнение плоскости, в которой лежит нужная нам окружность. Так как из всей плоксоти нам нужны конкретные точки, а именно лежащие на сфере, мы должны совместно решить уравнение плоскости и уравнение какой-нибудь из сфер(возьмём первое для удобства)(кстати, система из уравнения плоскости и сферы как раз даёт уравнение окружности произвольно ориентированной в пространстве), также вспомним, что мы опустили условие, что звено L1 может двигаться только в плоскости, поэтому сразу добавим третьим уравнением - уравнение плоскости L1, так как этой плоскостью является XY, то её уравнением будет просто z = 0. В итоге получим:
 
-По формуле:
+<img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\Ax&space;&plus;&space;By&space;&plus;&space;Cz&space;&plus;&space;D=0\\z=0\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\Ax + By + Cz + D=0\\z=0\end{matrix}\right." />
 
-<img src="https://latex.codecogs.com/svg.image?\sin(\arctan(\alpha&space;))=\frac{\alpha&space;}{\sqrt{1&plus;\alpha&space;^{2}}}" title="\sin(\arctan(\alpha ))=\frac{\alpha }{\sqrt{1+\alpha ^{2}}}" />
+Можем сразу подставить z=0 в два другим уравнения и получим:
 
-Получим:
+<img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}=L_{1}^{2}\\Ax&space;&plus;&space;By&space;&plus;&space;D=0\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}=L_{1}^{2}\\Ax + By + D=0\end{matrix}\right." />
 
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}=\arctan(\frac{z}{\sqrt{x^{2}&plus;y^{2}}})" title="\theta _{3}=\arctan(\frac{z}{\sqrt{x^{2}+y^{2}}})" />
+Из второго уравнения выразим x:
 
-Для получения углов <img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}" title="\theta _{1}" /> и <img src="https://latex.codecogs.com/svg.image?\theta&space;_{2}" title="\theta _{2}" /> будем работать в плоскости XY.
+<img src="http://latex.codecogs.com/svg.latex?x&space;=&space;\frac{-D-By}{A}" title="http://latex.codecogs.com/svg.latex?x = \frac{-D-By}{A}" />
 
-Для начала изобразим несколько промежуточных построений:
+и подставим это в первое уравнение:
 
-<img src="Arm_inv.png">
+<img src="http://latex.codecogs.com/svg.latex?(\frac{-D-By}{A})^{2}&plus;y^{2}=L_{1}^{2}" title="http://latex.codecogs.com/svg.latex?(\frac{-D-By}{A})^{2}+y^{2}=L_{1}^{2}" />
 
-Прямая, проведённая из начала координат(точки О) до точки хвата(точки a2) имеет длину: <img src="https://latex.codecogs.com/svg.image?r&space;=&space;\sqrt{x^{2}&plus;y^{2}}" title="r = \sqrt{x^{2}+y^{2}}" />, где {x,y} - координаты точки хвата в плоскости XY, соответсвенно. Координаты же, связаны с этой длинной следующими соотношениями:
 
-<img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}x=r\cdot&space;\sin(&space;\beta_{1})\\y=r\cdot&space;\cos(\beta_{1})\end{matrix}\right." title="\left\{\begin{matrix}x=r\cdot \sin( \beta_{1})\\y=r\cdot \cos(\beta_{1})\end{matrix}\right." />
-
-Откуда:
-
-<img src="https://latex.codecogs.com/svg.image?\beta_{1}=\arccos(\frac{y}{r})" title="\beta_{1}=\arccos(\frac{y}{r})" />
-
-Из построений несложно убедиться, что
-
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}=\beta_{1}+\beta_{2}" title="\theta _{1}=\beta_{1}+\beta_{2}" />
-
-Угол <img src="https://latex.codecogs.com/svg.image?\beta_{2}" title="\beta_{2}" /> найдём из теоремы косинусов:
-
-<img src="https://latex.codecogs.com/svg.image?L_{2}^2&space;=&space;L_{1}^2&space;&plus;&space;r^2&space;-2\cdot&space;L_{1}&space;\cdot&space;r&space;\cdot&space;\cos&space;\beta_{2}" title="L_{2}^2 = L_{1}^2 + r^2 -2\cdot L_{1} \cdot r \cdot \cos \beta_{2}" />
-
-Отсюда:
-
-<img src="https://latex.codecogs.com/svg.image?\beta_{2}&space;=&space;\arccos(\frac{L_{1}^2&space;-&space;L_{2}^2&space;&plus;&space;r^2}{2\cdot&space;L_{1}&space;\cdot&space;r})" title="\beta_{2} = \arccos(\frac{L_{1}^2 - L_{2}^2 + r^2}{2\cdot L_{1} \cdot r})" />
-
-Тогда получаем:
-
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}&space;=\arccos(\frac{y}{r})&space;&plus;&space;\arccos(\frac{L_{1}^2&space;-&space;L_{2}^2&space;&plus;&space;r^2}{2\cdot&space;L_{1}&space;\cdot&space;r})" title="\theta _{1} =\arccos(\frac{y}{r}) + \arccos(\frac{L_{1}^2 - L_{2}^2 + r^2}{2\cdot L_{1} \cdot r})" />
 
 Угол <img src="https://latex.codecogs.com/svg.image?\theta&space;_{2}" title="\theta _{2}" /> составляет с углом <img src="https://latex.codecogs.com/svg.image?\beta_{3}&space;" title="\beta_{3} " /> 180 градусов. Угол <img src="https://latex.codecogs.com/svg.image?\beta_{3}&space;" title="\beta_{3} " /> мы можем также найти из теоремы косинусов:
 
