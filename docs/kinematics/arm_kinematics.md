@@ -26,6 +26,9 @@
 
 Обратная кинематика:
 
+Для начала введём несколько обозначений:
+<img src="http://latex.codecogs.com/svg.latex?A&space;=&space;-2\cdot&space;x_{0}" title="http://latex.codecogs.com/svg.latex?A = -2\cdot x_{0}" />
+
 <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}\theta&space;_{1}=\arccos(\frac{y}{\sqrt{x^{2}&plus;y^{2}}})&plus;\arccos(\frac{L_{1}^{2}-L_{2}^{2}&plus;(x^{2}&plus;y^{2})}{2L_{1}\sqrt{x^{2}&plus;y^{2}}})\\\theta&space;_{2}=\pi&space;-\arccos(\frac{L_{1}^{2}&plus;L_{2}^{2}-(x^{2}&plus;y^{2})}{2L_{1}L_{2}})\\\theta&space;_{3}=\arcsin(\frac{z}{\sqrt{x^{2}&plus;y^{2}&plus;z^{2}}})\end{matrix}\right." title="\left\{\begin{matrix}\theta _{1}=\arccos(\frac{y}{\sqrt{x^{2}+y^{2}}})+\arccos(\frac{L_{1}^{2}-L_{2}^{2}+(x^{2}+y^{2})}{2L_{1}\sqrt{x^{2}+y^{2}}})\\\theta _{2}=\pi -\arccos(\frac{L_{1}^{2}+L_{2}^{2}-(x^{2}+y^{2})}{2L_{1}L_{2}})\\\theta _{3}=\arcsin(\frac{z}{\sqrt{x^{2}+y^{2}+z^{2}}})\end{matrix}\right." />
 
 Также уравнение для <img src="https://latex.codecogs.com/svg.image?\theta&space;_{3}" title="\theta _{3}" /> может быть задано в виде:
