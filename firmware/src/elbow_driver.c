@@ -5,7 +5,7 @@
 
 #define BB_DRIVER       1
 #define RED_DRIVER      2
-#define DRIVER          RED_DRIVER
+#define DRIVER          BB_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -34,7 +34,6 @@
 
 	#define RIGHT_UP		PAL_LINE(GPIOB,5)
 	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
-
 	#define RIGHT_PWM		PAL_LINE(GPIOC,7) // TIM3 CH2
 
 #endif
@@ -121,7 +120,7 @@ const angle_lim_t left_angle_lim = {
 
   const control_driver_t left_arm = {
     .line_control = left_control,
-    .arm_ctx = left_pwm_ctx
+    .pwm_setting_ctx = left_pwm_ctx
   };
 
   const close_conf_t left_close_conf = {
@@ -176,7 +175,7 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t right_arm = {
     .line_control = right_control,
-    .arm_ctx = right_pwm_ctx
+    .pwm_setting_ctx = right_pwm_ctx
 	};
 
   const close_conf_t right_close_conf = {
@@ -256,7 +255,7 @@ const angle_lim_t left_angle_lim = {
 
   const control_driver_t left_arm = {
     .line_control = left_control,
-    .arm_ctx = left_pwm_ctx
+    .pwm_setting_ctx = left_pwm_ctx
   };
 
   const close_conf_t left_close_conf = {
@@ -318,7 +317,7 @@ const angle_lim_t left_angle_lim = {
 
 	const control_driver_t right_arm = {
     .line_control = right_control,
-    .arm_ctx = right_pwm_ctx
+    .pwm_setting_ctx = right_pwm_ctx
 	};
 
   const close_conf_t right_close_conf = {

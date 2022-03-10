@@ -25,7 +25,7 @@ void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* 
 
 	palWriteLine(control->line_control.digit_1, PAL_LOW);
 	palWriteLine(control->line_control.digit_2, PAL_HIGH);
-  pwmEnableChannel(control->arm_ctx.driver_ptr, pwm_ch->ch_pwm_1, period);
+  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, period);
 
 }
 
@@ -38,7 +38,7 @@ void lld_bb_driver_reverse(const control_driver_t* control, const pwm_channel_t*
 
 	palWriteLine(control->line_control.digit_1, PAL_HIGH);
 	palWriteLine(control->line_control.digit_2, PAL_LOW);
-	pwmEnableChannel(control->arm_ctx.driver_ptr, pwm_ch->ch_pwm_1, period);
+	pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, period);
 
 }
 
@@ -51,7 +51,7 @@ void lld_bb_driver_off(const control_driver_t* control, const pwm_channel_t* pwm
 
 	palWriteLine(control->line_control.digit_1, PAL_LOW);
 	palWriteLine(control->line_control.digit_2, PAL_LOW);
-	pwmDisableChannel(control->arm_ctx.driver_ptr, pwm_ch->ch_pwm_1);
-	pwmDisableChannel(control->arm_ctx.driver_ptr, pwm_ch->ch_pwm_2);
+	pwmDisableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1);
+	pwmDisableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2);
 
 }

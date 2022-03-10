@@ -25,5 +25,6 @@ typedef struct{
 
 double PID_out(PID_t* reg, double dt);
 void PID_reset(PID_t* reg);
+void PID_err_calc (error_type_t *err_reg, float angle, float current_angle);
 
 #endif

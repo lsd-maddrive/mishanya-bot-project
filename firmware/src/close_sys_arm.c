@@ -3,20 +3,6 @@
 #define TIME_PREF 1/CH_CFG_ST_FREQUENCY
 
 
-typedef struct normalize_angle{
-    float	max_norm_angle;
-    float	min_norm_angle;
-    float	shift;
-    bool	zero_cross;
-}normalize_angle_t;
-
-
-static double normalize_angle (float min_angle, normalize_angle_t *arm_angle);
-static void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle);
-static void error_calculate (error_type_t *err_reg, float angle, float current_angle);
-
-
-
 /**
  * @brief lowlevel function sets the specified angle
  * @brief recieve the hand side, the goal angle, PID struct and arm driver struct
@@ -35,7 +21,7 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 
 	virtual_timer_t encoder_timer;
 
-  float pwm_period = arm_driver->arm[side].control.arm_ctx.pwm_conf.period;
+  float pwm_period = arm_driver->arm[side].control.pwm_setting_ctx.pwm_conf.period;
   float dead_zone = arm_driver->arm[side].close_conf.angle_dead_zone;
   float dt = arm_driver->arm[side].close_conf.dt;
   float min_angle = arm_driver->arm[side].close_conf.angle_lim.min_angle;
@@ -57,7 +43,10 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 		// bring the angle into the normalized range
 		current_angle = normalize_angle(min_angle, &arm_angle);
 
-		error_calculate(&PID->error, goal_angle, current_angle);
+    PID_err_calc(&PID->error, goal_angle, current_angle);
+
+    if(PID->error.P < 0)
+      PID->error.P *= -1;
 
 		delta_t = chVTGetSystemTime()-prev_time;
 
@@ -106,7 +95,7 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
  * @brief the function normalizes the angle interval
  * @brief recieve the initial angles and nirmalize struct
  */
-static void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle)
+void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle)
 {
 
 		if(min_angle>max_angle)
@@ -134,7 +123,7 @@ static void normalize_interval (float min_angle, float max_angle, normalize_angl
  * @brief recieve the initial minimum angle and nirmalize struct
  * @return angle inside the normalized interval
  */
-static double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
+double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
 {
 
 	double current_angle = Encoder_Read();
@@ -151,19 +140,5 @@ static double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
 		current_angle = current_angle - arm_angle->shift;
 
 	return current_angle;
-
-}
-
-/**
- * @brief error calculation function
- * @brief recieve the goal angle, current angle and error struct
- */
-static void error_calculate (error_type_t *err_reg, float angle, float current_angle)
-{
-
-	err_reg->P = angle-current_angle;
-
-	if(err_reg->P<0)
-		err_reg->P *=-1;
 
 }

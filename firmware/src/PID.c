@@ -32,3 +32,15 @@ void PID_reset(PID_t* reg)
   reg->error.prev_P = 0;
 
 }
+
+
+/**
+ * @brief error calculation function
+ * @brief recieve the setpoint, current point and error struct
+ */
+void PID_err_calc (error_type_t *err_reg, float setpoint, float current_point)
+{
+
+  err_reg->P = setpoint-current_point;
+
+}
