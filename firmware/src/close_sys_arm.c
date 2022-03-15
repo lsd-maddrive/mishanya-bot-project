@@ -2,7 +2,6 @@
 
 #define TIME_PREF 1/CH_CFG_ST_FREQUENCY
 
-
 /**
  * @brief lowlevel function sets the specified angle
  * @brief recieve the hand side, the goal angle, PID struct and arm driver struct
@@ -21,11 +20,13 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 
 	virtual_timer_t encoder_timer;
 
+
   float pwm_period = arm_driver->arm[side].control.pwm_setting_ctx.pwm_conf.period;
   float dead_zone = arm_driver->arm[side].close_conf.angle_dead_zone;
   float dt = arm_driver->arm[side].close_conf.dt;
   float min_angle = arm_driver->arm[side].close_conf.angle_lim.min_angle;
   float max_angle = arm_driver->arm[side].close_conf.angle_lim.max_angle;
+
 	float prev_time = 0;
 	float current_angle = 0;
 	float period = 0;
@@ -65,20 +66,20 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 		{
 
 			if(current_angle<goal_angle)
-				arm_driver->down(side, period);
+				arm_driver->down(side, (uint16_t)period);
 
 			else
-				arm_driver->up(side, period);
+				arm_driver->up(side, (uint16_t)period);
 
 		}
 		else if(side==RIGHT)
 		{
 
 			if(current_angle<goal_angle)
-				arm_driver->up(side, period);
+				arm_driver->up(side, (uint16_t)period);
 
 			else
-				arm_driver->down(side, period);
+				arm_driver->down(side, (uint16_t)period);
 
 		}
 

@@ -23,6 +23,10 @@ static void testsRoutines(void)
     test_normalize();
   #endif
 
+  #if(PROGRAM_TEST_PID)
+    test_PID();
+  #endif
+
   #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CLOSE_SYS)
     test_close_sys();
   #endif

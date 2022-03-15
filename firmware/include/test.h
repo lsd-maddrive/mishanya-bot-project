@@ -45,4 +45,11 @@ void test_lld_bb(void);
  */
 void test_lld_red(void);
 
+/*********** lld tests ***********/
+
+/**
+ * @brief reset PID
+ */
+void test_PID(void);
+
 #endif

@@ -29,11 +29,14 @@ void test_normalize(void)
   sdRead(&SD2, buf, 3);
   float max_angle = atoi(buf);
 
+  dbgprintf("minimum angle: %.4f\r\n", min_angle);
+  dbgprintf("maximum angle: %.4f\r\n", max_angle);
+
   // convert the angle range so that it starts from zero
   normalize_interval(min_angle, max_angle, &arm_angle);
 
-  dbgprintf("minimum normalized angle: %.4f\r\n", min_angle);
-  dbgprintf("maximum normalized angle: %.4f\r\n", max_angle);
+  dbgprintf("minimum normalized angle: %.4f\r\n", arm_angle.min_norm_angle);
+  dbgprintf("maximum normalized angle: %.4f\r\n", arm_angle.max_norm_angle);
 
   while(1)
   {
@@ -48,9 +51,6 @@ void test_normalize(void)
     if(rcv_data == 'b')
       break;
   }
-
-
-
 
 
 }
