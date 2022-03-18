@@ -1,3 +1,5 @@
+Для омниколёс:
+
 <img src="Alpha.png"> - <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a>
 <img src="Omega.png"> - <a href="https://www.codecogs.com/eqnedit.php?latex=\Omega" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Omega" title="\Omega" /></a>
 <img src="Vx_Vy.png"> - <a href="https://www.codecogs.com/eqnedit.php?latex=V_{x},V_{y}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{x},V_{y}" title="V_{x},V_{y}" /></a>
@@ -60,3 +62,6 @@
 
 <img src="Vx_Vy_Omega_to_wa_wb_wc.png"> - <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{bmatrix}\omega_{a}\\\omega_{b}&space;\\&space;\omega_{c}\end{bmatrix}&space;=&space;\frac{1}{r}&space;\begin{bmatrix}\cos(&space;\alpha&space;)&\sin(&space;\alpha&space;)&L&space;\\&space;-\cos(&space;\alpha&plus;&space;\theta&space;_{1})&-\sin(&space;\alpha&plus;&space;\theta&space;_{1})&L&space;\\&space;-\sin(&space;\alpha&plus;&space;\theta&space;_{2})&\cos(&space;\alpha&plus;&space;\theta&space;_{2})&L&space;\end{bmatrix}&space;\begin{bmatrix}V_{x}\\V_{y}\\\Omega\end{bmatrix}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}\omega_{a}\\\omega_{b}&space;\\&space;\omega_{c}\end{bmatrix}&space;=&space;\frac{1}{r}&space;\begin{bmatrix}\cos(&space;\alpha&space;)&\sin(&space;\alpha&space;)&L&space;\\&space;-\cos(&space;\alpha&plus;&space;\theta&space;_{1})&-\sin(&space;\alpha&plus;&space;\theta&space;_{1})&L&space;\\&space;-\sin(&space;\alpha&plus;&space;\theta&space;_{2})&\cos(&space;\alpha&plus;&space;\theta&space;_{2})&L&space;\end{bmatrix}&space;\begin{bmatrix}V_{x}\\V_{y}\\\Omega\end{bmatrix}" title="\begin{bmatrix}\omega_{a}\\\omega_{b} \\ \omega_{c}\end{bmatrix} = \frac{1}{r} \begin{bmatrix}\cos( \alpha )&\sin( \alpha )&L \\ -\cos( \alpha+ \theta _{1})&-\sin( \alpha+ \theta _{1})&L \\ -\sin( \alpha+ \theta _{2})&\cos( \alpha+ \theta _{2})&L \end{bmatrix} \begin{bmatrix}V_{x}\\V_{y}\\\Omega\end{bmatrix}" /></a>
 </details>
+
+Для руки:
+

@@ -230,3 +230,6 @@
 <img src="https://latex.codecogs.com/svg.image?\theta_{2}&space;=&space;\pi&space;-&space;\arccos(\frac{L_{1}^2&space;&plus;&space;L_{2}^2&space;-&space;d}{2\cdot&space;L_{1}&space;\cdot&space;L_{2}})" title="\theta_{2} = \pi - \arccos(\frac{L_{1}^2 + L_{2}^2 - d}{2\cdot L_{1} \cdot L_{2}})" />
 
 </details>
+
+###
+Для проверки работоспособности можно воспользоваться скриптом [Proverka.m](Script/Proverka.m)
