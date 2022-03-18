@@ -1,5 +1,3 @@
-*.dep
-*build*
-*.vscode
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:6e3ed2530f2dc1443f81f971890ae2dd6648f9c4547656af425526355b7bd1f0
+size 30

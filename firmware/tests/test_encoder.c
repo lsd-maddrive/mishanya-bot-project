@@ -1,22 +1,3 @@
-#include <serial.h>
-#include <test.h>
-#include <encoder.h>
-
-
-
-void test_abs_encoder(void)
-{
-
-  float angle = 0;
-  Encoder_init();
-  debug_stream_init();
-
-  while (1)
-  {
-    chThdSleepMilliseconds(100);
-    angle = Encoder_Read();
-
-    dbgprintf("angle=%.4f\r\n", angle);
-  }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7936a5648b1b3b205d1d6c5ac25031d61b0761c95a615c71aaedfc76fa2bea62
+size 279

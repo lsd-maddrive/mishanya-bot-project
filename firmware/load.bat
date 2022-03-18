@@ -1,8 +1,3 @@
-
-set BIN="%~dp0/build/ch.bin"
-set "BIN=%BIN:\=/%"
-
-openocd -s "%CHIBISTUDIO%/tools/openocd/scripts" -f board/st_nucleo_f4.cfg -c "program %BIN% reset exit 0x08000000"
-
-:pause
-sleep 2
+version https://git-lfs.github.com/spec/v1
+oid sha256:f9317c8dbe469fff60b07417d3f2cada3717abd90056134032eef83f80b29faf
+size 191

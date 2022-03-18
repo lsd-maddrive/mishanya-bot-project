@@ -1,14 +1,3 @@
-#ifndef INCLUDE_SERIAL_H
-#define INCLUDE_SERIAL_H
-
-/**
- * @brief   Initialize serial port
- */
-void debug_stream_init(void);
-
-/**
-* @brief    Print
-*/
-void dbgprintf( const char* format, ... );
-
-#endif
+version https://git-lfs.github.com/spec/v1
+oid sha256:cf264e9336774e436d236f3290b47d297702d883d53ff8451e55c0816be01358
+size 201

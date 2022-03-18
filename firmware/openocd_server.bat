@@ -1,6 +1,3 @@
-
-set BIN="%~dp0/build/ch.elf"
-set "BIN=%BIN:\=/%"
- 
-openocd -s "%CHIBISTUDIO%/tools/openocd/scripts" -f board/st_nucleo_f4.cfg -c "stm32f4x.cpu configure -rtos auto;"
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:43edeaf5010e8863e87dd50dedce6a55970ffe262c1a738e3f9e040b285fef66
+size 174

@@ -1,24 +1,3 @@
-*************************************************************
-FileName = PCB1.GBR
-AutoAperture = True
-*************************************************************
-Generating : Top Overlay
-      File : PCB1.GTO
-
-    Adding Layer      : Top Overlay
-
-    Adding Layer      : Mechanical 1
-
-    Adding Layer      : Mechanical 13
-
-    Adding Layer      : Mechanical 15
-
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-    D14
-*************************************************************
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac8f2b2c4c85ca571ef90061276bf345b10aa3024bd2f2ac3110b30ad5a281e5
+size 483

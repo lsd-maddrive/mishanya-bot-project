@@ -1,15 +1,3 @@
-#ifndef INCLUDE_LLD_RED_DRIVER_H
-#define INCLUDE_LLD_RED_DRIVER_H
-
-#include <common.h>
-#include <arm_driver.h>
-
-
-void lld_red_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx);
-void lld_red_driver_direct(const control_driver_t *control, const pwm_channel_t *pwm_ch, uint16_t period);
-void lld_red_driver_reverse(const control_driver_t *control, const pwm_channel_t *pwm_ch, uint16_t period);
-void lld_red_driver_off(const control_driver_t *control, const pwm_channel_t *pwm_ch);
-
-
-
-#endif
+version https://git-lfs.github.com/spec/v1
+oid sha256:5cca816f06eb88972cd607272e455ed1b8ae131efa458dfacce50e78d03b0cd1
+size 504
