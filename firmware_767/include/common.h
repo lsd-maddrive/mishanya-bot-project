@@ -13,8 +13,9 @@
 #define PROGRAM_TEST_SERVO_RIGHT_HAND 3
 #define PROGRAM_TEST_SERVO_RIGHT_WRIST 4
 #define PROGRAM_TEST_SERVO_NONLINEAR 5
+#define PROGRAM_TEST_BB_DRIVER 6
 
-#define MAIN_PROGRAM PROGRAM_TEST_SERVO_NONLINEAR
+#define MAIN_PROGRAM PROGRAM_TEST_BB_DRIVER
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

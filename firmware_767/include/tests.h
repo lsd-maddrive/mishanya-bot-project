@@ -14,5 +14,8 @@ void test_lld_servo(type_servo servo);
  * @args servo is pointer to struct left/right_hand/wrist
  */
 void test_lld_nonlinear(type_servo servo);
-
+/*
+ * @brief Test of bb_driver
+ */
+void test_lld_bb(void);
 #endif
