@@ -111,7 +111,7 @@
 
 <img src="Rot_Z.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{''}\\y^{''}\\z^{''}\end{bmatrix}&space;=&space;\begin{bmatrix}cos(&space;\theta&space;_{1}&space;)&-sin(&space;\theta&space;_{1}&space;)&0\\sin(&space;\theta&space;_{1})&cos(&space;\theta&space;_{1}&space;)&0\\0&0&1\end{bmatrix}&space;\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}=\begin{bmatrix}cos(&space;\theta&space;_{1}&space;)&-sin(&space;\theta&space;_{1}&space;)&0\\sin(&space;\theta&space;_{1})&cos(&space;\theta&space;_{1}&space;)&0\\0&0&1\end{bmatrix}\begin{bmatrix}L_{1}&space;&plus;&space;L_{2}\cdot&space;\cos(\theta&space;_{2})\\L_{2}\cdot\cos(\theta&space;_{3})\cdot\sin(\theta&space;_{2})\\L_{2}\cdot\sin(\theta&space;_{2})\cdot\sin(\theta&space;_{3})\end{bmatrix}" title="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{''}\\y^{''}\\z^{''}\end{bmatrix} = \begin{bmatrix}cos( \theta _{1} )&-sin( \theta _{1} )&0\\sin( \theta _{1})&cos( \theta _{1} )&0\\0&0&1\end{bmatrix} \begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}=\begin{bmatrix}cos( \theta _{1} )&-sin( \theta _{1} )&0\\sin( \theta _{1})&cos( \theta _{1} )&0\\0&0&1\end{bmatrix}\begin{bmatrix}L_{1} + L_{2}\cdot \cos(\theta _{2})\\L_{2}\cdot\cos(\theta _{3})\cdot\sin(\theta _{2})\\L_{2}\cdot\sin(\theta _{2})\cdot\sin(\theta _{3})\end{bmatrix}" />
 
-<img src="Two_sphere.png"> - <img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\(x-x_{0})^{2}&plus;(y-y_{0})^{2}&plus;(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." />
+<img src="Two_Sphere.png"> - <img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\(x-x_{0})^{2}&plus;(y-y_{0})^{2}&plus;(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." />
 
 <img src="Quad_eq.png"> - <img src="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}&plus;x_{0}^{2}&plus;y^{2}-2yy_{0}&plus;y_{0}^{2}&plus;z^{2}-2zz_{0}&plus;z_{0}^{2}=L_{2}^{2}" title="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}+x_{0}^{2}+y^{2}-2yy_{0}+y_{0}^{2}+z^{2}-2zz_{0}+z_{0}^{2}=L_{2}^{2}" />
 
@@ -165,7 +165,7 @@
 
 <img src="betta.png"> - <img src="https://latex.codecogs.com/svg.image?\beta&space;" title="\beta " />
 
-<img src="Law_of_cos.png"> - <img src="https://latex.codecogs.com/svg.image?r^2&space;=&space;L_{1}^2&space;&plus;&space;L_{2}^2&space;-2\cdot&space;L_{1}&space;\cdot&space;L_{2}&space;\cdot&space;\cos&space;\beta" title="r^2 = L_{1}^2 + L_{2}^2 -2\cdot L_{1} \cdot L_{2} \cdot \cos \beta" />
+<img src="law_of_cos.png"> - <img src="https://latex.codecogs.com/svg.image?r^2&space;=&space;L_{1}^2&space;&plus;&space;L_{2}^2&space;-2\cdot&space;L_{1}&space;\cdot&space;L_{2}&space;\cdot&space;\cos&space;\beta" title="r^2 = L_{1}^2 + L_{2}^2 -2\cdot L_{1} \cdot L_{2} \cdot \cos \beta" />
 
 <img src="betta_arccos.png"> - <img src="https://latex.codecogs.com/svg.image?\beta&space;&space;=&space;\arccos(\frac{L_{1}^2&space;&plus;&space;L_{2}^2&space;-&space;r^2}{2\cdot&space;L_{1}&space;\cdot&space;L_{2}})" title="https://latex.codecogs.com/svg.image?\beta = \arccos(\frac{L_{1}^2 + L_{2}^2 - r^2}{2\cdot L_{1} \cdot L_{2}})" />
 
