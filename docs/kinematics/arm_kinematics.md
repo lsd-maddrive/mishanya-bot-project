@@ -8,15 +8,11 @@
 
 | Обозначение| Смысл| Значение, ед. изм.|
 | -------------------|:---------------:| ---------:|
-| *XY*      | абсолютная система координат | м |
-| *X'Y'*      | связанная система координат      |   м |
-| <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha" title="\alpha" /></a> | угол поворота основания      |    рад |
-| <a href="https://www.codecogs.com/eqnedit.php?latex=\Omega" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Omega" title="\Omega" /></a>      | угловая скорость основания | рад/с |
-| *L*      | радиус основания | 0.40643 м |
-| <a href="https://www.codecogs.com/eqnedit.php?latex=V_{x},V_{y}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{x},V_{y}" title="V_{x},V_{y}" /></a>      | линейные скорости основания в абсолютной системе | м/с |
-|<a href="https://www.codecogs.com/eqnedit.php?latex=V_{a},V_{b},V_{c}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{a},V_{b},V_{c}" title="V_{a},V_{b},V_{c}" /></a>|линейные скорости омниколёс|м/с|
-|<a href="https://www.codecogs.com/eqnedit.php?latex=\omega_{a},\omega_{b},\omega_{c}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\omega_{a},\omega_{b},\omega_{c}" title="\omega_{a},\omega_{b},\omega_{c}" /></a>|угловые скорости омниколёс|рад/с|
-|*r*|радиус омниколёс|0.061 м|
+| *X,Y,Z / x,y,z*      | абсолютные координаты | м |
+| *X',Y',Z' / x',y',z',X'',Y'',Z'' / x'',y'',z''*      | преобразованные координаты      |   м |
+| <img src="Formul/theta1.png">, <img src="Formul/theta2.png">, <img src="Formul/theta3.png"> | углы поворота звеньев манипулятора      |    рад |
+| *L1*      | Длина первого звена | 0.258 м |
+|   *L2*   | Длина второго звена | 0.236 м |
 
 </details>
 
