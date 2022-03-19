@@ -137,7 +137,27 @@
 
 <img src="Quad_eq_for_y.png"> - <img src="https://latex.codecogs.com/svg.image?(A^{2}&plus;B^{2})y^{2}&plus;2DBy&plus;(D^{2}-A^{2}L_{1}^{2})=0" title="https://latex.codecogs.com/svg.image?(A^{2}+B^{2})y^{2}+2DBy+(D^{2}-A^{2}L_{1}^{2})=0" />
 
+<img src="theta1_arctg.png"> - <img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}=\arctan(\frac{y_{m}}{x_{m}})" title="https://latex.codecogs.com/svg.image?\theta _{1}=\arctan(\frac{y_{m}}{x_{m}})" />
 
+<img src="det_matrix_xyz.png"> - <img src="https://latex.codecogs.com/svg.image?\left|&space;\begin{matrix}x-x_1&y-y_1&z-z_1\\&space;x_2-x_1&y_2-y_1&z_2-z_1\\&space;x_3-x_1&y_3-y_1&z_3-z_1\\&space;\end{matrix}\right|=0." title="https://latex.codecogs.com/svg.image?\left| \begin{matrix}x-x_1&y-y_1&z-z_1\\ x_2-x_1&y_2-y_1&z_2-z_1\\ x_3-x_1&y_3-y_1&z_3-z_1\\ \end{matrix}\right|=0." />
+
+<img src="x13_y13_z13.png"> - <img src="https://latex.codecogs.com/svg.image?x_{1-3},&space;y_{1-3},&space;z_{1-3}" title="https://latex.codecogs.com/svg.image?x_{1-3}, y_{1-3}, z_{1-3}" />
+
+<img src="My_plane.png"> - <img src="https://latex.codecogs.com/svg.image?z_{0}y_{m}x&space;&plus;&space;(-z_{0}x_{m})y&space;&plus;(-x_{0}y_{m}&plus;x_{m}y_{0})z&space;=&space;0" title="https://latex.codecogs.com/svg.image?z_{0}y_{m}x + (-z_{0}x_{m})y +(-x_{0}y_{m}+x_{m}y_{0})z = 0" />
+
+<img src="cos_alpha_plane.png"> - <img src="https://latex.codecogs.com/svg.image?\cos(\alpha&space;)=\frac{\left|(x_{1}x_{2}&plus;y_{1}y_{2}&plus;z_{1}z_{2})\right|}{\sqrt{x_{1}^{2}&plus;y_{1}^{2}&space;&plus;&space;z_{1}^{2}}\sqrt{x_{2}^{2}&plus;y_{2}^{2}&space;&plus;&space;z_{2}^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\alpha )=\frac{\left|(x_{1}x_{2}+y_{1}y_{2}+z_{1}z_{2})\right|}{\sqrt{x_{1}^{2}+y_{1}^{2} + z_{1}^{2}}\sqrt{x_{2}^{2}+y_{2}^{2} + z_{2}^{2}}}" />
+
+<img src="cos_alpha_plane_out_mod.png"> - <img src="https://latex.codecogs.com/svg.image?\cos(\alpha&space;)=\frac{(x_{1}x_{2}&plus;y_{1}y_{2}&plus;z_{1}z_{2})}{\sqrt{x_{1}^{2}&plus;y_{1}^{2}&space;&plus;&space;z_{1}^{2}}\sqrt{x_{2}^{2}&plus;y_{2}^{2}&space;&plus;&space;z_{2}^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\alpha )=\frac{(x_{1}x_{2}+y_{1}y_{2}+z_{1}z_{2})}{\sqrt{x_{1}^{2}+y_{1}^{2} + z_{1}^{2}}\sqrt{x_{2}^{2}+y_{2}^{2} + z_{2}^{2}}}" />
+
+<img src="cos_theta3.png"> - <img src="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}&space;&plus;&space;(x_{0}y_{m}-x_{m}y_{0})^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2} + (x_{0}y_{m}-x_{m}y_{0})^{2}}}" />
+
+<img src="cos_theta3_sin.png"> - <img src="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\sin(\frac{\pi&space;}{2}-\theta_{3})" title="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\sin(\frac{\pi }{2}-\theta_{3})" />
+
+<img src="sin_arctg.png"> - <img src="https://latex.codecogs.com/svg.image?\sin(\arctan(\alpha&space;))=\frac{\alpha&space;}{\sqrt{1&plus;\alpha&space;^{2}}}" title="https://latex.codecogs.com/svg.image?\sin(\arctan(\alpha ))=\frac{\alpha }{\sqrt{1+\alpha ^{2}}}" />
+
+<img src="Transform_sqrt.png"> - <img src="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}&space;&plus;&space;(x_{0}y_{m}-x_{m}y_{0})^{2}}}=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}\sqrt{1&space;&plus;&space;\frac{(x_{0}y_{m}-x_{m}y_{0})^{2}}{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}}" title="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2} + (x_{0}y_{m}-x_{m}y_{0})^{2}}}=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}\sqrt{1 + \frac{(x_{0}y_{m}-x_{m}y_{0})^{2}}{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}}" />
+
+<img src="Transform_sqrt_2.png"> - <img src="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}\sqrt{1&space;&plus;&space;(\frac{(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})^{2}}}=\frac{\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}}}{\sqrt{1&space;&plus;&space;(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})^{2}}}" title="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}\sqrt{1 + (\frac{(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})^{2}}}=\frac{\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}}}{\sqrt{1 + (\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})^{2}}}" />
 
 <img src="pi_theta3_arctg.png"> - <img src="https://latex.codecogs.com/svg.image?\frac{\pi}{2}-\theta_{3}=\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})" title="https://latex.codecogs.com/svg.image?\frac{\pi}{2}-\theta_{3}=\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})" />
 

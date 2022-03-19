@@ -164,45 +164,45 @@
 
 или если нужно избежать возможное деление на ноль
 
- <img src="https://latex.codecogs.com/svg.image?x_{m_{1,2}}&space;=&space;\sqrt{L_{1}^{2}-y_{m_{1,2}}^{2}}" title="https://latex.codecogs.com/svg.image?x_{m_{1,2}} = \sqrt{L_{1}^{2}-y_{m_{1,2}}^{2}}" />
+<img src="Formul/xm12_sqrt.png">
 
 Зная координаты локтя, можно найти угол поворота первого звена, как:
 
-<img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}=\arctan(\frac{y_{m}}{x_{m}})" title="https://latex.codecogs.com/svg.image?\theta _{1}=\arctan(\frac{y_{m}}{x_{m}})" />
+<img src="Formul/theta1_arctg.png">
 
-Для нахождения угла <img src="https://latex.codecogs.com/svg.image?\theta_{3}" title="https://latex.codecogs.com/svg.image?\theta_{3}" /> вспоним сначала, что это поворот плоскости манипулятора вокруг первого звена, значит нахождения этого угла можно поставить как задачу расчёта угла между плоскостями: исходной(XY) и новой(желаемой), которые имеют общую прямую пересечения(которая проходит через первое звено). Плоскость можно задавать с помощью координат нормали к этой плоскости. Для исходной плоскости это будет единичный вектор сонаправленный с осью Z. Для получения уравнения координат нормали к новой плоскости, построим сначала уравнение самой плоскости. Для этого используем уравнение:
+Для нахождения угла <img src="Formul/theta3.png"> вспоним сначала, что это поворот плоскости манипулятора вокруг первого звена, значит нахождения этого угла можно поставить как задачу расчёта угла между плоскостями: исходной(XY) и новой(желаемой), которые имеют общую прямую пересечения(которая проходит через первое звено). Плоскость можно задавать с помощью координат нормали к этой плоскости. Для исходной плоскости это будет единичный вектор сонаправленный с осью Z. Для получения уравнения координат нормали к новой плоскости, построим сначала уравнение самой плоскости. Для этого используем уравнение:
 
-<img src="https://latex.codecogs.com/svg.image?\left|&space;\begin{matrix}x-x_1&y-y_1&z-z_1\\&space;x_2-x_1&y_2-y_1&z_2-z_1\\&space;x_3-x_1&y_3-y_1&z_3-z_1\\&space;\end{matrix}\right|=0." title="https://latex.codecogs.com/svg.image?\left| \begin{matrix}x-x_1&y-y_1&z-z_1\\ x_2-x_1&y_2-y_1&z_2-z_1\\ x_3-x_1&y_3-y_1&z_3-z_1\\ \end{matrix}\right|=0." />
+<img src="Formul/det_matrix_xyz.png">
 
-где вертикальные черты означают определитель, <img src="https://latex.codecogs.com/svg.image?x_{1-3},&space;y_{1-3},&space;z_{1-3}" title="https://latex.codecogs.com/svg.image?x_{1-3}, y_{1-3}, z_{1-3}" /> - координаты трёх точек, по которым строится плоскость. В качестве трёх точек возьмём начало координат, координаты локтя, желаемую точку, в итоге получим уравнение желамеой плоскости манипулятора:
+где вертикальные черты означают определитель, <img src="Formul/x13_y13_z13.png"> - координаты трёх точек, по которым строится плоскость. В качестве трёх точек возьмём начало координат, координаты локтя, желаемую точку, в итоге получим уравнение желамеой плоскости манипулятора:
 
-<img src="https://latex.codecogs.com/svg.image?z_{0}y_{m}x&space;&plus;&space;(-z_{0}x_{m})y&space;&plus;(-x_{0}y_{m}&plus;x_{m}y_{0})z&space;=&space;0" title="https://latex.codecogs.com/svg.image?z_{0}y_{m}x + (-z_{0}x_{m})y +(-x_{0}y_{m}+x_{m}y_{0})z = 0" />
+<img src="Formul/My_plane.png">
 
 коэффициенты при переменных - и будут координатами нормали к данной плоскости. Тогда мы можем воспользоваться формулой косинуса угла между пересекающимеся плоскостями по координатам их нормали:
 
-<img src="https://latex.codecogs.com/svg.image?\cos(\alpha&space;)=\frac{\left|(x_{1}x_{2}&plus;y_{1}y_{2}&plus;z_{1}z_{2})\right|}{\sqrt{x_{1}^{2}&plus;y_{1}^{2}&space;&plus;&space;z_{1}^{2}}\sqrt{x_{2}^{2}&plus;y_{2}^{2}&space;&plus;&space;z_{2}^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\alpha )=\frac{\left|(x_{1}x_{2}+y_{1}y_{2}+z_{1}z_{2})\right|}{\sqrt{x_{1}^{2}+y_{1}^{2} + z_{1}^{2}}\sqrt{x_{2}^{2}+y_{2}^{2} + z_{2}^{2}}}" />
+<img src="Formul/cos_alpha_plane.png">
 
 так как нам важен знак(четверть угла), то воспользуемся формулой:
 
-<img src="https://latex.codecogs.com/svg.image?\cos(\alpha&space;)=\frac{(x_{1}x_{2}&plus;y_{1}y_{2}&plus;z_{1}z_{2})}{\sqrt{x_{1}^{2}&plus;y_{1}^{2}&space;&plus;&space;z_{1}^{2}}\sqrt{x_{2}^{2}&plus;y_{2}^{2}&space;&plus;&space;z_{2}^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\alpha )=\frac{(x_{1}x_{2}+y_{1}y_{2}+z_{1}z_{2})}{\sqrt{x_{1}^{2}+y_{1}^{2} + z_{1}^{2}}\sqrt{x_{2}^{2}+y_{2}^{2} + z_{2}^{2}}}" />
+<img src="Formul/cos_alpha_plane_out_mod.png">
 
 Подставляя координаты наших нормалей получим:
 
-<img src="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}&space;&plus;&space;(x_{0}y_{m}-x_{m}y_{0})^{2}}}" title="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2} + (x_{0}y_{m}-x_{m}y_{0})^{2}}}" />
+<img src="Formul/cos_theta3.png">
 
 Из-за громоздкости выражений и расчётов был использован скрипт для символьных выражений [Ang_plosk.m](Script/Ang_plosk.m), который выводит выражения выше. От арккосинуса перейдём к арктангенсу, так как он позволяет сократить выражение, а также имеет специлизированные функции, защищающие от случай деления на ноль. Для этого сделаем преобразование:
 
-<img src="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\sin(\frac{\pi&space;}{2}-\theta_{3})" title="https://latex.codecogs.com/svg.image?\cos(\theta_{3})=\sin(\frac{\pi }{2}-\theta_{3})" />
+<img src="Formul/cos_theta3_sin.png">
 
 Используем выражение:
 
-<img src="https://latex.codecogs.com/svg.image?\sin(\arctan(\alpha&space;))=\frac{\alpha&space;}{\sqrt{1&plus;\alpha&space;^{2}}}" title="https://latex.codecogs.com/svg.image?\sin(\arctan(\alpha ))=\frac{\alpha }{\sqrt{1+\alpha ^{2}}}" />
+<img src="Formul/sin_arctg.png">
 
 Для этого сделаем преобразование:
 
-<img src="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}&space;&plus;&space;(x_{0}y_{m}-x_{m}y_{0})^{2}}}=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}\sqrt{1&space;&plus;&space;\frac{(x_{0}y_{m}-x_{m}y_{0})^{2}}{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}}" title="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2} + (x_{0}y_{m}-x_{m}y_{0})^{2}}}=\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}\sqrt{1 + \frac{(x_{0}y_{m}-x_{m}y_{0})^{2}}{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}}" />
+<img src="Formul/Transform_sqrt.png">
 
-<img src="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}\sqrt{1&space;&plus;&space;(\frac{(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})^{2}}}=\frac{\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}}}{\sqrt{1&space;&plus;&space;(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})^{2}}}" title="https://latex.codecogs.com/svg.image?\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}\sqrt{1 + (\frac{(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})^{2}}}=\frac{\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}}}{\sqrt{1 + (\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})^{2}}}" />
+<img src="Formul/Transform_sqrt_2.png">
 
 минус в одной из скобок знаменателя был добавлен так как дробь стоит под квадратом, а в знаменателе корень, который не меняет знака
 
