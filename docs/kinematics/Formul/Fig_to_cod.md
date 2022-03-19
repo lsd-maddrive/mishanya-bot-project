@@ -65,3 +65,92 @@
 
 Для руки:
 
+<img src="Hand_dir_kinematic.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{cases}x&space;=&space;\cos(&space;\theta_{1})\cdot&space;(L_{1}&plus;L_{2}\cos(&space;\theta&space;_{2}))-L_{2}\cos(&space;\theta&space;_{3})\sin(&space;\theta_{1})\sin(&space;\theta_{2})\\y&space;=&space;\sin(&space;\theta_{1})\cdot&space;(L_{1}&plus;L_{2}\cos(&space;\theta&space;_{2}))&plus;L_{2}\cos(&space;\theta&space;_{1})\cos(&space;\theta_{3})\sin(&space;\theta_{2})\\z&space;=&space;L_{2}\sin(&space;\theta_{2})\sin(&space;\theta_{3})\end{cases}" title="https://latex.codecogs.com/svg.image?\begin{cases}x = \cos( \theta_{1})\cdot (L_{1}+L_{2}\cos( \theta _{2}))-L_{2}\cos( \theta _{3})\sin( \theta_{1})\sin( \theta_{2})\\y = \sin( \theta_{1})\cdot (L_{1}+L_{2}\cos( \theta _{2}))+L_{2}\cos( \theta _{1})\cos( \theta_{3})\sin( \theta_{2})\\z = L_{2}\sin( \theta_{2})\sin( \theta_{3})\end{cases}" />
+
+<img src="A_2x0.png"> - <img src="http://latex.codecogs.com/svg.latex?A&space;=&space;-2\cdot&space;x_{0}" title="http://latex.codecogs.com/svg.latex?A = -2\cdot x_{0}" />
+
+<img src="B_2y0.png"> - <img src="http://latex.codecogs.com/svg.latex?B&space;=&space;-2\cdot&space;y_{0}" title="http://latex.codecogs.com/svg.latex?B = -2\cdot y_{0}" />
+
+<img src="C_2z0.png"> - <img src="http://latex.codecogs.com/svg.latex?C&space;=&space;-2\cdot&space;z_{0}" title="http://latex.codecogs.com/svg.latex?C = -2\cdot z_{0}" />
+
+<img src="d_x02_y02_z02.png"> - <img src="http://latex.codecogs.com/svg.latex?d&space;=&space;x_{0}^{2}&space;&plus;&space;y_{0}^{2}&space;&plus;&space;z_{0}^{2}" title="http://latex.codecogs.com/svg.latex?d = x_{0}^{2} + y_{0}^{2} + z_{0}^{2}" />
+
+<img src="x0_y0_z0.png"> - <img src="http://latex.codecogs.com/svg.latex?x_{0},&space;y_{0},&space;z_{0}" title="http://latex.codecogs.com/svg.latex?x_{0}, y_{0}, z_{0}" />
+
+<img src="D_L12_L22_d.png"> - <img src="http://latex.codecogs.com/svg.latex?D&space;=&space;L_{1}^{2}&space;-&space;L_{2}^{2}&space;&plus;&space;d" title="http://latex.codecogs.com/svg.latex?D = L_{1}^{2} - L_{2}^{2} + d" />
+
+<img src="ym12.png"> - <img src="http://latex.codecogs.com/svg.latex?y_{m_{1,2}}&space;=&space;\frac{-2DB\pm&space;\sqrt{(2DB)^{2}-4(A^{2}&plus;B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}&plus;B^{2})}" title="http://latex.codecogs.com/svg.latex?y_{m_{1,2}} = \frac{-2DB\pm \sqrt{(2DB)^{2}-4(A^{2}+B^{2})(D^{2}-(AL_{1})^{2})}}{2(A^{2}+B^{2})}" />
+
+<img src="xm12_lin.png"> - <img src="http://latex.codecogs.com/svg.latex?x_{m_{1,2}}&space;=&space;\frac{-D-By_{m_{1,2}}}{A}" title="http://latex.codecogs.com/svg.latex?x_{m_{1,2}} = \frac{-D-By_{m_{1,2}}}{A}" />
+
+<img src="xm12_sqrt.png"> - <img src="https://latex.codecogs.com/svg.image?x_{m_{1,2}}&space;=&space;\sqrt{L_{1}^{2}-y_{m_{1,2}}^{2}}" title="https://latex.codecogs.com/svg.image?x_{m_{1,2}} = \sqrt{L_{1}^{2}-y_{m_{1,2}}^{2}}" />
+
+<img src="Hand_inv_kinematic.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}\theta&space;_{1}=\arctan(\frac{y_{m}}{x_{m}})\\\\\theta&space;_{2}=\pi&space;-\arccos(\frac{L_{1}^{2}&plus;L_{2}^{2}-d}{2L_{1}L_{2}})\\\\\theta&space;_{3}=\frac{\pi}{2}&space;-&space;\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})\end{matrix}\right." title="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}\theta _{1}=\arctan(\frac{y_{m}}{x_{m}})\\\\\theta _{2}=\pi -\arccos(\frac{L_{1}^{2}+L_{2}^{2}-d}{2L_{1}L_{2}})\\\\\theta _{3}=\frac{\pi}{2} - \arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})\end{matrix}\right." />
+
+<img src="theta2.png"> - <img src="https://latex.codecogs.com/svg.image?\theta_{2}" title="https://latex.codecogs.com/svg.image?\theta_{2}" />
+
+<img src="theta1.png"> - <img src="https://latex.codecogs.com/svg.image?\theta&space;_{1}" title="\theta _{1}" />
+
+<img src="XY_a1.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}X_{a1}=L_{1}\cdot&space;\sin(&space;\theta&space;_{1})\\Y_{a1}=L_{1}\cdot&space;\cos(&space;\theta&space;_{1})\end{matrix}\right." title="\left\{\begin{matrix}X_{a1}=L_{1}\cdot \sin( \theta _{1})\\Y_{a1}=L_{1}\cdot \cos( \theta _{1})\end{matrix}\right." />
+
+<img src="X1Y1_a2.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}X_{a2}^{'}=L_{2}\cdot&space;\sin(&space;\theta&space;_{2})\\Y_{a2}^{'}=L_{2}\cdot&space;\cos(&space;\theta&space;_{2})\end{matrix}\right." title="\left\{\begin{matrix}X_{a2}^{'}=L_{2}\cdot \sin( \theta _{2})\\Y_{a2}^{'}=L_{2}\cdot \cos( \theta _{2})\end{matrix}\right." />
+
+<img src="X11Y11_a2.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}X_{a2}^{''}\\Y_{a2}^{''}\end{bmatrix}&space;=&space;\begin{bmatrix}cos(&space;\theta&space;_{1}&space;)&-sin(&space;\theta&space;_{1}&space;)\\&space;sin(&space;\theta&space;_{1})&cos(&space;\theta&space;_{1}&space;)\end{bmatrix}&space;\begin{bmatrix}L_{2}\cdot&space;\sin(&space;\theta&space;_{2})\\L_{2}\cdot&space;\cos(&space;\theta&space;_{2})\end{bmatrix}" title="\begin{bmatrix}X_{a2}^{''}\\Y_{a2}^{''}\end{bmatrix} = \begin{bmatrix}cos( \theta _{1} )&-sin( \theta _{1} )\\ sin( \theta _{1})&cos( \theta _{1} )\end{bmatrix} \begin{bmatrix}L_{2}\cdot \sin( \theta _{2})\\L_{2}\cdot \cos( \theta _{2})\end{bmatrix}" />
+
+<img src="X11Y11_a2_sys.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}X_{a2}^{''}=L_{2}\cdot&space;\cos(&space;\theta&space;_{1}&space;&plus;&space;\theta&space;_{2})\\Y_{a2}^{''}=L_{2}\cdot&space;\sin(&space;\theta&space;_{1}&space;&plus;&space;\theta&space;_{2})\end{matrix}\right." title="\left\{\begin{matrix}X_{a2}^{''}=L_{2}\cdot \cos( \theta _{1} + \theta _{2})\\Y_{a2}^{''}=L_{2}\cdot \sin( \theta _{1} + \theta _{2})\end{matrix}\right." />
+
+<img src="XY_a2.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}X_{a2}=L_{1}\cdot&space;\cos(&space;\theta&space;_{1}&space;)&plus;L_{2}\cdot&space;\cos(&space;\theta&space;_{1}&space;&plus;&space;\theta&space;_{2})\\Y_{a2}=L_{1}\cdot&space;\sin(&space;\theta&space;_{1})&plus;L_{2}\cdot&space;\sin(&space;\theta&space;_{1}&space;&plus;&space;\theta&space;_{2})\end{matrix}\right." title="\left\{\begin{matrix}X_{a2}=L_{1}\cdot \cos( \theta _{1} )+L_{2}\cdot \cos( \theta _{1} + \theta _{2})\\Y_{a2}=L_{1}\cdot \sin( \theta _{1})+L_{2}\cdot \sin( \theta _{1} + \theta _{2})\end{matrix}\right." />
+
+<img src="theta3.png"> - <img src="https://latex.codecogs.com/svg.image?\theta_{3}" title="https://latex.codecogs.com/svg.image?\theta_{3}" />
+
+<img src="Sys_start_position.png"> - <img src="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}x=L_{1}&space;&plus;&space;L_{2}\cdot&space;\cos(\theta&space;_{2})\\y=L_{2}\cdot&space;\sin(\theta&space;_{2})\\z=0\end{matrix}\right." title="https://latex.codecogs.com/svg.image?\left\{\begin{matrix}x=L_{1} + L_{2}\cdot \cos(\theta _{2})\\y=L_{2}\cdot \sin(\theta _{2})\\z=0\end{matrix}\right." />
+
+<img src="Rot_X.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}&space;=&space;\begin{bmatrix}1&0&0\\0&cos(&space;\theta&space;_{3}&space;)&-sin(&space;\theta&space;_{3}&space;)\\0&sin(&space;\theta&space;_{3})&cos(&space;\theta&space;_{3}&space;)\end{bmatrix}&space;\begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}1&0&0\\0&cos(&space;\theta&space;_{3}&space;)&-sin(&space;\theta&space;_{3}&space;)\\0&sin(&space;\theta&space;_{3})&cos(&space;\theta&space;_{3}&space;)\end{bmatrix}&space;\begin{bmatrix}L_{1}&space;&plus;&space;L_{2}\cdot&space;\cos(\theta&space;_{2})\\L_{2}\cdot&space;\sin(\theta&space;_{2})\\0\end{bmatrix}" title="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix} = \begin{bmatrix}1&0&0\\0&cos( \theta _{3} )&-sin( \theta _{3} )\\0&sin( \theta _{3})&cos( \theta _{3} )\end{bmatrix} \begin{bmatrix}x\\y\\z\end{bmatrix}=\begin{bmatrix}1&0&0\\0&cos( \theta _{3} )&-sin( \theta _{3} )\\0&sin( \theta _{3})&cos( \theta _{3} )\end{bmatrix} \begin{bmatrix}L_{1} + L_{2}\cdot \cos(\theta _{2})\\L_{2}\cdot \sin(\theta _{2})\\0\end{bmatrix}" />
+
+<img src="x1_y1_z1.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}&space;=&space;\begin{bmatrix}L_{1}&space;&plus;&space;L_{2}\cdot&space;\cos(\theta&space;_{2})\\L_{2}\cdot\cos(\theta&space;_{3})\cdot\sin(\theta&space;_{2})\\L_{2}\cdot\sin(\theta&space;_{2})\cdot\sin(\theta&space;_{3})\end{bmatrix}" title="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix} = \begin{bmatrix}L_{1} + L_{2}\cdot \cos(\theta _{2})\\L_{2}\cdot\cos(\theta _{3})\cdot\sin(\theta _{2})\\L_{2}\cdot\sin(\theta _{2})\cdot\sin(\theta _{3})\end{bmatrix}" />
+
+<img src="Rot_Z.png"> - <img src="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{''}\\y^{''}\\z^{''}\end{bmatrix}&space;=&space;\begin{bmatrix}cos(&space;\theta&space;_{1}&space;)&-sin(&space;\theta&space;_{1}&space;)&0\\sin(&space;\theta&space;_{1})&cos(&space;\theta&space;_{1}&space;)&0\\0&0&1\end{bmatrix}&space;\begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}=\begin{bmatrix}cos(&space;\theta&space;_{1}&space;)&-sin(&space;\theta&space;_{1}&space;)&0\\sin(&space;\theta&space;_{1})&cos(&space;\theta&space;_{1}&space;)&0\\0&0&1\end{bmatrix}\begin{bmatrix}L_{1}&space;&plus;&space;L_{2}\cdot&space;\cos(\theta&space;_{2})\\L_{2}\cdot\cos(\theta&space;_{3})\cdot\sin(\theta&space;_{2})\\L_{2}\cdot\sin(\theta&space;_{2})\cdot\sin(\theta&space;_{3})\end{bmatrix}" title="https://latex.codecogs.com/svg.image?\begin{bmatrix}x^{''}\\y^{''}\\z^{''}\end{bmatrix} = \begin{bmatrix}cos( \theta _{1} )&-sin( \theta _{1} )&0\\sin( \theta _{1})&cos( \theta _{1} )&0\\0&0&1\end{bmatrix} \begin{bmatrix}x^{'}\\y^{'}\\z^{'}\end{bmatrix}=\begin{bmatrix}cos( \theta _{1} )&-sin( \theta _{1} )&0\\sin( \theta _{1})&cos( \theta _{1} )&0\\0&0&1\end{bmatrix}\begin{bmatrix}L_{1} + L_{2}\cdot \cos(\theta _{2})\\L_{2}\cdot\cos(\theta _{3})\cdot\sin(\theta _{2})\\L_{2}\cdot\sin(\theta _{2})\cdot\sin(\theta _{3})\end{bmatrix}" />
+
+<img src="Two_sphere.png"> - <img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\(x-x_{0})^{2}&plus;(y-y_{0})^{2}&plus;(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\(x-x_{0})^{2}+(y-y_{0})^{2}+(z-z_{0})^{2}=L_{2}^{2}\end{matrix}\right." />
+
+<img src="Quad_eq.png"> - <img src="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}&plus;x_{0}^{2}&plus;y^{2}-2yy_{0}&plus;y_{0}^{2}&plus;z^{2}-2zz_{0}&plus;z_{0}^{2}=L_{2}^{2}" title="http://latex.codecogs.com/svg.latex?x^{2}-2xx_{0}+x_{0}^{2}+y^{2}-2yy_{0}+y_{0}^{2}+z^{2}-2zz_{0}+z_{0}^{2}=L_{2}^{2}" />
+
+<img src="Quad_eq_d.png"> - <img src="http://latex.codecogs.com/svg.latex?-2xx_{0}-2yy_{0}-2zz_{0}&space;-&space;L_{2}^{2}&space;&plus;&space;L_{1}^{2}&space;&plus;&space;d=0" title="http://latex.codecogs.com/svg.latex?-2xx_{0}-2yy_{0}-2zz_{0} - L_{2}^{2} + L_{1}^{2} + d=0" />
+
+<img src="L22_L12_d.png"> - <img src="http://latex.codecogs.com/svg.latex?&space;-&space;L_{2}^{2}&space;&plus;&space;L_{1}^{2}&space;&plus;&space;d" title="http://latex.codecogs.com/svg.latex? - L_{2}^{2} + L_{1}^{2} + d" />
+
+<img src="Plane.png"> - <img src="http://latex.codecogs.com/svg.latex?Ax&space;&plus;&space;By&space;&plus;&space;Cz&space;&plus;&space;D=0" title="http://latex.codecogs.com/svg.latex?Ax + By + Cz + D=0" />
+
+<img src="Sphere_plane_z_zero.png"> - <img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}&plus;z^{2}=L_{1}^{2}\\Ax&space;&plus;&space;By&space;&plus;&space;Cz&space;&plus;&space;D=0\\z=0\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}+z^{2}=L_{1}^{2}\\Ax + By + Cz + D=0\\z=0\end{matrix}\right." />
+
+<img src="Circle_line.png"> - <img src="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}&plus;y^{2}=L_{1}^{2}\\Ax&space;&plus;&space;By&space;&plus;&space;D=0\end{matrix}\right." title="http://latex.codecogs.com/svg.latex?\left\{\begin{matrix}x^{2}+y^{2}=L_{1}^{2}\\Ax + By + D=0\end{matrix}\right." />
+
+<img src="xy_line.png"> - <img src="http://latex.codecogs.com/svg.latex?x&space;=&space;\frac{-D-By}{A}" title="http://latex.codecogs.com/svg.latex?x = \frac{-D-By}{A}" />
+
+<img src="Circle_only_y.png"> - <img src="http://latex.codecogs.com/svg.latex?(\frac{-D-By}{A})^{2}&plus;y^{2}=L_{1}^{2}" title="http://latex.codecogs.com/svg.latex?(\frac{-D-By}{A})^{2}+y^{2}=L_{1}^{2}" />
+
+<img src="Circle_only_y_2.png"> - <img src="https://latex.codecogs.com/svg.image?(\frac{D}{A}&plus;\frac{B}{A}y)^{2}&plus;y^{2}=L_{1}^{2}" title="https://latex.codecogs.com/svg.image?(\frac{D}{A}+\frac{B}{A}y)^{2}+y^{2}=L_{1}^{2}" />
+
+<img src="Circle_only_y_3.png"> - <img src="https://latex.codecogs.com/svg.image?(\frac{D}{A})^{2}&plus;2\frac{D}{A}\frac{B}{A}y&plus;(\frac{B}{A}y)^{2}&plus;y^{2}=L_{1}^{2}" title="https://latex.codecogs.com/svg.image?(\frac{D}{A})^{2}+2\frac{D}{A}\frac{B}{A}y+(\frac{B}{A}y)^{2}+y^{2}=L_{1}^{2}" />
+
+<img src="Circle_only_y_4.png"> - <img src="https://latex.codecogs.com/svg.image?D^{2}&plus;2DBy&plus;B^{2}y^{2}&plus;A^{2}y^{2}=A^{2}L_{1}^{2}" title="https://latex.codecogs.com/svg.image?D^{2}+2DBy+B^{2}y^{2}+A^{2}y^{2}=A^{2}L_{1}^{2}" />
+
+<img src="Quad_eq_for_y.png"> - <img src="https://latex.codecogs.com/svg.image?(A^{2}&plus;B^{2})y^{2}&plus;2DBy&plus;(D^{2}-A^{2}L_{1}^{2})=0" title="https://latex.codecogs.com/svg.image?(A^{2}+B^{2})y^{2}+2DBy+(D^{2}-A^{2}L_{1}^{2})=0" />
+
+
+
+<img src="pi_theta3_arctg.png"> - <img src="https://latex.codecogs.com/svg.image?\frac{\pi}{2}-\theta_{3}=\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})" title="https://latex.codecogs.com/svg.image?\frac{\pi}{2}-\theta_{3}=\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})" />
+
+<img src="theta3_pi_arctg.png"> - <img src="https://latex.codecogs.com/svg.image?\theta_{3}=\frac{\pi}{2}-\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}&plus;(y_{m}z_{0})^{2}}})" title="https://latex.codecogs.com/svg.image?\theta_{3}=\frac{\pi}{2}-\arctan(\frac{-(x_{0}y_{m}-x_{m}y_{0})}{\sqrt{(x_{m}z_{0})^{2}+(y_{m}z_{0})^{2}}})" />
+
+<img src="betta.png"> - <img src="https://latex.codecogs.com/svg.image?\beta&space;" title="\beta " />
+
+<img src="Law_of_cos.png"> - <img src="https://latex.codecogs.com/svg.image?r^2&space;=&space;L_{1}^2&space;&plus;&space;L_{2}^2&space;-2\cdot&space;L_{1}&space;\cdot&space;L_{2}&space;\cdot&space;\cos&space;\beta" title="r^2 = L_{1}^2 + L_{2}^2 -2\cdot L_{1} \cdot L_{2} \cdot \cos \beta" />
+
+<img src="betta_arccos.png"> - <img src="https://latex.codecogs.com/svg.image?\beta&space;&space;=&space;\arccos(\frac{L_{1}^2&space;&plus;&space;L_{2}^2&space;-&space;r^2}{2\cdot&space;L_{1}&space;\cdot&space;L_{2}})" title="https://latex.codecogs.com/svg.image?\beta = \arccos(\frac{L_{1}^2 + L_{2}^2 - r^2}{2\cdot L_{1} \cdot L_{2}})" />
+
+<img src="r2.png"> - <img src="https://latex.codecogs.com/svg.image?r^2" title="https://latex.codecogs.com/svg.image?r^2" />
+
+<img src="d.png"> - <img src="https://latex.codecogs.com/svg.image?d" title="https://latex.codecogs.com/svg.image?d" />
+
+<img src="theta2_pi_arccos.png"> - <img src="https://latex.codecogs.com/svg.image?\theta_{2}&space;=&space;\pi&space;-&space;\arccos(\frac{L_{1}^2&space;&plus;&space;L_{2}^2&space;-&space;d}{2\cdot&space;L_{1}&space;\cdot&space;L_{2}})" title="\theta_{2} = \pi - \arccos(\frac{L_{1}^2 + L_{2}^2 - d}{2\cdot L_{1} \cdot L_{2}})" />
