@@ -92,6 +92,44 @@ void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *ar
 
 }
 
+// void init(cs_ctx *ctx, ...) {
+
+// }
+
+// void update(cs_ctx *ctx, float dt) {
+// 	// Read angle
+
+// 	// Normalize angle
+
+// 	// Error computation
+
+// 	// Controller computation
+
+// 	// Control update
+
+// }
+
+
+// void set_target(cs_cts *ctx, float target) {
+
+// }
+
+// enum ArmPoint {
+// 	ELBOW = 0,
+// 	SHOULDER = 1,
+// }
+
+// void set_angle(ArmPoint pnt, ..) {
+// 	switch (pnt) {
+// 		case ELBOW:
+// 			set_angle_elbow()
+// 	}
+// }
+
+// void set_angle_elbow() {
+
+// }
+
 /**
  * @brief the function normalizes the angle interval
  * @brief recieve the initial angles and nirmalize struct

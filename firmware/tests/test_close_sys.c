@@ -55,3 +55,15 @@ void test_close_sys(void)
   }
 
 }
+
+
+// void thread_routine() {
+
+//   init();
+
+//   while (1) {
+//     float dt = cur_time - prev-update_time;
+//     update();
+//     sleep();
+//   }
+// }
