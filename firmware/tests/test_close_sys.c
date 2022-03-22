@@ -71,7 +71,7 @@ void test_close_sys(void)
   elbow_off(RIGHT);
   elbow_off(LEFT);
   chThdCreateStatic(send_angle,sizeof(serial_send),NORMALPRIO-2,
-                    elbow_update, NULL);
+                    serial_send, NULL);
   chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-1,
                     elbow_update, NULL);
 
