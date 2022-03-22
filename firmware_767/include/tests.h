@@ -17,5 +17,5 @@ void test_lld_nonlinear(type_servo servo);
 /*
  * @brief Test of bb_driver
  */
-void test_lld_bb(void);
+void test_lld_bb(type_wheel wheel);
 #endif

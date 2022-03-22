@@ -13,9 +13,9 @@
 #define PROGRAM_TEST_SERVO_RIGHT_HAND 3
 #define PROGRAM_TEST_SERVO_RIGHT_WRIST 4
 #define PROGRAM_TEST_SERVO_NONLINEAR 5
-#define PROGRAM_TEST_BB_DRIVER 6
+#define PROGRAM_TEST_BASE_WHEEL_1 6
 
-#define MAIN_PROGRAM PROGRAM_TEST_BB_DRIVER
+#define MAIN_PROGRAM PROGRAM_TEST_BASE_WHEEL_1
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */
@@ -24,5 +24,6 @@
                                  (x) > (max) ? (max) : (x))
 
 typedef enum {LEFT_HAND,LEFT_WRIST,RIGHT_HAND,RIGHT_WRIST}type_servo;
+typedef enum {WHEEL_1=0, WHEEL_2=1, WHEEL_3=2}type_wheel;
 
 #endif

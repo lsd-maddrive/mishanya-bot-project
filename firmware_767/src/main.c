@@ -13,8 +13,8 @@ static void testsRoutines(void)
        test_lld_servo(RIGHT_WRIST);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_NONLINEAR)
        test_lld_nonlinear(LEFT_WRIST);
-    #elif(MAIN_PROGRAM == PROGRAM_TEST_BB_DRIVER)
-       test_lld_bb();
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_BASE_WHEEL_1)
+       test_lld_bb(WHEEL_1);
     #endif
 }
 
