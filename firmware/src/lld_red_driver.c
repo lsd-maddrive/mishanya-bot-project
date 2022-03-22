@@ -1,6 +1,5 @@
 #include <lld_red_driver.h>
 
-
 /**
  * @brief   initialize bridge driver type red
  * @brief   recieve pin struct and pwm struct

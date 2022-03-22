@@ -13,6 +13,7 @@ void test_elbow(void)
   elbow_init();
   elbow_off(RIGHT);
   elbow_off(LEFT);
+
   while(1)
   {
     dbgprintf("--------------------\r\n");

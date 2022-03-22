@@ -2,20 +2,17 @@
 #include "lld_bb_driver.h"
 #include "lld_red_driver.h"
 
-
 /**
  * @brief   initialize arm driver
  * @brief   recieve arm struct
  */
-void driver_init(const arm_driver_ctx_t *arm_driver)
+void driver_init(arm_driver_ctx_t *arm_driver)
 {
-
 	line_driver_t pins_right = arm_driver->arm[RIGHT].control.line_control;
 	pwm_ctx_t pwm_ctx_right = arm_driver->arm[RIGHT].control.pwm_setting_ctx;
 
 	line_driver_t pins_left = arm_driver->arm[LEFT].control.line_control;
 	pwm_ctx_t pwm_ctx_left = arm_driver->arm[LEFT].control.pwm_setting_ctx;
-
 
 
 	if (arm_driver->type == RED)
@@ -41,7 +38,7 @@ void driver_init(const arm_driver_ctx_t *arm_driver)
  * @brief the function controls the raising of the hand up
  * @brief recieve the hand side, arm struct and the filling period
  */
-void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period)
+void arm_up(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 {
 
 	control_driver_t control = arm_driver->arm[side].control;
@@ -58,7 +55,7 @@ void arm_up(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period
  * @brief the function controls the raising of the hand down
  * @brief recieve the hand side, arm struct and the filling period
  */
-void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t period)
+void arm_down(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 {
 
 	control_driver_t control = arm_driver->arm[side].control;
@@ -80,7 +77,7 @@ void arm_down(arm_side_t side, const arm_driver_ctx_t *arm_driver, uint16_t peri
  * @brief the function disables the selected hand
  * @brief recieve the hand side, arm struct
  */
-void arm_off (arm_side_t side, const arm_driver_ctx_t *arm_driver)
+void arm_off (arm_side_t side, arm_driver_ctx_t *arm_driver)
 {
 
 	control_driver_t control = arm_driver->arm[side].control;

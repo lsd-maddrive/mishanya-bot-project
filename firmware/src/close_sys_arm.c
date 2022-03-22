@@ -1,159 +1,24 @@
 #include <close_sys_arm.h>
 
-#define TIME_PREF 1/CH_CFG_ST_FREQUENCY
+static void normalize_interval (traking_cs_t* traking_cs);
+static float normalize_angle (traking_cs_t* traking_cs);
 
 /**
- * @brief lowlevel function sets the specified angle
- * @brief recieve the hand side, the goal angle, PID struct and arm driver struct
+ * @brief the function brings the resulting angle into the normalized range
+ * @brief recieve the initial minimum angle and nirmalize struct
+ * @return angle inside the normalized interval
  */
-void close_sys_arm(float goal_angle, arm_side_t side, const arm_driver_ctx_t *arm_driver, PID_t *PID)
+void init_traking_cs(arm_driver_ctx_t* arm_driver)
 {
 
-  PID_reset(PID);
+  normalize_interval(&arm_driver->arm[LEFT].traking_cs);
+  normalize_interval(&arm_driver->arm[RIGHT].traking_cs);
 
-	normalize_angle_t arm_angle = {
-		.max_norm_angle = 0,
-		.min_norm_angle = 0,
-		.shift = 0,
-		.zero_cross = false
-	};
+  arm_driver->arm[LEFT].traking_cs.normalize_angle.target = true;
+  arm_driver->arm[RIGHT].traking_cs.normalize_angle.target = true;
 
-	virtual_timer_t encoder_timer;
-
-
-  float pwm_period = arm_driver->arm[side].control.pwm_setting_ctx.pwm_conf.period;
-  float dead_zone = arm_driver->arm[side].close_conf.angle_dead_zone;
-  float dt = arm_driver->arm[side].close_conf.dt;
-  float min_angle = arm_driver->arm[side].close_conf.angle_lim.min_angle;
-  float max_angle = arm_driver->arm[side].close_conf.angle_lim.max_angle;
-
-	float prev_time = 0;
-	float current_angle = 0;
-	float period = 0;
-	float delta_t = 0;
-
-	chVTObjectInit(&encoder_timer);
-
-	// convert the angle range so that it starts from zero
-	normalize_interval(min_angle, max_angle, &arm_angle);
-
-	prev_time = chVTGetSystemTime();
-
-	while(1)
-	{
-		// bring the angle into the normalized range
-		current_angle = normalize_angle(min_angle, &arm_angle);
-
-    PID_err_calc(&PID->error, goal_angle, current_angle);
-
-    if(PID->error.P < 0)
-      PID->error.P *= -1;
-
-		delta_t = chVTGetSystemTime()-prev_time;
-
-		if(delta_t >= dt)
-		{
-
-			prev_time = chVTGetSystemTime();
-			period = PID_out(PID, delta_t*TIME_PREF);
-
-			if(period > pwm_period)
-				period = pwm_period;
-
-		}
-
-		if(side==LEFT)
-		{
-
-			if(current_angle<goal_angle)
-				arm_driver->down(side, (uint16_t)period);
-
-			else
-				arm_driver->up(side, (uint16_t)period);
-
-		}
-		else if(side==RIGHT)
-		{
-
-			if(current_angle<goal_angle)
-				arm_driver->up(side, (uint16_t)period);
-
-			else
-				arm_driver->down(side, (uint16_t)period);
-
-		}
-
-		if(PID->error.P <= dead_zone) break;
-
-	}
-
-	arm_driver->off(side);
-	chVTDoResetI (&encoder_timer);
-
-}
-
-// void init(cs_ctx *ctx, ...) {
-
-// }
-
-// void update(cs_ctx *ctx, float dt) {
-// 	// Read angle
-
-// 	// Normalize angle
-
-// 	// Error computation
-
-// 	// Controller computation
-
-// 	// Control update
-
-// }
-
-
-// void set_target(cs_cts *ctx, float target) {
-
-// }
-
-// enum ArmPoint {
-// 	ELBOW = 0,
-// 	SHOULDER = 1,
-// }
-
-// void set_angle(ArmPoint pnt, ..) {
-// 	switch (pnt) {
-// 		case ELBOW:
-// 			set_angle_elbow()
-// 	}
-// }
-
-// void set_angle_elbow() {
-
-// }
-
-/**
- * @brief the function normalizes the angle interval
- * @brief recieve the initial angles and nirmalize struct
- */
-void normalize_interval (float min_angle, float max_angle, normalize_angle_t *arm_angle)
-{
-
-		if(min_angle>max_angle)
-		{
-
-			arm_angle->shift = 360 - min_angle;
-			arm_angle->max_norm_angle = 360 - (min_angle-max_angle);
-			arm_angle->zero_cross = true;
-
-		}
-		else
-		{
-
-			arm_angle->max_norm_angle = max_angle - min_angle;
-			arm_angle->shift = min_angle;
-
-		}
-
-		arm_angle->min_norm_angle = 0;
+  PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
+  PID_reset(&arm_driver->arm[RIGHT].traking_cs.arm_PID);
 
 }
 
@@ -162,22 +27,125 @@ void normalize_interval (float min_angle, float max_angle, normalize_angle_t *ar
  * @brief recieve the initial minimum angle and nirmalize struct
  * @return angle inside the normalized interval
  */
-double normalize_angle (float min_angle, normalize_angle_t *arm_angle)
+void set_angle(float target_angle, arm_side_t side, arm_driver_ctx_t *arm_driver)
+{
+  arm_driver->arm[side].traking_cs.normalize_angle.target = 0;
+  arm_driver->arm[side].traking_cs.normalize_angle.target_angle = target_angle;
+
+}
+
+void update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
 {
 
-	double current_angle = Encoder_Read();
+  if(arm_driver->arm[side].traking_cs.normalize_angle.target == 1)
+    return ;
 
-	if(arm_angle->zero_cross)
+  PID_t* PID = &arm_driver->arm[side].traking_cs.arm_PID;
+
+  float target_angle = arm_driver->arm[side].traking_cs.normalize_angle.target_angle;
+  float pwm_period = (float)arm_driver->arm[side].control.pwm_setting_ctx.pwm_conf.period;
+  float dead_zone = arm_driver->arm[side].traking_cs.angle_dead_zone;
+  float current_angle = normalize_angle(&arm_driver->arm[side].traking_cs);
+
+  PID_err_calc(&PID->error, target_angle, current_angle);
+
+  if(PID->error.P < 0)
+    PID->error.P *= -1;
+
+  float control = PID_out(PID, dt);
+
+  if(control > pwm_period)
+    control = pwm_period;
+
+  if(side==LEFT)
+  {
+
+    if(current_angle<target_angle)
+      arm_driver->up(side, (uint16_t)control);
+    else
+      arm_driver->down(side, (uint16_t)control);
+
+  }
+  else if(side==RIGHT)
+  {
+
+    if(current_angle < target_angle)
+      arm_driver->up(side, (uint16_t)control);
+
+    else
+      arm_driver->down(side, (uint16_t)control);
+
+  }
+
+  if(PID->error.P <= dead_zone)
+  {
+    dbgprintf("dt=%f\r\n", dt);
+    PID_reset(PID);
+    arm_off(side, arm_driver);
+    arm_driver->arm[side].traking_cs.normalize_angle.target = 1;
+  }
+
+
+}
+
+
+
+/**
+* @brief the function normalizes the angle interval
+* @brief recieve the initial angles and nirmalize struct
+*/
+static void normalize_interval (traking_cs_t* traking_cs)
+{
+  float min_angle = traking_cs->angle_lim.min_angle;
+  float max_angle = traking_cs->angle_lim.max_angle;
+
+  if(min_angle>max_angle)
+  {
+
+    traking_cs->normalize_angle.shift = 360 - min_angle;
+    traking_cs->normalize_angle.max_norm_angle = 360 - (min_angle-max_angle);
+    traking_cs->normalize_angle.zero_cross = true;
+
+  }
+  else
+  {
+
+    traking_cs->normalize_angle.max_norm_angle = max_angle - min_angle;
+    traking_cs->normalize_angle.shift = min_angle;
+
+  }
+
+  traking_cs->normalize_angle.min_norm_angle = 0;
+
+}
+
+
+/**
+ * @brief the function brings the resulting angle into the normalized range
+ * @brief recieve the initial minimum angle and nirmalize struct
+ * @return angle inside the normalized interval
+ */
+static float normalize_angle (traking_cs_t* traking_cs)
+{
+
+  float current_angle = Encoder_Read();
+  if(current_angle == -1)
+    return -1;
+
+	if(traking_cs->normalize_angle.zero_cross)
 	{
-		if((current_angle+arm_angle->shift)>=360)
-			current_angle = current_angle - min_angle;
+		if((current_angle+traking_cs->normalize_angle.shift)>=360)
+			current_angle = current_angle - traking_cs->angle_lim.min_angle;
 
 		else
-			current_angle = current_angle + arm_angle->shift;
+			current_angle = current_angle + traking_cs->normalize_angle.shift;
 	}
 	else
-		current_angle = current_angle - arm_angle->shift;
+		current_angle = current_angle - traking_cs->normalize_angle.shift;
 
 	return current_angle;
 
 }
+
+
+

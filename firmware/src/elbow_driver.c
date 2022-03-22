@@ -1,11 +1,11 @@
 #include <elbow_driver.h>
-
+#include "serial.h"
 
 // *******************elbow driver type config******************* //
 
-#define BB_DRIVER       1
-#define RED_DRIVER      2
-#define DRIVER          BB_DRIVER
+#define BB_DRIVER       0
+#define RED_DRIVER      1
+#define DRIVER          RED_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -20,7 +20,6 @@
 // **********************close sys config********************** //
 
 #define ENCODER_DEADZONE 1
-#define INTEGRAL_PERIOD 100
 
 // **********************close sys config********************** //
 
@@ -123,16 +122,6 @@ const angle_lim_t left_angle_lim = {
     .pwm_setting_ctx = left_pwm_ctx
   };
 
-  const close_conf_t left_close_conf = {
-    .angle_lim = left_angle_lim,
-    .angle_dead_zone = ENCODER_DEADZONE,
-    .dt = INTEGRAL_PERIOD
-  };
-
-  const arm_system_t left_system = {
-    .close_conf = left_close_conf,
-    .control = left_arm
-  };
 
 // ***********************left arm config*********************** //
 
@@ -178,34 +167,9 @@ const angle_lim_t left_angle_lim = {
     .pwm_setting_ctx = right_pwm_ctx
 	};
 
-  const close_conf_t right_close_conf = {
-    .angle_lim = right_angle_lim,
-    .angle_dead_zone = ENCODER_DEADZONE,
-    .dt = INTEGRAL_PERIOD
-  };
-
-  const arm_system_t right_system = {
-    .close_conf = right_close_conf,
-    .control = right_arm
-  };
 
 // ***********************right arm config*********************** //
 
-
-
-// ***********************final config struct*********************** //
-
-  const arm_driver_ctx_t elbow_driver = {
-    .type = BB,
-    .down = &elbow_down,
-    .up = &elbow_up,
-    .off = &elbow_off,
-    .arm[0] = left_system,
-    .arm[1] = right_system
-  };
-
-
-// ***********************final config struct*********************** //
 
 #endif
 
@@ -256,17 +220,6 @@ const angle_lim_t left_angle_lim = {
   const control_driver_t left_arm = {
     .line_control = left_control,
     .pwm_setting_ctx = left_pwm_ctx
-  };
-
-  const close_conf_t left_close_conf = {
-    .angle_lim = left_angle_lim,
-    .angle_dead_zone = ENCODER_DEADZONE,
-    .dt = INTEGRAL_PERIOD
-  };
-
-  const arm_system_t left_system = {
-    .close_conf = left_close_conf,
-    .control = left_arm
   };
 
 // ***********************left arm config*********************** //
@@ -320,33 +273,20 @@ const angle_lim_t left_angle_lim = {
     .pwm_setting_ctx = right_pwm_ctx
 	};
 
-  const close_conf_t right_close_conf = {
-    .angle_lim = right_angle_lim,
-    .angle_dead_zone = ENCODER_DEADZONE,
-    .dt = INTEGRAL_PERIOD
-  };
-
-  const arm_system_t right_system = {
-    .close_conf = right_close_conf,
-    .control = right_arm
-  };
-
 // ***********************right arm config*********************** //
 
-// ***********************final config struct*********************** //
-
-	const arm_driver_ctx_t elbow_driver = {
-    .type = BB,
-    .down = &elbow_down,
-    .up = &elbow_up,
-    .off = &elbow_off,
-    .arm[0] = left_system,
-    .arm[1] = right_system
-	};
-
-// ***********************final config struct*********************** //
-
 #endif
+
+// ***********************final struct declaration*********************** //
+
+traking_cs_t left_cs;
+traking_cs_t right_cs;
+arm_system_t right_system;
+arm_system_t left_system;
+
+arm_driver_ctx_t elbow_driver;
+
+// ***********************final struct declaration*********************** //
 
 
 /**
@@ -354,7 +294,29 @@ const angle_lim_t left_angle_lim = {
  */
 void elbow_init(void)
 {
+  right_cs.angle_lim = right_angle_lim;
+  right_cs.angle_dead_zone = ENCODER_DEADZONE;
+  right_cs.arm_PID = elbow_PID;
+
+  left_cs.angle_lim = left_angle_lim;
+  left_cs.angle_dead_zone = ENCODER_DEADZONE;
+  left_cs.arm_PID = elbow_PID;
+
+  right_system.traking_cs = right_cs;
+  right_system.control = right_arm;
+
+  left_system.traking_cs = left_cs;
+  left_system.control = left_arm;
+
+  elbow_driver.type = DRIVER;
+  elbow_driver.down = &elbow_down;
+  elbow_driver.up = &elbow_up;
+  elbow_driver.off = &elbow_off;
+  elbow_driver.arm[0] = left_system;
+  elbow_driver.arm[1] = right_system;
+
   driver_init(&elbow_driver);
+  init_traking_cs(&elbow_driver);
 }
 
 /**
@@ -388,8 +350,13 @@ void elbow_off(arm_side_t side)
  * @brief the function set input angle (0-40)
  * @brief recieve the hand side and goal angle
  */
-void elbow_set_angle(float goal_angle, arm_side_t side)
+void elbow_set_angle(float target_angle, arm_side_t side)
 {
-  close_sys_arm(goal_angle, side, &elbow_driver, &elbow_PID);
+  set_angle(target_angle, side, &elbow_driver);
 }
 
+void elbow_update_angle(float dt)
+{
+  update_angle(dt, LEFT, &elbow_driver);
+  update_angle(dt, RIGHT, &elbow_driver);
+}

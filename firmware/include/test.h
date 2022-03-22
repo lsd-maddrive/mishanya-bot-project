@@ -33,19 +33,6 @@ void test_close_sys(void);
  */
 void test_normalize(void);
 
-/*********** lld tests ***********/
-
-/**
- * @brief Test lld bb driver
- */
-void test_lld_bb(void);
-
-/**
- * @brief Test lld red driver
- */
-void test_lld_red(void);
-
-/*********** lld tests ***********/
 
 /**
  * @brief reset PID

@@ -7,23 +7,15 @@ static void testsRoutines(void)
     test_abs_encoder();
   #endif
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
+  #if(MAIN_PROGRAM==PROGRAM_TEST_ELBOW_DRIVER)
     test_elbow();
-  #endif
-
-  #if(MAIN_PROGRAM==PROGRAM_TEST_LLD_BB)
-    test_lld_bb();
-  #endif
-
-  #if(MAIN_PROGRAM==PROGRAM_TEST_LLD_RED)
-    test_lld_red();
   #endif
 
   #if(MAIN_PROGRAM==PROGRAM_TEST_NORMALIZE)
     test_normalize();
   #endif
 
-  #if(PROGRAM_TEST_PID)
+  #if(MAIN_PROGRAM==PROGRAM_TEST_PID)
     test_PID();
   #endif
 

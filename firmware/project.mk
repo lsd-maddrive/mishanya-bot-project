@@ -11,8 +11,6 @@ PROJECT_MODULES = src/encoder.c \
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_elbow.c \
                   tests/test_close_sys.c \
-                  tests/test_lld_bb.c \
-                  tests/test_lld_red.c \
                   tests/test_normalize.c \
                   tests/test_PID.c \
 
