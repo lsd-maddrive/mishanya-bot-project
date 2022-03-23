@@ -3,13 +3,17 @@
 static void testsRoutines(void)
 {
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
+#if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
     test_abs_encoder();
-  #endif
+#endif
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
+#if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
     test_elbow();
-  #endif
+#endif
+
+#if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CLOSE_SYS)
+    test_close_sys();
+#endif
 
 }
 

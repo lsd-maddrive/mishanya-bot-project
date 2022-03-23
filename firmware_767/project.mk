@@ -1,8 +1,9 @@
 PROJECT_MODULES = src/serial.c \
 		          src/lld_control_servo.c \
+		          src/lld_bb_driver.c \
 
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
-
+                  tests/test_lld_bb_driver.c \
 # C source files
 PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)			 
