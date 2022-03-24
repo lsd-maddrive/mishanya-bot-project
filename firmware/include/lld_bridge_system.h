@@ -1,7 +1,7 @@
 #ifndef FIRMWARE_LLD_BRIDGE_SYSTEM_H
 #define FIRMWARE_LLD_BRIDGE_SYSTEM_H
 
-#include <common.h>
+#include "common.h"
 
 typedef struct {
   uint8_t           ch_pwm_1;					          // PWM first channel number
@@ -17,10 +17,10 @@ typedef struct {
 } pwm_ctx_t;
 
 typedef struct {
-  ioline_t 			    digit_1;		                // first digit pin
-  ioline_t 			    digit_2;		                // second digit pin
-  ioline_t 			    PWM_1;			                // first PWM pin
-  ioline_t 			    PWM_2;			                // second digit pin
+  ioline_t 			    lin_1;
+  ioline_t 			    lin_2;
+  ioline_t 			    hin_1;
+  ioline_t 			    hin_2;
 } line_driver_t;
 
 typedef struct{

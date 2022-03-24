@@ -1,7 +1,7 @@
 #ifndef INCLUDE_ARM_DRIVER_H
 #define INCLUDE_ARM_DRIVER_H
 
-#include <common.h>
+#include "common.h"
 #include "lld_bridge_system.h"
 #include "PID.h"
 
@@ -15,26 +15,25 @@ typedef enum {
 	RED = 1								                        // this type of driver requires one channel of PWM
 } driver_t;
 
-
 typedef struct {
-  float min_angle;                               // min angle encored read
-  float max_angle;                               // max angle encored read
+  float min_angle;                              // min angle encored read
+  float max_angle;                              // max angle encored read
 } angle_lim_t;
 
 typedef struct normalize_angle{
-  bool target;
-  volatile float target_angle;
-  float	max_norm_angle;
-  float	min_norm_angle;
-  float	shift;
-  bool	zero_cross;
+  bool target;                                  // target angle flag
+  volatile float target_angle;                  // value of target angle
+  float	max_norm_angle;                         // max normalize angle get from encoder
+  float	min_norm_angle;                         // min normalize angle get from encoder
+  float	shift;                                  // offset of zero minimum angle
+  bool	zero_cross;                             // flag indicating whether zero is betwenn the max and min angle
 }normalize_angle_t;
 
 typedef struct {
-  normalize_angle_t normalize_angle;
+  normalize_angle_t normalize_angle;              // typedef normalize angle
 	angle_lim_t			  angle_lim;                    // typedef angle limit
-	uint8_t 					angle_dead_zone;							// deadzone of encoder
-  PID_t             arm_PID;
+  PID_t             arm_PID;                      // PID struct
+  uint8_t 					angle_dead_zone;							// deadzone of encoder
 } traking_cs_t;
 
 typedef struct{

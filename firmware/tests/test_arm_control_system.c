@@ -1,12 +1,11 @@
-#include <close_sys_arm.h>
-#include <test.h>
-#include <serial.h>
-#include <encoder.h>
-#include <elbow_driver.h>
+#include "arm_control_system.h"
+#include "test.h"
+#include "serial.h"
+#include "encoder.h"
+#include "elbow_driver.h"
 #include <stdlib.h>
 
 static THD_WORKING_AREA(traking_elbow,256);
-static THD_WORKING_AREA(send_angle,256);
 
 static THD_FUNCTION(elbow_update,arg) {
   (void *) arg;
@@ -15,17 +14,30 @@ static THD_FUNCTION(elbow_update,arg) {
     elbow_update_angle(0.00002);
 
   }
-  time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+  time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
 }
 
-static THD_FUNCTION(serial_send,arg) {
-  (void *) arg;
+
+
+void test_arm_control_system(void)
+{
   char rcv_data;
   uint8_t buf[2];
   uint8_t arm = 0;
   uint8_t angle = 0;
-  systime_t time = chVTGetSystemTimeX();
-  while (1) {
+
+  debug_stream_init();
+  elbow_init();
+  Encoder_init();
+  elbow_off(RIGHT);
+  elbow_off(LEFT);
+
+  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-1,
+                    elbow_update, NULL);
+
+
+  while(1)
+  {
     dbgprintf("--------------------\r\n");
     dbgprintf("elbow side(r - right; l - left):\r\n");
     rcv_data = sdGet(&SD2);
@@ -56,29 +68,6 @@ static THD_FUNCTION(serial_send,arg) {
     angle = atoi(buf);
     dbgprintf("goal angle=%d\r\n", angle);
     elbow_set_angle((float)angle, arm);
-  }
-  time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
-}
-
-
-void test_close_sys(void)
-{
-
-
-  debug_stream_init();
-  elbow_init();
-  Encoder_init();
-  elbow_off(RIGHT);
-  elbow_off(LEFT);
-  chThdCreateStatic(send_angle,sizeof(serial_send),NORMALPRIO-2,
-                    serial_send, NULL);
-  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-1,
-                    elbow_update, NULL);
-
-
-  while(1)
-  {
-
   }
 
 }

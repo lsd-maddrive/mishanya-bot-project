@@ -26,7 +26,7 @@ void test_elbow(void);
 /**
  * @brief Test close system
  */
-void test_close_sys(void);
+void test_arm_control_system(void);
 
 /**
  * @brief Test normalize interval and angle

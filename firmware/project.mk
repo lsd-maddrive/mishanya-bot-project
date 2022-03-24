@@ -4,14 +4,13 @@ PROJECT_MODULES = src/encoder.c \
 				  src/lld_bb_driver.c \
 				  src/lld_red_driver.c \
 				  src/elbow_driver.c \
-				  src/close_sys_arm.c \
+				  src/arm_control_system.c \
 				  src/PID.c \
 
 
 PROJECT_TESTS   = tests/test_encoder.c \
                   tests/test_elbow.c \
-                  tests/test_close_sys.c \
-                  tests/test_normalize.c \
+                  tests/test_arm_control_system.c \
                   tests/test_PID.c \
 
 

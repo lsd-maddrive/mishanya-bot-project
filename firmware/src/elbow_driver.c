@@ -5,7 +5,7 @@
 
 #define BB_DRIVER       0
 #define RED_DRIVER      1
-#define DRIVER          RED_DRIVER
+#define DRIVER          BB_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -25,29 +25,31 @@
 
 // *******************elbow driver pin config******************* //
 
+
 #if(DRIVER == RED_DRIVER)
 
-	#define LEFT_UP			PAL_LINE(GPIOB,4)
-	#define LEFT_DOWN		PAL_LINE(GPIOB,10)
 	#define LEFT_PWM		PAL_LINE(GPIOA,6) // TIM3 CH1
-
-	#define RIGHT_UP		PAL_LINE(GPIOB,5)
-	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
 	#define RIGHT_PWM		PAL_LINE(GPIOC,7) // TIM3 CH2
+
+  #define LEFT_UP			PAL_LINE(GPIOB,4)
+  #define LEFT_DOWN		PAL_LINE(GPIOB,10)
+  #define RIGHT_UP		PAL_LINE(GPIOB,5)
+  #define RIGHT_DOWN	PAL_LINE(GPIOB,3)
 
 #endif
 
 #if(DRIVER == BB_DRIVER)
 
-	#define LEFT_UP			PAL_LINE(GPIOB,4)
-	#define LEFT_DOWN		PAL_LINE(GPIOB,10)
-	#define LEFT_PWM_1	PAL_LINE(GPIOA,8) // TIM1 CH1
-	#define LEFT_PWM_2	PAL_LINE(GPIOA,7) // TIM1 CH1N
 
-	#define RIGHT_UP		PAL_LINE(GPIOB,5)
-	#define RIGHT_DOWN	PAL_LINE(GPIOB,3)
-	#define RIGHT_PWM_1	PAL_LINE(GPIOA,9) // TIM1 CH2
-	#define RIGHT_PWM_2	PAL_LINE(GPIOB,0) // TIM1 CH2N
+	#define LEFT_HIN_1 PAL_LINE(GPIOA,8) // TIM1 CH1
+	#define LEFT_LIN_1 PAL_LINE(GPIOA,7) // TIM1 CH1N
+	#define LEFT_LIN_2 PAL_LINE(GPIOA,9) // TIM1 CH2
+	#define LEFT_HIN_2 PAL_LINE(GPIOB,0) // TIM1 CH2N
+
+  #define RIGHT_HIN_1 PAL_LINE(GPIOA,8) // TIM1 CH3
+  #define RIGHT_LIN_1 PAL_LINE(GPIOA,7) // TIM1 CH3N
+  #define RIGHT_LIN_2 PAL_LINE(GPIOA,9) // TIM1 CH4
+  #define RIGHT_HIN_2 PAL_LINE(GPIOB,0) // TIM1 CH4N
 
 #endif
 
@@ -112,9 +114,9 @@ const angle_lim_t left_angle_lim = {
 	};
 
 	const line_driver_t left_control = {
-    .PWM_1 = LEFT_PWM,
-    .digit_2 = LEFT_DOWN,
-    .digit_1 = LEFT_UP
+    .hin_1 = LEFT_PWM,
+    .lin_2 = LEFT_DOWN,
+    .lin_1 = LEFT_UP
 	};
 
   const control_driver_t left_arm = {
@@ -157,9 +159,9 @@ const angle_lim_t left_angle_lim = {
 	};
 
 	const line_driver_t right_control = {
-    .PWM_1 = RIGHT_PWM,
-    .digit_2 = RIGHT_DOWN,
-    .digit_1 = RIGHT_UP
+    .hin_1 = RIGHT_PWM,
+    .lin_2 = RIGHT_DOWN,
+    .lin_1 = RIGHT_UP
 	};
 
 	const control_driver_t right_arm = {
@@ -179,7 +181,7 @@ const angle_lim_t left_angle_lim = {
 
 	const pwm_channel_t ch_left_pwm = {
     .ch_pwm_1 = 0,
-    .ch_pwm_2 = 0,
+    .ch_pwm_2 = 1,
     .alt_func_1 = 1,
     .alt_func_2 = 1
 	};
@@ -193,28 +195,28 @@ const angle_lim_t left_angle_lim = {
       .callback  = NULL,
       .channels  = {
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT LIN1 & HIN1
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT_PWM
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // LEFT HIN2 & LIN2
 
-        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT LIN1 & HIN1
 
-        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
+        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT LN2 & HIN2I
 
       },
       .cr2        = 0,
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-      .bdtr 		= 0b10011100,
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+    // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
+      .bdtr 		= 0b11111111,
+    // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
       .dier       = 0
     }
 	};
 
 	const line_driver_t left_control = {
-    .PWM_1 = LEFT_PWM_1,
-    .PWM_2 = LEFT_PWM_2,
-    .digit_1 = LEFT_UP,
-    .digit_2 = LEFT_DOWN
+    .hin_1 = LEFT_HIN_1,
+    .hin_2 = LEFT_HIN_2,
+    .lin_1 = LEFT_LIN_1,
+    .lin_2 = LEFT_LIN_2
 	};
 
   const control_driver_t left_arm = {
@@ -227,8 +229,8 @@ const angle_lim_t left_angle_lim = {
 // ***********************right arm config*********************** //
 
 	const pwm_channel_t ch_right_pwm = {
-    .ch_pwm_1 = 1,
-    .ch_pwm_2 = 1,
+    .ch_pwm_1 = 2,
+    .ch_pwm_2 = 3,
     .alt_func_1 = 1,
     .alt_func_2 = 1
 	};
@@ -242,30 +244,30 @@ const angle_lim_t left_angle_lim = {
       .callback  = NULL,
       .channels  = {
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT_PWM
+      {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT LIN1 & HIN1
 
-        {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT_PWM
+      {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // LEFT HIN2 & LIN2
 
-        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+      {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT LIN1 & HIN1
 
-        {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
+      {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT LN2 & HIN2I
 
       },
       .cr2        = 0,
 
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
-      .bdtr 		= 0b10011100,
-    // !!!!!!!! THE CALCULATION WAS MADE FOR A CLOCK FREQUENCY OF 8 MHz AND THE APB1 BUS !!!!!!!! //
+    // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
+      .bdtr 		= 0b11111111,
+    // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
 
       .dier       = 0
     }
 	};
 
 	const line_driver_t right_control = {
-    .PWM_1 = RIGHT_PWM_1,
-    .PWM_2 = RIGHT_PWM_2,
-    .digit_1 = RIGHT_UP,
-    .digit_2 = RIGHT_DOWN
+    .hin_1 = RIGHT_HIN_1,
+    .hin_2 = RIGHT_HIN_2,
+    .lin_1 = RIGHT_LIN_1,
+    .lin_2 = RIGHT_LIN_2
 	};
 
 	const control_driver_t right_arm = {
@@ -294,20 +296,26 @@ arm_driver_ctx_t elbow_driver;
  */
 void elbow_init(void)
 {
-  right_cs.angle_lim = right_angle_lim;
-  right_cs.angle_dead_zone = ENCODER_DEADZONE;
-  right_cs.arm_PID = elbow_PID;
 
+  // init left_cs struct
   left_cs.angle_lim = left_angle_lim;
   left_cs.angle_dead_zone = ENCODER_DEADZONE;
   left_cs.arm_PID = elbow_PID;
 
-  right_system.traking_cs = right_cs;
-  right_system.control = right_arm;
-
+  // init right_system struct
   left_system.traking_cs = left_cs;
   left_system.control = left_arm;
 
+  // init right_cs struct
+  right_cs.angle_lim = right_angle_lim;
+  right_cs.angle_dead_zone = ENCODER_DEADZONE;
+  right_cs.arm_PID = elbow_PID;
+
+  // init right_system struct
+  right_system.traking_cs = right_cs;
+  right_system.control = right_arm;
+
+  // init final elbow_driver struct
   elbow_driver.type = DRIVER;
   elbow_driver.down = &elbow_down;
   elbow_driver.up = &elbow_up;
@@ -316,7 +324,7 @@ void elbow_init(void)
   elbow_driver.arm[1] = right_system;
 
   driver_init(&elbow_driver);
-  init_traking_cs(&elbow_driver);
+  acs_init(&elbow_driver);
 }
 
 /**
@@ -347,16 +355,20 @@ void elbow_off(arm_side_t side)
 }
 
 /**
- * @brief the function set input angle (0-40)
+ * @brief the function set input angle ~(0-40)
  * @brief recieve the hand side and goal angle
  */
 void elbow_set_angle(float target_angle, arm_side_t side)
 {
-  set_angle(target_angle, side, &elbow_driver);
+  acs_set_angle(target_angle, side, &elbow_driver);
 }
 
+/**
+ * @brief the function update current state of elbow
+ * @brief recieve the function call period
+ */
 void elbow_update_angle(float dt)
 {
-  update_angle(dt, LEFT, &elbow_driver);
-  update_angle(dt, RIGHT, &elbow_driver);
+  acs_update_angle(dt, LEFT, &elbow_driver);
+  acs_update_angle(dt, RIGHT, &elbow_driver);
 }

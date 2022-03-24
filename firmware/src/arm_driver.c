@@ -64,11 +64,7 @@ void arm_down(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 	if (arm_driver->type == RED)
     lld_red_driver_reverse(&control, &pwm_ch, period);
 	else
-  {
-    uint16_t  max_period = arm_driver->arm->control.pwm_setting_ctx.pwm_conf.period;
-
-    lld_bb_driver_reverse(&control, &pwm_ch, max_period-period);
-  }
+    lld_bb_driver_reverse(&control, &pwm_ch, period);
 
 }
 
