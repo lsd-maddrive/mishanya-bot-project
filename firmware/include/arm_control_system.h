@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "encoder.h"
-#include "arm_driver.h"
+#include "part_arm_driver.h"
 #include "PID.h"
 
 void acs_init(arm_driver_ctx_t* arm_driver);

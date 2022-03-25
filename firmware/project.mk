@@ -1,6 +1,6 @@
 PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
-				  src/arm_driver.c \
+				  src/part_arm_driver.c \
 				  src/lld_bb_driver.c \
 				  src/lld_red_driver.c \
 				  src/elbow_driver.c \
