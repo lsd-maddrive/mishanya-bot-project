@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ARM_DRIVER_H
-#define INCLUDE_ARM_DRIVER_H
+#ifndef INCLUDE_PART_ARM_DRIVER_H
+#define INCLUDE_PART_ARM_DRIVER_H
 
 #include "common.h"
 #include "lld_bridge_system.h"
@@ -26,14 +26,14 @@ typedef struct normalize_angle{
   float	max_norm_angle;                         // max normalize angle get from encoder
   float	min_norm_angle;                         // min normalize angle get from encoder
   float	shift;                                  // offset of zero minimum angle
-  bool	zero_cross;                             // flag indicating whether zero is betwenn the max and min angle
+  bool	zero_cross;                              // flag indicating whether zero is betwenn the max and min angle
 }normalize_angle_t;
 
 typedef struct {
   normalize_angle_t normalize_angle;              // typedef normalize angle
-  angle_lim_t	    angle_lim;                    // typedef angle limit
+  angle_lim_t       angle_lim;                    // typedef angle limit
   PID_t             arm_PID;                      // PID struct
-  uint8_t 	    angle_dead_zone;	   	  // deadzone of encoder
+  uint8_t           angle_dead_zone;              // deadzone of encoder
 } traking_cs_t;
 
 typedef struct{
@@ -46,7 +46,7 @@ typedef struct {
   void (* up) (arm_side_t, uint16_t);             // ptr function up
   void (* down) (arm_side_t, uint16_t);           // ptr function down
   void (* off) (arm_side_t);                      // ptr function off arm
-  arm_system_t arm[2];   	                  // array because there is a right hand and a left hand
+  arm_system_t arm[2];                            // array because there is a right hand and a left hand
 } arm_driver_ctx_t;
 
 
