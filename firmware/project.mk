@@ -1,13 +1,18 @@
 PROJECT_MODULES = src/encoder.c \
 				  src/serial.c \
-
-				  src/arm_driver.c \
+				  src/part_arm_driver.c \
 				  src/lld_bb_driver.c \
 				  src/lld_red_driver.c \
 				  src/elbow_driver.c \
+				  src/arm_control_system.c \
+				  src/PID.c \
+
 
 PROJECT_TESTS   = tests/test_encoder.c \
-                  tests/test_elbow.c
+                  tests/test_elbow.c \
+                  tests/test_arm_control_system.c \
+                  tests/test_PID.c \
+
 
 
 # C source files

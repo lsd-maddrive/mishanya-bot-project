@@ -7,8 +7,16 @@ static void testsRoutines(void)
     test_abs_encoder();
   #endif
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
+  #if(MAIN_PROGRAM==PROGRAM_TEST_ELBOW_DRIVER)
     test_elbow();
+  #endif
+
+  #if(MAIN_PROGRAM==PROGRAM_TEST_PID)
+    test_PID();
+  #endif
+
+  #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
+    test_arm_control_system();
   #endif
 
 }
