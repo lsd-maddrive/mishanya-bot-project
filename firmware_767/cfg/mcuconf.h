@@ -264,13 +264,13 @@
 /*
  * PWM driver system settings.
  */
-#define STM32_PWM_USE_ADVANCED              TRUE
+#define STM32_PWM_USE_ADVANCED              FALSE
 #define STM32_PWM_USE_TIM1                  TRUE
 #define STM32_PWM_USE_TIM2                  FALSE
 #define STM32_PWM_USE_TIM3                  TRUE
 #define STM32_PWM_USE_TIM4                  FALSE
 #define STM32_PWM_USE_TIM5                  FALSE
-#define STM32_PWM_USE_TIM8                  FALSE
+#define STM32_PWM_USE_TIM8                  TRUE
 #define STM32_PWM_USE_TIM9                  FALSE
 #define STM32_PWM_USE_TIM10                 FALSE
 #define STM32_PWM_USE_TIM11                 FALSE
@@ -321,7 +321,7 @@
  * SPI driver system settings.
  */
 #define STM32_SPI_USE_SPI1                  FALSE
-#define STM32_SPI_USE_SPI2                  FALSE
+#define STM32_SPI_USE_SPI2                  TRUE
 #define STM32_SPI_USE_SPI3                  FALSE
 #define STM32_SPI_USE_SPI4                  FALSE
 #define STM32_SPI_USE_SPI5                  FALSE

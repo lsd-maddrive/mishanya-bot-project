@@ -14,8 +14,31 @@ void test_lld_servo(type_servo servo);
  * @args servo is pointer to struct left/right_hand/wrist
  */
 void test_lld_nonlinear(type_servo servo);
-/*
- * @brief Test of bb_driver
+
+/************* Elbow tests *************/
+
+/**
+ * @brief Test arm driver
  */
-void test_lld_bb(void);
+void test_elbow(void);
+
+/*********** Close sys tests ***********/
+
+/**
+ * @brief Test close system
+ */
+void test_arm_control_system(void);
+
+/**
+ * @brief reset PID
+ */
+void test_PID(void);
+
+/************ Encoder tests ************/
+
+/**
+ * @brief Test absolute encoder
+ */
+void test_abs_encoder(void);
+
 #endif
