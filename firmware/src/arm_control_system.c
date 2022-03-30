@@ -1,5 +1,4 @@
 #include <arm_control_system.h>
-#include "serial.h"
 
 static void acs_normalize_interval (traking_cs_t* traking_cs);
 static float acs_normalize_angle (traking_cs_t* traking_cs);
@@ -11,6 +10,9 @@ static float acs_normalize_angle (traking_cs_t* traking_cs);
  */
 void acs_init(arm_driver_ctx_t* arm_driver)
 {
+
+  encoder_init(&arm_driver->arm[LEFT].traking_cs.arm_encoder);
+  encoder_init(&arm_driver->arm[RIGHT].traking_cs.arm_encoder);
 
   acs_normalize_interval(&arm_driver->arm[LEFT].traking_cs);
   acs_normalize_interval(&arm_driver->arm[RIGHT].traking_cs);
@@ -135,7 +137,7 @@ static void acs_normalize_interval (traking_cs_t* traking_cs)
 static float acs_normalize_angle (traking_cs_t* traking_cs)
 {
 
-  float current_angle = Encoder_Read();
+  float current_angle = encoder_read(&traking_cs->arm_encoder);
   if(current_angle == -1)
     return -1;
 

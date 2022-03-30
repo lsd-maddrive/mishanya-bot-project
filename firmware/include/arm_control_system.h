@@ -2,7 +2,7 @@
 #define INCLUDE_ARM_CONTROL_SYSTEM_H
 
 #include "common.h"
-#include "encoder.h"
+#include "arm_encoder.h"
 #include "part_arm_driver.h"
 #include "PID.h"
 

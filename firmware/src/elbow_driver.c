@@ -1,6 +1,45 @@
 #include <elbow_driver.h>
 #include "serial.h"
 
+#define MISO_ENCODER PAL_LINE(GPIOC, 2)
+#define CLK_ENCODER PAL_LINE(GPIOC, 7)
+#define CS_LEFT_ENCODER PAL_LINE(GPIOC, 6)
+#define CS_RIGHT_ENCODER PAL_LINE(GPIOC, 10)
+
+
+arm_encoder_t left_elbow_encoder =
+{
+  .spi_use = 0,
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_LEFT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+          .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+          .ssline = CS_LEFT_ENCODER,
+          .end_cb = NULL
+  }
+};
+
+arm_encoder_t right_elbow_encoder =
+{
+  .spi_use = 1,
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_LEFT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+    .ssline = CS_RIGHT_ENCODER,
+    .end_cb = NULL
+  }
+};
+
+
 // *******************elbow driver type config******************* //
 
 #define BB_DRIVER       0
@@ -301,6 +340,7 @@ void elbow_init(void)
   left_cs.angle_lim = left_angle_lim;
   left_cs.angle_dead_zone = ENCODER_DEADZONE;
   left_cs.arm_PID = elbow_PID;
+  left_cs.arm_encoder = left_elbow_encoder;
 
   // init right_system struct
   left_system.traking_cs = left_cs;
@@ -310,6 +350,7 @@ void elbow_init(void)
   right_cs.angle_lim = right_angle_lim;
   right_cs.angle_dead_zone = ENCODER_DEADZONE;
   right_cs.arm_PID = elbow_PID;
+  right_cs.arm_encoder = right_elbow_encoder;
 
   // init right_system struct
   right_system.traking_cs = right_cs;

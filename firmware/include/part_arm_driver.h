@@ -4,21 +4,22 @@
 #include "common.h"
 #include "lld_bridge_system.h"
 #include "PID.h"
+#include "arm_encoder.h"
 
 typedef enum {
- LEFT = 					// left hand
- RIGHT = 1					// right hand
+  LEFT = 0,          // left hand
+  RIGHT = 1          // right hand
 } arm_side_t;
 
 typedef enum {
- BB = 0,					// this type of driver requires two channel PWM
- RED = 1					// this type of driver requires one channel of PWM
-} driver_t;
+  BB = 0,            // this type of driver requires two channel PWM
+  RED = 1            // this type of driver requires one channel of PWM
+}driver_t;
 
 typedef struct {
   float min_angle;                              // min angle encored read
   float max_angle;                              // max angle encored read
-} angle_lim_t;
+}angle_lim_t;
 
 typedef struct normalize_angle{
   bool target;                                  // target angle flag
@@ -30,6 +31,7 @@ typedef struct normalize_angle{
 }normalize_angle_t;
 
 typedef struct {
+  arm_encoder_t     arm_encoder;                  // encoder struct
   normalize_angle_t normalize_angle;              // typedef normalize angle
   angle_lim_t       angle_lim;                    // typedef angle limit
   PID_t             arm_PID;                      // PID struct
