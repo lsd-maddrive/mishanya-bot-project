@@ -7,28 +7,28 @@
 #include <test.h>
 
 /**
- * @brief   Invalidates the data cache lines overlapping a memory buffer.
- * @details This function is meant to make sure that data written in
- *          data cache is invalidated.
- * @note    On devices without data cache this function does nothing.
- * @note    The function does not consider the lower 5 bits of addresses,
- *          the buffers are meant to be aligned to a 32 bytes boundary or
- *          adjacent data can be invalidated as side effect.
- *
- * @param[in] saddr     start address of the DMA buffer
- * @param[in] n         size of the DMA buffer in bytes
- *
- * @api
+ * @brief   Math constants.
+ * @note    Pi, conversion factors from degrees to radians and from
+ *          radians to degrees.
  */
 
 #define PI 3.1415926535
 #define DEG2RAD 0.0174532925
 #define RAD2DEG 57.2957795131
+
+/**
+ * @brief   Structures for coordinates.
+ */
+
 struct coord{
     float x;
     float y;
     float z;
 };
+
+/**
+ * @brief   Structures for angles.
+ */
 
 struct angles{
     float th1;
@@ -38,6 +38,13 @@ struct angles{
 
 typedef struct angles angles_t;
 typedef struct coord coord_t;
+
+/**
+ * @brief   Structure for hand parameters.
+ * @note    side - calculate a left or right hand, shoulder - shoulder
+ *          length(L1), forearm - forearm length(L2), coord_base -
+ *          shoulder point coordinates in absolute coordinate system.
+ */
 
 struct arm{
   bool side;
@@ -55,8 +62,6 @@ typedef struct arm arm_t;
  * @note    The function calculates the position of the grip point
  *          in the absolute coordinate system, the beginning of which
  *          is specified in the "arm_t" structure.
- * @note    Restrictions are imposed on the corners, in case of
- *          violation of which the function will return zeros.
  * @note    Angles are accepted in radians, coordinates are returned
  *          in meters.
  *
