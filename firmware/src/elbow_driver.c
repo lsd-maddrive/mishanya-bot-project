@@ -2,7 +2,7 @@
 #include "serial.h"
 
 #define MISO_ENCODER PAL_LINE(GPIOC, 2)
-#define CLK_ENCODER PAL_LINE(GPIOC, 7)
+#define CLK_ENCODER PAL_LINE(GPIOB, 13)
 #define CS_LEFT_ENCODER PAL_LINE(GPIOC, 6)
 #define CS_RIGHT_ENCODER PAL_LINE(GPIOC, 10)
 
@@ -28,7 +28,7 @@ arm_encoder_t right_elbow_encoder =
   .spi_use = 1,
   .encoder_ptr = &SPID2,
   .encoder_pins = {
-    .cs_encoder = CS_LEFT_ENCODER,
+    .cs_encoder = CS_RIGHT_ENCODER,
     .clk_encoder = CLK_ENCODER,
     .miso_encoder = MISO_ENCODER
   },
@@ -44,7 +44,7 @@ arm_encoder_t right_elbow_encoder =
 
 #define BB_DRIVER       0
 #define RED_DRIVER      1
-#define DRIVER          BB_DRIVER
+#define DRIVER          RED_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -98,7 +98,7 @@ arm_encoder_t right_elbow_encoder =
 // ***************************PID coef************************** //
 
 PID_t elbow_PID = {
-  .coef = {.kp = 3000, .ki = 500, .kd = 0},
+  .coef = {.kp = 3500, .ki = 500, .kd = 0},
   .error = {.P = 0, .prev_P = 0, .I = 0, .D = 0}
 };
 
@@ -410,6 +410,6 @@ void elbow_set_angle(float target_angle, arm_side_t side)
  */
 void elbow_update_angle(float dt)
 {
-  acs_update_angle(dt, LEFT, &elbow_driver);
   acs_update_angle(dt, RIGHT, &elbow_driver);
+  acs_update_angle(dt, LEFT, &elbow_driver);
 }

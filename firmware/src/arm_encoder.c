@@ -18,12 +18,12 @@
 void encoder_init(arm_encoder_t* encoder)
 {
   palSetLineMode(encoder->encoder_pins.cs_encoder, PAL_MODE_OUTPUT_PUSHPULL);
-  if(!(encoder->spi_use))
-  {
+//  if(!(encoder->spi_use))
+//  {
     palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
     palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
     spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
-  }
+//  }
 }
 
 /**
