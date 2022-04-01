@@ -14,5 +14,6 @@ void test_lld_servo(type_servo servo);
  * @args servo is pointer to struct left/right_hand/wrist
  */
 void test_lld_nonlinear(type_servo servo);
+void test_arm_kinematic(void);
 
 #endif

@@ -1,8 +1,9 @@
 PROJECT_MODULES = src/serial.c \
 		          src/lld_control_servo.c \
+		          src/arm_kinematic.c \
 
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
-
+				  tests/test_arm_kinematic.c \
 # C source files
 PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)			 
@@ -13,6 +14,6 @@ PROJECT_INCDIR	= include/
 # Additional libraries
 PROJECT_LIBS	=
 # Compiler options
-PROJECT_OPT     = -DCHPRINTF_USE_FLOAT=1    
+PROJECT_OPT     = -DCHPRINTF_USE_FLOAT=1 -lm
 
 # Additional .mk files are included here
