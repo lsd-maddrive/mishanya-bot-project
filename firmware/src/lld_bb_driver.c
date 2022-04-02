@@ -1,8 +1,9 @@
 #include <lld_bb_driver.h>
 
 /**
- * @brief   initialize bridge driver type bb
- * @brief   recieve pin struct and pwm struct
+ * @details initialize bridge driver type bb
+ * @param[in] pins - pointer to the struct of control pins
+ * @param[in] pwm_ctx - pointer to the structure of PWM config
  */
 void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
 {
@@ -17,8 +18,10 @@ void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
 }
 
 /**
- * @brief the function open bridge driver in first direction
- * @brief recieve control struct, pwm channel and and the filling period
+ * @details the function open bridge driver in first direction
+ * @param[in] control - pointer to the control struct of driver
+ * @param[in] pwm_ch - pointer to the structure of PWM channel
+ * @param[in] period - PWM period
  */
 void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* pwm_ch, uint16_t period)
 {
@@ -30,8 +33,10 @@ void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* 
 }
 
 /**
- * @brief the function open bridge driver in second direction
- * @brief recieve control struct, pwm channel and and the filling period
+ * @details the function open bridge driver in reverse direction
+ * @param[in] control - pointer to the control struct of driver
+ * @param[in] pwm_ch - pointer to the structure of PWM channel
+ * @param[in] period - PWM period
  */
 void lld_bb_driver_reverse(const control_driver_t* control, const pwm_channel_t* pwm_ch, uint16_t period)
 {
@@ -43,8 +48,9 @@ void lld_bb_driver_reverse(const control_driver_t* control, const pwm_channel_t*
 }
 
 /**
- * @brief the function disables the selected direction
- * @brief recieve control struct, pwm channel
+ * @details the function disables the selected direction
+ * @param[in] control - pointer to the control struct of driver
+ * @param[in] pwm_ch - pointer to the structure of PWM channel
  */
 void lld_bb_driver_off(const control_driver_t* control, const pwm_channel_t* pwm_ch)
 {

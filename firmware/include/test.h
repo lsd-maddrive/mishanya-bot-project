@@ -2,6 +2,7 @@
 #define INCLUDE_TEST_H
 
 #include <common.h>
+#include "arm_encoder.h"
 
 
 
@@ -10,7 +11,7 @@
 /**
  * @brief Test absolute encoder
  */
-void test_abs_encoder(void);
+void test_arm_encoder(arm_encoder_t* encoder);
 
 
 /************* Elbow tests *************/

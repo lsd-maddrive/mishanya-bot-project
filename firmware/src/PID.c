@@ -1,8 +1,10 @@
-#include <PID.h>
+#include "PID.h"
 
 /**
- * @brief PID function
- * @brief recieve time step and PID struct
+ * @details calculates the control of the pid controller
+ * @param[in] reg - pointer to the PID structure
+ * @param[in] dt - time step
+ * @param[out] control - control signal
  */
 float PID_out(PID_t* reg, float dt)
 {
@@ -19,8 +21,8 @@ float PID_out(PID_t* reg, float dt)
 }
 
 /**
- * @brief PID coefficients reset
- * @brief recieve time PID struct
+ * @details reset PID controller coefficients
+ * @param[in] reg - pointer to the PID structure
  */
 void PID_reset(PID_t* reg)
 {
@@ -33,10 +35,11 @@ void PID_reset(PID_t* reg)
 
 }
 
-
 /**
  * @brief error calculation function
- * @brief recieve the setpoint, current point and error struct
+ * @param[in] err_reg - pointer to the error PID structure
+ * @param[in] setpoint - desired value of the controlled variable
+ * @param[in] current_point - current value of the controlled variable
  */
 void PID_err_calc (error_type_t *err_reg, float setpoint, float current_point)
 {

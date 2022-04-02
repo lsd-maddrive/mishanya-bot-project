@@ -4,17 +4,17 @@
 
 
 
-void test_abs_encoder(void)
+void test_arm_encoder(arm_encoder_t* encoder)
 {
 
   float angle = 0;
-//  encoder_init();
+  encoder_init(encoder);
   debug_stream_init();
 
   while (1)
   {
     chThdSleepMilliseconds(100);
-//    angle = encoder_read();
+    angle = encoder_read(encoder);
 
     dbgprintf("angle=%.4f\r\n", angle);
   }

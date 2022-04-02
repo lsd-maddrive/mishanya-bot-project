@@ -1,13 +1,11 @@
 #include <arm_control_system.h>
-#include "serial.h"
 
 static void acs_normalize_interval (traking_cs_t* traking_cs);
 static float acs_normalize_angle (traking_cs_t* traking_cs);
 
 /**
- * @brief the function brings the resulting angle into the normalized range
- * @brief recieve the initial minimum angle and nirmalize struct
- * @return angle inside the normalized interval
+ * @details the function brings the resulting angle into the normalized range
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
  */
 void acs_init(arm_driver_ctx_t* arm_driver)
 {
@@ -27,8 +25,10 @@ void acs_init(arm_driver_ctx_t* arm_driver)
 }
 
 /**
- * @brief the function set target angle ~(0-40)
- * @brief recieve target angle, the hand side and arm driver struct
+ * @details the function set target angle
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
+ * @param[in] side - left or right side of hand
+ * @param[in] target_angle - setpoint angle
  */
 void acs_set_angle(float target_angle, arm_side_t side, arm_driver_ctx_t *arm_driver)
 {
@@ -38,11 +38,14 @@ void acs_set_angle(float target_angle, arm_side_t side, arm_driver_ctx_t *arm_dr
 }
 
 /**
- * @brief the function update current state of arm
- * @brief recieve the function call period, the hand side and arm driver struct
+ * @details the function update current state of arm
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
+ * @param[in] side - left or right side of hand
+ * @param[in] dt - function call period
  */
 void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
 {
+
 
   if(arm_driver->arm[side].traking_cs.normalize_angle.target == 1)
     return ;
@@ -59,8 +62,6 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
     return ;
 
   PID_err_calc(&PID->error, target_angle, current_angle);
-
-
 
   if(PID->error.P < 0)
     PID->error.P *= -1;
@@ -101,9 +102,9 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
 }
 
 /**
-* @brief the function normalizes the angle interval
-* @brief recieve the initial angles and nirmalize struct
-*/
+ * @details the function normalizes the angle interval
+ * @param[in] traking_cs - pointer to the structure of the tracking system of arm
+ */
 static void acs_normalize_interval (traking_cs_t* traking_cs)
 {
   float min_angle = traking_cs->angle_lim.min_angle;
@@ -131,9 +132,9 @@ static void acs_normalize_interval (traking_cs_t* traking_cs)
 
 
 /**
- * @brief the function brings the resulting angle into the normalized range
- * @brief recieve the initial minimum angle and nirmalize struct
- * @return angle inside the normalized interval
+ * @details the function brings the current angle to the normalized angle change interval
+ * @param[in] traking_cs - pointer to the structure of the tracking system of arm
+ * @param[out] current_angle - current angle from normalized angle range
  */
 static float acs_normalize_angle (traking_cs_t* traking_cs)
 {

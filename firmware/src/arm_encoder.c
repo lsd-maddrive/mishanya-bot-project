@@ -1,5 +1,6 @@
 #include <arm_encoder.h>
 
+
 /************ Status bits ************/
 
 #define OCF 0b00000100
@@ -13,23 +14,22 @@
 
 
 /**
- * @brief   Initialize periphery connected to encoder
+ * @details initialize periphery connected to encoder
+ * @param[in] encoder - pointer to the encoder structure
  */
 void encoder_init(arm_encoder_t* encoder)
 {
   palSetLineMode(encoder->encoder_pins.cs_encoder, PAL_MODE_OUTPUT_PUSHPULL);
-//  if(!(encoder->spi_use))
-//  {
-    palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
-//  }
+  palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+  palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+  spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
 }
 
+
 /**
- * @brief recieve data from encoder
- * @return  angle of rotation
- * @return error
+ * @details returns the current angle
+ * @param[in] encoder - pointer to the encoder structure
+ * @param[out] angle - current angle or error (-1)
  */
 float encoder_read(arm_encoder_t* encoder)
 {

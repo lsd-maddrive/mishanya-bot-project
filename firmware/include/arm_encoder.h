@@ -11,7 +11,6 @@ typedef struct {
 
 typedef struct
 {
-    bool spi_use;
     SPIDriver* encoder_ptr;
     SPIConfig encoder_conf;
     arm_encoder_line_t encoder_pins;
