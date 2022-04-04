@@ -3,8 +3,6 @@
 
 #include <math.h>
 #include <common.h>
-#include <serial.h>
-#include <test.h>
 
 /**
  * @brief   Math constants.
