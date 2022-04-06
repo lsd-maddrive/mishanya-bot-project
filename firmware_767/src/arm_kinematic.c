@@ -13,8 +13,8 @@ float z;
 coord_t arm_dir_kinematic(arm_t arm, angles_t ang)
 {
   coord_t set_pos;
-  float L1 = arm.shoulder;
-  float L2 = arm.forearm;
+  float L1 = arm.shoulder_length;
+  float L2 = arm.forearm_length;
   float alpha = ang.th1 * DEG2RAD;
   float betta = ang.th2  * DEG2RAD;
   float gamma = ang.th3  * DEG2RAD;
@@ -27,7 +27,7 @@ coord_t arm_dir_kinematic(arm_t arm, angles_t ang)
   set_pos.x = (c_th1*(L1 + c_th2 * L2)) - (c_th3*(s_th1*s_th2)) * L2;
   set_pos.y = (s_th1*(L1 + c_th2 * L2)) + (c_th1*(c_th3*s_th2)) * L2;
   set_pos.z = (s_th2*s_th3) * L2;
-  if (arm.side){
+  if (arm.side == 1){
     set_pos.z = ((-1)*set_pos.z) - arm.coord_base.z;
   }
   else
@@ -42,12 +42,12 @@ angles_t arm_inv_kinematic(arm_t arm, coord_t coord)
 {
   angles_t set_ang_1;
   angles_t set_ang_2;
-  float L1 = arm.shoulder;
-  float L2 = arm.forearm;
+  float L1 = arm.shoulder_length;
+  float L2 = arm.forearm_length;
   float x = coord.x + arm.coord_base.x;
   float y = coord.y + arm.coord_base.y;
   float z;
-  if (arm.side){
+  if (arm.side == 1){
      z = (-1)*(coord.z + arm.coord_base.z);
   }
   else z = (coord.z + arm.coord_base.z);

@@ -15,7 +15,7 @@
 #define RAD2DEG 57.2957795131
 
 /**
- * @brief   Structures for coordinates.
+ * @brief   Structures for coordinates. unit of measurement: meter
  */
 
 struct coord{
@@ -25,7 +25,7 @@ struct coord{
 };
 
 /**
- * @brief   Structures for angles.
+ * @brief   Structures for angles. unit of measurement: radians
  */
 
 struct angles{
@@ -39,15 +39,15 @@ typedef struct coord coord_t;
 
 /**
  * @brief   Structure for hand parameters.
- * @note    side - calculate a left or right hand, shoulder - shoulder
- *          length(L1), forearm - forearm length(L2), coord_base -
- *          shoulder point coordinates in absolute coordinate system.
+ * @note    side - calculate a left or right hand, shoulder_length - shoulder
+ *          length in meter(L1), forearm_length - forearm length in meter(L2),
+ *          coord_base - shoulder point coordinates in absolute coordinate system.
  */
 
 struct arm{
   bool side;
-  float shoulder;
-  float forearm;
+  float shoulder_length;
+  float forearm_length;
   coord_t coord_base;
 };
 
