@@ -27,7 +27,7 @@ coord_t arm_dir_kinematic(arm_t arm, angles_t ang)
   set_pos.x = (c_th1*(L1 + c_th2 * L2)) - (c_th3*(s_th1*s_th2)) * L2;
   set_pos.y = (s_th1*(L1 + c_th2 * L2)) + (c_th1*(c_th3*s_th2)) * L2;
   set_pos.z = (s_th2*s_th3) * L2;
-  if (arm.side == 1){
+  if (arm.side == LEFT_ARM){
     set_pos.z = ((-1)*set_pos.z) - arm.coord_base.z;
   }
   else
@@ -47,7 +47,7 @@ angles_t arm_inv_kinematic(arm_t arm, coord_t coord)
   float x = coord.x + arm.coord_base.x;
   float y = coord.y + arm.coord_base.y;
   float z;
-  if (arm.side == 1){
+  if (arm.side == LEFT_ARM){
      z = (-1)*(coord.z + arm.coord_base.z);
   }
   else z = (coord.z + arm.coord_base.z);

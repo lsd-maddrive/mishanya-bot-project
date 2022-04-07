@@ -15,6 +15,15 @@
 #define RAD2DEG 57.2957795131
 
 /**
+ * @brief   hand side constants.
+ * @note    constants that allow you to more clearly display which
+ *          hand a particular section of code is associated with
+ */
+
+#define LEFT_ARM 1
+#define RIGHT_ARM 0
+
+/**
  * @brief   Structures for coordinates. unit of measurement: meter
  */
 

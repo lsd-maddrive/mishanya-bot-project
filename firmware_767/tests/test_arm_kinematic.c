@@ -1,11 +1,7 @@
 #include <arm_kinematic.h>
 
-//#define LEFT_ARM
-//#define RIGHT_ARM
-//enum {LEFT_ARM,RIGHT_ARM};
-
 arm_t right_arm = {
-                   .side = 0,
+                   .side = RIGHT_ARM,
                    .shoulder_length = 1,
                    .forearm_length = 2,
                    .coord_base = {
@@ -15,7 +11,7 @@ arm_t right_arm = {
               }
 };
 arm_t left_arm = {
-                  .side = 1,
+                  .side = LEFT_ARM,
                   .shoulder_length = 1,
                   .forearm_length = 2,
                   .coord_base = {
