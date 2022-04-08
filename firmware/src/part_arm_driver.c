@@ -1,10 +1,10 @@
-#include <part_arm_driver.h>
+#include "part_arm_driver.h"
 #include "lld_bb_driver.h"
 #include "lld_red_driver.h"
 
 /**
- * @brief   initialize arm driver
- * @brief   recieve arm struct
+ * @details initialize arm driver
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
  */
 void driver_init(arm_driver_ctx_t *arm_driver)
 {
@@ -31,12 +31,13 @@ void driver_init(arm_driver_ctx_t *arm_driver)
 	}
 
   pwmStart(pwm_ctx_left.driver_ptr, &pwm_ctx_left.pwm_conf);
-
 }
 
 /**
- * @brief the function controls the raising of the hand up
- * @brief recieve the hand side, arm struct and the filling period
+ * @details the function controls the raising of the hand up
+ * @param[in] side - left or right side of hand
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
+ * @param[in] period - PWM period
  */
 void arm_up(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 {
@@ -52,8 +53,10 @@ void arm_up(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 }
 
 /**
- * @brief the function controls the raising of the hand down
- * @brief recieve the hand side, arm struct and the filling period
+ * @details the function controls the raising of the hand down
+ * @param[in] side - left or right side of hand
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
+ * @param[in] period - PWM period
  */
 void arm_down(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 {
@@ -69,9 +72,10 @@ void arm_down(arm_side_t side, arm_driver_ctx_t *arm_driver, uint16_t period)
 }
 
 
-/**
- * @brief the function disables the selected hand
- * @brief recieve the hand side, arm struct
+/*!
+ * @details The function disables the selected hand
+ * @param[in] side - left or right side of hand
+ * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
  */
 void arm_off (arm_side_t side, arm_driver_ctx_t *arm_driver)
 {

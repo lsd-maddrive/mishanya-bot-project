@@ -1,11 +1,12 @@
-#include <elbow_driver.h>
-#include "serial.h"
+#include "elbow_driver.h"
+
+
 
 // *******************elbow driver type config******************* //
 
 #define BB_DRIVER       0
 #define RED_DRIVER      1
-#define DRIVER          BB_DRIVER
+#define DRIVER          RED_DRIVER
 
 // *******************elbow driver type config******************* //
 
@@ -24,7 +25,6 @@
 // **********************close sys config********************** //
 
 // *******************elbow driver pin config******************* //
-
 
 #if(DRIVER == RED_DRIVER)
 
@@ -55,11 +55,19 @@
 
 // *******************elbow driver pin config******************* //
 
+// *******************encoder pin config******************* //
+
+#define MISO_ENCODER PAL_LINE(GPIOC, 2)
+#define CLK_ENCODER PAL_LINE(GPIOB, 13)
+#define CS_LEFT_ENCODER PAL_LINE(GPIOC, 6)
+#define CS_RIGHT_ENCODER PAL_LINE(GPIOC, 10)
+
+// *******************encoder pin config******************* //
 
 // ***************************PID coef************************** //
 
 PID_t elbow_PID = {
-  .coef = {.kp = 3000, .ki = 500, .kd = 0},
+  .coef = {.kp = 3500, .ki = 500, .kd = 0},
   .error = {.P = 0, .prev_P = 0, .I = 0, .D = 0}
 };
 
@@ -79,7 +87,35 @@ const angle_lim_t left_angle_lim = {
 
 // ***************************angle lim************************** //
 
+arm_encoder_t left_elbow_encoder =
+{
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_LEFT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+    .ssline = CS_LEFT_ENCODER,
+    .end_cb = NULL
+  }
+};
 
+arm_encoder_t right_elbow_encoder =
+{
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_RIGHT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+    .ssline = CS_RIGHT_ENCODER,
+    .end_cb = NULL
+  }
+};
 
 #if(DRIVER == RED_DRIVER)
 
@@ -168,7 +204,6 @@ const angle_lim_t left_angle_lim = {
     .line_control = right_control,
     .pwm_setting_ctx = right_pwm_ctx
 	};
-
 
 // ***********************right arm config*********************** //
 
@@ -291,16 +326,17 @@ arm_driver_ctx_t elbow_driver;
 // ***********************final struct declaration*********************** //
 
 
+
 /**
- * @brief   initialize elbow driver
+ * @details initialize elbow driver
  */
 void elbow_init(void)
 {
-
   // init left_cs struct
   left_cs.angle_lim = left_angle_lim;
   left_cs.angle_dead_zone = ENCODER_DEADZONE;
   left_cs.arm_PID = elbow_PID;
+  left_cs.arm_encoder = left_elbow_encoder;
 
   // init right_system struct
   left_system.traking_cs = left_cs;
@@ -310,6 +346,7 @@ void elbow_init(void)
   right_cs.angle_lim = right_angle_lim;
   right_cs.angle_dead_zone = ENCODER_DEADZONE;
   right_cs.arm_PID = elbow_PID;
+  right_cs.arm_encoder = right_elbow_encoder;
 
   // init right_system struct
   right_system.traking_cs = right_cs;
@@ -327,9 +364,11 @@ void elbow_init(void)
   acs_init(&elbow_driver);
 }
 
+
 /**
- * @brief the function controls the raising of the elbow up
- * @brief recieve the hand side and the filling period
+ * @details the function controls the raising of the elbow up
+ * @param[in] side - left or right side of hand
+ * @param[in] period - PWM period
  */
 void elbow_up(arm_side_t side, uint16_t period)
 {
@@ -337,8 +376,9 @@ void elbow_up(arm_side_t side, uint16_t period)
 }
 
 /**
- * @brief the function controls the raising of the elbow down
- * @brief recieve the hand side and the filling period
+ * @details the function controls the raising of the elbow down
+ * @param[in] side - left or right side of hand
+ * @param[in] period - PWM period
  */
 void elbow_down(arm_side_t side, uint16_t period)
 {
@@ -346,8 +386,8 @@ void elbow_down(arm_side_t side, uint16_t period)
 }
 
 /**
- * @brief the function disables the selected elbow
- * @brief recieve the hand sides
+ * @details the function disables the selected elbow
+ * @param[in] side - left or right side of hand
  */
 void elbow_off(arm_side_t side)
 {
@@ -355,8 +395,9 @@ void elbow_off(arm_side_t side)
 }
 
 /**
- * @brief the function set input angle ~(0-40)
- * @brief recieve the hand side and goal angle
+ * @details the function set input angle ~(0-40)
+ * @param[in] side - left or right side of hand
+ * @param[in] target_angle - setpoint angle
  */
 void elbow_set_angle(float target_angle, arm_side_t side)
 {
@@ -364,11 +405,31 @@ void elbow_set_angle(float target_angle, arm_side_t side)
 }
 
 /**
- * @brief the function update current state of elbow
- * @brief recieve the function call period
+ * @details the function update current state of elbow
+ * @param[in] dt - function call period
  */
 void elbow_update_angle(float dt)
 {
-  acs_update_angle(dt, LEFT, &elbow_driver);
   acs_update_angle(dt, RIGHT, &elbow_driver);
+  acs_update_angle(dt, LEFT, &elbow_driver);
+}
+
+/**
+ * @details the function get encoder struct
+ * @param[in] encoder_side - left of right encoder
+ * @return encoder struct
+ */
+arm_encoder_t elbow_get_encoder_ctx(arm_side_t encoder_side)
+{
+  switch (encoder_side) {
+    case LEFT:
+      return left_elbow_encoder;
+      break;
+    case RIGHT:
+      return right_elbow_encoder;
+      break;
+    default:
+      break;
+  }
+
 }

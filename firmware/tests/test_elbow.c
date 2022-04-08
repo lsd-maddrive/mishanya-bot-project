@@ -52,6 +52,7 @@ void test_elbow(void)
 
       dbgprintf("--------------------\r\n");
       dbgprintf("PWM period(z: +500, x: -500):\r\n");
+      dbgprintf("b: change elbow side\r\n");
       rcv_data = sdGet(&SD2);
       switch (rcv_data)
       {

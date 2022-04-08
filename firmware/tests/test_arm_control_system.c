@@ -1,7 +1,7 @@
 #include "arm_control_system.h"
 #include "test.h"
 #include "serial.h"
-#include "encoder.h"
+#include "arm_encoder.h"
 #include "elbow_driver.h"
 #include <stdlib.h>
 
@@ -28,7 +28,6 @@ void test_arm_control_system(void)
 
   debug_stream_init();
   elbow_init();
-  Encoder_init();
   elbow_off(RIGHT);
   elbow_off(LEFT);
 

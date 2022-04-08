@@ -3,8 +3,12 @@
 static void testsRoutines(void)
 {
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
-    test_abs_encoder();
+  #if(MAIN_PROGRAM==PROGRAM_TEST_LEFT_ELBOW_ENCODER)
+    test_elbow_encoder(LEFT);
+  #endif
+
+  #if(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_ELBOW_ENCODER)
+    test_elbow_encoder(RIGHT);
   #endif
 
   #if(MAIN_PROGRAM==PROGRAM_TEST_ELBOW_DRIVER)
