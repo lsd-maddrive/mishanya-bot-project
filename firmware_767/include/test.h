@@ -15,4 +15,10 @@ void test_lld_servo(type_servo servo);
  */
 void test_lld_nonlinear(type_servo servo);
 
+/*
+ * @brief test forward and inverse Kinematics by computing on the controller
+ * @note there is a unit of measurement conversion in the code
+ */
+void test_arm_kinematic(void);
+
 #endif

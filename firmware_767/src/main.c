@@ -13,6 +13,8 @@ static void testsRoutines(void)
        test_lld_servo(RIGHT_WRIST);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_NONLINEAR)
        test_lld_nonlinear(LEFT_WRIST);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_KINEMATIC)
+       test_arm_kinematic();
     #endif
 }
 
