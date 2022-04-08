@@ -87,7 +87,35 @@ const angle_lim_t left_angle_lim = {
 
 // ***************************angle lim************************** //
 
+arm_encoder_t left_elbow_encoder =
+{
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_LEFT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+    .ssline = CS_LEFT_ENCODER,
+    .end_cb = NULL
+  }
+};
 
+arm_encoder_t right_elbow_encoder =
+{
+  .encoder_ptr = &SPID2,
+  .encoder_pins = {
+    .cs_encoder = CS_RIGHT_ENCODER,
+    .clk_encoder = CLK_ENCODER,
+    .miso_encoder = MISO_ENCODER
+  },
+  .encoder_conf = {
+    .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+    .ssline = CS_RIGHT_ENCODER,
+    .end_cb = NULL
+  }
+};
 
 #if(DRIVER == RED_DRIVER)
 
@@ -130,22 +158,6 @@ const angle_lim_t left_angle_lim = {
   const control_driver_t left_arm = {
     .line_control = left_control,
     .pwm_setting_ctx = left_pwm_ctx
-  };
-
-
-  arm_encoder_t left_elbow_encoder =
-  {
-    .encoder_ptr = &SPID2,
-    .encoder_pins = {
-      .cs_encoder = CS_LEFT_ENCODER,
-      .clk_encoder = CLK_ENCODER,
-      .miso_encoder = MISO_ENCODER
-    },
-    .encoder_conf = {
-      .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-      .ssline = CS_LEFT_ENCODER,
-      .end_cb = NULL
-    }
   };
 
 
@@ -192,22 +204,6 @@ const angle_lim_t left_angle_lim = {
     .line_control = right_control,
     .pwm_setting_ctx = right_pwm_ctx
 	};
-
-  arm_encoder_t right_elbow_encoder =
-  {
-    .encoder_ptr = &SPID2,
-    .encoder_pins = {
-      .cs_encoder = CS_RIGHT_ENCODER,
-      .clk_encoder = CLK_ENCODER,
-      .miso_encoder = MISO_ENCODER
-    },
-    .encoder_conf = {
-      .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-      .ssline = CS_RIGHT_ENCODER,
-      .end_cb = NULL
-    }
-  };
-
 
 // ***********************right arm config*********************** //
 
@@ -416,4 +412,24 @@ void elbow_update_angle(float dt)
 {
   acs_update_angle(dt, RIGHT, &elbow_driver);
   acs_update_angle(dt, LEFT, &elbow_driver);
+}
+
+/**
+ * @details the function get encoder struct
+ * @param[in] encoder_side - left of right encoder
+ * @return encoder struct
+ */
+arm_encoder_t elbow_get_encoder_ctx(arm_side_t encoder_side)
+{
+  switch (encoder_side) {
+    case LEFT:
+      return left_elbow_encoder;
+      break;
+    case RIGHT:
+      return right_elbow_encoder;
+      break;
+    default:
+      break;
+  }
+
 }

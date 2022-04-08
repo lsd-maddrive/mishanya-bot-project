@@ -1,5 +1,7 @@
 #include <lld_bb_driver.h>
 
+#define POWER_LIMIT 0.9
+
 /**
  * @details initialize bridge driver type bb
  * @param[in] pins - pointer to the struct of control pins
@@ -26,7 +28,7 @@ void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
 void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* pwm_ch, uint16_t period)
 {
 
-  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, period*0.9);
+  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, period*POWER_LIMIT);
 
   pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2, 0);
 
@@ -43,7 +45,7 @@ void lld_bb_driver_reverse(const control_driver_t* control, const pwm_channel_t*
 
 	pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, 0);
 
-  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2, period*0.9);
+  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2, period*POWER_LIMIT);
 
 }
 

@@ -1,5 +1,11 @@
 #include <arm_encoder.h>
 
+#define FULL_TURN 360
+#define BIT_DEPTH 4096 // 12 bit
+#define FIRST_BYTE_MASK 0b01111111
+#define SECOND_BYTE_MASK 0b00011111
+#define FIRST_BYTE_SHIFT 5
+#define SECOND_BYTE_SHIFT 3
 
 /************ Status bits ************/
 
@@ -43,9 +49,9 @@ float encoder_read(arm_encoder_t* encoder)
 /*** check data ***/
   if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
   {
-    rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
-    angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5);
-    angle = (angle*360)/4096;
+    rx_encoder_buf[1]=(rx_encoder_buf[1] >> SECOND_BYTE_SHIFT) & SECOND_BYTE_MASK;
+    angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & FIRST_BYTE_MASK) << FIRST_BYTE_SHIFT);
+    angle = (angle*FULL_TURN)/BIT_DEPTH;
     return angle;
   }
   /*** error data ***/

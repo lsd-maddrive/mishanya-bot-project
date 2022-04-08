@@ -8,7 +8,7 @@ PROJECT_MODULES = src/arm_encoder.c \
 				  src/PID.c \
 
 
-PROJECT_TESTS   = tests/test_encoder.c \
+PROJECT_TESTS   = tests/test_elbow_encoder.c \
                   tests/test_elbow.c \
                   tests/test_arm_control_system.c \
                   tests/test_PID.c \
