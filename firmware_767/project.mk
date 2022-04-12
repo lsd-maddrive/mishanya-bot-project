@@ -1,14 +1,14 @@
 PROJECT_MODULES = src/serial.c \
 		  src/lld_control_servo.c \
-                  src/encoder.c \
                   src/lld_bb_driver.c \
                   src/lld_red_driver.c \
 		  src/elbow_driver.c \
 	          src/arm_control_system.c \
 	          src/PID.c \
 	          src/part_arm_driver.c \
+		  src/arm_encoder.c \
+	         
                   
-
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
                   tests/test_elbow.c \
                   tests/test_arm_control_system.c \

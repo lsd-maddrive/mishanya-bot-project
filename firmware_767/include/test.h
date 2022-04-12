@@ -2,6 +2,7 @@
 #define INCLUDE_TEST_H
 
 #include <lld_control_servo.h>
+#include <arm_encoder.h>
 
 /*
  * @brief Test of servos
@@ -30,7 +31,7 @@ void test_elbow(void);
 void test_arm_control_system(void);
 
 /**
- * @brief reset PID
+ * @brief test PID
  */
 void test_PID(void);
 
@@ -39,6 +40,6 @@ void test_PID(void);
 /**
  * @brief Test absolute encoder
  */
-void test_abs_encoder(void);
+void test_arm_encoder(arm_encoder_t* encoder);
 
 #endif

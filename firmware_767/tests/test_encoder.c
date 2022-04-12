@@ -1,20 +1,20 @@
 #include <serial.h>
 #include <test.h>
-#include <encoder.h>
+#include <arm_encoder.h>
 
 
 
-void test_abs_encoder(void)
+void test_arm_encoder(arm_encoder_t* encoder)
 {
 
   float angle = 0;
-  Encoder_init();
+  encoder_init(encoder);
   debug_stream_init();
 
   while (1)
   {
     chThdSleepMilliseconds(100);
-    angle = Encoder_Read();
+    angle = encoder_read(encoder);
 
     dbgprintf("angle=%.4f\r\n", angle);
   }

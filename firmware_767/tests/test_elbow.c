@@ -11,32 +11,64 @@ void test_elbow(void)
   int16_t period = 0;
   debug_stream_init();
   elbow_init();
-  elbow_off(RIGHT);
-  elbow_off(LEFT);
+  elbow_off(LEFT_ELBOW);
+  palSetLine(LINE_LED2);
+  elbow_off(LEFT_SHOULDER_IN);
+
+  elbow_off(LEFT_SHOULDER_OUT);
+  elbow_off(RIGHT_ELBOW);
+  elbow_off(RIGHT_SHOULDER_IN);
+  elbow_off(RIGHT_SHOULDER_OUT);
+
 
   while(1)
   {
     dbgprintf("--------------------\r\n");
-    dbgprintf("elbow side(r - right; l - left):\r\n");
+    dbgprintf("part arm(1 - right elbow; 2 - left elbow; 3-left shoulder_in; "
+        "4-right shoulder_in; 5-left shoulder_out; 6-right shoulder_out):\r\n");
     rcv_data = sdGet(&SD3);
     switch (rcv_data)
     {
-      case 'r':
-        arm = RIGHT;
-        dbgprintf("RIGHT ARM\r\n");
-        dbgprintf("--------------------\r\n");
-        dbgprintf("\r\n");
-        break;
+      case '1':
+         arm = RIGHT_ELBOW;
+         dbgprintf("RIGHT ARM\r\n");
+         dbgprintf("--------------------\r\n");
+         dbgprintf("\r\n");
+         break;
 
-      case 'l':
-        arm = LEFT;
-        dbgprintf("LEFT ARM\r\n");
-        dbgprintf("--------------------\r\n");
-        dbgprintf("\r\n");
-        break;
+      case '2':
+         arm = LEFT_ELBOW;
+         dbgprintf("LEFT ARM\r\n");
+         dbgprintf("--------------------\r\n");
+         dbgprintf("\r\n");
+         break;
+      case '3':
+          arm = LEFT_SHOULDER_IN;
+          dbgprintf("LEFT ARM\r\n");
+          dbgprintf("--------------------\r\n");
+          dbgprintf("\r\n");
+          break;
+      case '4':
+           arm = RIGHT_SHOULDER_IN;
+           dbgprintf("LEFT ARM\r\n");
+           dbgprintf("--------------------\r\n");
+           dbgprintf("\r\n");
+           break;
+      case '5':
+           arm = LEFT_SHOULDER_OUT;
+           dbgprintf("LEFT ARM\r\n");
+           dbgprintf("--------------------\r\n");
+           dbgprintf("\r\n");
+           break;
+      case '6':
+           arm = RIGHT_SHOULDER_OUT;
+           dbgprintf("LEFT ARM\r\n");
+           dbgprintf("--------------------\r\n");
+           dbgprintf("\r\n");
+           break;
 
       default:
-        break;
+           break;
     }
 
     test = 0;
@@ -52,6 +84,7 @@ void test_elbow(void)
 
       dbgprintf("--------------------\r\n");
       dbgprintf("PWM period(z: +500, x: -500):\r\n");
+      dbgprintf("b: change elbow side\r\n");
       rcv_data = sdGet(&SD3);
       switch (rcv_data)
       {

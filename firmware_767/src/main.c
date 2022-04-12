@@ -17,8 +17,12 @@ static void testsRoutines(void)
         test_elbow();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
         test_arm_control_system();
-    #elif(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
-        test_abs_encoder();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_ELBOW_ENCODER)
+        extern arm_encoder_t left_elbow_encoder;
+        test_arm_encoder(&left_elbow_encoder);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_ELBOW_ENCODER)
+        extern arm_encoder_t right_elbow_encoder;
+        test_arm_encoder(&right_elbow_encoder);
     #endif
 }
 

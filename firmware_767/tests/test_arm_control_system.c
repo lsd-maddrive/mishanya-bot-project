@@ -1,7 +1,7 @@
 #include "arm_control_system.h"
 #include "test.h"
 #include "serial.h"
-#include "encoder.h"
+#include "arm_encoder.h"
 #include "elbow_driver.h"
 #include <stdlib.h>
 
@@ -28,9 +28,8 @@ void test_arm_control_system(void)
 
   debug_stream_init();
   elbow_init();
-  Encoder_init();
-  elbow_off(RIGHT);
-  elbow_off(LEFT);
+  elbow_off(RIGHT_ELBOW);
+  elbow_off(LEFT_ELBOW);
 
   chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-1,
                     elbow_update, NULL);
@@ -45,14 +44,14 @@ void test_arm_control_system(void)
     switch (rcv_data)
     {
       case 'r':
-        arm = RIGHT;
+        arm = RIGHT_ELBOW;
         dbgprintf("RIGHT ARM\r\n");
         dbgprintf("--------------------\r\n");
         dbgprintf("\r\n");
         break;
 
       case 'l':
-        arm = LEFT;
+        arm = LEFT_ELBOW;
         dbgprintf("LEFT ARM\r\n");
         dbgprintf("--------------------\r\n");
         dbgprintf("\r\n");
