@@ -90,28 +90,28 @@ PROJECT = ch
 # Target settings.
 MCU  = cortex-m7
 
-# Imported source files and paths.
-CHIBIOS  := C:\STM\ChibiStudio20v0\chibios203
-CONFDIR  := ./cfg
-BUILDDIR := ./build
-DEPDIR   := ./.dep
+# CHIBIOS  := C:\STM\ChibiStudio20v0\chibios203
+ CHIBIOS = $(CHIBIOS_ROOT)
+ CONFDIR  := ./cfg
+ BUILDDIR := ./build
+ DEPDIR   := ./.dep
 
 # Licensing files.
-include $(CHIBIOS)/os/license/license.mk
-# Startup files.
-include $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk/startup_stm32f7xx.mk
-# HAL-OSAL files (optional).
-include $(CHIBIOS)/os/hal/hal.mk
-include $(CHIBIOS)/os/hal/ports/STM32/STM32F7xx/platform.mk
-include $(CHIBIOS)/os/hal/boards/ST_NUCLEO144_F767ZI/board.mk
-include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
-# RTOS files (optional).
-include $(CHIBIOS)/os/rt/rt.mk
-include $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC/mk/port_v7m.mk
-# Auto-build files in ./source recursively.
-include $(CHIBIOS)/tools/mk/autobuild.mk
-# Other files (optional).
-include $(CHIBIOS)/os/hal/lib/streams/streams.mk
+ include $(CHIBIOS)/os/license/license.mk
+ # Startup files.
+ include $(CHIBIOS)/os/common/startup/ARMCMx/compilers/GCC/mk/startup_stm32f7xx.mk
+ # HAL-OSAL files (optional).
+ include $(CHIBIOS)/os/hal/hal.mk
+ include $(CHIBIOS)/os/hal/ports/STM32/STM32F7xx/platform.mk
+ include $(CHIBIOS)/os/hal/boards/ST_NUCLEO144_F767ZI/board.mk
+ include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
+ # RTOS files (optional).
+ include $(CHIBIOS)/os/rt/rt.mk
+ include $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC/mk/port_v7m.mk
+ # Auto-build files in ./source recursively.
+ include $(CHIBIOS)/tools/mk/autobuild.mk
+ # Other files (optional).
+ include $(CHIBIOS)/os/hal/lib/streams/streams.mk
 
 # Define linker script file here
 LDSCRIPT= $(STARTUPLD)/STM32F76xxI.ld

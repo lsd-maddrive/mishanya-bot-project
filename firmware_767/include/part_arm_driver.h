@@ -52,7 +52,7 @@ typedef struct {
   void (* up) (arm_side_t, uint16_t);             // ptr function up
   void (* down) (arm_side_t, uint16_t);           // ptr function down
   void (* off) (arm_side_t);                      // ptr function off arm
-  arm_system_t arm[2];                            // array because there is a right hand and a left hand
+  arm_system_t arm[6];                            // two arms = 6 motors
 } arm_driver_ctx_t;
 
 

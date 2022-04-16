@@ -9,45 +9,45 @@ static float acs_normalize_angle (traking_cs_t* traking_cs);
  */
 void acs_init(arm_driver_ctx_t* arm_driver)
 {
+	// left arm
+	encoder_init(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_encoder);
+	encoder_init(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_encoder);
+	encoder_init(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_encoder);
 
-  encoder_init(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_encoder);
-  encoder_init(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_encoder);
+	// right arm
+	encoder_init(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_encoder);
+	encoder_init(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_encoder);
+	encoder_init(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_encoder);
 
-  encoder_init(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_encoder);
-  encoder_init(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_encoder);
+	// left arm interval normalization
+	acs_normalize_interval(&arm_driver->arm[LEFT_ELBOW].traking_cs);
+	acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs);
+	acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs);
 
-  encoder_init(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_encoder);
-  encoder_init(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_encoder);
+	// right arm interval normalization
+	acs_normalize_interval(&arm_driver->arm[RIGHT_ELBOW].traking_cs);
+	acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs);
+	acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs);
 
+	// left arm angle normalization
+	arm_driver->arm[LEFT_ELBOW].traking_cs.normalize_angle.target = true;
+	arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
+	arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
 
+	// right arm angle normalization
+	arm_driver->arm[RIGHT_ELBOW].traking_cs.normalize_angle.target = true;
+	arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
+	arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
 
-  acs_normalize_interval(&arm_driver->arm[LEFT_ELBOW].traking_cs);
-  acs_normalize_interval(&arm_driver->arm[RIGHT_ELBOW].traking_cs);
+	// left arm PID reset
+	PID_reset(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_PID);
 
-  acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs);
-  acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs);
-
-  acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs);
-  acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs);
-
-  arm_driver->arm[LEFT_ELBOW].traking_cs.normalize_angle.target = true;
-  arm_driver->arm[RIGHT_ELBOW].traking_cs.normalize_angle.target = true;
-
-  arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
-  arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
-
-  arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
-  arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
-
-  PID_reset(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_PID);
-  PID_reset(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_PID);
-
-  PID_reset(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_PID);
-  PID_reset(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_PID);
-
-  PID_reset(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_PID);
-  PID_reset(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_PID);
-
+	// right arm PID reset
+	PID_reset(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_PID);
 }
 
 /**
