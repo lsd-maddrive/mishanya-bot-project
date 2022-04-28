@@ -18,11 +18,17 @@ static void testsRoutines(void)
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
         test_arm_control_system();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_ELBOW_ENCODER)
-        extern arm_encoder_t left_elbow_encoder;
-        test_arm_encoder(&left_elbow_encoder);
+        test_arm_encoder(LEFT_ELBOW);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_ELBOW_ENCODER)
-        extern arm_encoder_t right_elbow_encoder;
-        test_arm_encoder(&right_elbow_encoder);
+        test_arm_encoder(RIGHT_ELBOW);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_SHOULDER_OUT_ENCODER)
+        test_arm_encoder(RIGHT_SHOULDER_OUT);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_SHOULDER_IN_ENCODER)
+        test_arm_encoder(RIGHT_SHOULDER_IN);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_SHOULDER_IN_ENCODER)
+        test_arm_encoder(LEFT_SHOULDER_IN);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_SHOULDER_OUT_ENCODER)
+        test_arm_encoder(LEFT_SHOULDER_OUT);
     #endif
 }
 

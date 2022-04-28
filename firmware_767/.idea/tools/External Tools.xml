@@ -1,0 +1,9 @@
+<toolSet name="External Tools">
+  <tool name="Ch" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="false" showConsoleOnStdErr="false" synchronizeAfterRun="true">
+    <exec>
+      <option name="COMMAND" value="C:\STM\ChibiStudio20v0\workspace\firmware_767\build\ch.elf" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="C:/STM/ChibiStudio20v0/workspace/firmware_767/build" />
+    </exec>
+  </tool>
+</toolSet>

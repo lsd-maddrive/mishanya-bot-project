@@ -187,6 +187,7 @@ static void acs_normalize_interval (traking_cs_t* traking_cs)
 
     traking_cs->normalize_angle.max_norm_angle = max_angle - min_angle;
     traking_cs->normalize_angle.shift = min_angle;
+    traking_cs->normalize_angle.zero_cross = false;
 
   }
 

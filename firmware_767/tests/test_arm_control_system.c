@@ -18,7 +18,6 @@ static THD_FUNCTION(elbow_update,arg) {
 }
 
 
-
 void test_arm_control_system(void)
 {
   char rcv_data;
@@ -28,37 +27,68 @@ void test_arm_control_system(void)
 
   debug_stream_init();
   elbow_init();
-  elbow_off(RIGHT_ELBOW);
   elbow_off(LEFT_ELBOW);
+  elbow_off(LEFT_SHOULDER_IN);
+  elbow_off(LEFT_SHOULDER_OUT);
+  elbow_off(RIGHT_ELBOW);
+  elbow_off(RIGHT_SHOULDER_IN);
+  elbow_off(RIGHT_SHOULDER_OUT);
 
-  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-1,
+  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-2,
                     elbow_update, NULL);
 
 
   while(1)
   {
     dbgprintf("--------------------\r\n");
-    dbgprintf("elbow side(r - right; l - left):\r\n");
+    dbgprintf(
+             "part arm(1 - right elbow; 2 - left elbow; 3-left shoulder_in; "
+             "4-right shoulder_in; 5-left shoulder_out; 6-right shoulder_out):\r\n"
+    );
     rcv_data = sdGet(&SD3);
 
     switch (rcv_data)
     {
-      case 'r':
-        arm = RIGHT_ELBOW;
-        dbgprintf("RIGHT ARM\r\n");
-        dbgprintf("--------------------\r\n");
-        dbgprintf("\r\n");
-        break;
+    case '1':
+                    arm = RIGHT_ELBOW;
+                    dbgprintf("1\r\n");
+                    dbgprintf("--------------------\r\n");
+                    dbgprintf("\r\n");
+                    break;
 
-      case 'l':
-        arm = LEFT_ELBOW;
-        dbgprintf("LEFT ARM\r\n");
-        dbgprintf("--------------------\r\n");
-        dbgprintf("\r\n");
-        break;
+                case '2':
+                    arm = LEFT_ELBOW;
+                    dbgprintf("2\r\n");
+                    dbgprintf("--------------------\r\n");
+                    dbgprintf("\r\n");
+                    break;
+                case '3':
+                    arm = LEFT_SHOULDER_IN;
+                    dbgprintf("3\r\n");
+                    dbgprintf("--------------------\r\n");
+                    dbgprintf("\r\n");
+                    break;
+                case '4':
+                    arm = RIGHT_SHOULDER_IN;
+                    dbgprintf("4\r\n");
+                    dbgprintf("--------------------\r\n");
+                    dbgprintf("\r\n");
+                    break;
+                case '5':
+                    arm = LEFT_SHOULDER_OUT;
+                    dbgprintf("5\r\n");
+                    dbgprintf("--------------------\r\n");
+                    dbgprintf("\r\n");
+                    break;
+                case '6':
+                   arm = RIGHT_SHOULDER_OUT;
+                   dbgprintf("6\r\n");
+                   dbgprintf("--------------------\r\n");
+                   dbgprintf("\r\n");
+                   break;
 
-      default:
-        break;
+              default:
+                   break;
     }
 
     dbgprintf("--------------------\r\n");

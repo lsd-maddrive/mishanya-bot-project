@@ -14,8 +14,8 @@ const PWMConfig pwm1config_copy = {
   .period    = PWM_period,
   .callback  = NULL,
   .channels  = {
-		  {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-		  {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+		  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+		  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
 		  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // E13 - LEFT_PWM_ELBOW
 		  {.mode = PWM_OUTPUT_DISABLED, .callback = NULL}
   },
@@ -102,12 +102,6 @@ void driver_init(arm_driver_ctx_t *arm_driver)
 	pwmStart(pwm1Driver_copy, &pwm1config_copy);
 	pwmStart(pwm8Driver_copy, &pwm8config_copy);
 
-//  pwmStart(pwm_ctx_left_elbow.driver_ptr, &(pwm_ctx_left_elbow.pwm_conf));
-//  pwmStart(pwm_ctx_right_elbow.driver_ptr, &pwm_ctx_right_elbow.pwm_conf);
-//  pwmStart(pwm_ctx_left_shoulder_in.driver_ptr, &pwm_ctx_left_shoulder_in.pwm_conf);
-//  pwmStart(pwm_ctx_right_shoulder_in.driver_ptr, &pwm_ctx_right_shoulder_in.pwm_conf);
-//  pwmStart(pwm_ctx_left_shoulder_out.driver_ptr, &pwm_ctx_left_shoulder_out.pwm_conf);
-//  pwmStart(pwm_ctx_right_shoulder_out.driver_ptr, &pwm_ctx_right_shoulder_out.pwm_conf);
 }
 
 /**

@@ -3,6 +3,8 @@
 
 #include <lld_control_servo.h>
 #include <arm_encoder.h>
+#include <elbow_driver.h>
+#include <arm_encoder.h>
 
 /*
  * @brief Test of servos
@@ -40,6 +42,6 @@ void test_PID(void);
 /**
  * @brief Test absolute encoder
  */
-void test_arm_encoder(arm_encoder_t* encoder);
+void test_arm_encoder(arm_side_t encoder_side);
 
 #endif

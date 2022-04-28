@@ -64,7 +64,7 @@ const PWMConfig pwm8config = {
 #define LEFT_DOWN_ELBOW        		PAL_LINE(GPIOB, 15)
 
 // left shoulder in
-#define LEFT_PWM_SHOULDER_IN    	PAL_LINE(GPIOE, 8)  // TIM1_CH1 AF1
+#define LEFT_PWM_SHOULDER_IN    	PAL_LINE(GPIOE, 9)  // TIM1_CH1 AF1
 #define LEFT_UP_SHOULDER_IN     	PAL_LINE(GPIOC, 8)
 #define LEFT_DOWN_SHOULDER_IN   	PAL_LINE(GPIOE, 14)
 
@@ -108,9 +108,10 @@ const PWMConfig pwm8config = {
 // *******************elbow driver pin config******************* //
 
 // *******************encoder pin config******************* //
-
-#define MISO_ENCODER 					PAL_LINE(GPIOC, 2)
-#define CLK_ENCODER 					PAL_LINE(GPIOD, 3)
+#define MISO_ENCODER_LEFT               PAL_LINE(GPIOA, 6)//SPI1
+#define CLK_ENCODER_LEFT                PAL_LINE(GPIOB, 3)//SPI1
+#define MISO_ENCODER_RIGHT			    PAL_LINE(GPIOC, 2)//SPI2
+#define CLK_ENCODER_RIGHT 			    PAL_LINE(GPIOD, 3)//SPI2
 #define CS_LEFT_ENCODER_ELBOW 			PAL_LINE(GPIOA, 3)
 #define CS_RIGHT_ENCODER_ELBOW 			PAL_LINE(GPIOA, 4)
 #define CS_LEFT_ENCODER_SHOULDER_IN 	PAL_LINE(GPIOC, 0)
@@ -127,7 +128,7 @@ const PID_t elbow_PID = {
 };
 
 const PID_t shoulder_in_PID = {
-  .coef = {.kp = 3500, .ki = 500, .kd = 0},
+  .coef = {.kp = 6000, .ki = 500, .kd = 0},
   .error = {.P = 0, .prev_P = 0, .I = 0, .D = 0}
 };
 
@@ -151,23 +152,23 @@ const angle_lim_t left_angle_lim_elbow = {
 };
 
 const angle_lim_t right_angle_lim_shoulder_in = {
-  .max_angle = 62.6660,
-  .min_angle = 22.9394
+  .max_angle = 30.3222,
+  .min_angle = 3329.5019
 };
 
 const angle_lim_t left_angle_lim_shoulder_in = {
-  .max_angle = 18.2812,
-  .min_angle = 334.9511
+  .max_angle = 325.8105, //min down
+  .min_angle = 25.5761 //max up
 };
 
 const angle_lim_t right_angle_lim_shoulder_out = {
-  .max_angle = 62.6660,
-  .min_angle = 22.9394
+  .max_angle = 61.6123,
+  .min_angle = 113.4667
 };
 
 const angle_lim_t left_angle_lim_shoulder_out = {
-  .max_angle = 18.2812,
-  .min_angle = 334.9511
+  .max_angle = 132.1875, //outside
+  .min_angle = 78.7500 //inside
 };
 
 // ***************************angle lim************************** //
@@ -246,11 +247,11 @@ const control_driver_t left_arm_shoulder_out = {
 
 const arm_encoder_t left_elbow_encoder =
 {
-	.encoder_ptr = &SPID2,
+	.encoder_ptr = &SPID1,
 	.encoder_pins = {
 		.cs_encoder = CS_LEFT_ENCODER_ELBOW,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_LEFT,
+		.miso_encoder = MISO_ENCODER_LEFT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -261,11 +262,11 @@ const arm_encoder_t left_elbow_encoder =
 
 const arm_encoder_t left_shoulder_in_encoder =
 {
-	.encoder_ptr = &SPID2,
+	.encoder_ptr = &SPID1,
 	.encoder_pins = {
 		.cs_encoder = CS_LEFT_ENCODER_SHOULDER_IN,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_LEFT,
+		.miso_encoder = MISO_ENCODER_LEFT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -276,11 +277,11 @@ const arm_encoder_t left_shoulder_in_encoder =
 
 const arm_encoder_t left_shoulder_out_encoder =
 {
-	.encoder_ptr = &SPID2,
+	.encoder_ptr = &SPID1,
 	.encoder_pins = {
 		.cs_encoder = CS_LEFT_ENCODER_SHOULDER_OUT,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_LEFT,
+		.miso_encoder = MISO_ENCODER_LEFT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -366,8 +367,8 @@ const arm_encoder_t right_elbow_encoder =
 	.encoder_ptr = &SPID2,
 	.encoder_pins = {
 		.cs_encoder = CS_RIGHT_ENCODER_ELBOW,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_RIGHT,
+		.miso_encoder = MISO_ENCODER_RIGHT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -381,8 +382,8 @@ const arm_encoder_t right_shoulder_in_encoder =
 	.encoder_ptr = &SPID2,
 	.encoder_pins = {
 		.cs_encoder = CS_RIGHT_ENCODER_SHOULDER_IN,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_RIGHT,
+		.miso_encoder = MISO_ENCODER_RIGHT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -396,8 +397,8 @@ const arm_encoder_t right_shoulder_out_encoder =
 	.encoder_ptr = &SPID2,
 	.encoder_pins = {
 		.cs_encoder = CS_RIGHT_ENCODER_SHOULDER_OUT,
-		.clk_encoder = CLK_ENCODER,
-		.miso_encoder = MISO_ENCODER
+		.clk_encoder = CLK_ENCODER_RIGHT,
+		.miso_encoder = MISO_ENCODER_RIGHT
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
@@ -598,7 +599,7 @@ void elbow_init(void)
 	// left arm
 	motor_init(&arm_driver.arm[0], &left_arm_elbow, 		&left_cs_elbow);
 	motor_init(&arm_driver.arm[1], &left_arm_shoulder_in, 	&left_cs_shoulder_in);
-	motor_init(&arm_driver.arm[2], &left_arm_shoulder_out, 	&left_cs_shoulder_out);
+	motor_init(&arm_driver.arm[2], &left_arm_shoulder_out,  &left_cs_shoulder_out);
 
 	// right arm
 	motor_init(&arm_driver.arm[3], &right_arm_elbow, 		&right_cs_elbow);
@@ -661,4 +662,35 @@ void elbow_update_angle(float dt)
   acs_update_angle(dt, LEFT_SHOULDER_IN, &arm_driver);
   acs_update_angle(dt, RIGHT_SHOULDER_OUT, &arm_driver);
   acs_update_angle(dt, LEFT_SHOULDER_OUT, &arm_driver);
+}
+
+/**
+ * @details the function get encoder struct
+ * @param[in] encoder_side - left of right encoder
+ * @return encoder struct
+ */
+arm_encoder_t elbow_get_encoder_ctx(arm_side_t encoder_side)
+{
+    switch (encoder_side) {
+        case LEFT_ELBOW:
+            return left_elbow_encoder;
+            break;
+        case LEFT_SHOULDER_IN:
+            return left_shoulder_in_encoder;
+            break;
+        case LEFT_SHOULDER_OUT:
+            return left_shoulder_out_encoder;
+            break;
+        case  RIGHT_ELBOW:
+            return right_elbow_encoder;
+            break;
+        case RIGHT_SHOULDER_IN:
+            return right_shoulder_in_encoder;
+            break;
+        case RIGHT_SHOULDER_OUT:
+            return right_shoulder_out_encoder;
+            break;
+        default:
+            break;
+    }
 }

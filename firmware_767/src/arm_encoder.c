@@ -11,7 +11,7 @@
 #define EvenPAR 0b01000000
 
 /************ Status bits ************/
-
+int Flag = 1;
 
 /**
  * @details initialize periphery connected to encoder
@@ -20,9 +20,12 @@
 void encoder_init(arm_encoder_t* encoder)
 {
   palSetLineMode(encoder->encoder_pins.cs_encoder, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-  palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-  spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
+  if(encoder->encoder_ptr->state == SPI_STOP)
+  {
+    palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+    palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
+    spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
+  }
 }
 
 

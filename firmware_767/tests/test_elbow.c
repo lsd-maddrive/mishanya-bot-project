@@ -35,38 +35,38 @@ void test_elbow(void)
 		{
 			case '1':
 				arm = RIGHT_ELBOW;
-				dbgprintf("RIGHT ARM\r\n");
+				dbgprintf("1\r\n");
 				dbgprintf("--------------------\r\n");
 				dbgprintf("\r\n");
 				break;
 
 			case '2':
 			  	arm = LEFT_ELBOW;
-			  	dbgprintf("LEFT ARM\r\n");
+			  	dbgprintf("2\r\n");
 			  	dbgprintf("--------------------\r\n");
 			  	dbgprintf("\r\n");
 			  	break;
 			case '3':
 				arm = LEFT_SHOULDER_IN;
-				dbgprintf("LEFT ARM\r\n");
+				dbgprintf("3\r\n");
 				dbgprintf("--------------------\r\n");
 				dbgprintf("\r\n");
 				break;
 			case '4':
 				arm = RIGHT_SHOULDER_IN;
-				dbgprintf("LEFT ARM\r\n");
+				dbgprintf("4\r\n");
 				dbgprintf("--------------------\r\n");
 				dbgprintf("\r\n");
 				break;
 			case '5':
 				arm = LEFT_SHOULDER_OUT;
-				dbgprintf("LEFT ARM\r\n");
+				dbgprintf("5\r\n");
 				dbgprintf("--------------------\r\n");
 				dbgprintf("\r\n");
 				break;
 			case '6':
 			   arm = RIGHT_SHOULDER_OUT;
-			   dbgprintf("LEFT ARM\r\n");
+			   dbgprintf("6\r\n");
 			   dbgprintf("--------------------\r\n");
 			   dbgprintf("\r\n");
 			   break;
