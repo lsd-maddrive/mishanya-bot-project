@@ -96,9 +96,6 @@ void driver_init(arm_driver_ctx_t *arm_driver)
 		lld_bb_init_driver(&pins_left_shoulder_out, &pwm_ctx_left_shoulder_out);
 	}
 
-	// PWM1 and PWM8 are started multiple times, it is bad
-	// TODO: need to fix
-	// maybe add new fields into arm_driver struct with PWM drivers and their configs
 	pwmStart(pwm1Driver_copy, &pwm1config_copy);
 	pwmStart(pwm8Driver_copy, &pwm8config_copy);
 

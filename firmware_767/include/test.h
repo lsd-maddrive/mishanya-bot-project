@@ -43,5 +43,10 @@ void test_PID(void);
  * @brief Test absolute encoder
  */
 void test_arm_encoder(arm_side_t encoder_side);
+/**
+ * @brief Test close system
+ * @note three angles are set for all parts of the hand
+ */
+void test_arm_cs(void);
 
 #endif

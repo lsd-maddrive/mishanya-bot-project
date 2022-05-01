@@ -20,7 +20,10 @@
 #define PROGRAM_TEST_LEFT_ELBOW_ENCODER 10
 #define PROGRAM_TEST_RIGHT_SHOULDER_OUT_ENCODER 11
 #define PROGRAM_TEST_RIGHT_SHOULDER_IN_ENCODER 12
-#define MAIN_PROGRAM PROGRAM_TEST_RIGHT_ELBOW_ENCODER
+#define PROGRAM_TEST_LEFT_SHOULDER_IN_ENCODER 13
+#define PROGRAM_TEST_LEFT_SHOULDER_OUT_ENCODER 14
+#define PROGRAM_TEST_ARM_CS 15
+#define MAIN_PROGRAM PROGRAM_TEST_ARM_CS
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

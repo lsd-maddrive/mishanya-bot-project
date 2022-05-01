@@ -143,7 +143,6 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
 
       else
         arm_driver->up(side, (uint16_t)control);
-
     }
   else if(side==RIGHT_SHOULDER_OUT)
     {

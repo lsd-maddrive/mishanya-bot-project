@@ -29,6 +29,8 @@ static void testsRoutines(void)
         test_arm_encoder(LEFT_SHOULDER_IN);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_SHOULDER_OUT_ENCODER)
         test_arm_encoder(LEFT_SHOULDER_OUT);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CS)
+        test_arm_cs();
     #endif
 }
 

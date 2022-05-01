@@ -1,14 +1,14 @@
 #include "elbow_driver.h"
 
-// *******************elbow driver type config******************* //
+// *******************arm driver type config******************* //
 
 #define BB_DRIVER       0
 #define RED_DRIVER      1
 #define DRIVER          RED_DRIVER
 
-// *******************elbow driver type config******************* //
+// *******************arm driver type config******************* //
 
-// *******************elbow driver PWM config******************* //
+// *******************arm driver PWM config******************* //
 
 #define PWM_frequency		500000
 #define PWM_period			10000
@@ -45,7 +45,7 @@ const PWMConfig pwm8config = {
   .dier       = 0
 };
 
-// *******************elbow driver PWM config******************* //
+// *******************arm driver PWM config******************* //
 
 
 // **********************close sys config********************** //
@@ -54,7 +54,7 @@ const PWMConfig pwm8config = {
 
 // **********************close sys config********************** //
 
-// *******************elbow driver pin config******************* //
+// *******************arm driver pin config******************* //
 
 #if(DRIVER == RED_DRIVER)
 
@@ -105,7 +105,7 @@ const PWMConfig pwm8config = {
 
 #endif
 
-// *******************elbow driver pin config******************* //
+// *******************arm driver pin config******************* //
 
 // *******************encoder pin config******************* //
 #define MISO_ENCODER_LEFT               PAL_LINE(GPIOA, 6)//SPI1
@@ -128,7 +128,7 @@ const PID_t elbow_PID = {
 };
 
 const PID_t shoulder_in_PID = {
-  .coef = {.kp = 6000, .ki = 500, .kd = 0},
+  .coef = {.kp = 3500, .ki = 500, .kd = 0},
   .error = {.P = 0, .prev_P = 0, .I = 0, .D = 0}
 };
 
@@ -152,18 +152,18 @@ const angle_lim_t left_angle_lim_elbow = {
 };
 
 const angle_lim_t right_angle_lim_shoulder_in = {
-  .max_angle = 30.3222,
-  .min_angle = 3329.5019
+  .max_angle =30.2343,
+  .min_angle = 329.5019
 };
 
 const angle_lim_t left_angle_lim_shoulder_in = {
-  .max_angle = 325.8105, //min down
-  .min_angle = 25.5761 //max up
+  .max_angle = 25.5761, //up
+  .min_angle = 325.8105//down
 };
 
 const angle_lim_t right_angle_lim_shoulder_out = {
-  .max_angle = 61.6123,
-  .min_angle = 113.4667
+  .max_angle = 113.4667,
+  .min_angle = 61.6123
 };
 
 const angle_lim_t left_angle_lim_shoulder_out = {
@@ -255,7 +255,6 @@ const arm_encoder_t left_elbow_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_LEFT_ENCODER_ELBOW,
 		.end_cb = NULL
 	}
 };
@@ -270,7 +269,6 @@ const arm_encoder_t left_shoulder_in_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_LEFT_ENCODER_SHOULDER_IN,
 		.end_cb = NULL
 	}
 };
@@ -285,7 +283,6 @@ const arm_encoder_t left_shoulder_out_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_LEFT_ENCODER_SHOULDER_OUT,
 		.end_cb = NULL
 	}
 };
@@ -372,7 +369,6 @@ const arm_encoder_t right_elbow_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_RIGHT_ENCODER_ELBOW,
 		.end_cb = NULL
 	}
 };
@@ -387,7 +383,6 @@ const arm_encoder_t right_shoulder_in_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_RIGHT_ENCODER_SHOULDER_IN,
 		.end_cb = NULL
 	}
 };
@@ -402,7 +397,6 @@ const arm_encoder_t right_shoulder_out_encoder =
 	},
 	.encoder_conf = {
 		.cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-		.ssline = CS_RIGHT_ENCODER_SHOULDER_OUT,
 		.end_cb = NULL
 	}
 };
@@ -584,7 +578,7 @@ void motor_init(
 static bool isInitialized   = false;
 
 /**
- * @details initialize elbow driver
+ * @details initialize arm driver
  */
 void elbow_init(void)
 {
@@ -612,7 +606,7 @@ void elbow_init(void)
 
 
 /**
- * @details the function controls the raising of the elbow up
+ * @details the function controls the raising of the arm up
  * @param[in] side - left or right side of hand
  * @param[in] period - PWM period
  */
@@ -622,7 +616,7 @@ void elbow_up(arm_side_t side, uint16_t period)
 }
 
 /**
- * @details the function controls the raising of the elbow down
+ * @details the function controls the raising of the arm down
  * @param[in] side - left or right side of hand
  * @param[in] period - PWM period
  */
@@ -632,7 +626,7 @@ void elbow_down(arm_side_t side, uint16_t period)
 }
 
 /**
- * @details the function disables the selected elbow
+ * @details the function disables the selected arm
  * @param[in] side - left or right side of hand
  */
 void elbow_off(arm_side_t side)
@@ -641,7 +635,7 @@ void elbow_off(arm_side_t side)
 }
 
 /**
- * @details the function set input angle ~(0-40)
+ * @details the function set input angle
  * @param[in] side - left or right side of hand
  * @param[in] target_angle - setpoint angle
  */
@@ -651,7 +645,7 @@ void elbow_set_angle(float target_angle, arm_side_t side)
 }
 
 /**
- * @details the function update current state of elbow
+ * @details the function update current state of arm
  * @param[in] dt - function call period
  */
 void elbow_update_angle(float dt)
@@ -669,6 +663,7 @@ void elbow_update_angle(float dt)
  * @param[in] encoder_side - left of right encoder
  * @return encoder struct
  */
+
 arm_encoder_t elbow_get_encoder_ctx(arm_side_t encoder_side)
 {
     switch (encoder_side) {

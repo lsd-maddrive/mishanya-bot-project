@@ -20,6 +20,7 @@ int Flag = 1;
 void encoder_init(arm_encoder_t* encoder)
 {
   palSetLineMode(encoder->encoder_pins.cs_encoder, PAL_MODE_OUTPUT_PUSHPULL);
+  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_HIGH);
   if(encoder->encoder_ptr->state == SPI_STOP)
   {
     palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
@@ -38,10 +39,9 @@ float encoder_read(arm_encoder_t* encoder)
 {
   uint8_t rx_encoder_buf[3] = {0};
   float angle = 0;
-
-  spiSelect(encoder->encoder_ptr);
+  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_LOW);
   spiReceive(encoder->encoder_ptr, 3, rx_encoder_buf);
-  spiUnselect(encoder->encoder_ptr);
+  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_HIGH);
 
 /*** check data ***/
   if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
