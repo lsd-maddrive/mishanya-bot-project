@@ -1,5 +1,5 @@
-#include <elbow_driver.h>
-#include <test.h>
+#include "elbow_driver.h"
+#include "test.h"
 #include "serial.h"
 
 
@@ -13,6 +13,7 @@ void test_elbow(void)
   elbow_init();
   elbow_off(RIGHT);
   elbow_off(LEFT);
+
   while(1)
   {
     dbgprintf("--------------------\r\n");
@@ -51,6 +52,7 @@ void test_elbow(void)
 
       dbgprintf("--------------------\r\n");
       dbgprintf("PWM period(z: +500, x: -500):\r\n");
+      dbgprintf("b: change elbow side\r\n");
       rcv_data = sdGet(&SD2);
       switch (rcv_data)
       {
