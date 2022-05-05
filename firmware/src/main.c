@@ -3,25 +3,17 @@
 static void testsRoutines(void)
 {
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_LEFT_ELBOW_ENCODER)
-    test_elbow_encoder(LEFT);
-  #endif
+#if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
+    test_abs_encoder();
+#endif
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_RIGHT_ELBOW_ENCODER)
-    test_elbow_encoder(RIGHT);
-  #endif
-
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ELBOW_DRIVER)
+#if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)
     test_elbow();
-  #endif
+#endif
 
-  #if(MAIN_PROGRAM==PROGRAM_TEST_PID)
-    test_PID();
-  #endif
-
-  #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
-    test_arm_control_system();
-  #endif
+#if(MAIN_PROGRAM==PROGRAM_TEST_ARM_CLOSE_SYS)
+    test_close_sys();
+#endif
 
 }
 

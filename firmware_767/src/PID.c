@@ -4,10 +4,10 @@
  * @brief PID function
  * @brief recieve time step and PID struct
  */
-double PID_out(PID_t* reg, double dt)
+float PID_out(PID_t* reg, float dt)
 {
 
-	double control = 0;
+  float control = 0;
 
 	reg->error.I += reg->error.P*dt;
 	reg->error.D = (reg->error.P - reg->error.prev_P)/dt;
@@ -30,5 +30,18 @@ void PID_reset(PID_t* reg)
   reg->error.I = 0;
   reg->error.P = 0;
   reg->error.prev_P = 0;
+
+}
+
+
+/**
+ * @brief error calculation function
+ * @brief recieve the setpoint, current point and error struct
+ */
+void PID_err_calc (error_type_t *err_reg, float setpoint, float current_point)
+{
+
+  err_reg->P = setpoint-current_point;
+
 
 }

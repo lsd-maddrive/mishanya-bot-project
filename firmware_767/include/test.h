@@ -2,6 +2,9 @@
 #define INCLUDE_TEST_H
 
 #include <lld_control_servo.h>
+#include <arm_encoder.h>
+#include <elbow_driver.h>
+#include <arm_encoder.h>
 
 /*
  * @brief Test of servos
@@ -15,10 +18,35 @@ void test_lld_servo(type_servo servo);
  */
 void test_lld_nonlinear(type_servo servo);
 
-/*
- * @brief test forward and inverse Kinematics by computing on the controller
- * @note there is a unit of measurement conversion in the code
+/************* Elbow tests *************/
+
+/**
+ * @brief Test arm driver
  */
-void test_arm_kinematic(void);
+void test_elbow(void);
+
+/*********** Close sys tests ***********/
+
+/**
+ * @brief Test close system
+ */
+void test_arm_control_system(void);
+
+/**
+ * @brief test PID
+ */
+void test_PID(void);
+
+/************ Encoder tests ************/
+
+/**
+ * @brief Test absolute encoder
+ */
+void test_arm_encoder(arm_side_t encoder_side);
+/**
+ * @brief Test close system
+ * @note three angles are set for all parts of the hand
+ */
+void test_arm_cs(void);
 
 #endif

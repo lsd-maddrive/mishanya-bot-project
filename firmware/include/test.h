@@ -2,8 +2,6 @@
 #define INCLUDE_TEST_H
 
 #include <common.h>
-#include "arm_encoder.h"
-#include "elbow_driver.h"
 
 
 
@@ -12,7 +10,7 @@
 /**
  * @brief Test absolute encoder
  */
-void test_elbow_encoder(arm_side_t encoder_side);
+void test_abs_encoder(void);
 
 
 /************* Elbow tests *************/
@@ -28,17 +26,8 @@ void test_elbow(void);
 /**
  * @brief Test close system
  */
-void test_arm_control_system(void);
-
-/**
- * @brief Test normalize interval and angle
- */
-void test_normalize(void);
+void test_close_sys(void);
 
 
-/**
- * @brief reset PID
- */
-void test_PID(void);
 
 #endif
