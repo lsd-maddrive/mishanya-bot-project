@@ -23,7 +23,7 @@
 #define PROGRAM_TEST_LEFT_SHOULDER_IN_ENCODER 13
 #define PROGRAM_TEST_LEFT_SHOULDER_OUT_ENCODER 14
 #define PROGRAM_TEST_ARM_CS 15
-#define MAIN_PROGRAM PROGRAM_TEST_ARM_CS
+#define MAIN_PROGRAM PROGRAM_TEST_SERVO_LEFT_WRIST
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

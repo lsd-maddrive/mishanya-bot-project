@@ -13,10 +13,23 @@ PWMConfig pwm3conf = {
     .period = T,
     .callback = NULL,
     .channels = {
+                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
                  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+                 {.mode = PWM_OUTPUT_DISABLED,  .callback = NULL}
+                 },
+    .cr2 = 0,
+    .dier = 0
+};
+PWMConfig pwm4conf = {
+    .frequency = F,
+    .period = T,
+    .callback = NULL,
+    .channels = {
                  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
                  {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-                 {.mode = PWM_OUTPUT_ACTIVE_HIGH,    .callback = NULL}
+                 {.mode = PWM_OUTPUT_ACTIVE_HIGH,  .callback = NULL}
                  },
     .cr2 = 0,
     .dier = 0
@@ -27,7 +40,7 @@ PWMConfig pwm3conf = {
 servo_arm left_hand =
 {
       .channel = 0,
-      .line = PAL_LINE(GPIOC,6),
+      .line = PAL_LINE(GPIOB,6),
       .low_hand_limit = 1110,
       .high_hand_limit = 1620
 };
@@ -37,8 +50,8 @@ servo_arm left_hand =
  */
 servo_arm left_wrist =
 {
-      .channel = 1,
-      .line = PAL_LINE(GPIOC,7),
+      .channel = 2,
+      .line = PAL_LINE(GPIOB,8),
       .low_hand_limit = 900,
       .high_hand_limit = 2100
 };
@@ -47,8 +60,8 @@ servo_arm left_wrist =
  */
 servo_arm right_hand =
 {
-      .channel = 2,
-      .line = PAL_LINE(GPIOC,8),
+      .channel = 3,
+      .line = PAL_LINE(GPIOB,9),
       .low_hand_limit = 1110,
       .high_hand_limit = 1620
 };
@@ -58,8 +71,8 @@ servo_arm right_hand =
  */
 servo_arm right_wrist =
 {
-      .channel = 3,
-      .line = PAL_LINE(GPIOC,9),
+      .channel = 1,
+      .line = PAL_LINE(GPIOB,5),
       .low_hand_limit = 900,
       .high_hand_limit = 2100
 };
@@ -74,6 +87,7 @@ void lld_control_servo_init(void)
     palSetLineMode(left_wrist.line,PAL_MODE_ALTERNATE(2));
     palSetLineMode(right_wrist.line,PAL_MODE_ALTERNATE(2));
     pwmStart(&PWMD3,&pwm3conf);
+    pwmStart(&PWMD4,&pwm4conf);
 
     init = true;
 }
@@ -82,7 +96,10 @@ void lld_control_servo(int16_t duty_cycle, servo_arm *servo)
 {
     duty_cycle = CLIP_VALUE(duty_cycle,servo->low_hand_limit,
                             servo->high_hand_limit);
-    pwmEnableChannel(&PWMD3,servo->channel,duty_cycle);
+    if(servo == &right_wrist)
+      pwmEnableChannel(&PWMD3,servo->channel,duty_cycle);
+    else
+      pwmEnableChannel(&PWMD4,servo->channel,duty_cycle);
 }
 
 void lld_set_dutycycle_servo(int16_t duty_cycle, type_servo servo_t)
