@@ -9,37 +9,51 @@ typedef enum {ENCODER_1, ENCODER_2, ENCODER_3}type_encoder;
  * @brief structure for encoder in base
  * @identifier1 port and pin for phase A
  * @identifier2 port and pin for phase B
+ * @identifier3 tic_count is number of encoder tics
+ * @identifier4 rev_count is number of revolution passed by the encoder
+ * @identifier5 direction of rotation of the encoder
  */
 typedef struct
 {
     ioline_t line_phase_A;
     ioline_t line_phase_B;
-}phase_pin;
+    int16_t tic_count;
+    float rev_count;
+    bool direction_rotation;
+}encoder_t;
 
 /**
  * @brief Initialization Interruption
- * @note variable init_enc for protection
+ * @args encoder_n is value from enum
  */
-void lldEncoderInit(void);
+void lldEncoderInit(type_encoder encoder_n);
+/**
+ * @brief the function counts ticks revolutions and determines the direction
+ * @args enc_t is pointer to struct
+ */
+void EncoderCounter(encoder_t* enc_t);
 
 /**
  * @brief Get number of encoder tics
  * @note maximum tics - number of tics one per revolution
+ * @args encoder_n is value from enum
  * @return tics passed by the encoder
  */
-int16_t GetEncoderRawTicks(void);
+int16_t GetEncoderRawTicks(type_encoder encoder_n);
 
 /**
  * @brief Get direction of rotation of the encoder
+ * @args encoder_n is value from enum
  * @return direction of rotation
  */
-bool GetEncoderDirection(void);
+bool GetEncoderDirection(type_encoder encoder_n);
 
 /**
  * @brief Get number of revolution passed by the encoder
+ * @args encoder_n is value from enum
  * @return number of revolutions + number tics
  */
-float GetEncoderRawRevs(void);
+float GetEncoderRawRevs(type_encoder encoder_n);
 
 /**
  * @brief Reset the value of variables
@@ -47,10 +61,5 @@ float GetEncoderRawRevs(void);
  */
 void ResetEncoder(void);
 
-/**
- * @brief Gets the encoder type
- * @args encoder is value from enum
- */
-void GetTypeEncoder(int8_t encoder);
 
 #endif

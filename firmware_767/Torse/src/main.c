@@ -31,8 +31,6 @@ static void testsRoutines(void)
         test_arm_encoder(LEFT_SHOULDER_OUT);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CS)
         test_arm_cs();
-    #elif(MAIN_PROGRAM==PROGRAM_TEST_ENCODER_BASE)
-        test_encoder_base();
     #endif
 }
 

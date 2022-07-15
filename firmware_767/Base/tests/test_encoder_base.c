@@ -5,12 +5,19 @@
 
 void test_encoder_base(void)
 {
-    int16_t tic = 0;
-    bool dr = 0;
-    float revs = 0;
+    int16_t tic_1 = 0;
+    bool dr_1 = 0;
+    float revs_1 = 0;
+    int16_t tic_2 = 0;
+    bool dr_2 = 0;
+    float revs_2 = 0;
+    int16_t tic_3 = 0;
+    bool dr_3 = 0;
+    float revs_3 = 0;
     char sym = 0;
-    GetTypeEncoder(ENCODER_2);
-    lldEncoderInit();
+    lldEncoderInit(ENCODER_1);
+    lldEncoderInit(ENCODER_2);
+    lldEncoderInit(ENCODER_3);
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
@@ -23,13 +30,23 @@ void test_encoder_base(void)
         }
         else
         {
-            tic = GetEncoderRawTicks();
-            dr = GetEncoderDirection();
-            revs = 1000*GetEncoderRawRevs();
+            tic_1 = GetEncoderRawTicks(ENCODER_1);
+            dr_1 = GetEncoderDirection(ENCODER_1);
+            revs_1 = 1000*GetEncoderRawRevs(ENCODER_1);
+            tic_2 = GetEncoderRawTicks(ENCODER_2);
+            dr_2 = GetEncoderDirection(ENCODER_2);
+            revs_2 = 1000*GetEncoderRawRevs(ENCODER_2);
+            tic_3 = GetEncoderRawTicks(ENCODER_3);
+            dr_3 = GetEncoderDirection(ENCODER_3);
+            revs_3 = 1000*GetEncoderRawRevs(ENCODER_3);
         }
-        dbgprintf("Tic count:%d Rev count:%d Direction:%d\n\r",tic,
-                              (int)revs,dr);
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+        dbgprintf("ENC1: Tic1:%d Rev1:%d Direct1:%d "
+                  "ENC2: Tic2:%d Rev2:%d Direct2:%d "
+                  "ENC3: Tic3:%d Rev3:%d Direct3:%d\n\r",
+                  tic_1, (int)revs_1, dr_1, tic_2, (int)revs_2, dr_2,
+                  tic_3, (int)revs_3, dr_3);
+
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(300)+time);
     }
 }
 

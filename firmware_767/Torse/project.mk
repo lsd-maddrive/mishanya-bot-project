@@ -7,7 +7,7 @@ PROJECT_MODULES = src/serial.c \
 	              src/PID.c \
 	              src/part_arm_driver.c \
 		          src/arm_encoder.c \
-		          src/encoder_base.c \
+		          
 	         
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
                   tests/test_elbow.c \
@@ -15,7 +15,7 @@ PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
                   tests/test_PID.c \
                   tests/test_encoder.c \
                   tests/test_arm_cs.c \
-                  tests/test_encoder_base.c \
+                  
 # C source files
 PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)			 
