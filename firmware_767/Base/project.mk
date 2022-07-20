@@ -2,6 +2,7 @@ PROJECT_MODULES = src/serial.c \
 		  src/encoder_base.c \
 	         
 PROJECT_TESTS   = tests/test_encoder_base.c \
+                  tests/test_all_base_encoders.c \
 # C source files
 PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)			 

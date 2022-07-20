@@ -2,7 +2,6 @@
 
 #define MAX_TIC 360
 int8_t status_phase_B = 0;
-int8_t type_enc = 0;
 
 encoder_t encoder_1 =
 {
@@ -37,23 +36,23 @@ encoder_t encoder_3 =
 static void ExtEnc1(void* args)
 {
     args = args;
-    EncoderCounter(&encoder_1);
+    ProcessEncoderData(&encoder_1);
 }
 
 static void ExtEnc2(void* args)
 {
     args = args;
-    EncoderCounter(&encoder_2);
+    ProcessEncoderData(&encoder_2);
 }
 
 static void ExtEnc3(void* args)
 {
     args = args;
-    EncoderCounter(&encoder_3);
+    ProcessEncoderData(&encoder_3);
 }
 
 
-void EncoderCounter(encoder_t* enc_t)
+void ProcessEncoderData(encoder_t* enc_t)
 {
     status_phase_B = palReadLine(enc_t->line_phase_B);
     if(status_phase_B == 0)
@@ -82,21 +81,19 @@ void EncoderCounter(encoder_t* enc_t)
 
 void lldEncoderInit(type_encoder encoder_n)
 {
-
-    type_enc = encoder_n;
-    if(type_enc == ENCODER_1)
+    if(encoder_n == ENCODER_1)
     {
         palEnableLineEvent(encoder_1.line_phase_A, PAL_MODE_INPUT_PULLDOWN);
         palEnableLineEvent(encoder_1.line_phase_A, PAL_EVENT_MODE_RISING_EDGE);
         palSetLineCallback(encoder_1.line_phase_A, ExtEnc1, NULL);
     }
-    else if(type_enc == ENCODER_2)
+    else if(encoder_n == ENCODER_2)
     {
         palEnableLineEvent(encoder_2.line_phase_A, PAL_MODE_INPUT_PULLDOWN);
         palEnableLineEvent(encoder_2.line_phase_A, PAL_EVENT_MODE_RISING_EDGE);
         palSetLineCallback(encoder_2.line_phase_A, ExtEnc2, NULL);
     }
-    else if(type_enc == ENCODER_3)
+    else if(encoder_n == ENCODER_3)
     {
         palEnableLineEvent(encoder_3.line_phase_A, PAL_MODE_INPUT_PULLDOWN);
         palEnableLineEvent(encoder_3.line_phase_A, PAL_EVENT_MODE_RISING_EDGE);
@@ -143,31 +140,49 @@ bool GetEncoderDirection(type_encoder encoder_n)
 float GetEncoderRawRevs(type_encoder encoder_n)
 {
      float rev = 0;
+     encoder_t cur_encoder;
      if(encoder_n == ENCODER_1)
      {
-         rev = encoder_1.rev_count +(float)encoder_1.tic_count/(float)MAX_TIC;
+         cur_encoder = encoder_1;
      }
      else if(encoder_n == ENCODER_2)
      {
-         rev = encoder_2.rev_count +(float)encoder_2.tic_count/(float)MAX_TIC;
+         cur_encoder = encoder_2;
      }
      else if(encoder_n == ENCODER_3)
      {
-         rev = encoder_3.rev_count +(float)encoder_3.tic_count/(float)MAX_TIC;
+         cur_encoder = encoder_3;
      }
+     rev = getRevs(&cur_encoder);
      return rev;
 }
 
-void ResetEncoder(void)
+float getRevs(encoder_t* cur_encoder)
 {
-    encoder_1.direction_rotation = 0;
-    encoder_1.tic_count = 0;
-    encoder_1.rev_count = 0;
-    encoder_2.direction_rotation = 0;
-    encoder_2.tic_count = 0;
-    encoder_2.rev_count = 0;
-    encoder_3.direction_rotation = 0;
-    encoder_3.tic_count = 0;
-    encoder_3.rev_count = 0;
+    float revs = 0;
+    revs = cur_encoder->rev_count +(float)cur_encoder->tic_count/(float)MAX_TIC;
+    return revs;
+}
+
+void ResetEncoder(type_encoder encoder_n)
+{
+     if(encoder_n == ENCODER_1)
+     {
+         encoder_1.direction_rotation = 0;
+         encoder_1.tic_count = 0;
+         encoder_1.rev_count = 0;
+     }
+     else if(encoder_n == ENCODER_2)
+     {
+         encoder_2.direction_rotation = 0;
+         encoder_2.tic_count = 0;
+         encoder_2.rev_count = 0;
+     }
+     else if(encoder_n == ENCODER_3)
+     {
+         encoder_3.direction_rotation = 0;
+         encoder_3.tic_count = 0;
+         encoder_3.rev_count = 0;
+     }
 }
 

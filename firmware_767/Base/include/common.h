@@ -8,9 +8,12 @@
 
 #define PROGRAM_MASTER 0
 
-#define PROGRAM_TEST_ENCODER_BASE 1
+#define PROGRAM_TEST_ENCODER_BASE_ALL 1
+#define PROGRAM_TEST_ENCODER_BASE_1 2
+#define PROGRAM_TEST_ENCODER_BASE_2 3
+#define PROGRAM_TEST_ENCODER_BASE_3 4
 
-#define MAIN_PROGRAM PROGRAM_TEST_ENCODER_BASE
+#define MAIN_PROGRAM PROGRAM_TEST_ENCODER_BASE_2
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

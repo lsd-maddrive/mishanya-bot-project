@@ -31,7 +31,7 @@ void lldEncoderInit(type_encoder encoder_n);
  * @brief the function counts ticks revolutions and determines the direction
  * @args enc_t is pointer to struct
  */
-void EncoderCounter(encoder_t* enc_t);
+void ProcessEncoderData(encoder_t* enc_t);
 
 /**
  * @brief Get number of encoder tics
@@ -59,7 +59,13 @@ float GetEncoderRawRevs(type_encoder encoder_n);
  * @brief Reset the value of variables
  * @note variables: number of tics, direction rotation, number of revolution
  */
-void ResetEncoder(void);
+void ResetEncoder(type_encoder encoder_n);
 
+/**
+ * @brief Ñounts the number of revolutions
+ * @args cur_encoder is pointer to the structure
+ * @return number of revolutions + number tics
+ */
+float getRevs(encoder_t* cur_encoder);
 
 #endif
