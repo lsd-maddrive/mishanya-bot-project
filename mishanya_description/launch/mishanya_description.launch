@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- start map -->
+  <include file="$(find webots_ros)/launch/webots.launch">
+    <arg name="world" value="$(find mishanya_description)/worlds/base_map.wbt"/>
+    <arg name="mode" value="realtime"/>
+    <arg name="no_gui" value="false"/>
+  </include>
+
+  <!-- start model -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find mishanya_description)/urdf/mishanya.xacro'"/>
+
+
+  <!-- state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+
+
+</launch>

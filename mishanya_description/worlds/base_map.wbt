@@ -1,0 +1,27 @@
+#VRML_SIM R2022a utf8
+WorldInfo {
+}
+Viewpoint {
+  orientation 0.2570928248618632 -0.3823304980689364 -0.887539672156071 4.845949846052514
+  position -3.107743367713848 -9.882338720159265 4.458655480956406
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 100 100
+  floorAppearance Parquetry {
+    type "chequered"
+    colorOverride 0.12549 0.290196 0.529412
+  }
+  wallThickness 1
+  wallHeight 5
+  wallAppearance BrushedAluminium {
+    colorOverride 0.643137 0 0
+  }
+}
+Mishanya {
+  translation -7.734905006703969e-19 -1.6804587739111688e-18 0.0028407519751906737
+  rotation 0.6183742241925384 0.5349096390641388 -0.5757473377190284 4.738754150266585e-18
+}
