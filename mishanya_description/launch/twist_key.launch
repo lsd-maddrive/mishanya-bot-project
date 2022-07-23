@@ -1,5 +1,0 @@
-
-<launch>
-  <node pkg="teleop_keyboard_omni3" type="teleop_keyboard_omni3.py" name="keyboard_cmd" output="screen" respawn="false">
-  </node>
-</launch>

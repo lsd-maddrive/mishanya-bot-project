@@ -2,14 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
-  <xacro:property name="M_PI" value="3.1415926535897931" />
-
-
   <!-- base property -->
 
 
   <xacro:property name="base_height" value="0.21" />
-
   <xacro:property name="base_mass" value="5" />
   <xacro:property name="base_rad" value="0.4" />
   <xacro:property name="base_length" value="0.21" />
@@ -19,8 +15,6 @@
 
   <!-- inertial macros -->
 
-
-  
 
    <xacro:macro name="solid_cylinder_inertial"
                params="r h mass *origin">
@@ -35,26 +29,25 @@
 
   <!-- inertial macros -->
 
-  <link name="origin_link"/>
-  <link name="base_link">
-    <collision name="collision_chassis">
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
-      <geometry>
-        <cylinder length="${base_length}" radius="${base_rad}"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
-      <geometry>
-        <cylinder length="${base_length}" radius="${base_rad}"/>
-      </geometry>
-    </visual>
-    <xacro:solid_cylinder_inertial
-          r="${base_rad}" h="${base_length}"
-          mass="${base_mass}">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:solid_cylinder_inertial>
-  </link>
+    <link name="base_link">
+      <collision name="collision_chassis">
+        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+        <geometry>
+          <cylinder length="${base_length}" radius="${base_rad}"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+        <geometry>
+          <cylinder length="${base_length}" radius="${base_rad}"/>
+        </geometry>
+      </visual>
+      <xacro:solid_cylinder_inertial
+            r="${base_rad}" h="${base_length}"
+            mass="${base_mass}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </xacro:solid_cylinder_inertial>
+    </link>
 
 
 </robot>
