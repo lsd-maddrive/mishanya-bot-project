@@ -3,9 +3,40 @@
 
   <xacro:include filename="$(find mishanya_description)/urdf/kernel.xacro" />
   <xacro:include filename="$(find mishanya_description)/urdf/base.xacro" />
+  <xacro:include filename="$(find mishanya_description)/urdf/omni_wheel.xacro" />
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  
+  <link name="base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 ${wheel_radius + base_height/2}" rpy="0 0 0" /> 
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
 
   <xacro:link_kernel name="kernel" />
-	<xacro:joint_kernel name="joint_kernel" child="kernel" origin_xyz="0 0 ${2*base_height}" />
+	<xacro:joint_kernel name="joint_kernel" child="kernel" origin_xyz="0 0 ${base_height/2}" />
+
+  <xacro:omni_wheel prefix="front" parent="base_link" reflect="false">
+    <origin xyz="${base_rad} 0 -${base_height/2}" rpy="0 0 ${M_PI/2}"/>
+  </xacro:omni_wheel>
+
+  <xacro:omni_wheel prefix="back_left" parent="base_link" reflect="false">
+    <origin xyz="-${base_rad/sqrt(2)} ${base_rad/sqrt(2)} -${base_height/2}" rpy="0 0 ${M_PI/4}"/>
+  </xacro:omni_wheel>
+
+  <xacro:omni_wheel prefix="back_right" parent="base_link" reflect="false">
+    <origin xyz="-${base_rad/sqrt(2)} -${base_rad/sqrt(2)}  -${base_height/2}" rpy="0 0 -${M_PI/4}"/>
+  </xacro:omni_wheel>
 
 
 </robot>

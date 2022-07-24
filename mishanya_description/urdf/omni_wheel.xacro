@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot name="wheel" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="PI" value="3.1415926535897931" />
+
+  <!-- Wheels -->
+  <xacro:property name="wheel_radius" value="0.0635" />
+  <xacro:property name="wheel_height" value="0.00435" />
+  <xacro:property name="wheel_mass" value="3.25" /> <!-- in kg-->
+
+   <xacro:macro name="solid_cylinder_inertial"
+               params="r h mass *origin">
+    <inertial>
+      <xacro:insert_block name="origin"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${(mass * h * h)/12 + (mass * r * r)/4}" ixy="0.0" ixz="0.0"
+               iyy="${(mass * h * h)/12 + (mass * r * r)/4}" iyz="0.0"
+               izz="${mass / 2 * r * r}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="omni_wheel" params="prefix parent *origin reflect">
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${prefix}_wheel_link"/>
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <limit effort="100" velocity="100"/>
+      <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <xacro:if value="${reflect}">
+          <geometry>
+            <mesh filename="package://summit_description/meshes/wheels/omni_wheel_1.dae" scale="0.5 0.5 0.5"/>
+          </geometry>
+          </xacro:if>
+          <xacro:unless value="${reflect}">
+            <geometry>
+              <mesh filename="package://summit_description/meshes/wheels/omni_wheel_2.dae" scale="0.5 0.5 0.5"/>
+            </geometry>
+		    </xacro:unless>
+      </visual>
+
+      <collision>
+				<origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+        <geometry>
+					<cylinder length="${wheel_height}" radius="${wheel_radius}" />
+        </geometry>
+      </collision>
+
+      <solid_cylinder_inertial
+            r="${wheel_radius}" h="${wheel_height}"
+            mass="${wheel_mass}">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </solid_cylinder_inertial>
+
+
+    </link>
+
+    <!-- Transmission is important to link the joints and the controller (see summit_xl_control/config/summit_xl_control.yaml)-->
+    <transmission name="${prefix}_wheel_joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}_wheel_joint" >
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_wheel_joint_motor">
+         <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+  </xacro:macro>
+</robot>

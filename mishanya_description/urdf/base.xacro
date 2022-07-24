@@ -31,13 +31,13 @@
 
     <link name="base_link">
       <collision name="collision_chassis">
-        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <cylinder length="${base_length}" radius="${base_rad}"/>
         </geometry>
       </collision>
       <visual>
-        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
           <cylinder length="${base_length}" radius="${base_rad}"/>
         </geometry>

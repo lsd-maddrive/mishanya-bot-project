@@ -12,6 +12,9 @@
   <param name="robot_description" command="$(find xacro)/xacro '$(find mishanya_description)/urdf/mishanya.xacro'"/>
 
 
+  <!-- Publish joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
   <!-- state publisher -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
