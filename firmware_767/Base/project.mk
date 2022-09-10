@@ -1,7 +1,9 @@
 PROJECT_MODULES = src/serial.c \
 		  src/encoder_base.c \
+		  src/odometry_base.c \
 	         
 PROJECT_TESTS   = tests/test_encoder_base.c \
+				  tests/test_odometry_base.c \
                   
 # C source files
 PROJECT_CSRC 	=  src/main.c \

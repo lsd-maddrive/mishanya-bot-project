@@ -15,4 +15,14 @@ void test_encoder_base_all(void);
  */
 void test_encoder_base(type_encoder encoder);
 
+/**
+ * @brief test odometry to get distance, speed
+ */
+void testOdometryBase(void);
+
+/**
+ * @brief test odometry to get distance, speed all wheels
+ */
+void testOdometryBaseAll(void);
+
 #endif
