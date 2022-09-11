@@ -6,9 +6,10 @@
 
 /************ Driver with complementary mode ************/
 
-void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx);
-void lld_bb_driver_direct(const control_driver_t *control, const pwm_channel_t *pwm_ch, uint16_t period);
-void lld_bb_driver_reverse(const control_driver_t *control, const pwm_channel_t *pwm_ch, uint16_t period);
-void lld_bb_driver_off(const control_driver_t *control, const pwm_channel_t *pwm_ch);
+void lld_bb_init_driver(control_driver_t* driver, PWMDriver* pwm_ptr_left_shoulder, uint8_t ch_num_left,
+		PWMDriver* pwm_ptr_right_shoulder, uint8_t ch_num_right);
+void lld_bb_driver_direct(control_driver_t* driver, float period);
+void lld_bb_driver_reverse(control_driver_t* driver, float period);
+void lld_bb_driver_off(control_driver_t* driver);
 
 #endif

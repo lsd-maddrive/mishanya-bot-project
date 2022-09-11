@@ -1,53 +1,39 @@
 #include <arm_control_system.h>
 
-static void acs_normalize_interval (traking_cs_t* traking_cs);
-static float acs_normalize_angle (traking_cs_t* traking_cs);
+static void acs_normalize_interval (arm_angle_t* arm_angle);
+static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_angle);
 
 /**
  * @details the function brings the resulting angle into the normalized range
  * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
  */
-void acs_init(arm_driver_ctx_t* arm_driver)
+void acs_init(arm_ctx_t* elbow_driver)
 {
+
 	// left arm
-	encoder_init(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_encoder);
-	encoder_init(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_encoder);
-	encoder_init(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_encoder);
+	encoder_init(&elbow_driver->arm[LEFT].traking_cs.arm_encoder);
 
 	// right arm
-	encoder_init(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_encoder);
-	encoder_init(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_encoder);
-	encoder_init(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_encoder);
+	encoder_init(&elbow_driver->arm[RIGHT].traking_cs.arm_encoder);
+
 
 	// left arm interval normalization
-	acs_normalize_interval(&arm_driver->arm[LEFT_ELBOW].traking_cs);
-	acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs);
-	acs_normalize_interval(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs);
+	acs_normalize_interval(&elbow_driver->arm[LEFT].arm_angle);
 
 	// right arm interval normalization
-	acs_normalize_interval(&arm_driver->arm[RIGHT_ELBOW].traking_cs);
-	acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs);
-	acs_normalize_interval(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs);
+	acs_normalize_interval(&elbow_driver->arm[RIGHT].arm_angle);
 
-	// left arm angle normalization
-	arm_driver->arm[LEFT_ELBOW].traking_cs.normalize_angle.target = true;
-	arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
-	arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
+	// left arm target angle true
+  elbow_driver->arm[LEFT].arm_angle.target_angle.reach_target_angle = true;
 
-	// right arm angle normalization
-	arm_driver->arm[RIGHT_ELBOW].traking_cs.normalize_angle.target = true;
-	arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.normalize_angle.target = true;
-	arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.normalize_angle.target = true;
+	// right arm target angle true
+  elbow_driver->arm[RIGHT].arm_angle.target_angle.reach_target_angle = true;
 
 	// left arm PID reset
-	PID_reset(&arm_driver->arm[LEFT_ELBOW].traking_cs.arm_PID);
-	PID_reset(&arm_driver->arm[LEFT_SHOULDER_IN].traking_cs.arm_PID);
-	PID_reset(&arm_driver->arm[LEFT_SHOULDER_OUT].traking_cs.arm_PID);
+	PID_reset(&elbow_driver->arm[LEFT].traking_cs.arm_PID);
 
 	// right arm PID reset
-	PID_reset(&arm_driver->arm[RIGHT_ELBOW].traking_cs.arm_PID);
-	PID_reset(&arm_driver->arm[RIGHT_SHOULDER_IN].traking_cs.arm_PID);
-	PID_reset(&arm_driver->arm[RIGHT_SHOULDER_OUT].traking_cs.arm_PID);
+	PID_reset(&elbow_driver->arm[LEFT].traking_cs.arm_PID);
 }
 
 /**
@@ -56,10 +42,10 @@ void acs_init(arm_driver_ctx_t* arm_driver)
  * @param[in] side - left or right side of hand
  * @param[in] target_angle - setpoint angle
  */
-void acs_set_angle(float target_angle, arm_side_t side, arm_driver_ctx_t *arm_driver)
+void acs_set_angle(float target_angle, arm_side_t side, arm_info_t *arm_driver)
 {
-  arm_driver->arm[side].traking_cs.normalize_angle.target = 0;
-  arm_driver->arm[side].traking_cs.normalize_angle.target_angle = target_angle;
+	arm_driver[side].arm_angle.target_angle.reach_target_angle = false;
+	arm_driver[side].arm_angle.target_angle.target_angle = target_angle;
 
 }
 
@@ -69,22 +55,23 @@ void acs_set_angle(float target_angle, arm_side_t side, arm_driver_ctx_t *arm_dr
  * @param[in] side - left or right side of hand
  * @param[in] dt - function call period
  */
-void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
+void acs_update_angle(float dt, arm_side_t side, arm_ctx_t *arm_driver)
 {
 
 
-  if(arm_driver->arm[side].traking_cs.normalize_angle.target == 1)
+  if(arm_driver->arm[side].arm_angle.target_angle.reach_target_angle == true)
     return ;
 
   PID_t* PID = &arm_driver->arm[side].traking_cs.arm_PID;
 
-  float target_angle = arm_driver->arm[side].traking_cs.normalize_angle.target_angle;
-  float pwm_period = (float)arm_driver->arm[side].control.pwm_setting_ctx.pwm_conf.period;
-  float dead_zone = arm_driver->arm[side].traking_cs.angle_dead_zone;
+  float target_angle = arm_driver->arm[side].arm_angle.target_angle.target_angle;
+  float pwm_period = (float)arm_driver->arm[side].traking_cs.control.pwm_period;
+  float dead_zone = arm_driver->arm[side].arm_angle.angle_dead_zone;
 
-  float current_angle = acs_normalize_angle(&arm_driver->arm[side].traking_cs);
+  float current_angle = acs_normalize_angle(&arm_driver->arm[side].traking_cs,
+                                            &arm_driver->arm[side].arm_angle);
 
-  if(current_angle == -1)
+  if(current_angle < 0)
     return ;
 
   PID_err_calc(&PID->error, target_angle, current_angle);
@@ -97,7 +84,7 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
   if(control > pwm_period)
     control = pwm_period;
 
-  if(side==LEFT_ELBOW)
+  if(side==LEFT)
   {
 
     if(current_angle < target_angle)
@@ -107,25 +94,7 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
 
   }
 
-  else if(side==LEFT_SHOULDER_IN)
-   {
-
-     if(current_angle < target_angle)
-       arm_driver->up(side, (uint16_t)control);
-     else
-       arm_driver->down(side, (uint16_t)control);
-
-   }
-  else if(side==LEFT_SHOULDER_OUT)
-   {
-
-     if(current_angle < target_angle)
-       arm_driver->up(side, (uint16_t)control);
-     else
-       arm_driver->down(side, (uint16_t)control);
-
-   }
-  else if(side==RIGHT_ELBOW)
+  else if(side==RIGHT)
   {
 
     if(current_angle < target_angle)
@@ -135,30 +104,12 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
       arm_driver->up(side, (uint16_t)control);
 
   }
-  else if(side==RIGHT_SHOULDER_IN)
-    {
 
-      if(current_angle < target_angle)
-        arm_driver->down(side, (uint16_t)control);
-
-      else
-        arm_driver->up(side, (uint16_t)control);
-    }
-  else if(side==RIGHT_SHOULDER_OUT)
-    {
-
-      if(current_angle < target_angle)
-        arm_driver->down(side, (uint16_t)control);
-
-      else
-        arm_driver->up(side, (uint16_t)control);
-
-    }
   if(PID->error.P <= dead_zone)
   {
     PID_reset(PID);
     arm_off(side, arm_driver);
-    arm_driver->arm[side].traking_cs.normalize_angle.target = 1;
+    arm_driver->arm[side].arm_angle.target_angle.reach_target_angle = true;
   }
 
 
@@ -168,29 +119,29 @@ void acs_update_angle(float dt, arm_side_t side, arm_driver_ctx_t *arm_driver)
  * @details the function normalizes the angle interval
  * @param[in] traking_cs - pointer to the structure of the tracking system of arm
  */
-static void acs_normalize_interval (traking_cs_t* traking_cs)
+static void acs_normalize_interval (arm_angle_t* arm_angle)
 {
-  float min_angle = traking_cs->angle_lim.min_angle;
-  float max_angle = traking_cs->angle_lim.max_angle;
+  float min_angle = arm_angle->angle_lim.min_angle;
+  float max_angle = arm_angle->angle_lim.max_angle;
 
   if(min_angle>max_angle)
   {
 
-    traking_cs->normalize_angle.shift = 360 - min_angle;
-    traking_cs->normalize_angle.max_norm_angle = 360 - (min_angle-max_angle);
-    traking_cs->normalize_angle.zero_cross = true;
+	arm_angle->angle_norm_info.shift_from_zero = 360 - min_angle;
+	arm_angle->angle_norm_lim.max_norm_angle = 360 - (min_angle-max_angle);
+	arm_angle->angle_norm_info.zero_between_angle = true;
 
   }
   else
   {
 
-    traking_cs->normalize_angle.max_norm_angle = max_angle - min_angle;
-    traking_cs->normalize_angle.shift = min_angle;
-    traking_cs->normalize_angle.zero_cross = false;
+	arm_angle->angle_norm_lim.max_norm_angle = max_angle - min_angle;
+    arm_angle->angle_norm_info.shift_from_zero = min_angle;
+    arm_angle->angle_norm_info.zero_between_angle = false;
 
   }
 
-  traking_cs->normalize_angle.min_norm_angle = 0;
+  arm_angle->angle_norm_lim.min_norm_angle = 0;
 
 }
 
@@ -200,23 +151,24 @@ static void acs_normalize_interval (traking_cs_t* traking_cs)
  * @param[in] traking_cs - pointer to the structure of the tracking system of arm
  * @param[out] current_angle - current angle from normalized angle range
  */
-static float acs_normalize_angle (traking_cs_t* traking_cs)
+static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_angle)
 {
 
   float current_angle = encoder_read(&traking_cs->arm_encoder);
+
   if(current_angle < 0)
     return -1;
 
-	if(traking_cs->normalize_angle.zero_cross)
+	if(arm_angle->angle_norm_info.zero_between_angle)
 	{
-		if((current_angle+traking_cs->normalize_angle.shift)>=360)
-			current_angle = current_angle - traking_cs->angle_lim.min_angle;
+		if((current_angle+arm_angle->angle_norm_info.shift_from_zero)>=360)
+			current_angle = current_angle - arm_angle->angle_norm_lim.min_norm_angle;
 
 		else
-			current_angle = current_angle + traking_cs->normalize_angle.shift;
+			current_angle = current_angle + arm_angle->angle_norm_info.shift_from_zero;
 	}
 	else
-		current_angle = current_angle - traking_cs->normalize_angle.shift;
+		current_angle = current_angle - arm_angle->angle_norm_info.shift_from_zero;
 
 	return current_angle;
 

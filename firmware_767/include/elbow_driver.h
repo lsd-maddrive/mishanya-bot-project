@@ -5,7 +5,7 @@
 #include "PID.h"
 #include "part_arm_driver.h"
 #include "arm_control_system.h"
-
+#include "arm_low_level.h"
 
 void elbow_init(void);
 void elbow_up(arm_side_t side, uint16_t period);

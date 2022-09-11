@@ -1,28 +1,35 @@
 #include <lld_bb_driver.h>
 
+static void lld_bb_init_line(line_driver_t* line_control);
+
+static void lld_bb_init_line(line_driver_t* line_control)
+{
+  palSetLineMode(line_control->bb_driver_line.pwm_hin, PAL_MODE_ALTERNATE(line_control->alt_func_num));
+  palSetLineMode(line_control->bb_driver_line.pwm_lin, PAL_MODE_ALTERNATE(line_control->alt_func_num));
+}
+
 /**
  * @brief   initialize bridge driver type bb
  * @brief   recieve pin struct and pwm struct
  */
-void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
+void lld_bb_init_driver(control_driver_t* driver, PWMDriver* pwm_ptr_left_shoulder, uint8_t ch_num_left,
+		PWMDriver* pwm_ptr_right_shoulder, uint8_t ch_num_right)
 {
+  line_driver_t left_shoulder_control = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+  line_driver_t right_shoulder_control = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-  palSetLineMode(pins->hin_1, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_1));
-  palSetLineMode(pins->hin_2, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_2));
+  left_shoulder_control.ch_pwm_num = ch_num_left;
 
+  right_shoulder_control.ch_pwm_num = ch_num_right;
 
-  palSetLineMode(pins->lin_1, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_1));
-  palSetLineMode(pins->lin_2, PAL_MODE_ALTERNATE(pwm_ctx->pwm_ch.alt_func_2));
+  lld_bb_init_line(&left_shoulder_control);
+  lld_bb_init_line(&right_shoulder_control);
 
-//  palSetLineMode(pins->lin_1, PAL_MODE_OUTPUT_PUSHPULL);
-//  palSetLineMode(pins->lin_2, PAL_MODE_OUTPUT_PUSHPULL);
-//  palSetLineMode(pins->hin_1, PAL_MODE_OUTPUT_PUSHPULL);
-//  palSetLineMode(pins->hin_2, PAL_MODE_OUTPUT_PUSHPULL);
-//
-//  palSetLine(pins->lin_1);
-//  palSetLine(pins->lin_2);
-//  palSetLine(pins->hin_1);
-//  palSetLine(pins->hin_2);
+  driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_right_shoulder;
+
+  driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_left_shoulder;
+
+  driver->pwm_period = pwm_ptr_right_shoulder->period;
 
 }
 
@@ -30,12 +37,16 @@ void lld_bb_init_driver(const line_driver_t* pins, const pwm_ctx_t* pwm_ctx)
  * @brief the function open bridge driver in first direction
  * @brief recieve control struct, pwm channel and and the filling period
  */
-void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* pwm_ch, uint16_t period)
+void lld_bb_driver_direct(control_driver_t* driver, float period)
 {
+  line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+  line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, period*0.8);
+  PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
+  PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
 
-  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2, 0);
+  pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
+  pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, 0);
 
 }
 
@@ -43,24 +54,30 @@ void lld_bb_driver_direct(const control_driver_t* control, const pwm_channel_t* 
  * @brief the function open bridge driver in second direction
  * @brief recieve control struct, pwm channel and and the filling period
  */
-void lld_bb_driver_reverse(const control_driver_t* control, const pwm_channel_t* pwm_ch, uint16_t period)
+void lld_bb_driver_reverse(control_driver_t* driver, float period)
 {
+  line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+  line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-	pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1, 0);
+  PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
+  PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
 
-  pwmEnableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2, period*0.8);
-
+  pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, 0);
+  pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
 }
 
 /**
  * @brief the function disables the selected direction
  * @brief recieve control struct, pwm channel
  */
-void lld_bb_driver_off(const control_driver_t* control, const pwm_channel_t* pwm_ch)
+void lld_bb_driver_off(control_driver_t* driver)
 {
+	line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+	line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-	pwmDisableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_1);
-	pwmDisableChannel(control->pwm_setting_ctx.driver_ptr, pwm_ch->ch_pwm_2);
+	PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
+	PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
 
-
+	pwmDisableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num);
+	pwmDisableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num);
 }
