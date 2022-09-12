@@ -25,8 +25,8 @@ typedef struct {
 
         struct {
           ioline_t          pwm_line;
-          ioline_t          gpio_line_1;
-          ioline_t          gpio_line_2;
+          ioline_t          direct_line;
+          ioline_t          reverse_line;
         }red_driver_line;
     };
 

@@ -1,14 +1,14 @@
 PROJECT_MODULES = src/serial.c \
 		  src/lld_control_servo.c \
-		  src/lld_bb_driver.c \
-		  src/lld_red_driver.c \
 		  src/elbow_driver.c \
 		  src/arm_control_system.c \
-		  src/PID.c \
 		  src/part_arm_driver.c \
 		  src/arm_encoder.c \
 	      src/vertical_shoulder_driver.c \
-	      src/arm_low_level.c \
+	      src/low_level.c \
+	      robo_lib/PID.c \
+		  robo_lib/lld_bb_driver.c \
+		  robo_lib/lld_red_driver.c \
                   
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
 		  tests/test_elbow.c \
@@ -23,7 +23,8 @@ PROJECT_CSRC 	=  src/main.c \
 # C++ source files
 PROJECT_CPPSRC 	= 
 # Directories to search headers in
-PROJECT_INCDIR	= include/
+PROJECT_INCDIR	= include/ \
+				  robo_lib/
 # Additional libraries
 PROJECT_LIBS	=
 # Compiler options

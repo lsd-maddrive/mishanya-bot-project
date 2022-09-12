@@ -5,6 +5,7 @@
 #include "hal.h"
 #include "chprintf.h"
 #include "stdint.h"
+#include "low_level.h"
 
 #define PROGRAM_MASTER 0
 

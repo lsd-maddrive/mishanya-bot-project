@@ -1,32 +1,20 @@
-#include <lld_bb_driver.h>
-
-static void lld_bb_init_line(line_driver_t* line_control);
-
-static void lld_bb_init_line(line_driver_t* line_control)
-{
-  palSetLineMode(line_control->bb_driver_line.pwm_hin, PAL_MODE_ALTERNATE(line_control->alt_func_num));
-  palSetLineMode(line_control->bb_driver_line.pwm_lin, PAL_MODE_ALTERNATE(line_control->alt_func_num));
-}
+#include "lld_bb_driver.h"
 
 /**
  * @brief   initialize bridge driver type bb
  * @brief   recieve pin struct and pwm struct
  */
-void lld_bb_init_driver(control_driver_t* driver, PWMDriver* pwm_ptr_left_shoulder, uint8_t ch_num_left,
-		PWMDriver* pwm_ptr_right_shoulder, uint8_t ch_num_right)
+void lld_bb_init_driver(control_driver_t* driver,
+                        PWMDriver* pwm_ptr_left_shoulder, uint8_t ch_num_left,
+		                    PWMDriver* pwm_ptr_right_shoulder, uint8_t ch_num_right)
 {
   line_driver_t left_shoulder_control = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
   line_driver_t right_shoulder_control = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
   left_shoulder_control.ch_pwm_num = ch_num_left;
-
   right_shoulder_control.ch_pwm_num = ch_num_right;
 
-  lld_bb_init_line(&left_shoulder_control);
-  lld_bb_init_line(&right_shoulder_control);
-
   driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_right_shoulder;
-
   driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_left_shoulder;
 
   driver->pwm_period = pwm_ptr_right_shoulder->period;

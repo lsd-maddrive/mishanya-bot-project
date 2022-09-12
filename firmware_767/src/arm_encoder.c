@@ -11,7 +11,6 @@
 #define EvenPAR 0b01000000
 
 /************ Status bits ************/
-int Flag = 1;
 
 /**
  * @details initialize periphery connected to encoder

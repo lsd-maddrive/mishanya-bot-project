@@ -8,7 +8,7 @@
 static THD_WORKING_AREA(traking_elbow,256);
 
 static THD_FUNCTION(elbow_update,arg) {
-  (void *) arg;
+  (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
     elbow_update_angle(0.00002);

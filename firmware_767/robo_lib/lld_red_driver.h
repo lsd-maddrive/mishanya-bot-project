@@ -6,7 +6,9 @@
 
 /************ Driver with one channel PWM ************/
 
-void lld_red_init_driver(control_driver_t* driver, PWMDriver* pwm_ptr, uint8_t ch_num);
+void lld_red_init_driver(control_driver_t* driver,
+                         ioline_t direct_line, ioline_t reversr_line,
+                         PWMDriver* pwm_ptr, uint8_t ch_num);
 void lld_red_driver_direct(control_driver_t* driver, float period);
 void lld_red_driver_reverse(control_driver_t* driver, float period);
 void lld_red_driver_off(control_driver_t* driver);

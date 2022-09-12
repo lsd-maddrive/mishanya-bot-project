@@ -6,8 +6,6 @@
 #define ARM_LOW_LEVEL_H
 
 #include "common.h"
-#include "part_arm_driver.h"
-#include "arm_control_system.h"
 
 // *******************arm driver pin config******************* //
 

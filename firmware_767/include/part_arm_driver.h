@@ -2,8 +2,8 @@
 #define INCLUDE_PART_ARM_DRIVER_H
 
 #include "common.h"
-#include "lld_bridge_system.h"
-#include "PID.h"
+#include "robo_lib/lld_bridge_system.h"
+#include "robo_lib/PID.h"
 #include "arm_encoder.h"
 
 typedef enum {

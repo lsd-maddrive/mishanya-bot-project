@@ -1,11 +1,11 @@
 ////
 //// Created by Anton on 09.09.2022.
 ////
-//
-//#include "arm_low_level.h"
-//
-//static void init_arm_pwm();
-//
+#include "low_level.h"
+
+
+static void init_gpio();
+
 //// *******************arm spi config******************* //
 //
 //const arm_encoder_t right_shoulder_in_encoder =
@@ -101,14 +101,15 @@
 //// *******************arm spi config******************* //
 //
 //
-////void init_arm()
-////{
-////
-////}
-////
-////static void init_arm_pwm()
-////{
-////
-////
-////
-////}
+void init_low_level()
+{
+	init_gpio();
+}
+
+static void init_gpio()
+{
+	palSetLineMode(LEFT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+
+
+
+}
