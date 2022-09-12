@@ -9,12 +9,10 @@ void lld_red_init_driver(control_driver_t* driver,
                          ioline_t direct_line, ioline_t reversr_line,
                          PWMDriver* pwm_ptr, uint8_t ch_num)
 {
-  line_driver_t control = driver->control_red.red_pwm_ctx.control;
-
-  control.red_driver_line.direct_line = direct_line;
-  control.red_driver_line.reverse_line = reversr_line;
+  driver->control_red.red_pwm_ctx.control.red_driver_line.direct_line = direct_line;
+  driver->control_red.red_pwm_ctx.control.red_driver_line.reverse_line = reversr_line;
   driver->control_red.red_pwm_ctx.driver_ptr = pwm_ptr;
-  control.ch_pwm_num= ch_num;
+  driver->control_red.red_pwm_ctx.control.ch_pwm_num= ch_num;
   driver->pwm_period = pwm_ptr->period;
 }
 

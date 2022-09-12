@@ -29,8 +29,7 @@ typedef struct {
           ioline_t          reverse_line;
         }red_driver_line;
     };
-
-    uint8_t           alt_func_num;
+    
     uint8_t           ch_pwm_num;
 } line_driver_t;
 

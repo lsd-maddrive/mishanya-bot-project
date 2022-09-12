@@ -8,11 +8,9 @@ void lld_bb_init_driver(control_driver_t* driver,
                         PWMDriver* pwm_ptr_left_shoulder, uint8_t ch_num_left,
 		                    PWMDriver* pwm_ptr_right_shoulder, uint8_t ch_num_right)
 {
-  line_driver_t left_shoulder_control = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
-  line_driver_t right_shoulder_control = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-  left_shoulder_control.ch_pwm_num = ch_num_left;
-  right_shoulder_control.ch_pwm_num = ch_num_right;
+  driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control.ch_pwm_num = ch_num_left;
+  driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control.ch_pwm_num = ch_num_right;
 
   driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_right_shoulder;
   driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr = pwm_ptr_left_shoulder;
