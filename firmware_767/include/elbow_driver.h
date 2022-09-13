@@ -6,6 +6,7 @@
 #include "part_arm_driver.h"
 #include "arm_control_system.h"
 #include "low_level.h"
+#include "string.h"
 
 void elbow_init(void);
 void elbow_up(arm_side_t side, uint16_t period);

@@ -7,6 +7,9 @@
 
 #include "common.h"
 
+#define LEFT_ELBOW_ALT_FUNC_NUM  1
+#define RIGHT_ELBOW_ALT_FUNC_NUM 3
+
 // *******************arm driver pin config******************* //
 
 // left elbow
@@ -55,6 +58,9 @@
 #define CS_RIGHT_ENCODER_SHOULDER_OUT 	PAL_LINE(GPIOG, 3)
 
 // *******************encoder pin config******************* //
+
+
+void init_low_level(void);
 
 
 #endif //ARM_LOW_LEVEL_H

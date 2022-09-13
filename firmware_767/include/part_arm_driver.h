@@ -2,9 +2,12 @@
 #define INCLUDE_PART_ARM_DRIVER_H
 
 #include "common.h"
-#include "robo_lib/lld_bridge_system.h"
-#include "robo_lib/PID.h"
+#include "lld_bridge_system.h"
+#include "PID.h"
 #include "arm_encoder.h"
+#include "lld_bb_driver.h"
+#include "lld_red_driver.h"
+
 
 typedef enum {
     LEFT = 0,
@@ -59,10 +62,10 @@ typedef struct {
 } arm_ctx_t;
 
 
-void driver_init(arm_ctx_t *arm_driver);
 void arm_up(arm_side_t side, arm_ctx_t *arm_driver, uint16_t period);
 void arm_down(arm_side_t side, arm_ctx_t *arm_driver, uint16_t period);
 void arm_off (arm_side_t side, arm_ctx_t *arm_driver);
+
 
 
 #endif
