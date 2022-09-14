@@ -1,48 +1,13 @@
 #include "elbow_driver.h"
 
-
-#define DRIVER RED
-
-// *******************arm driver PWM config******************* //
-
-
-
-// *******************arm driver PWM config******************* //
-
-
-const arm_encoder_t right_elbow_encoder =
-        {
-                .encoder_ptr = &SPID2,
-                .encoder_pins = {
-                        .cs_encoder = CS_RIGHT_ENCODER_ELBOW,
-                        .clk_encoder = CLK_ENCODER_RIGHT,
-                        .miso_encoder = MISO_ENCODER_RIGHT
-                },
-                .encoder_conf = {
-                        .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-                        .end_cb = NULL
-                }
-        };
-
-
-const arm_encoder_t left_elbow_encoder =
-        {
-                .encoder_ptr = &SPID1,
-                .encoder_pins = {
-                        .cs_encoder = CS_LEFT_ENCODER_ELBOW,
-                        .clk_encoder = CLK_ENCODER_LEFT,
-                        .miso_encoder = MISO_ENCODER_LEFT
-                },
-                .encoder_conf = {
-                        .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
-                        .end_cb = NULL
-                }
-        };
-
-// **********************close sys config********************** //
-
+#define DRIVER 1
 #define ENCODER_DEADZONE 1
 
+static PWMDriver *LEFT_ELBOW_PWM_PTR = &PWMD1;
+static PWMDriver *RIGHT_ELBOW_PWM_PTR = &PWMD8;
+
+static SPIDriver *LEFT_SPI = &SPID1;
+static SPIDriver *RIGHT_SPI = &SPID2;
 
 // ***************************PID coef************************** //
 
@@ -79,23 +44,30 @@ void elbow_init(void)
 		return;
 
   elbow_driver.arm[LEFT].traking_cs.arm_PID = elbow_PID;
-  elbow_driver.arm[LEFT].traking_cs.arm_encoder = left_elbow_encoder;
   elbow_driver.arm[LEFT].arm_angle.angle_lim = left_angle_lim_elbow;
   elbow_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   elbow_driver.arm[RIGHT].traking_cs.arm_PID = elbow_PID;
-  elbow_driver.arm[RIGHT].traking_cs.arm_encoder = right_elbow_encoder;
   elbow_driver.arm[RIGHT].arm_angle.angle_lim = right_angle_lim_elbow;
   elbow_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   lld_red_init_driver(&elbow_driver.arm[LEFT].traking_cs.control,
                       LEFT_UP_ELBOW, LEFT_DOWN_ELBOW,
-                      &PWMD1, LEFT_ELBOW_ALT_FUNC_NUM);
+                      LEFT_ELBOW_PWM_PTR, LEFT_ELBOW_ALT_FUNC_NUM);
 
   lld_red_init_driver(&elbow_driver.arm[RIGHT].traking_cs.control,
                       RIGHT_UP_ELBOW, RIGHT_DOWN_ELBOW,
-                      &PWMD8, RIGHT_ELBOW_ALT_FUNC_NUM);
+                      RIGHT_ELBOW_PWM_PTR, RIGHT_ELBOW_ALT_FUNC_NUM);
 
+
+  encoder_init(&elbow_driver.arm[LEFT].traking_cs.arm_encoder,
+               CS_LEFT_ENCODER_ELBOW, CLK_ENCODER_LEFT, MISO_ENCODER_LEFT,
+               LEFT_SPI);
+
+
+  encoder_init(&elbow_driver.arm[RIGHT].traking_cs.arm_encoder,
+               CS_RIGHT_ENCODER_ELBOW, CLK_ENCODER_RIGHT, MISO_ENCODER_RIGHT,
+               RIGHT_SPI);
 
   elbow_driver.type = DRIVER;
   elbow_driver.down = &elbow_down;

@@ -5,7 +5,6 @@
 
 #define POWER_SATURATION 0.8F
 
-#define    ONCE_SHOULDER 0
 #define    LEFT_BRIDGE_SHOULDER 0
 #define    RIGHT_BRIDGE_SHOULDER 1
 

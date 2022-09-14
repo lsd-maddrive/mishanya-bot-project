@@ -2,11 +2,12 @@
 #define INCLUDE_ELBOW_DRIVER_H
 
 #include "common.h"
-#include "robo_lib/PID.h"
+#include "PID.h"
 #include "part_arm_driver.h"
 #include "arm_control_system.h"
 #include "low_level.h"
 #include "string.h"
+#include "lld_bridge_system.h"
 
 void elbow_init(void);
 void elbow_up(arm_side_t side, uint16_t period);

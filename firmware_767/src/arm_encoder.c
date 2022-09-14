@@ -16,16 +16,14 @@
  * @details initialize periphery connected to encoder
  * @param[in] encoder - pointer to the encoder structure
  */
-void encoder_init(arm_encoder_t* encoder)
+void encoder_init(arm_encoder_t* encoder,
+                  ioline_t cs, ioline_t clk, ioline_t miso,
+                  SPIDriver* spi_ptr)
 {
-  palSetLineMode(encoder->encoder_pins.cs_encoder, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_HIGH);
-  if(encoder->encoder_ptr->state == SPI_STOP)
-  {
-    palSetLineMode(encoder->encoder_pins.clk_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    palSetLineMode(encoder->encoder_pins.miso_encoder, PAL_MODE_ALTERNATE(5) | PAL_STM32_OSPEED_HIGHEST);
-    spiStart(encoder->encoder_ptr, &encoder->encoder_conf);
-  }
+  encoder->encoder_pins.cs_encoder = cs;
+  encoder->encoder_pins.clk_encoder = clk;
+  encoder->encoder_pins.miso_encoder = miso;
+  encoder->encoder_ptr = spi_ptr;
 }
 
 
@@ -46,7 +44,7 @@ float encoder_read(arm_encoder_t* encoder)
   if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
   {
     rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
-    angle = rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5);
+    angle = (float)(rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5));
     angle = (angle*360)/4096;
     return angle;
   }

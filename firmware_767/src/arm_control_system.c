@@ -7,33 +7,25 @@ static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_ang
  * @details the function brings the resulting angle into the normalized range
  * @param[in] arm_driver - pointer to the structure of the elbow or shoulder drivers
  */
-void acs_init(arm_ctx_t* elbow_driver)
+void acs_init(arm_ctx_t* arm_driver)
 {
-
-	// left arm
-	encoder_init(&elbow_driver->arm[LEFT].traking_cs.arm_encoder);
-
-	// right arm
-	encoder_init(&elbow_driver->arm[RIGHT].traking_cs.arm_encoder);
-
-
 	// left arm interval normalization
-	acs_normalize_interval(&elbow_driver->arm[LEFT].arm_angle);
+	acs_normalize_interval(&arm_driver->arm[LEFT].arm_angle);
 
 	// right arm interval normalization
-	acs_normalize_interval(&elbow_driver->arm[RIGHT].arm_angle);
+	acs_normalize_interval(&arm_driver->arm[RIGHT].arm_angle);
 
 	// left arm target angle true
-  elbow_driver->arm[LEFT].arm_angle.target_angle.reach_target_angle = true;
+  arm_driver->arm[LEFT].arm_angle.target_angle.reach_target_angle = true;
 
 	// right arm target angle true
-  elbow_driver->arm[RIGHT].arm_angle.target_angle.reach_target_angle = true;
+  arm_driver->arm[RIGHT].arm_angle.target_angle.reach_target_angle = true;
 
 	// left arm PID reset
-	PID_reset(&elbow_driver->arm[LEFT].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
 
 	// right arm PID reset
-	PID_reset(&elbow_driver->arm[LEFT].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
 }
 
 /**
