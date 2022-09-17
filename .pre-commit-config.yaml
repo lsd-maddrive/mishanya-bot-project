@@ -2,7 +2,7 @@ default_stages: [commit, push]
 
 repos:
 - repo: https://github.com/pocc/pre-commit-hooks
-  rev: master
+  rev: v1.3.5
   hooks:
     - id: clang-format
       args: [--style=Google]
@@ -21,7 +21,7 @@ repos:
         ]
     
 - repo: https://github.com/Lucas-C/pre-commit-hooks
-  rev: v1.1.12
+  rev: v1.3.1
   hooks:
   - id: forbid-crlf
   - id: remove-crlf
