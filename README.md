@@ -2,6 +2,83 @@
 
 Проект по разработке/оживлению человекоподного робота Мишаня -> [Описание робота](docs/equipment/equipment.md)
 
+# Содержание
+- [Подготовка окружения](#подготовка-окружения)
+- [Пара моментов по разработке](#пара-моментов-по-разработке)
+- [Заметки по работе в-целом](#заметки-по-работе-в-целом)
+- [Глобальные цели](#глобальные-цели)
+- [Ресурсы](#ресурсы)
+
+## Подготовка окружения
+
+1. Устанавливаем make
+    - Windows:
+  
+      Устанавливаем [chocolatey](https://chocolatey.org/install) и устанавливаем `make` с помощью команды:
+
+      ```bash
+      choco install make 
+      ```
+
+    - Linux:
+
+      ```
+      sudo apt-get install build-essential
+      ```
+
+2. Устанавливаем `python 3.8`
+
+   - Windows
+
+      Устанавливаем через [официальный установщик](https://www.python.org/downloads/)
+
+   - Linux
+
+      ```
+      sudo apt install python3.8-dev
+      ```
+
+3. Устанавливаем [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer)
+
+    - Windows
+
+      Используйте [официальные инструкции](https://python-poetry.org/docs/#installing-with-the-official-installer) или команду `powershell`
+
+      ```
+      (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+      ```
+    
+    - Linux
+
+      ```
+      make poetry-install
+      ```
+
+4. Устанавливаем `clang-format`
+   - Windows
+
+      Используйте установочный файл с [официального сайта LLVM](https://llvm.org/builds/) 
+
+   - Linux 
+
+      ```
+      sudo apt install clang-format
+      ```
+
+5. Устанавливаем требуемые пакеты и инструменты с помощью команды
+
+    ```
+    make env-init
+    ```
+
+6. Активируем виртуальное окружение, чтобы при коммите выполнялись проверки кода 
+
+    ```
+    poetry shell 
+    ```
+
+  >  Чтобы сделать коммит, нужно чтобы во всех проверках была написано "Passed"
+
 ## Пара моментов по разработке
 
 - Основная разработка ведется через ветку `develop`
