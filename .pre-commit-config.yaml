@@ -1,0 +1,30 @@
+default_stages: [commit, push]
+
+repos:
+- repo: https://github.com/pocc/pre-commit-hooks
+  rev: master
+  hooks:
+    - id: clang-format
+      args: [--style=Google]
+    - id: cpplint
+      args:
+        [
+          "--filter=
+            -legal/copyright,
+            -build/include_subdir,
+            -whitespace/braces,
+            -readability/casting,
+            -build/header_guard,
+            -whitespace/comments,
+            -whitespace/newline",
+          "--linelength=150"
+        ]
+    
+- repo: https://github.com/Lucas-C/pre-commit-hooks
+  rev: v1.1.12
+  hooks:
+  - id: forbid-crlf
+  - id: remove-crlf
+  - id: forbid-tabs
+  - id: remove-tabs
+    args: [ '--whitespaces-count', '4' ]  # defaults to: 4

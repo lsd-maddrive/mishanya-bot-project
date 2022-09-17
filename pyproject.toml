@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "\u001b[A"
+version = "0.1.0"
+description = "Framework for human-like bot Mishanya controlling"
+authors = ["LetiSauDep"]
+license = "GNU"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+cpplint = "^1.6.1"
+pre-commit = "^2.20.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
