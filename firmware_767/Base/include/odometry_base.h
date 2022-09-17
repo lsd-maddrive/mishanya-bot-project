@@ -3,7 +3,7 @@
 
 #include <common.h>
 
-#define Wheel_Radius 1
+#define Wheel_Radius 0.065
 #define k 1
 
 typedef enum {MM = 1000, CM = 100, M = 1}DistUnits;
@@ -43,7 +43,7 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits uints, type_encoder encode
 
 /**
  * @brief Get speed of wheel
- * @args units(MM_S, CM_S, M_S)
+ * @args units(MM_S, CM_S, M_S), encoder is value from enum
  * @return speed
  */
 speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder);

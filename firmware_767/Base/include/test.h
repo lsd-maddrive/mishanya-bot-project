@@ -17,11 +17,13 @@ void test_encoder_base(type_encoder encoder);
 
 /**
  * @brief test odometry to get distance, speed
+ * @args encoder is value from enum
  */
-void testOdometryBase(void);
+void testOdometryBase(type_encoder encoder);
 
 /**
  * @brief test odometry to get distance, speed all wheels
+ * @args encoder is value from enum
  */
 void testOdometryBaseAll(void);
 

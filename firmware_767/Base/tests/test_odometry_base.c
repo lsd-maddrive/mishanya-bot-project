@@ -3,7 +3,7 @@
 #include <serial.h>
 #include <encoder_base.h>
 
-void testOdometryBase(void)
+void testOdometryBase(type_encoder encoder)
 {
     float dist = 0;
     float speed = 0;
@@ -15,10 +15,10 @@ void testOdometryBase(void)
         char sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
         if(sym == ' ')
         {
-            odometryReset(ENCODER_3);
+            odometryReset(encoder);
         }
-        dist = odometryGetWheelDistance(CM, ENCODER_3);
-        speed = odometryGetWheelSpeed(CM_S,ENCODER_3);
+        dist = odometryGetWheelDistance(CM, encoder);
+        speed = odometryGetWheelSpeed(CM_S,encoder);
         dbgprintf("Distance:%d Speed:%d \n\r",(int)dist,(int)(speed));
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }

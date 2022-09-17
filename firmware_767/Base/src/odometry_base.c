@@ -3,7 +3,7 @@
 
 #define VTIME_PERIOD_MS 10
 #define MS_TO_SEC 100
-#define FILTER
+#define FILTER TRUE
 #define Kf 0.4
 
 static virtual_timer_t odometr_1;
@@ -72,6 +72,7 @@ static void tim_enc3(void* encdrs)
     chVTSetI(&odometr_3, TIME_MS2I(VTIME_PERIOD_MS), tim_enc3, &odmtr_enc3);
     chSysUnlockFromISR();
 }
+
 void odometryInit(void)
 {
     if(init_tim)
@@ -98,11 +99,29 @@ speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
 {
     float spd_wheel = 0;
     if(encoder == ENCODER_1)
-        spd_wheel = odmtr_enc1.speed;
+    {
+        #if(FILTER == FALSE)
+            spd_wheel = odmtr_enc1.speed;
+        #elif(FILTER == TRUE)
+            spd_wheel = odmtr_enc1.filtered_speed;
+        #endif
+    }
     else if(encoder == ENCODER_2)
-        spd_wheel = odmtr_enc2.speed;
+    {
+        #if(FILTER == FALSE)
+            spd_wheel = odmtr_enc2.speed;
+        #elif(FILTER == TRUE)
+            spd_wheel = odmtr_enc2.filtered_speed;
+        #endif
+    }
     else if(encoder == ENCODER_3)
-        spd_wheel = odmtr_enc3.speed;
+    {
+        #if(FILTER == FALSE)
+            spd_wheel = odmtr_enc3.speed;
+        #elif(FILTER == TRUE)
+            spd_wheel = odmtr_enc3.filtered_speed;
+        #endif
+    }
     return spd_wheel*units;
 }
 
@@ -111,14 +130,20 @@ void odometryReset(type_encoder encoder)
     if(encoder == ENCODER_1)
     {
         odmtr_enc1.speed = 0;
+        odmtr_enc1.filtered_speed = 0;
+        odmtr_enc1.prev_filtered_speed = 0;
     }
     else if(encoder == ENCODER_2)
     {
         odmtr_enc2.speed = 0;
+        odmtr_enc2.filtered_speed = 0;
+        odmtr_enc2.prev_filtered_speed = 0;
     }
     else if(encoder == ENCODER_3)
     {
         odmtr_enc3.speed = 0;
+        odmtr_enc3.filtered_speed = 0;
+        odmtr_enc3.prev_filtered_speed = 0;
     }
 }
 
@@ -127,9 +152,8 @@ void handler_odomety(odometry_var *encdr, DistUnits units, type_encoder encoder)
     encdr->dist = odometryGetWheelDistance(units, encoder)/units;
     encdr->speed = (encdr->dist - encdr->prev_dist)*MS_TO_SEC;
     encdr->prev_dist = encdr->dist;
-    #ifdef FILTER
+    #if(FILTER == TRUE)
         encdr->filtered_speed = encdr->speed * (1 - Kf) + Kf * encdr->prev_filtered_speed;
         encdr->prev_filtered_speed = encdr->filtered_speed;
-        encdr->speed = encdr->filtered_speed;
     #endif
 }
