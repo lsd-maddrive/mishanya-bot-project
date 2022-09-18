@@ -1,6 +1,6 @@
 #include "elbow_driver.h"
 
-#define DRIVER 1
+#define DRIVER RED
 #define ENCODER_DEADZONE 1
 
 static PWMDriver *LEFT_ELBOW_PWM_PTR = &PWMD1;
@@ -12,8 +12,11 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // ***************************PID coef************************** //
 
 const PID_t elbow_PID = {
-  .coef = {.kp = 3500, .ki = 500, .kd = 0},
-  .error = {.P = 0, .prev_P = 0, .I = 0, .D = 0}
+  .coef = {
+    .kp = 3500,
+    .ki = 500,
+    .kd = 0
+  }
 };
 
 // ***************************PID coef************************** //
@@ -21,13 +24,13 @@ const PID_t elbow_PID = {
 // ***************************angle lim************************* //
 
 const angle_lim_t right_angle_lim_elbow= {
-  .max_angle = 62.6660F,
-  .min_angle = 22.9394F
+  .max_angle = 62.6660f,
+  .min_angle = 22.9394f
 };
 
 const angle_lim_t left_angle_lim_elbow = {
-  .max_angle = 18.2812F,
-  .min_angle = 334.9511F
+  .max_angle = 18.2812f,
+  .min_angle = 334.9511f
 };
 
 // ***************************angle lim************************** //
@@ -53,11 +56,11 @@ void elbow_init(void)
 
   lld_red_init_driver(&elbow_driver.arm[LEFT].traking_cs.control,
                       LEFT_UP_ELBOW, LEFT_DOWN_ELBOW,
-                      LEFT_ELBOW_PWM_PTR, LEFT_ELBOW_ALT_FUNC_NUM);
+                      LEFT_ELBOW_PWM_PTR, LEFT_PWM_ELBOW_CH_NUM);
 
   lld_red_init_driver(&elbow_driver.arm[RIGHT].traking_cs.control,
                       RIGHT_UP_ELBOW, RIGHT_DOWN_ELBOW,
-                      RIGHT_ELBOW_PWM_PTR, RIGHT_ELBOW_ALT_FUNC_NUM);
+                      RIGHT_ELBOW_PWM_PTR, RIGHT_PWM_ELBOW_CH_NUM);
 
 
   encoder_init(&elbow_driver.arm[LEFT].traking_cs.arm_encoder,
@@ -126,23 +129,3 @@ void elbow_update_angle(float dt)
   acs_update_angle(dt, RIGHT, &elbow_driver);
   acs_update_angle(dt, LEFT, &elbow_driver);
 }
-
-/**
- * @details the function get encoder struct
- * @param[in] encoder_side - left of right encoder
- * @return encoder struct
- */
-
-//arm_encoder_t elbow_get_encoder_ctx(arm_side_t encoder_side)
-//{
-//    switch (encoder_side) {
-//        case LEFT:
-//            return left_elbow_encoder;
-//            break;
-//        case RIGHT:
-//            return right_elbow_encoder;
-//            break;
-//        default:
-//        	break;
-//    }
-//}

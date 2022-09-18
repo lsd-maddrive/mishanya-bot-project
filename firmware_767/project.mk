@@ -5,6 +5,7 @@ PROJECT_MODULES = src/serial.c \
 		  src/part_arm_driver.c \
 		  src/arm_encoder.c \
 	      src/vertical_shoulder_driver.c \
+	      src/horizontal_shoulder_driver.c \
 	      src/low_level.c \
 	      robo_lib/PID.c \
 		  robo_lib/lld_bb_driver.c \

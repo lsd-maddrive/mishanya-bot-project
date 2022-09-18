@@ -118,19 +118,15 @@ static void acs_normalize_interval (arm_angle_t* arm_angle)
 
   if(min_angle>max_angle)
   {
-
-	arm_angle->angle_norm_info.shift_from_zero = 360 - min_angle;
-	arm_angle->angle_norm_lim.max_norm_angle = 360 - (min_angle-max_angle);
-	arm_angle->angle_norm_info.zero_between_angle = true;
-
+    arm_angle->angle_norm_info.shift_from_zero = 360 - min_angle;
+    arm_angle->angle_norm_lim.max_norm_angle = 360 - (min_angle-max_angle);
+    arm_angle->angle_norm_info.zero_between_angle = true;
   }
   else
   {
-
-	arm_angle->angle_norm_lim.max_norm_angle = max_angle - min_angle;
+	  arm_angle->angle_norm_lim.max_norm_angle = max_angle - min_angle;
     arm_angle->angle_norm_info.shift_from_zero = min_angle;
     arm_angle->angle_norm_info.zero_between_angle = false;
-
   }
 
   arm_angle->angle_norm_lim.min_norm_angle = 0;
