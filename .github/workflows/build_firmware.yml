@@ -20,3 +20,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build firmware
         run: make -C firmware
+
+  build-firmware-767:
+    runs-on: ubuntu-latest
+    container: kail4ek/chibios_buildkit:20.03.4
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Build firmware
+        run: make -C firmware_767
