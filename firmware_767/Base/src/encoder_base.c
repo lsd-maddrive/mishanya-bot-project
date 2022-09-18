@@ -5,8 +5,8 @@ int8_t status_phase_B = 0;
 
 encoder_t encoder_1 =
 {
-     .line_phase_A = PAL_LINE(GPIOA,4),
-     .line_phase_B = PAL_LINE(GPIOA,3),
+     .line_phase_A = PAL_LINE(GPIOA,4), //GREEN
+     .line_phase_B = PAL_LINE(GPIOA,3), // WHITE
      .direction_rotation = 0,
      .tic_count = 0,
      .rev_count = 0
