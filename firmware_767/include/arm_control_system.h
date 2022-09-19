@@ -4,7 +4,7 @@
 #include "common.h"
 #include "arm_encoder.h"
 #include "part_arm_driver.h"
-#include "robo_lib/PID.h"
+#include "PID.h"
 
 void acs_init(arm_ctx_t* elbow_driver);
 void acs_update_angle(float dt, arm_side_t side, arm_ctx_t *arm_driver);

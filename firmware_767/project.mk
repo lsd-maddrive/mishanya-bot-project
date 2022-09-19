@@ -11,10 +11,10 @@ PROJECT_MODULES = src/serial.c \
 		  robo_lib/lld_bb_driver.c \
 		  robo_lib/lld_red_driver.c \
                   
-#PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
-#		  tests/test_elbow.c \
-#		  tests/test_arm_control_system.c \
-#		  tests/test_PID.c \
+PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
+		  tests/test_arm_high_function.c \
+		  tests/test_arm_control_system.c \
+		  tests/test_PID.c \
 #		  tests/test_encoder.c \
 #		  tests/test_arm_cs.c \
 

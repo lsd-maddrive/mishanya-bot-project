@@ -11,7 +11,8 @@
 
 typedef enum {
     LEFT = 0,
-    RIGHT = 1
+    RIGHT = 1,
+    NONE_SIDE = 2
 } arm_side_t;
 
 typedef struct {

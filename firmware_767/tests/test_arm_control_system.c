@@ -11,7 +11,7 @@ static THD_FUNCTION(elbow_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    elbow_update_angle(0.00002);
+    elbow_update_angle(0.00002f);
     time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
   }
 

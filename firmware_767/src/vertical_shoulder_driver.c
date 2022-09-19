@@ -23,13 +23,13 @@ const PID_t v_shoulder_PID = {
 // ***************************angle lim************************* //
 
 const angle_lim_t right_angle_lim_v_shoulder = {
-  .max_angle =30.2343f,
-  .min_angle = 329.5019f
+  .max_angle = 113.4667f,
+  .min_angle = 61.6123f
 };
 
 const angle_lim_t left_angle_lim_v_shoulder = {
-  .max_angle = 25.5761f,
-  .min_angle = 325.8105f
+  .max_angle = 132.1875f,
+  .min_angle = 78.7500f
 };
 
 // ***************************angle lim************************** //

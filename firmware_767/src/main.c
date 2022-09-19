@@ -3,8 +3,8 @@
 
 static void testsRoutines(void)
 {
-//    #if(MAIN_PROGRAM == PROGRAM_TEST_SERVO_LEFT_HAND)
-//        test_lld_servo(LEFT_HAND);
+    #if(MAIN_PROGRAM == PROGRAM_TEST_SERVO_LEFT_HAND)
+        test_lld_servo(LEFT_HAND);
 //    #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_LEFT_WRIST)
 //        test_lld_servo(LEFT_WRIST);
 //    #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_RIGHT_HAND)
@@ -13,8 +13,8 @@ static void testsRoutines(void)
 //       test_lld_servo(RIGHT_WRIST);
 //    #elif(MAIN_PROGRAM == PROGRAM_TEST_SERVO_NONLINEAR)
 //       test_lld_nonlinear(LEFT_WRIST);
-//    #elif(MAIN_PROGRAM==PROGRAM_TEST_ELBOW_DRIVER)
-//        test_elbow();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_HIGH_FUNCTION)
+      test_arm_high_function();
 //    #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
 //        test_arm_control_system();
 //    #elif(MAIN_PROGRAM==PROGRAM_TEST_LEFT_ELBOW_ENCODER)
@@ -31,7 +31,7 @@ static void testsRoutines(void)
 //        test_arm_encoder(LEFT_SHOULDER_OUT);
 //    #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CS)
 //        test_arm_cs();
-//    #endif
+    #endif
 }
 
 int main(void)

@@ -23,7 +23,7 @@ void test_lld_nonlinear(type_servo servo);
 /**
  * @brief Test arm driver
  */
-void test_elbow(void);
+void test_arm_high_function(void);
 
 /*********** Close sys tests ***********/
 
