@@ -25,7 +25,7 @@ void acs_init(arm_ctx_t* arm_driver)
 	PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
 
 	// right arm PID reset
-	PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
+	PID_reset(&arm_driver->arm[RIGHT].traking_cs.arm_PID);
 }
 
 /**
