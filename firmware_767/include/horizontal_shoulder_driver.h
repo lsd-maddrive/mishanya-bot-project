@@ -18,5 +18,6 @@ void h_shoulder_down(arm_side_t side, uint16_t period);
 void h_shoulder_off(arm_side_t side);
 void h_shoulder_set_angle(float target_angle, arm_side_t side);
 void h_shoulder_update_angle(float dt);
+float h_shoulder_read_angle(arm_side_t side);
 
 #endif //HORIZONTAL_SHOULDER_DRIVER_H

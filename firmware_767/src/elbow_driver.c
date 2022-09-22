@@ -111,6 +111,15 @@ void elbow_off(arm_side_t side)
 }
 
 /**
+ * @details the function reads the angle of the elbow
+ * @param[in] side - left or right side of hand
+ */
+float elbow_read_angle(arm_side_t side)
+{
+  return encoder_read(&elbow_driver.arm[side].traking_cs.arm_encoder);
+}
+
+/**
  * @details the function set input angle
  * @param[in] side - left or right side of hand
  * @param[in] target_angle - setpoint angle

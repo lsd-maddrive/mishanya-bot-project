@@ -6,12 +6,6 @@
 #include "serial.h"
 #include "stdlib.h"
 
-typedef enum {
-    ELBOW = 0,
-    V_SHOULDER = 1,
-    H_SHOULDER = 2,
-    NONE = 3
-} part_arm_t;
 
 typedef struct {
     void (* up) (arm_side_t, uint16_t);
@@ -45,6 +39,11 @@ void test_arm_high_function(void)
   h_shoulder_init();
   v_shoulder_init();
 
+  for(size_t i = 0; i<3; i++)
+  {
+    high_func[i].off(LEFT);
+    high_func[i].off(RIGHT);
+  }
 
 	while (1) {
     dbgprintf(

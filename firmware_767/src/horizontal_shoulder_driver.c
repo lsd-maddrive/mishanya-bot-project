@@ -121,6 +121,15 @@ void h_shoulder_set_angle(float target_angle, arm_side_t side)
 }
 
 /**
+ * @details the function reads the angle of the horizontal shoulder
+ * @param[in] side - left or right side of hand
+ */
+float h_shoulder_read_angle(arm_side_t side)
+{
+  return encoder_read(&h_shoulder_driver.arm[side].traking_cs.arm_encoder);
+}
+
+/**
  * @details the function update current state of arm
  * @param[in] dt - function call period
  */

@@ -6,6 +6,13 @@
 #include <elbow_driver.h>
 #include <arm_encoder.h>
 
+typedef enum {
+    ELBOW = 0,
+    V_SHOULDER = 1,
+    H_SHOULDER = 2,
+    NONE = 3
+} part_arm_t;
+
 /*
  * @brief Test of servos
  * @note value raw duty cycle
@@ -42,11 +49,11 @@ void test_PID(void);
 /**
  * @brief Test absolute encoder
  */
-void test_arm_encoder(arm_side_t encoder_side);
+void test_arm_encoder(void);
 /**
  * @brief Test close system
  * @note three angles are set for all parts of the hand
  */
-void test_arm_cs(void);
+void test_arm_control_system(void);
 
 #endif
