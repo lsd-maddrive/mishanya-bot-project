@@ -17,8 +17,9 @@
 #define PROGRAM_TEST_ODOMETRY_BASE_ENC_2 6
 #define PROGRAM_TEST_ODOMETRY_BASE_ENC_3 7
 #define PROGRAM_TEST_ODOMETRY_BASE_ALL 8
+#define PROGRAM_TEST_MOTOR_1 9
 
-#define MAIN_PROGRAM PROGRAM_TEST_ODOMETRY_BASE_ALL
+#define MAIN_PROGRAM PROGRAM_TEST_MOTOR_1
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

@@ -2,6 +2,7 @@
 #define INCLUDE_TEST_H
 
 #include <encoder_base.h>
+#include "motor.h"
 
 /**
  * @testing the all encoders
@@ -26,5 +27,6 @@ void testOdometryBase(type_encoder encoder);
  * @args encoder is value from enum
  */
 void testOdometryBaseAll(void);
+void test_lld_motor(type_motor motor_n);
 
 #endif

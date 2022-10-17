@@ -21,6 +21,8 @@ static void testsRoutines(void)
        testOdometryBase(ENCODER_3);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ODOMETRY_BASE_ALL)
        testOdometryBaseAll();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_1)
+       test_lld_motor(MOTOR_1);
     #endif
 }
 
