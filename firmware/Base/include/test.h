@@ -9,6 +9,7 @@
  * @note variable of encoder displayed in Serial
  */
 void test_encoder_base_all(void);
+
 /**
  * @testing the encoder
  * @note variable of encoder displayed in Serial
@@ -27,6 +28,33 @@ void testOdometryBase(type_encoder encoder);
  * @args encoder is value from enum
  */
 void testOdometryBaseAll(void);
-void test_lld_motor(type_motor motor_n);
+
+/**
+ * @brief Test for motor without feedback
+ * @note duty_sycle is raw value
+ * @args motor_n is value from enum
+ */
+void testlldMotor(type_motor motor_n);
+
+/**
+ * @brief Test for motors without feedback
+ * @note duty_sycle is raw value
+ * @args motor_n is value from enum
+ */
+void testlldMotorAll(void);
+
+/**
+ * @brief Test for motor without feedback
+ * @note duty_sycle is is the percentage value
+ * @args motor_n is value from enum
+ */
+void testlldMotorPer(type_motor motor_n);
+
+/**
+ * @brief Test for motors without feedback
+ * @note duty_sycle is is the percentage value
+ * @args motor_n is value from enum
+ */
+void testlldMotorPerAll(void);
 
 #endif

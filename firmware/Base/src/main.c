@@ -22,7 +22,21 @@ static void testsRoutines(void)
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ODOMETRY_BASE_ALL)
        testOdometryBaseAll();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_1)
-       test_lld_motor(MOTOR_1);
+       testlldMotor(MOTOR_1);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_2)
+       testlldMotor(MOTOR_2);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_3)
+       testlldMotor(MOTOR_3);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_ALL)
+       testlldMotorAll();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_1);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_2);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_3);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPerAll();
     #endif
 }
 
