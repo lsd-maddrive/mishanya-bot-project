@@ -45,7 +45,7 @@
       Используйте [официальные инструкции](https://python-poetry.org/docs/#installing-with-the-official-installer) или команду `powershell`
 
       ```
-      (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+      (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
       ```
     
     - Linux
