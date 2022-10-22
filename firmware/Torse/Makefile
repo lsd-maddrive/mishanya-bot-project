@@ -85,12 +85,11 @@ endif
 #
 
 # Define project name here
-PROJECT = ch
+PROJECT = M_TORSE
 
 # Target settings.
 MCU  = cortex-m7
 
- #CHIBIOS  := C:/STM/ChibiStudio20v0/chibios203
  CHIBIOS = $(CHIBIOS_ROOT)
  CONFDIR  := ./cfg
  BUILDDIR := ./build

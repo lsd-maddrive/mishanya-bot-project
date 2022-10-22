@@ -19,7 +19,7 @@ float PID_out(PID_t* reg, float dt)
 }
 
 /**
- * @brief PID coefficients reset
+ * @brief PID errors reset
  * @brief recieve time PID struct
  */
 void PID_reset(PID_t* reg)
@@ -44,4 +44,18 @@ void PID_err_calc (error_type_t *err_reg, float setpoint, float current_point)
   err_reg->P = setpoint-current_point;
 
 
+}
+
+/**
+ * @brief PID coefficients set
+ * @param[in] reg - pointer to pid regulator
+ * @param[in] kp - proportional coef
+ * @param[in] kd - differential coef
+ * @param[in] ki - integral coef
+ */
+void PID_set_coef(PID_t* reg, float kp, float kd, float ki)
+{
+  reg->coef.kp = kp;
+  reg->coef.ki = ki;
+  reg->coef.kd = kd;
 }
