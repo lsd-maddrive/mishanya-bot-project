@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  push:
+  #branches: [ develop ]
+  pull_request:
+    branches: [develop]
+    types: [assigned, opened, closed, review_requested, reopened]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Run clang-format style check
+        uses: jidicula/clang-format-action@v4.9.0
+        with:
+          clang-format-version: "15"
+          check-path: "firmware"
+          fallback-style: "Google"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+        
+      - name: Install packages
+        run: pip install cpplint
+
+      - name: Run cpplint
+        run: cpplint

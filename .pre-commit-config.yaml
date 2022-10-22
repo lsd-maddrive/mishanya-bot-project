@@ -7,19 +7,7 @@ repos:
     - id: clang-format
       args: [--style=Google]
     - id: cpplint
-      args:
-        [
-          "--filter=
-            -legal/copyright,
-            -build/include_subdir,
-            -whitespace/braces,
-            -readability/casting,
-            -build/header_guard,
-            -whitespace/comments,
-            -whitespace/newline",
-          "--linelength=150"
-        ]
-    
+
 - repo: https://github.com/Lucas-C/pre-commit-hooks
   rev: v1.3.1
   hooks:
