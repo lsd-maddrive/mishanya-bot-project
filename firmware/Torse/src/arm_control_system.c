@@ -1,7 +1,5 @@
 #include <arm_control_system.h>
 
-#define FROUND(x) (((x)>=0)?(int32_t)((x)+0.5):(int32_t)((x)-0.5))
-
 static void acs_normalize_interval (arm_angle_t* arm_angle);
 static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_angle);
 
