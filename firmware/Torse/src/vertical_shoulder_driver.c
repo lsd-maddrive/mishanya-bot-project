@@ -29,7 +29,7 @@ const angle_lim_t left_angle_lim_v_shoulder = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t v_shoulder_driver;
+joint_t v_shoulder_driver;
 /**
  * @details initialize arm driver
  */
@@ -82,7 +82,7 @@ void v_shoulder_init(void)
  */
 void v_shoulder_up(arm_side_t side, uint16_t period)
 {
-  arm_up(side, &v_shoulder_driver, period);
+  joint_up(side, &v_shoulder_driver, period);
 }
 
 /**
@@ -92,7 +92,7 @@ void v_shoulder_up(arm_side_t side, uint16_t period)
  */
 void v_shoulder_down(arm_side_t side, uint16_t period)
 {
-  arm_down(side, &v_shoulder_driver, period);
+  joint_down(side, &v_shoulder_driver, period);
 }
 
 /**
@@ -101,7 +101,7 @@ void v_shoulder_down(arm_side_t side, uint16_t period)
  */
 void v_shoulder_off(arm_side_t side)
 {
-  arm_off(side, &v_shoulder_driver);
+  joint_off(side, &v_shoulder_driver);
 }
 
 /**

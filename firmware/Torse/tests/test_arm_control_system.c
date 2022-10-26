@@ -50,7 +50,7 @@ void test_arm_control_system(void)
   char rcv_data[2];
   arm_side_t side;
   uint8_t angle = 0;
-  part_arm_t part_arm = NONE;
+  part_arm_type_t part_arm = NONE;
   acs_test_t acs[3];
 
   debug_stream_init();

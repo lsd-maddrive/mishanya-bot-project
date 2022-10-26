@@ -8,7 +8,7 @@
 
 #include "common.h"
 #include "PID.h"
-#include "part_arm_driver.h"
+#include "joint.h"
 #include "arm_control_system.h"
 
 

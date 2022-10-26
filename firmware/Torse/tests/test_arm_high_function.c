@@ -17,7 +17,7 @@ typedef struct {
 void test_arm_high_function(void)
 {
 	uint8_t rcv_data;
-  part_arm_t part_arm = NONE;
+  part_arm_type_t part_arm = NONE;
   arm_side_t side;
   int16_t period = 0;
   high_func_test_t high_func[3];

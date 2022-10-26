@@ -30,7 +30,7 @@ const angle_lim_t left_angle_lim_h_shoulder = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t h_shoulder_driver;
+joint_t h_shoulder_driver;
 /**
  * @details initialize arm driver
  */
@@ -83,7 +83,7 @@ void h_shoulder_init(void)
  */
 void h_shoulder_up(arm_side_t side, uint16_t period)
 {
-  arm_up(side, &h_shoulder_driver, period);
+  joint_up(side, &h_shoulder_driver, period);
 }
 
 /**
@@ -93,7 +93,7 @@ void h_shoulder_up(arm_side_t side, uint16_t period)
  */
 void h_shoulder_down(arm_side_t side, uint16_t period)
 {
-  arm_down(side, &h_shoulder_driver, period);
+  joint_down(side, &h_shoulder_driver, period);
 }
 
 /**
@@ -102,7 +102,7 @@ void h_shoulder_down(arm_side_t side, uint16_t period)
  */
 void h_shoulder_off(arm_side_t side)
 {
-  arm_off(side, &h_shoulder_driver);
+  joint_off(side, &h_shoulder_driver);
 }
 
 /**

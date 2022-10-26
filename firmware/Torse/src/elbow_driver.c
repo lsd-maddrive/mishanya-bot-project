@@ -29,7 +29,7 @@ const angle_lim_t left_angle_lim_elbow = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t elbow_driver;
+joint_t elbow_driver;
 /**
  * @details initialize arm driver
  */
@@ -82,7 +82,7 @@ void elbow_init(void)
  */
 void elbow_up(arm_side_t side, uint16_t period)
 {
-	arm_up(side, &elbow_driver, period);
+  joint_up(side, &elbow_driver, period);
 }
 
 /**
@@ -92,7 +92,7 @@ void elbow_up(arm_side_t side, uint16_t period)
  */
 void elbow_down(arm_side_t side, uint16_t period)
 {
-	arm_down(side, &elbow_driver, period);
+  joint_down(side, &elbow_driver, period);
 }
 
 /**
@@ -101,7 +101,7 @@ void elbow_down(arm_side_t side, uint16_t period)
  */
 void elbow_off(arm_side_t side)
 {
-	arm_off(side, &elbow_driver);
+  joint_off(side, &elbow_driver);
 }
 
 /**

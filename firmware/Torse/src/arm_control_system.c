@@ -7,25 +7,25 @@ static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_ang
  * @details init arm control system 
  * @param[in] arm_driver - pointer to the structure of the elbow or shoulder (vertical/horizontal) drivers
  */
-void acs_init(arm_ctx_t* arm_driver)
+void acs_init(joint_t* joint)
 {
 	// left arm interval normalization
-	acs_normalize_interval(&arm_driver->arm[LEFT].arm_angle);
+	acs_normalize_interval(&joint->arm[LEFT].arm_angle);
 
 	// right arm interval normalization
-	acs_normalize_interval(&arm_driver->arm[RIGHT].arm_angle);
+	acs_normalize_interval(&joint->arm[RIGHT].arm_angle);
 
 	// left arm target angle true
-  arm_driver->arm[LEFT].arm_angle.target_angle.reach_target_angle = true;
+  joint->arm[LEFT].arm_angle.target_angle.reach_target_angle = true;
 
 	// right arm target angle true
-  arm_driver->arm[RIGHT].arm_angle.target_angle.reach_target_angle = true;
+  joint->arm[RIGHT].arm_angle.target_angle.reach_target_angle = true;
 
 	// left arm PID reset
-	PID_reset(&arm_driver->arm[LEFT].traking_cs.arm_PID);
+	PID_reset(&joint->arm[LEFT].traking_cs.arm_PID);
 
 	// right arm PID reset
-	PID_reset(&arm_driver->arm[RIGHT].traking_cs.arm_PID);
+	PID_reset(&joint->arm[RIGHT].traking_cs.arm_PID);
 }
 
 /**
@@ -47,24 +47,24 @@ void acs_set_angle(float target_angle, arm_side_t side, arm_info_t *arm_driver)
 
 /**
  * @details the function update current state of arm
- * @param[in] arm_driver - pointer to the structure of the elbow or shoulder (vertical/horizontal) drivers
+ * @param[in] joint - pointer to the structure of the elbow or shoulder (vertical/horizontal) drivers
  * @param[in] side - left or right side of hand
  * @param[in] dt - function call period
  */
-void acs_update_angle(float dt, arm_side_t side, arm_ctx_t *arm_driver)
+void acs_update_angle(float dt, arm_side_t side, joint_t *joint)
 {
   // if we have already reached the specified angle, then we simply exit
-  if(arm_driver->arm[side].arm_angle.target_angle.reach_target_angle == true)
+  if(joint->arm[side].arm_angle.target_angle.reach_target_angle == true)
     return ;
 
-  PID_t* PID = &arm_driver->arm[side].traking_cs.arm_PID;
+  PID_t* PID = &joint->arm[side].traking_cs.arm_PID;
 
-  float target_angle = arm_driver->arm[side].arm_angle.target_angle.target_angle;
-  float pwm_period = (float)arm_driver->arm[side].traking_cs.control.pwm_period;
-  float dead_zone = arm_driver->arm[side].arm_angle.angle_dead_zone;
+  float target_angle = joint->arm[side].arm_angle.target_angle.target_angle;
+  float pwm_period = (float)joint->arm[side].traking_cs.control.pwm_period;
+  float dead_zone = joint->arm[side].arm_angle.angle_dead_zone;
 
-  float current_angle = acs_normalize_angle(&arm_driver->arm[side].traking_cs,
-                                            &arm_driver->arm[side].arm_angle);
+  float current_angle = acs_normalize_angle(&joint->arm[side].traking_cs,
+                                            &joint->arm[side].arm_angle);
 
   // if less than zero, it means an error in the encoder readings
   if(current_angle < 0)
@@ -83,24 +83,24 @@ void acs_update_angle(float dt, arm_side_t side, arm_ctx_t *arm_driver)
   if(side==LEFT)
   {
     if(current_angle < target_angle)
-      arm_driver->up(side, (uint16_t)control);
+      joint->up(side, (uint16_t)control);
     else
-      arm_driver->down(side, (uint16_t)control);
+      joint->down(side, (uint16_t)control);
   }
   else if(side==RIGHT)
   {
     if(current_angle < target_angle)
-      arm_driver->down(side, (uint16_t)control);
+      joint->down(side, (uint16_t)control);
     else
-      arm_driver->up(side, (uint16_t)control);
+      joint->up(side, (uint16_t)control);
   }
 
   // check deadzone of encoder
   if(PID->error.P <= dead_zone)
   {
     PID_reset(PID);
-    arm_off(side, arm_driver);
-    arm_driver->arm[side].arm_angle.target_angle.reach_target_angle = true;
+    joint->off(side);
+    joint->arm[side].arm_angle.target_angle.reach_target_angle = true;
   }
 }
 

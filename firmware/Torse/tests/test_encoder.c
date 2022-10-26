@@ -17,7 +17,7 @@ void test_arm_encoder(void)
   uint8_t rcv_data;
   arm_side_t side;
   float angle = 0;
-  part_arm_t part_arm = NONE;
+  part_arm_type_t part_arm = NONE;
   arm_enc_test_t enc_read[3];
 
   enc_read[ELBOW].encoder_read = elbow_read_angle;

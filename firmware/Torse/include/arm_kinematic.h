@@ -2,7 +2,7 @@
 #define TORSE_ARM_KINEMATIC_H
 
 #include <math.h>
-#include "part_arm_driver.h"
+#include "joint.h"
 #include "common.h"
 #include "macro_lib.h"
 
@@ -39,7 +39,6 @@ typedef struct{
  *          coord_base - shoulder point coordinates in absolute coordinate system.
  */
 typedef struct{
-    arm_side_t side;
     length_t arm_length;
     coord_t coord_base;
 }arm_kinematic_t;
@@ -66,7 +65,7 @@ typedef enum{
  * @return            Three coordinates
  */
 
-kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position);
+kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position, arm_side_t side);
 
 /**
  * @brief   Invers kinematics function.
@@ -85,5 +84,7 @@ kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, c
  * @return            Three angles
  */
 
-kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t coord, angles_t* arm_angles);
+kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, angles_t* arm_angles, arm_side_t side);
+
+
 #endif //TORSE_ARM_KINEMATIC_H

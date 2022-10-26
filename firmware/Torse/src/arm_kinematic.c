@@ -25,7 +25,7 @@ void angle_transform_calculation(angles_t* angles, float deg_or_rad)
   angles->th3 *= deg_or_rad;
 }
 
-kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position)
+kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position, arm_side_t side)
 {
   float shoulder_length = arm->arm_length.shoulder_length;
   float forearm_length = arm->arm_length.forearm_length;
@@ -46,10 +46,10 @@ kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, c
 
   coord_position->z = (sin_angles.th2*sin_angles.th3) * forearm_length;
 
-  if (arm->side == LEFT){
+  if (side == LEFT){
     coord_position->z = ((-1)*coord_position->z) - arm->coord_base.z;
   }
-  else if(arm->side == RIGHT)
+  else if(side == RIGHT)
   {
     coord_position->z -= arm->coord_base.z;
   }
@@ -65,20 +65,20 @@ kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, c
 }
 
 
-kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t coord, angles_t* arm_angles)
+kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, angles_t* arm_angles, arm_side_t side)
 {
   float shoulder_length = arm->arm_length.shoulder_length;
   float forearm_length = arm->arm_length.forearm_length;
 
-  coord.x += arm->coord_base.x;
-  coord.y += arm->coord_base.y;
+  coord->x += arm->coord_base.x;
+  coord->y += arm->coord_base.y;
 
-  if (arm->side == LEFT){
-    coord.z = ((-1)*coord.z) + arm->coord_base.z;
+  if (side == LEFT){
+    coord->z = ((-1)*coord->z) + arm->coord_base.z;
   }
-  else if(arm->side == RIGHT)
+  else if(side == RIGHT)
   {
-    coord.z += arm->coord_base.z;
+    coord->z += arm->coord_base.z;
   }
   else
   {
@@ -86,12 +86,12 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t coord, ang
   }
 
   // auxiliary variables
-  float A = (-2)*coord.x;
-  float B = (-2)*coord.y;
+  float A = (-2)*coord->x;
+  float B = (-2)*coord->y;
 
-  float d = coord.x*coord.x +
-            coord.y*coord.y +
-            coord.z*coord.z;
+  float d = coord->x*coord->x +
+            coord->y*coord->y +
+            coord->z*coord->z;
 
   float D = shoulder_length*shoulder_length -
             forearm_length*forearm_length +
@@ -124,7 +124,7 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t coord, ang
       xm = sqrtf(shoulder_length*shoulder_length - ym*ym);
       arm_angles->th1 = atan2f(ym,xm);
       arm_angles->th2 = PI - acosf((shoulder_length*shoulder_length + forearm_length*forearm_length - d)/(2*shoulder_length+forearm_length));
-      arm_angles->th3 = (PI/2) - atan2f(((-1)*(coord.x*ym - xm*coord.y)),sqrtf((xm*coord.z)*(xm*coord.z) + (ym*coord.z)*(ym*coord.z)));
+      arm_angles->th3 = (PI/2) - atan2f(((-1)*(coord->x*ym - xm*coord->y)),sqrtf((xm*coord->z)*(xm*coord->z) + (ym*coord->z)*(ym*coord->z)));
 
       return ERROR_NONE;
     }

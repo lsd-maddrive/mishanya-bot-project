@@ -17,6 +17,8 @@ static void testsRoutines(void)
       test_arm_high_function();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_CONTROL_SYSTEM)
       test_arm_control_system();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_KINEMATIC)
+      test_arm_kinematic();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ARM_ENCODER)
         test_arm_encoder();
     #elif(MAIN_PROGRAM==PROGRAM_TEST_PID)
