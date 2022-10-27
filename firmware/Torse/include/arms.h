@@ -14,12 +14,8 @@
 #define BASE_COOR_X 0
 #define BASE_COOR_Y 0
 #define BASE_COOR_Z 0
-
-typedef struct
-{
-  arm_kinematic_t kinematic;
-  joint_t joints[3];
-}arms_ctx_t;
+#define UPDATE_TIME_SEC 0.02f
+#define UPDATE_TIME_MSEC 20u
 
 
 void arms_init(void);

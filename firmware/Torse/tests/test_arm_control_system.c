@@ -21,7 +21,7 @@ static THD_FUNCTION(elbow_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    elbow_update_angle(0.00002f);
+    elbow_update_angle(0.02f);
     time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
   }
 }
@@ -30,7 +30,7 @@ static THD_FUNCTION(v_shoulder_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    v_shoulder_update_angle(0.00002f);
+    v_shoulder_update_angle(0.02f);
     time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
   }
 }
@@ -39,7 +39,7 @@ static THD_FUNCTION(h_shoulder_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    h_shoulder_update_angle(0.00002f);
+    h_shoulder_update_angle(0.02f);
     time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
   }
 }
