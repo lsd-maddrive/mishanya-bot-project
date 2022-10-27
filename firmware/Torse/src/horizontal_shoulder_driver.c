@@ -36,9 +36,9 @@ joint_t h_shoulder_driver;
  */
 void h_shoulder_init(void)
 {
-  static bool isInitialized   = false;
+  static bool is_init   = false;
 
-  if (isInitialized)
+  if (is_init)
     return;
 
   PID_set_coef(&h_shoulder_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
@@ -73,6 +73,8 @@ void h_shoulder_init(void)
   h_shoulder_driver.off = &h_shoulder_off;
 
   acs_init(&h_shoulder_driver);
+
+  is_init = true;
 }
 
 

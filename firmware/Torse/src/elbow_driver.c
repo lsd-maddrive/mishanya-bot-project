@@ -35,16 +35,16 @@ joint_t elbow_driver;
  */
 void elbow_init(void)
 {
-	static bool isInitialized   = false;
+	static bool is_init   = false;
 
-	if (isInitialized)
+	if (is_init)
 		return;
 
   PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
   elbow_driver.arm[LEFT].arm_angle.angle_lim = left_angle_lim_elbow;
   elbow_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
-  PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
+  PID_set_coef(&elbow_driver.arm[RIGHT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
   elbow_driver.arm[RIGHT].arm_angle.angle_lim = right_angle_lim_elbow;
   elbow_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
@@ -72,6 +72,8 @@ void elbow_init(void)
   elbow_driver.off = &elbow_off;
 
 	acs_init(&elbow_driver);
+
+  is_init = true;
 }
 
 

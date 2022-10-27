@@ -18,6 +18,7 @@
 #define UPDATE_TIME_MSEC 20u
 
 
+
 void arms_init(void);
 void arm_set_coordinates(arm_side_t side, coord_t* target_coordinates);
 
