@@ -1,7 +1,7 @@
 robot = rigidBodyTree('DataFormat','column','MaxNumBodies',3);
 
-shoulder_length  = 0.3;
-forearm_length  = 0.265;
+shoulder_length  = 0.258;
+forearm_length  = 0.236;
 
 body = rigidBody('v_shoulder');
 joint = rigidBodyJoint('v_shoulder_joint', 'revolute');
@@ -39,24 +39,13 @@ ik = inverseKinematics('RigidBodyTree', robot);
 weights = [0, 0, 0, 1, 1, 1];
 endEffector = 'brush';
 
-points = [0.5 0.5 0.1 ; 0.4 0.4 0.1 ; 0.3 0.3 0.0; 0.2 0.2 0.0; 0.1 0.1 0.0];
-
+q0 = homeConfiguration(robot);
 qInitial = q0; % Use home configuration as the initial guess
-for i = 1:5
-    % Solve for the configuration satisfying the desired end effector
-    % position
-    point = points(i,:);
-    qSol = ik(endEffector,trvec2tform(point),weights,qInitial);
-    % Store the configuration
-    qs(i,:) = qSol;
-    % Start from prior solution
-    qInitial = qSol;
-end
 
-framesPerSecond = 5;
-r = rateControl(framesPerSecond);
-for i = 1:5
-    show(robot,qs(i,:)','PreservePlot',false);
-    drawnow
-    waitfor(r);
-end
+point = [0.3 0.2 0.1];
+qSol = ik(endEffector,trvec2tform(point),weights,qInitial);
+
+
+show(robot,qSol,'PreservePlot',false);
+
+drawnow

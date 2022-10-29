@@ -2,9 +2,23 @@
 #define TORSE_ARM_KINEMATIC_H
 
 #include <math.h>
-#include "joint.h"
-#include "common.h"
+#include "stdint.h"
 #include "macro_lib.h"
+#include "joint.h"
+
+
+typedef struct
+{
+    float theta_min;
+    float theta_max;
+} angle_limits_t;
+
+typedef struct
+{
+    angle_limits_t th1;
+    angle_limits_t th2;
+    angle_limits_t th3;
+} arm_angle_limits_t;
 
 /**
  * @brief   Structures for coordinates. unit of measurement: meter
@@ -41,6 +55,7 @@ typedef struct{
 typedef struct{
     length_t arm_length;
     coord_t coord_base;
+    arm_angle_limits_t arm_angle_limits;
 }arm_kinematic_t;
 
 typedef enum{

@@ -3,6 +3,8 @@
 static void sin_angle_calculation(angles_t* angles, angles_t* sin_angles);
 static void cos_angle_calculation(angles_t* angles, angles_t* cos_angles);
 static void angle_transform_calculation(angles_t* angles, float deg_or_rad);
+static uint8_t check_solution(angles_t* angles, arm_angle_limits_t* angles_limits);
+static uint8_t angle_calculation(arm_kinematic_t* arm, angles_t* angles, coord_t* coord, int8_t sign, float d, float A, float B, float D, float discriminant);
 
 void sin_angle_calculation(angles_t* angles, angles_t* sin_angles)
 {
@@ -25,6 +27,34 @@ void angle_transform_calculation(angles_t* angles, float deg_or_rad)
   angles->th3 *= deg_or_rad;
 }
 
+uint8_t angle_calculation(arm_kinematic_t* arm, angles_t* angles, coord_t* coord, int8_t sign, float d, float A, float B, float D, float discriminant)
+{
+  float shoulder_length = arm->arm_length.shoulder_length;
+  float forearm_length = arm->arm_length.forearm_length;
+
+  float xm;
+  float ym;
+
+  // check first solution
+  ym = ((-2)*D*B + (float)sign*sqrtf(discriminant))/(2*(A*A + B*B));
+  xm = sqrtf(shoulder_length*shoulder_length - ym*ym);
+
+  angles->th1 = atan2f(ym,xm);
+  angles->th2 = PI - acosf((shoulder_length*shoulder_length + forearm_length*forearm_length - d)/(2*shoulder_length*forearm_length));
+  angles->th3 = (PI/2) - atan2f(((-1)*(coord->x*ym - xm*coord->y)),sqrtf((xm*coord->z)*(xm*coord->z) + (ym*coord->z)*(ym*coord->z)));
+
+  angle_transform_calculation(angles, RAD2DEG);
+
+  return check_solution(angles, &arm->arm_angle_limits);
+}
+
+uint8_t check_solution(angles_t* angles, arm_angle_limits_t* angles_limits)
+{
+  return CHECK_IN_RANGE(angles->th1, angles_limits->th1.theta_min, angles_limits->th1.theta_max) &
+         CHECK_IN_RANGE(angles->th2, angles_limits->th2.theta_min, angles_limits->th2.theta_max) &
+         CHECK_IN_RANGE(angles->th3, angles_limits->th3.theta_min, angles_limits->th3.theta_max);
+}
+
 kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position, arm_side_t side)
 {
   float shoulder_length = arm->arm_length.shoulder_length;
@@ -39,10 +69,10 @@ kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, c
   cos_angle_calculation(angles, &cos_angles);
 
   coord_position->x = (cos_angles.th1*(shoulder_length + cos_angles.th2 * forearm_length)) -
-          (cos_angles.th3*(sin_angles.th1*sin_angles.th2)) * forearm_length;
+                      (cos_angles.th3*(sin_angles.th1*sin_angles.th2)) * forearm_length;
 
   coord_position->y = (sin_angles.th1*(shoulder_length + cos_angles.th2 * forearm_length)) +
-          (cos_angles.th1*(cos_angles.th3*sin_angles.th2)) * forearm_length;
+                      (cos_angles.th1*(cos_angles.th3*sin_angles.th2)) * forearm_length;
 
   coord_position->z = (sin_angles.th2*sin_angles.th3) * forearm_length;
 
@@ -99,10 +129,6 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, an
 
   if (sqrtf(d) > (shoulder_length+forearm_length))
   {
-    arm_angles->th1 = 0;
-    arm_angles->th2 = 0;
-    arm_angles->th3 = 0;
-
     return ERROR_FALSE_LENGTH;
   }
   else
@@ -110,23 +136,22 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, an
     float discriminant = (2*D*B)*(2*D*B) - 4*(A*A + B*B)*(D*D - (A*shoulder_length)*(A*shoulder_length));
     if (discriminant < 0)
     {
-      arm_angles->th1 = 0;
-      arm_angles->th2 = 0;
-      arm_angles->th3 = 0;
-
       return ERROR_NEGATIVE_DISCRIMINANT;
     }
     else
     {
-      float ym;
-      float xm;
-      ym = ((-2)*D*B + sqrtf(discriminant))/(2*(A*A + B*B));
-      xm = sqrtf(shoulder_length*shoulder_length - ym*ym);
-      arm_angles->th1 = atan2f(ym,xm);
-      arm_angles->th2 = PI - acosf((shoulder_length*shoulder_length + forearm_length*forearm_length - d)/(2*shoulder_length+forearm_length));
-      arm_angles->th3 = (PI/2) - atan2f(((-1)*(coord->x*ym - xm*coord->y)),sqrtf((xm*coord->z)*(xm*coord->z) + (ym*coord->z)*(ym*coord->z)));
+      if(angle_calculation(arm, arm_angles, coord, 1, d, A, B, D, discriminant) == 1)
+      {
+        return ERROR_NONE;
+      }
 
-      return ERROR_NONE;
+      if(angle_calculation(arm, arm_angles, coord, -1, d, A, B, D, discriminant) == 1)
+      {
+        return ERROR_NONE;
+      }
+
+      return ERROR_FALSE_LENGTH;
+
     }
   }
 }
