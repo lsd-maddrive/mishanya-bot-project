@@ -18,5 +18,5 @@ void lldMotorInit(type_motor motor_n);
  * @brief Set type motor and pwm duty cycle for control
  * @args motor_n is value from enum, duty cycle pwm for control motor, flag percent: 1 - percent value, 0 - raw value
  */
-void lldMotor(type_motor motor_n, float duty_cycle,int8_t flag_percent);
+void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent);
 #endif

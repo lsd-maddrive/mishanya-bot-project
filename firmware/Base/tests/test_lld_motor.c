@@ -29,7 +29,7 @@ void testlldMotor(type_motor motor_n)
                 break;
             default: ;
         }
-        lldMotor(motor_n, duty_cycle,flag_percent);
+        lldSetMotorPower(motor_n, duty_cycle,flag_percent);
         dbgprintf("Speed:%d \n\r",(int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
@@ -63,9 +63,9 @@ void testlldMotorAll(void)
                 break;
             default: ;
         }
-        lldMotor(MOTOR_1, duty_cycle,flag_percent);
-        lldMotor(MOTOR_2, duty_cycle,flag_percent);
-        lldMotor(MOTOR_3, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_1, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_2, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_3, duty_cycle,flag_percent);
         dbgprintf("Speed:%d \n\r",(int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
@@ -98,7 +98,7 @@ void testlldMotorPer(type_motor motor_n)
             default: ;
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
-        lldMotor(motor_n, duty_cycle,flag_percent);
+        lldSetMotorPower(motor_n, duty_cycle,flag_percent);
         dbgprintf("Speed:%d \n\r",(int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
@@ -132,9 +132,9 @@ void testlldMotorPerAll(void)
             default: ;
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
-        lldMotor(MOTOR_1, duty_cycle,flag_percent);
-        lldMotor(MOTOR_2, duty_cycle,flag_percent);
-        lldMotor(MOTOR_3, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_1, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_2, duty_cycle,flag_percent);
+        lldSetMotorPower(MOTOR_3, duty_cycle,flag_percent);
         dbgprintf("Speed:%d \n\r",(int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }

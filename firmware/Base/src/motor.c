@@ -12,7 +12,7 @@ control_driver_t motor_3;
  * @brief motor selection and set duty cycle
  * @args ptr structure control_driver_t, duty cycle
  */
-void lldSetMotorPower(control_driver_t* driver, float duty_cycle);
+void SetMotor(control_driver_t* driver, float duty_cycle);
 
 void lldMotorInit(type_motor motor_n)
 {
@@ -27,18 +27,18 @@ void lldMotorInit(type_motor motor_n)
             lld_bb_init_driver(&motor_3, &PWMD8, M1_CH_H1L1, &PWMD1, M1_CH_H2L2);
         }
 }
-void lldMotor(type_motor motor_n, float duty_cycle,int8_t flag_percent)
+void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent)
 {
     if(flag_percent)
         duty_cycle = duty_cycle * K_PERCENT;
     if(motor_n == MOTOR_1)
-        lldSetMotorPower(&motor_1, duty_cycle);
+        SetMotor(&motor_1, duty_cycle);
     else if(motor_n == MOTOR_2)
-        lldSetMotorPower(&motor_2, duty_cycle);
+        SetMotor(&motor_2, duty_cycle);
     else if(motor_n == MOTOR_3)
-        lldSetMotorPower(&motor_3, duty_cycle);
+        SetMotor(&motor_3, duty_cycle);
 }
-void lldSetMotorPower(control_driver_t* driver, float duty_cycle)
+void SetMotor(control_driver_t* driver, float duty_cycle)
 {
     if(duty_cycle > 0)
         lld_bb_driver_direct(driver, duty_cycle);
