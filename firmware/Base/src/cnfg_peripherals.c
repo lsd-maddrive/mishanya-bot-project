@@ -1,5 +1,6 @@
 #include "cnfg_peripherals.h"
 
+static bool init_cnfg = 0;
 /**
  * @brief Init pins and start PWM
  */
@@ -37,7 +38,10 @@ static PWMConfig pwmcfg_m23 = {
 
 void cnfgInit(void)
 {
+    if(init_cnfg)
+        return;
     InitPwm();
+    init_cnfg = 1;
 }
 
 static void InitPwm(void)
