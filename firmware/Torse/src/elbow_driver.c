@@ -3,7 +3,7 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1
 
-#define PID_P 3500U
+#define PID_P 6000U
 #define PID_I 500U
 #define PID_D 0U
 
@@ -18,8 +18,8 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // todo necessary that the angles are recorded in flash memory during calibration
 
 const angle_lim_t right_angle_lim_elbow= {
-  .max_angle = 62.6660f,
-  .min_angle = 22.5f
+  .max_angle = 63.0175f,
+  .min_angle = 22.8515f
 };
 
 const angle_lim_t left_angle_lim_elbow = {
@@ -133,4 +133,9 @@ void elbow_update_angle(float dt)
 {
   acs_update_angle(dt, RIGHT, &elbow_driver);
   acs_update_angle(dt, LEFT, &elbow_driver);
+}
+
+bool elbow_get_status(arm_side_t side)
+{
+  return elbow_driver.arm[side].arm_angle.target_angle.reach_target_angle;
 }

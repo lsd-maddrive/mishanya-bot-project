@@ -150,6 +150,8 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, an
         return ERROR_NONE;
       }
 
+
+
       return ERROR_FALSE_LENGTH;
 
     }

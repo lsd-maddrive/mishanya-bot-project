@@ -1,5 +1,4 @@
 #include <arm_control_system.h>
-
 static void acs_normalize_interval (arm_angle_t* arm_angle);
 static float acs_normalize_angle (traking_cs_t* traking_cs, arm_angle_t* arm_angle);
 
@@ -53,6 +52,8 @@ void acs_set_angle(float target_angle, arm_side_t side, arm_info_t *arm_driver)
  */
 void acs_update_angle(float dt, arm_side_t side, joint_t *joint)
 {
+//  dbgprintf("1=%.4f\r\n", 5.0);
+
   // if we have already reached the specified angle, then we simply exit
   if(joint->arm[side].arm_angle.target_angle.reach_target_angle == true)
     return ;

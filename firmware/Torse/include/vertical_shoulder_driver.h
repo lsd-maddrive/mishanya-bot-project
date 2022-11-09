@@ -19,5 +19,6 @@ void v_shoulder_off(arm_side_t side);
 void v_shoulder_set_angle(float target_angle, arm_side_t side);
 void v_shoulder_update_angle(float dt);
 float v_shoulder_read_angle(arm_side_t side);
+bool v_shoulder_get_status(arm_side_t side);
 
 #endif //VERTICAL_SHOULDER_DRIVER_H

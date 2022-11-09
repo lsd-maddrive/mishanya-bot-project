@@ -3,7 +3,7 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1
 
-#define PID_P 3500U
+#define PID_P 6000U
 #define PID_I 500U
 #define PID_D 0U
 
@@ -18,8 +18,8 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // todo necessary that the angles are recorded in flash memory during calibration
 
 const angle_lim_t right_angle_lim_v_shoulder = {
-  .max_angle = 30.1464f,
-  .min_angle = 329.3261f
+  .max_angle = 27.6738f,
+  .min_angle = 329.5898f
 };
 
 const angle_lim_t left_angle_lim_v_shoulder = {
@@ -135,3 +135,7 @@ void v_shoulder_update_angle(float dt)
   acs_update_angle(dt, LEFT, &v_shoulder_driver);
 }
 
+bool v_shoulder_get_status(arm_side_t side)
+{
+  return v_shoulder_driver.arm[side].arm_angle.target_angle.reach_target_angle;
+}

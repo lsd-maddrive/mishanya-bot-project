@@ -24,7 +24,7 @@ PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
 PROJECT_CSRC 	=  src/main.c \
 					$(PROJECT_MODULES) $(PROJECT_TESTS)
 # C++ source files
-PROJECT_CPPSRC 	= 
+PROJECT_CPPSRC 	=
 # Directories to search headers in
 PROJECT_INCDIR	= include/ \
 				  ../robo_lib/

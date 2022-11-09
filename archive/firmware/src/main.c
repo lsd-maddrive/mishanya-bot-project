@@ -4,7 +4,7 @@ static void testsRoutines(void)
 {
 
 #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
-    test_abs_encoder();
+    test_elbow_encoder();
 #endif
 
 #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)

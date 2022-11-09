@@ -9,8 +9,8 @@
 #include "vertical_shoulder_driver.h"
 
 
-#define SHOULDER_LENGTH 0.3f
-#define FOREARM_LENGTH 0.265f
+#define SHOULDER_LENGTH 0.258f
+#define FOREARM_LENGTH 0.236f
 #define BASE_COOR_X 0
 #define BASE_COOR_Y 0
 #define BASE_COOR_Z 0

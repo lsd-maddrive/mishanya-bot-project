@@ -16,6 +16,7 @@ void elbow_off(arm_side_t side);
 void elbow_set_angle(float target_angle, arm_side_t side);
 void elbow_update_angle(float dt);
 float elbow_read_angle(arm_side_t side);
+bool elbow_get_status(arm_side_t side);
 
 
 #endif
