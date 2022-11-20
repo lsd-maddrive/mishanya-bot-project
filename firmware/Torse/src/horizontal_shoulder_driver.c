@@ -3,7 +3,7 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1
 
-#define PID_P 3500U
+#define PID_P 6000U
 #define PID_I 500U
 #define PID_D 0U
 
@@ -19,8 +19,8 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // todo necessary that the angles are recorded in flash memory during calibration
 
 const angle_lim_t right_angle_lim_h_shoulder = {
-        .max_angle = 292.7968f,
-        .min_angle = 240.0292f
+        .max_angle = 291.0058f,
+        .min_angle = 240.2050f
 };
 
 const angle_lim_t left_angle_lim_h_shoulder = {
@@ -30,15 +30,15 @@ const angle_lim_t left_angle_lim_h_shoulder = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t h_shoulder_driver;
+joint_t h_shoulder_driver;
 /**
  * @details initialize arm driver
  */
 void h_shoulder_init(void)
 {
-  static bool isInitialized   = false;
+  static bool is_init   = false;
 
-  if (isInitialized)
+  if (is_init)
     return;
 
   PID_set_coef(&h_shoulder_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
@@ -73,6 +73,8 @@ void h_shoulder_init(void)
   h_shoulder_driver.off = &h_shoulder_off;
 
   acs_init(&h_shoulder_driver);
+
+  is_init = true;
 }
 
 
@@ -83,7 +85,7 @@ void h_shoulder_init(void)
  */
 void h_shoulder_up(arm_side_t side, uint16_t period)
 {
-  arm_up(side, &h_shoulder_driver, period);
+  joint_up(side, &h_shoulder_driver, period);
 }
 
 /**
@@ -93,7 +95,7 @@ void h_shoulder_up(arm_side_t side, uint16_t period)
  */
 void h_shoulder_down(arm_side_t side, uint16_t period)
 {
-  arm_down(side, &h_shoulder_driver, period);
+  joint_down(side, &h_shoulder_driver, period);
 }
 
 /**
@@ -102,7 +104,7 @@ void h_shoulder_down(arm_side_t side, uint16_t period)
  */
 void h_shoulder_off(arm_side_t side)
 {
-  arm_off(side, &h_shoulder_driver);
+  joint_off(side, &h_shoulder_driver);
 }
 
 /**
@@ -132,4 +134,10 @@ void h_shoulder_update_angle(float dt)
 {
   acs_update_angle(dt, RIGHT, &h_shoulder_driver);
   acs_update_angle(dt, LEFT, &h_shoulder_driver);
+}
+
+
+bool h_shoulder_get_status(arm_side_t side)
+{
+  return h_shoulder_driver.arm[side].arm_angle.target_angle.reach_target_angle;
 }

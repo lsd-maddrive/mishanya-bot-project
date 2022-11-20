@@ -3,7 +3,7 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1
 
-#define PID_P 3500U
+#define PID_P 6000U
 #define PID_I 500U
 #define PID_D 0U
 
@@ -18,8 +18,8 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // todo necessary that the angles are recorded in flash memory during calibration
 
 const angle_lim_t right_angle_lim_v_shoulder = {
-  .max_angle = 30.1464f,
-  .min_angle = 329.3261f
+  .max_angle = 27.6738f,
+  .min_angle = 329.5898f
 };
 
 const angle_lim_t left_angle_lim_v_shoulder = {
@@ -29,15 +29,15 @@ const angle_lim_t left_angle_lim_v_shoulder = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t v_shoulder_driver;
+joint_t v_shoulder_driver;
 /**
  * @details initialize arm driver
  */
 void v_shoulder_init(void)
 {
-  static bool isInitialized   = false;
+  static bool is_init   = false;
 
-  if (isInitialized)
+  if (is_init)
     return;
 
   PID_set_coef(&v_shoulder_driver.arm[RIGHT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
@@ -72,6 +72,8 @@ void v_shoulder_init(void)
   v_shoulder_driver.off = &v_shoulder_off;
 
   acs_init(&v_shoulder_driver);
+
+  is_init = true;
 }
 
 
@@ -82,7 +84,7 @@ void v_shoulder_init(void)
  */
 void v_shoulder_up(arm_side_t side, uint16_t period)
 {
-  arm_up(side, &v_shoulder_driver, period);
+  joint_up(side, &v_shoulder_driver, period);
 }
 
 /**
@@ -92,7 +94,7 @@ void v_shoulder_up(arm_side_t side, uint16_t period)
  */
 void v_shoulder_down(arm_side_t side, uint16_t period)
 {
-  arm_down(side, &v_shoulder_driver, period);
+  joint_down(side, &v_shoulder_driver, period);
 }
 
 /**
@@ -101,7 +103,7 @@ void v_shoulder_down(arm_side_t side, uint16_t period)
  */
 void v_shoulder_off(arm_side_t side)
 {
-  arm_off(side, &v_shoulder_driver);
+  joint_off(side, &v_shoulder_driver);
 }
 
 /**
@@ -133,3 +135,7 @@ void v_shoulder_update_angle(float dt)
   acs_update_angle(dt, LEFT, &v_shoulder_driver);
 }
 
+bool v_shoulder_get_status(arm_side_t side)
+{
+  return v_shoulder_driver.arm[side].arm_angle.target_angle.reach_target_angle;
+}

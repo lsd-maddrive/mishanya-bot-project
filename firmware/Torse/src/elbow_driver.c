@@ -3,7 +3,7 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1
 
-#define PID_P 3500U
+#define PID_P 6000U
 #define PID_I 500U
 #define PID_D 0U
 
@@ -18,8 +18,8 @@ static SPIDriver *RIGHT_SPI = &SPID2;
 // todo necessary that the angles are recorded in flash memory during calibration
 
 const angle_lim_t right_angle_lim_elbow= {
-  .max_angle = 62.6660f,
-  .min_angle = 22.5f
+  .max_angle = 63.0175f,
+  .min_angle = 22.8515f
 };
 
 const angle_lim_t left_angle_lim_elbow = {
@@ -29,22 +29,22 @@ const angle_lim_t left_angle_lim_elbow = {
 
 // ***************************angle lim************************** //
 
-arm_ctx_t elbow_driver;
+joint_t elbow_driver;
 /**
  * @details initialize arm driver
  */
 void elbow_init(void)
 {
-	static bool isInitialized   = false;
+	static bool is_init   = false;
 
-	if (isInitialized)
+	if (is_init)
 		return;
 
   PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
   elbow_driver.arm[LEFT].arm_angle.angle_lim = left_angle_lim_elbow;
   elbow_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
-  PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
+  PID_set_coef(&elbow_driver.arm[RIGHT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
   elbow_driver.arm[RIGHT].arm_angle.angle_lim = right_angle_lim_elbow;
   elbow_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
@@ -72,6 +72,8 @@ void elbow_init(void)
   elbow_driver.off = &elbow_off;
 
 	acs_init(&elbow_driver);
+
+  is_init = true;
 }
 
 
@@ -82,7 +84,7 @@ void elbow_init(void)
  */
 void elbow_up(arm_side_t side, uint16_t period)
 {
-	arm_up(side, &elbow_driver, period);
+  joint_up(side, &elbow_driver, period);
 }
 
 /**
@@ -92,7 +94,7 @@ void elbow_up(arm_side_t side, uint16_t period)
  */
 void elbow_down(arm_side_t side, uint16_t period)
 {
-	arm_down(side, &elbow_driver, period);
+  joint_down(side, &elbow_driver, period);
 }
 
 /**
@@ -101,7 +103,7 @@ void elbow_down(arm_side_t side, uint16_t period)
  */
 void elbow_off(arm_side_t side)
 {
-	arm_off(side, &elbow_driver);
+  joint_off(side, &elbow_driver);
 }
 
 /**
@@ -131,4 +133,9 @@ void elbow_update_angle(float dt)
 {
   acs_update_angle(dt, RIGHT, &elbow_driver);
   acs_update_angle(dt, LEFT, &elbow_driver);
+}
+
+bool elbow_get_status(arm_side_t side)
+{
+  return elbow_driver.arm[side].arm_angle.target_angle.reach_target_angle;
 }

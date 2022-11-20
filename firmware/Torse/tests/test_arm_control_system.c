@@ -21,8 +21,8 @@ static THD_FUNCTION(elbow_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    elbow_update_angle(0.00002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
+    elbow_update_angle(0.002f);
+    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
   }
 }
 
@@ -30,8 +30,8 @@ static THD_FUNCTION(v_shoulder_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    v_shoulder_update_angle(0.00002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
+    v_shoulder_update_angle(0.002f);
+    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
   }
 }
 
@@ -39,8 +39,8 @@ static THD_FUNCTION(h_shoulder_update,arg) {
   (void) arg;
   systime_t time = chVTGetSystemTimeX();
   while (1) {
-    h_shoulder_update_angle(0.00002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
+    h_shoulder_update_angle(0.002f);
+    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
   }
 }
 
@@ -50,7 +50,7 @@ void test_arm_control_system(void)
   char rcv_data[2];
   arm_side_t side;
   uint8_t angle = 0;
-  part_arm_t part_arm = NONE;
+  part_arm_type_t part_arm = NONE;
   acs_test_t acs[3];
 
   debug_stream_init();
@@ -66,13 +66,13 @@ void test_arm_control_system(void)
 
 
 
-  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO-2,
+  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO,
                     elbow_update, NULL);
 
-  chThdCreateStatic(traking_v_shoulder,sizeof(traking_v_shoulder),NORMALPRIO-2,
+  chThdCreateStatic(traking_v_shoulder,sizeof(traking_v_shoulder),NORMALPRIO,
                     v_shoulder_update, NULL);
 
-  chThdCreateStatic(traking_h_shoulder,sizeof(traking_h_shoulder),NORMALPRIO-2,
+  chThdCreateStatic(traking_h_shoulder,sizeof(traking_h_shoulder),NORMALPRIO,
                     h_shoulder_update, NULL);
 
 

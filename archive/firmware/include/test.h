@@ -10,7 +10,7 @@
 /**
  * @brief Test absolute encoder
  */
-void test_abs_encoder(void);
+void test_elbow_encoder(void);
 
 
 /************* Elbow tests *************/
