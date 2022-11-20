@@ -9,8 +9,8 @@ static uint8_t angle_calculation(arm_kinematic_t* arm, angles_t* angles, coord_t
 void sin_angle_calculation(angles_t* angles, angles_t* sin_angles)
 {
   sin_angles->th1 = sinf(angles->th1);
-  sin_angles->th1 = sinf(angles->th2);
-  sin_angles->th1 = sinf(angles->th3);
+  sin_angles->th2 = sinf(angles->th2);
+  sin_angles->th3 = sinf(angles->th3);
 }
 
 void cos_angle_calculation(angles_t* angles, angles_t* cos_angles)
