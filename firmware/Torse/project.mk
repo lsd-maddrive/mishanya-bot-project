@@ -9,9 +9,11 @@ PROJECT_MODULES = src/serial.c \
 	      src/low_level.c \
 	      src/arm_kinematic.c \
 	      src/arms.c \
+	      src/arm_calibration.c \
 	      ../robo_lib/PID.c \
 		  ../robo_lib/lld_bb_driver.c \
 		  ../robo_lib/lld_red_driver.c \
+		  ../robo_lib/flash_f7.c \
 
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
 		  tests/test_arm_high_function.c \
