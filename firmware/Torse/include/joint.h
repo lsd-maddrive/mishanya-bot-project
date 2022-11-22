@@ -15,6 +15,13 @@ typedef enum {
     NONE_SIDE = 2
 } arm_side_t;
 
+typedef enum {
+    ELBOW = 0,
+    V_SHOULDER = 1,
+    H_SHOULDER = 2,
+    NONE = 3
+} part_arm_type_t;
+
 typedef struct {
     float min_angle;                              // min angle encored read
     float max_angle;                              // max angle encored read
@@ -60,12 +67,12 @@ typedef struct {
   void (* down) (arm_side_t, uint16_t);           // ptr function down
   void (* off) (arm_side_t);                      // ptr function off arm
   arm_info_t arm[2];                              // two arms
-} arm_ctx_t;
+} joint_t;
 
 
-void arm_up(arm_side_t side, arm_ctx_t *arm_driver, uint16_t period);
-void arm_down(arm_side_t side, arm_ctx_t *arm_driver, uint16_t period);
-void arm_off (arm_side_t side, arm_ctx_t *arm_driver);
+void joint_up(arm_side_t side, joint_t *joint, uint16_t period);
+void joint_down(arm_side_t side, joint_t *joint, uint16_t period);
+void joint_off (arm_side_t side, joint_t *joint);
 
 
 
