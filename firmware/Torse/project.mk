@@ -15,6 +15,7 @@ PROJECT_MODULES = src/serial.c \
 		  ../robo_lib/lld_bb_driver.c \
 		  ../robo_lib/lld_red_driver.c \
 		  ../robo_lib/flash_f7.c \
+		  ../robo_lib/crc32.c \
 
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
 		  tests/test_arm_high_function.c \

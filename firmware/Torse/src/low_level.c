@@ -1,5 +1,6 @@
 #include "low_level.h"
 #include "arms.h"
+#include "crc32.h"
 
 #define PWM_frequency		500000
 #define PWM_period			10000
@@ -59,6 +60,7 @@ void init_low_level(void)
     init_pwm();
     init_spi();
     arms_init();
+    crc32_init();
 }
 
 static void init_gpio(void)

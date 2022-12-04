@@ -3,6 +3,8 @@
 
 #include "stdint.h"
 #include "stddef.h"
+#include "crc32.h"
+#include "arm_calibration.h"
 
 #define ARM_PROTO_GUI_PREFIX_SIZE     1U
 #define ARM_PROTO_GUI_LEN_SIZE        1U
