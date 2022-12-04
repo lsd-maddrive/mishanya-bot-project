@@ -1,43 +1,54 @@
 #include "arm_calibration.h"
 
-static void elbow_calibration(void);
-static void v_shoulder_calibration(void);
-static void h_shoulder_calibration(void);
 
-void arm_calibration_start()
-{
-    elbow_calibration();
-    v_shoulder_calibration();
-    h_shoulder_calibration();
-}
+typedef struct {
+    void (*up) (arm_side_t, uint16_t);
+    void (*down) (arm_side_t, uint16_t);
+    void (*off) (arm_side_t);
+    float (*read_encoder) (arm_side_t);
+} control_arm_t;
 
-static void elbow_calibration(void)
+
+void arm_calibration_start(void)
 {
-    arm_side_t elbow_side = LEFT;
-    float angle_speed = 0;
+    float d_angle = 0;
     float angle = 0;
-    elbow_up(elbow_side, 5000);
-    angle = elbow_read_angle(elbow_side);
-    chThdSleepMilliseconds(10);
-    while(1)
+    control_arm_t arm_control[3];
+
+    arm_control[ELBOW].down = elbow_down;
+    arm_control[ELBOW].up = elbow_up;
+    arm_control[ELBOW].off = elbow_off;
+    arm_control[ELBOW].read_encoder = elbow_read_angle;
+
+    arm_control[V_SHOULDER].down = v_shoulder_down;
+    arm_control[V_SHOULDER].up = v_shoulder_up;
+    arm_control[V_SHOULDER].off = v_shoulder_off;
+    arm_control[V_SHOULDER].read_encoder = v_shoulder_read_angle;
+
+    arm_control[H_SHOULDER].down = h_shoulder_down;
+    arm_control[H_SHOULDER].up = h_shoulder_up;
+    arm_control[H_SHOULDER].off = h_shoulder_off;
+    arm_control[H_SHOULDER].read_encoder = h_shoulder_read_angle;
+
+    for(size_t part_arm = 0; part_arm <= H_SHOULDER; part_arm++)
     {
-        angle_speed = elbow_read_angle(elbow_side) - angle;
-        if(angle_speed == 0)
+        for(size_t side = 0; side <= RIGHT; side++)
         {
-            flash_write_block(LEFT_UP_ELBOW_ADDRESS, (uint8_t*)&angle, 4);
-            elbow_off(LEFT);
-            break;
+            arm_control[part_arm].up(side, 10000);
+            angle = arm_control[part_arm].read_encoder(side);
+            chThdSleepMilliseconds(1000);
+            while(1)
+            {
+                d_angle = arm_control[part_arm].read_encoder(side) - angle;
+                if(d_angle == 0)
+                {
+                    flash_write_block((BASE_CALIBRATION_ADDRESS + (part_arm+side)*ANGLE_SIZE), (uint8_t*)&angle, 4);
+                    arm_control[part_arm].off(side);
+                    break;
+                }
+                angle = arm_control[part_arm].read_encoder(side);
+                chThdSleepMilliseconds(1000);
+            }
         }
-        chThdSleepMilliseconds(10);
     }
-}
-
-static void v_shoulder_calibration(void)
-{
-
-}
-
-static void h_shoulder_calibration(void)
-{
-
 }

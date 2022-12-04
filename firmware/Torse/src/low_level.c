@@ -1,7 +1,5 @@
-////
-//// Created by Anton on 09.09.2022.
-////
 #include "low_level.h"
+#include "arms.h"
 
 #define PWM_frequency		500000
 #define PWM_period			10000
@@ -57,9 +55,10 @@ const PWMConfig pwm8_config = {
 
 void init_low_level(void)
 {
-	init_gpio();
-  init_pwm();
-  init_spi();
+    init_gpio();
+    init_pwm();
+    init_spi();
+    arms_init();
 }
 
 static void init_gpio(void)

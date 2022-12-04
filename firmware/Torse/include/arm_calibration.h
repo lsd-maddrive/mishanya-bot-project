@@ -8,9 +8,9 @@
 #include "flash_f7.h"
 
 // float
-#define ANGLE_SIZE 4U
+#define ANGLE_SIZE 0x04
 
-#define BASE_CALIBRATION_ADDRESS 0x081C0000U
+#define BASE_CALIBRATION_ADDRESS 0x081C0000
 
 // 11 sector
 #define LEFT_UP_ELBOW_ADDRESS                  BASE_CALIBRATION_ADDRESS
