@@ -1,14 +1,11 @@
 #ifndef INCLUDE_SERIAL_H
 #define INCLUDE_SERIAL_H
 
-/**
- * @brief   Initialize serial port
- */
-void debug_stream_init(void);
+#include "common.h"
 
 /**
 * @brief    Print
 */
-void dbgprintf( const char* format, ... );
+void dbgprintf(SerialDriver *sdp, const char* format, ... );
 
 #endif

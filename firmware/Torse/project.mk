@@ -11,6 +11,7 @@ PROJECT_MODULES = src/serial.c \
 	      src/arms.c \
 	      src/arm_calibration.c \
 	      src/arm_proto_gui.c \
+	      src/arm_tasks.c \
 	      ../robo_lib/PID.c \
 		  ../robo_lib/lld_bb_driver.c \
 		  ../robo_lib/lld_red_driver.c \

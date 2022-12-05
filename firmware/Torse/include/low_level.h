@@ -60,14 +60,20 @@
 #define MISO_ENCODER_RIGHT		   PAL_LINE(GPIOC, 2)//SPI2
 #define CLK_ENCODER_RIGHT 		   PAL_LINE(GPIOD, 3)//SPI2
 
-#define CS_LEFT_ENCODER_ELBOW 	   PAL_LINE(GPIOA, 3)
-#define CS_RIGHT_ENCODER_ELBOW 	   PAL_LINE(GPIOA, 4)
-#define CS_LEFT_ENCODER_V_SHOULDER 	    PAL_LINE(GPIOC, 0)
-#define CS_RIGHT_ENCODER_V_SHOULDER 	  PAL_LINE(GPIOG, 0)
-#define CS_LEFT_ENCODER_H_SHOULDER 	    PAL_LINE(GPIOG, 2)
-#define CS_RIGHT_ENCODER_H_SHOULDER 	  PAL_LINE(GPIOG, 3)
+#define CS_LEFT_ENCODER_ELBOW 	    PAL_LINE(GPIOA, 3)
+#define CS_RIGHT_ENCODER_ELBOW 	    PAL_LINE(GPIOA, 4)
+#define CS_LEFT_ENCODER_V_SHOULDER 	PAL_LINE(GPIOC, 0)
+#define CS_RIGHT_ENCODER_V_SHOULDER PAL_LINE(GPIOG, 0)
+#define CS_LEFT_ENCODER_H_SHOULDER 	PAL_LINE(GPIOG, 2)
+#define CS_RIGHT_ENCODER_H_SHOULDER PAL_LINE(GPIOG, 3)
 
 // *******************encoder pin config******************* //
+
+// *******************uart config******************* //
+#define GUI_TX                    PAL_LINE(GPIOD, 8)
+#define GUI_RX                    PAL_LINE(GPIOD, 9)
+
+// *******************uart config******************* //
 
 
 void init_low_level(void);

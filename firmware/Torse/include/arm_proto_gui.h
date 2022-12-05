@@ -43,4 +43,6 @@ typedef struct
 
 #pragma pack(pop)
 
+arm_proto_gui_error_t arm_proto_gui_parser(uint8_t* msg, size_t msg_size);
+
 #endif //TORSE_ARM_PROTO_GUI_H

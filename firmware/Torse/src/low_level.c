@@ -2,12 +2,22 @@
 #include "arms.h"
 #include "crc32.h"
 
-#define PWM_frequency		500000
-#define PWM_period			10000
+#define PWM_frequency		500000U
+#define PWM_period			10000U
 
 static void init_gpio(void);
 static void init_pwm(void);
 static void init_spi(void);
+static void uart_gui_init(void);
+
+// *******************arm GUI uart config******************* //
+
+static const SerialConfig uart_gui_cnfg = {
+        .speed = 115200,
+        .cr1 = 0, .cr2 = 0, .cr3 = 0
+};
+
+// *******************arm GUI uart config******************* //
 
 // *******************arm spi config******************* //
 
@@ -61,6 +71,7 @@ void init_low_level(void)
     init_spi();
     arms_init();
     crc32_init();
+    uart_gui_init();
 }
 
 static void init_gpio(void)
@@ -134,4 +145,12 @@ static void init_spi(void)
 
   spiStart(&SPID1, &spi1_conf);
   spiStart(&SPID2, &spi2_conf);
+}
+
+
+static void uart_gui_init(void)
+{
+    palSetLineMode(GUI_RX,  PAL_MODE_ALTERNATE(7));
+    palSetLineMode(GUI_TX,  PAL_MODE_ALTERNATE(7));
+    sdStart( &SD3, &uart_gui_cnfg);
 }

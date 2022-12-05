@@ -2,29 +2,11 @@
 
 static arm_kinematic_t arm_kinematic;
 
-static THD_WORKING_AREA(arm_task,256);
-
-static THD_FUNCTION(arm_task_update,arg) {
-  (void) arg;
-  systime_t time = chVTGetSystemTimeX();
-  while (1) {
-    elbow_update_angle(0.1f);
-    v_shoulder_update_angle(0.1f);
-    h_shoulder_update_angle(0.1f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
-  }
-}
-
-
-
 void arms_init(void)
 {
   elbow_init();
   v_shoulder_init();
   h_shoulder_init();
-
-  chThdCreateStatic(arm_task,sizeof(arm_task),NORMALPRIO+1,
-                    arm_task_update, NULL);
 
   // vertical shoulder
   arm_kinematic.arm_angle_limits.th1.theta_min = -15;
