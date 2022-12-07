@@ -5,6 +5,12 @@ arm_proto_gui_error_t arm_proto_gui_parser(uint8_t* msg, size_t msg_size)
 {
     arm_proto_gui_pctk_t* proto_msg = (void*)msg;
 
+    if(msg_size !=
+    proto_msg->msg_len + (ARM_PROTO_GUI_PREFIX_SIZE + ARM_PROTO_GUI_CMD_SIZE + ARM_PROTO_GUI_LEN_SIZE + ARM_PROTO_GUI_CRC_SIZE))
+    {
+        return LEN_ERROR;
+    }
+
     if(proto_msg->arm_proto_gui_prefix == ARM_PROTO_GUI_PREFIX)
     {
         size_t data_size = msg_size -
