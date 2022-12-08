@@ -1,6 +1,7 @@
 #include "low_level.h"
 #include "arms.h"
 #include "crc32.h"
+#include "arm_calibration.h"
 
 #define PWM_frequency		500000U
 #define PWM_period			10000U
@@ -13,7 +14,7 @@ static void uart_gui_init(void);
 // *******************arm GUI uart config******************* //
 
 static const SerialConfig uart_gui_cnfg = {
-        .speed = 115200,
+        .speed = 57600,
         .cr1 = 0, .cr2 = 0, .cr3 = 0
 };
 
@@ -72,6 +73,7 @@ void init_low_level(void)
     arms_init();
     crc32_init();
     uart_gui_init();
+    calibration_init();
 }
 
 static void init_gpio(void)
@@ -114,6 +116,11 @@ static void init_gpio(void)
 
   palSetLineMode(CS_RIGHT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
   palWriteLine(CS_RIGHT_ENCODER_H_SHOULDER, PAL_HIGH);
+
+  // info led
+  palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
 }
 
 static void init_pwm(void)

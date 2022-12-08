@@ -7,12 +7,13 @@
 #include "common.h"
 #include "flash_f7.h"
 
-// float
+// float size
 #define ANGLE_SIZE 0x04
+
+#define CALIBRATION_DATA_SECTOR_NUMBER 11U
 
 #define BASE_CALIBRATION_ADDRESS 0x081C0000
 
-// 11 sector
 #define LEFT_UP_ELBOW_ADDRESS                  BASE_CALIBRATION_ADDRESS
 #define LEFT_DOWN_ELBOW_ADDRESS                (LEFT_UP_ELBOW_ADDRESS + ANGLE_SIZE)
 #define RIGHT_UP_ELBOW_ADDRESS                 (LEFT_DOWN_ELBOW_ADDRESS + ANGLE_SIZE)
@@ -29,5 +30,7 @@
 #define RIGHT_DOWN_H_SHOULDER_ADDRESS          (RIGHT_UP_H_SHOULDER_ADDRESS + ANGLE_SIZE)
 
 void arm_calibration_start(void);
+void calibration_init(void);
+
 
 #endif //TORSE_ARM_CALIBRATION_H

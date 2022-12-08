@@ -21,11 +21,19 @@ static THD_FUNCTION(gui_task_update,arg) {
     uint8_t gui_buffer[255];
     systime_t time = chVTGetSystemTimeX();
     size_t read_size;
+    static size_t msg_offset = 0;
     while (1) {
-        read_size = sdReadI(uart_gui, gui_buffer, 255);
+        read_size = sdReadI(uart_gui, (gui_buffer+msg_offset), 255);
         if(read_size > 0)
         {
-            arm_proto_gui_parser(gui_buffer, read_size);
+            if(arm_proto_gui_parser(gui_buffer, (read_size + msg_offset)) == WAIT_MSG)
+            {
+                msg_offset += read_size;
+            }
+            else
+            {
+                msg_offset = 0;
+            }
         }
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }

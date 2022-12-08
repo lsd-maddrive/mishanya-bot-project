@@ -19,7 +19,7 @@
 #define PROGRAM_TEST_ARM_HIGH_FUNCTION 8
 #define PROGRAM_TEST_ARM_CONTROL_SYSTEM 9
 #define PROGRAM_TEST_ARM_KINEMATIC 10
-#define MAIN_PROGRAM PROGRAM_TEST_ARM_KINEMATIC
+#define MAIN_PROGRAM PROGRAM_TEST_ARM_ENCODER
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

@@ -26,7 +26,8 @@ typedef enum
     NO_ERROR = 0,
     PREFIX_ERROR = 1,
     CRC_ERROR = 2,
-    LEN_ERROR = 3
+    LEN_ERROR = 3,
+    WAIT_MSG = 4
 }arm_proto_gui_error_t;
 
 #pragma pack(push)
