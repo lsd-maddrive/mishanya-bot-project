@@ -37,6 +37,8 @@ static void testsRoutines(void)
        testlldMotorPer(MOTOR_3);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
        testlldMotorPerAll();
+    #elif(MAIN_PROGRAM==PROGRAMM_TEST_SPEED_FILTER_GRAPHS)
+        test_speed_filter_graphs();
     #endif
 }
 

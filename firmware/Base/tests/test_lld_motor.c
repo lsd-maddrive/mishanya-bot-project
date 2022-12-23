@@ -6,7 +6,7 @@
 void testlldMotor(type_motor motor_n)
 {
     int8_t flag_percent = 0;
-    int16_t delta = 50;
+    float delta = 50;
     float duty_cycle = 0;
     char sym = 0;
     lldMotorInit(motor_n);
@@ -37,7 +37,7 @@ void testlldMotor(type_motor motor_n)
 
 void testlldMotorAll(void)
 {
-    int16_t delta = 50;
+    float delta = 50;
     int8_t flag_percent = 0;
     float duty_cycle = 0;
     char sym = 0;
@@ -74,7 +74,7 @@ void testlldMotorAll(void)
 void testlldMotorPer(type_motor motor_n)
 {
     int8_t flag_percent = 1;
-    uint16_t delta_per = 10;
+    float delta_per = 10;
     float duty_cycle = 0;
     char sym = 0;
     lldMotorInit(motor_n);
@@ -106,7 +106,7 @@ void testlldMotorPer(type_motor motor_n)
 void testlldMotorPerAll(void)
 {
     int8_t flag_percent = 1;
-    uint16_t delta_per = 10;
+    float delta_per = 10;
     float duty_cycle = 0;
     char sym = 0;
     lldMotorInit(MOTOR_1);

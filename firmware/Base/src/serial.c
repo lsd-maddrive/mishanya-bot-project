@@ -7,14 +7,13 @@
 #define SerialTX PAL_LINE(GPIOD, 8)
 #define SerialRX PAL_LINE(GPIOD, 9)
 
-
 static SerialDriver         *debug_serial = &SD3;
 static BaseSequentialStream *debug_stream = NULL;
 
 
 static const SerialConfig sd_st_cfg = {
-    .speed = 115200,
-    .cr1 = 0, .cr2 = 0, .cr3 = 0
+        .speed = 115200,
+        .cr1 = 0, .cr2 = 0, .cr3 = 0
 };
 
 /**

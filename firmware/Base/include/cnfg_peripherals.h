@@ -4,9 +4,11 @@
 #include "common.h"
 
 // *******************pwm config******************* //
-#define PWM_FREQUENCY 1000000
+#define PWM_FREQUENCY 8000000
 #define PWM_PERIOD 1000
 
+
+// *******************BB driver******************* //
 // *******************Motor1******************* //
 
 //pins

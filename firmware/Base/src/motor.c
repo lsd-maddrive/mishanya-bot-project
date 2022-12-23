@@ -2,7 +2,6 @@
 #include "cnfg_peripherals.h"
 
 #define K_PERCENT PWM_PERIOD/100
-int8_t Motor_Init = 1;
 
 control_driver_t motor_1;
 control_driver_t motor_2;
@@ -21,6 +20,7 @@ void lldMotorInit(type_motor motor_n)
             lld_bb_init_driver(&motor_1, &PWMD1, M1_CH_H1L1, &PWMD1, M1_CH_H2L2);
         }
         if (motor_n == MOTOR_2) {
+
             lld_bb_init_driver(&motor_2, &PWMD8, M1_CH_H1L1, &PWMD8, M1_CH_H2L2);
         }
         if (motor_n == MOTOR_3) {
@@ -40,11 +40,13 @@ void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent)
 }
 void SetMotor(control_driver_t* driver, float duty_cycle)
 {
-    if(duty_cycle > 0)
+    if(duty_cycle > 0) {
         lld_bb_driver_direct(driver, duty_cycle);
-    else if(duty_cycle < 0)
+    }
+    else if(duty_cycle < 0) {
         lld_bb_driver_reverse(driver, -duty_cycle);
-    else if(duty_cycle == 0)
+    }
+    else if(duty_cycle == 0) {
         lld_bb_driver_off(driver);
-
+    }
 }

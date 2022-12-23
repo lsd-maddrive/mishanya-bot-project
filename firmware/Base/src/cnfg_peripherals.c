@@ -4,7 +4,7 @@ static bool init_cnfg = 0;
 /**
  * @brief Init pins and start PWM
  */
-static void InitPwm(void);
+static void InitPwmComplementary(void);
 
 static PWMConfig pwmcfg_m13 = {
   .frequency = PWM_FREQUENCY,
@@ -40,11 +40,11 @@ void cnfgInit(void)
 {
     if(init_cnfg)
         return;
-    InitPwm();
+    InitPwmComplementary();
     init_cnfg = 1;
 }
 
-static void InitPwm(void)
+static void InitPwmComplementary(void)
 {
     palSetLineMode(MOTOR1_PWM_HIN1, M1_AF_H1L1);
     palSetLineMode(MOTOR1_PWM_LIN1, M1_AF_H1L1);
@@ -64,3 +64,5 @@ static void InitPwm(void)
     pwmStart(&PWMD1, &pwmcfg_m13);
     pwmStart(&PWMD8, &pwmcfg_m23);
 }
+
+

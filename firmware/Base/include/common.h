@@ -25,8 +25,9 @@
 #define PROGRAM_TEST_MOTOR_PER_2 14
 #define PROGRAM_TEST_MOTOR_PER_3 15
 #define PROGRAM_TEST_MOTOR_PER_ALL 16
+#define PROGRAMM_TEST_SPEED_FILTER_GRAPHS 17
 
-#define MAIN_PROGRAM PROGRAM_TEST_MOTOR_PER_1
+#define MAIN_PROGRAM PROGRAMM_TEST_SPEED_FILTER_GRAPHS
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

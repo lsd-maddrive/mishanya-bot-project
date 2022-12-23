@@ -57,4 +57,6 @@ void testlldMotorPer(type_motor motor_n);
  */
 void testlldMotorPerAll(void);
 
+void test_speed_filter_graphs(void);
+
 #endif
