@@ -2,7 +2,6 @@
 #define INCLUDE_MOTOR_H
 
 #include "common.h"
-#include "lld_red_driver.h"
 #include "lld_bb_driver.h"
 #include "lld_bridge_system.h"
 #include "cnfg_peripherals.h"
