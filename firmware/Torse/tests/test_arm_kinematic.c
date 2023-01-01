@@ -74,4 +74,3 @@ void test_arm_kinematic(void)
   }
 
 }
-

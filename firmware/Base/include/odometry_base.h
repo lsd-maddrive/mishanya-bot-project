@@ -63,4 +63,6 @@ void odometryReset(type_encoder encoder);
  */
 void handler_odomety(odometry_var *encdr, DistUnits units, type_encoder encoder);
 
+speedOdometry getRaw(SpeedUnits units,type_encoder encoder);
+
 #endif

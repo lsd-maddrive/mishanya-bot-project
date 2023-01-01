@@ -62,7 +62,7 @@ float GetEncoderRawRevs(type_encoder encoder_n);
 void ResetEncoder(type_encoder encoder_n);
 
 /**
- * @brief Ñounts the number of revolutions
+ * @brief Counts the number of revolutions
  * @args cur_encoder is pointer to the structure
  * @return number of revolutions + number tics
  */

@@ -1,10 +1,10 @@
 #include <encoder_base.h>
 #include <odometry_base.h>
 
-#define VTIME_PERIOD_MS 10
-#define MS_TO_SEC 100
+#define VTIME_PERIOD_MS 1
+#define MS_TO_SEC 1000
 #define FILTER TRUE
-#define Kf 0.4
+#define Kf 0.9
 
 static virtual_timer_t odometr_1;
 static virtual_timer_t odometr_2;
@@ -95,6 +95,13 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits units, type_encoder encode
     return rev_count * Kw * units;
 }
 
+speedOdometry getRaw(SpeedUnits units,type_encoder encoder){
+    float spdRaw = 0;
+    if(encoder == ENCODER_1){
+        spdRaw = odmtr_enc1.speed;
+    }
+    return spdRaw * units;
+}
 speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
 {
     float spd_wheel = 0;

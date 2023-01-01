@@ -17,8 +17,17 @@
 #define PROGRAM_TEST_ODOMETRY_BASE_ENC_2 6
 #define PROGRAM_TEST_ODOMETRY_BASE_ENC_3 7
 #define PROGRAM_TEST_ODOMETRY_BASE_ALL 8
+#define PROGRAM_TEST_MOTOR_1 9
+#define PROGRAM_TEST_MOTOR_2 10
+#define PROGRAM_TEST_MOTOR_3 11
+#define PROGRAM_TEST_MOTOR_ALL 12
+#define PROGRAM_TEST_MOTOR_PER_1 13
+#define PROGRAM_TEST_MOTOR_PER_2 14
+#define PROGRAM_TEST_MOTOR_PER_3 15
+#define PROGRAM_TEST_MOTOR_PER_ALL 16
+#define PROGRAMM_TEST_SPEED_FILTER_GRAPHS 17
 
-#define MAIN_PROGRAM PROGRAM_TEST_ODOMETRY_BASE_ALL
+#define MAIN_PROGRAM PROGRAMM_TEST_SPEED_FILTER_GRAPHS
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

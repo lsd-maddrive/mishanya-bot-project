@@ -7,8 +7,8 @@ void testOdometryBase(type_encoder encoder)
 {
     float dist = 0;
     float speed = 0;
-    debug_stream_init();
     odometryInit();
+    debug_stream_init();
     systime_t time = chVTGetSystemTime();
     while(1)
     {
