@@ -23,7 +23,7 @@ void test_lld_nonlinear(type_servo servo);
 /**
  * @brief Test arm driver
  */
-void test_elbow(void);
+void test_arm_high_function(void);
 
 /*********** Close sys tests ***********/
 
@@ -42,17 +42,12 @@ void test_PID(void);
 /**
  * @brief Test absolute encoder
  */
-void test_arm_encoder(arm_side_t encoder_side);
+void test_arm_encoder(void);
 /**
  * @brief Test close system
  * @note three angles are set for all parts of the hand
  */
-void test_arm_cs(void);
 
-/**
- * @testing the encoder
- * @note variable of encoder displayed in Serial
- */
-void test_encoder_base(void);
+void test_arm_kinematic (void);
 
 #endif

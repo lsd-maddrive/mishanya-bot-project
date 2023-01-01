@@ -40,8 +40,5 @@ void PID_reset(PID_t* reg)
  */
 void PID_err_calc (error_type_t *err_reg, float setpoint, float current_point)
 {
-
   err_reg->P = setpoint-current_point;
-
-
 }

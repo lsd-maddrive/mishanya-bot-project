@@ -4,7 +4,11 @@ static void testsRoutines(void)
 {
 
 #if(MAIN_PROGRAM==PROGRAM_TEST_ENCODER)
+<<<<<<< HEAD:archive/firmware/src/main.c
     test_abs_encoder();
+=======
+    test_elbow_encoder();
+>>>>>>> develop:firmware/src/main.c
 #endif
 
 #if(MAIN_PROGRAM==PROGRAM_TEST_ARM_DRIVER)

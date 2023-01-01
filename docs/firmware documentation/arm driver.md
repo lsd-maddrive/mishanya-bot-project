@@ -41,16 +41,16 @@ enum для выбора типа драйвера:
 Структура с информацией о используемых выводах.
 
 
-- ioline_t 	lin_1:
+- ioline_t     lin_1:
   * Нижний ключ первого полумоста при работе с BB;
   * Первый цифровой вывод при работе с RED.
-- ioline_t 	lin_2:
+- ioline_t     lin_2:
   * Нижний ключ второго полумоста при работе с BB;
   * Второй цифровой вывод при работе с RED.
-- ioline_t 	hin_1:
+- ioline_t     hin_1:
   * Верхний ключ первого полумоста при работе с BB;
   * Вывод ШИМ при работе с RED.
-- ioline_t 	hin_2:
+- ioline_t     hin_2:
   * Верхний ключ второго полумоста при работе с BB;
   * Не используется при работе с RED.
 
@@ -147,18 +147,18 @@ const pwm_ctx_t left_pwm_ctx = {
     .callback  = NULL,
     .channels  = {
             
-            {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// LEFT LIN1 & HIN1
+            {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},    // LEFT LIN1 & HIN1
             
             {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // LEFT HIN2 & LIN2
             
-            {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// RIGHT LIN1 & HIN1
+            {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},    // RIGHT LIN1 & HIN1
             
             {.mode = PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // RIGHT LN2 & HIN2I
         
         },
         .cr2        = 0,
         // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
-        .bdtr 		= 0b11111111,
+        .bdtr         = 0b11111111,
         // !!!!!!!! THE CALCULATION WAS MADE FOR F411 !!!!!!!! //
         .dier       = 0
     }

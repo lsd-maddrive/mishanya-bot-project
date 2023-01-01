@@ -5,6 +5,7 @@
 #include "hal.h"
 #include "chprintf.h"
 #include "stdint.h"
+#include "low_level.h"
 
 #define PROGRAM_MASTER 0
 
@@ -13,17 +14,12 @@
 #define PROGRAM_TEST_SERVO_RIGHT_HAND 3
 #define PROGRAM_TEST_SERVO_RIGHT_WRIST 4
 #define PROGRAM_TEST_SERVO_NONLINEAR 5
-#define PROGRAM_TEST_ELBOW_DRIVER 6
-#define PROGRAM_TEST_PID 7
-#define PROGRAM_TEST_ARM_CONTROL_SYSTEM 8
-#define PROGRAM_TEST_RIGHT_ELBOW_ENCODER 9
-#define PROGRAM_TEST_LEFT_ELBOW_ENCODER 10
-#define PROGRAM_TEST_RIGHT_SHOULDER_OUT_ENCODER 11
-#define PROGRAM_TEST_RIGHT_SHOULDER_IN_ENCODER 12
-#define PROGRAM_TEST_LEFT_SHOULDER_IN_ENCODER 13
-#define PROGRAM_TEST_LEFT_SHOULDER_OUT_ENCODER 14
-#define PROGRAM_TEST_ARM_CS 15
-#define MAIN_PROGRAM PROGRAM_TEST_ARM_CS
+#define PROGRAM_TEST_PID 6
+#define PROGRAM_TEST_ARM_ENCODER 7
+#define PROGRAM_TEST_ARM_HIGH_FUNCTION 8
+#define PROGRAM_TEST_ARM_CONTROL_SYSTEM 9
+#define PROGRAM_TEST_ARM_KINEMATIC 10
+#define MAIN_PROGRAM PROGRAM_TEST_ARM_KINEMATIC
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

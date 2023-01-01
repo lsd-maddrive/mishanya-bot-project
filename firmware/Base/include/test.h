@@ -2,14 +2,12 @@
 #define INCLUDE_TEST_H
 
 #include <encoder_base.h>
-#include "motor.h"
 
 /**
  * @testing the all encoders
  * @note variable of encoder displayed in Serial
  */
 void test_encoder_base_all(void);
-
 /**
  * @testing the encoder
  * @note variable of encoder displayed in Serial
@@ -28,35 +26,5 @@ void testOdometryBase(type_encoder encoder);
  * @args encoder is value from enum
  */
 void testOdometryBaseAll(void);
-
-/**
- * @brief Test for motor without feedback
- * @note duty_sycle is raw value
- * @args motor_n is value from enum
- */
-void testlldMotor(type_motor motor_n);
-
-/**
- * @brief Test for motors without feedback
- * @note duty_sycle is raw value
- * @args motor_n is value from enum
- */
-void testlldMotorAll(void);
-
-/**
- * @brief Test for motor without feedback
- * @note duty_sycle is is the percentage value
- * @args motor_n is value from enum
- */
-void testlldMotorPer(type_motor motor_n);
-
-/**
- * @brief Test for motors without feedback
- * @note duty_sycle is is the percentage value
- * @args motor_n is value from enum
- */
-void testlldMotorPerAll(void);
-
-void test_speed_filter_graphs(void);
 
 #endif

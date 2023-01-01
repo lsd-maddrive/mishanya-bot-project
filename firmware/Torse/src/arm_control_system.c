@@ -221,6 +221,3 @@ static float acs_normalize_angle (traking_cs_t* traking_cs)
 	return current_angle;
 
 }
-
-
-

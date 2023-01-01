@@ -12,14 +12,15 @@ typedef struct {
 typedef struct
 {
     SPIDriver* encoder_ptr;
-    SPIConfig encoder_conf;
     arm_encoder_line_t encoder_pins;
 }arm_encoder_t;
 
 /**
  * @brief   Initialize periphery connected to encoder
  */
-void encoder_init(arm_encoder_t* encoder);
+void encoder_init(arm_encoder_t* encoder,
+        ioline_t cs, ioline_t clk, ioline_t miso,
+        SPIDriver* spi_ptr);
 
 /**
  * @brief recieve data from encoder
