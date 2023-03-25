@@ -11,6 +11,6 @@
 #include "vertical_shoulder_driver.h"
 #include "arm_proto_gui.h"
 
-void arm_tasks_init(void);
+void arm_tasks_init(SerialDriver* serial_port);
 
 #endif //TORSE_ARM_TASKS_H

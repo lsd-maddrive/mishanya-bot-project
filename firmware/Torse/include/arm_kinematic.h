@@ -9,15 +9,9 @@
 
 typedef struct
 {
-    float theta_min;
-    float theta_max;
-} angle_limits_t;
-
-typedef struct
-{
-    angle_limits_t th1;
-    angle_limits_t th2;
-    angle_limits_t th3;
+    angle_lim_t* th1;
+    angle_lim_t* th2;
+    angle_lim_t* th3;
 } arm_angle_limits_t;
 
 /**

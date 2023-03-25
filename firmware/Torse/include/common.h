@@ -8,7 +8,6 @@
 #include "low_level.h"
 
 #define PROGRAM_MASTER 0
-
 #define PROGRAM_TEST_SERVO_LEFT_HAND 1
 #define PROGRAM_TEST_SERVO_LEFT_WRIST 2
 #define PROGRAM_TEST_SERVO_RIGHT_HAND 3
@@ -19,7 +18,7 @@
 #define PROGRAM_TEST_ARM_HIGH_FUNCTION 8
 #define PROGRAM_TEST_ARM_CONTROL_SYSTEM 9
 #define PROGRAM_TEST_ARM_KINEMATIC 10
-#define MAIN_PROGRAM PROGRAM_TEST_ARM_ENCODER
+#define MAIN_PROGRAM PROGRAM_MASTER
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

@@ -14,11 +14,15 @@
                                         ARM_PROTO_GUI_LEN_SIZE +   \
                                         ARM_PROTO_GUI_CMD_SIZE +   \
                                         ARM_PROTO_GUI_CRC_SIZE)
-#define ARM_PROTO_GUI_PREFIX          0x52
+#define ARM_PROTO_GUI_PREFIX          ((uint8_t)0x52)
+
 
 typedef enum
 {
     ARM_PROTO_GUI_CALIB = 0,
+    ARM_PROTO_GUI_ANGLE_VALUES = 1,
+    ARM_PROTO_GUI_LEFT_ENCODERS_VALUES = 2,
+    ARM_PROTO_GUI_RIGHT_ENCODERS_VALUES = 3,
 }arm_proto_gui_cmd_t;
 
 typedef enum
@@ -44,6 +48,8 @@ typedef struct
 
 #pragma pack(pop)
 
+void arm_proto_gui_init(SerialDriver* serial_port);
 arm_proto_gui_error_t arm_proto_gui_parser(uint8_t* msg, size_t msg_size);
+void arm_proto_gui_send_cmd(arm_proto_gui_cmd_t cmd, uint8_t* data, size_t data_size);
 
 #endif //TORSE_ARM_PROTO_GUI_H

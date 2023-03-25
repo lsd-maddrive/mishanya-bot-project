@@ -46,6 +46,15 @@ void calibration_init(void)
     arm_control[H_SHOULDER].read_encoder = h_shoulder_read_angle;
     arm_control[H_SHOULDER].off(LEFT);
     arm_control[H_SHOULDER].off(RIGHT);
+
+    uint32_t check_valid_angle;
+
+    memcpy(&check_valid_angle, (uint32_t *)RIGHT_DOWN_H_SHOULDER_ADDRESS, sizeof(float));
+
+    if(check_valid_angle == 0xFFFFFFFF)
+    {
+        arm_calibration_start();
+    }
 }
 
 void arm_calibration_start(void)
@@ -55,6 +64,8 @@ void arm_calibration_start(void)
     uint8_t address = 0;
 
     flash_erase_sector(CALIBRATION_DATA_SECTOR_NUMBER);
+    chThdSleepMilliseconds(2000);
+
 
     // 3 joint on the one hand
     for(size_t part_arm = 0; part_arm < 3; part_arm++)
@@ -71,7 +82,11 @@ void arm_calibration_start(void)
                 d_angle = arm_control[part_arm].read_encoder(side) - angle;
                 if(d_angle == 0.0f)
                 {
-                    flash_write_block(calibration_address[address-1], (uint8_t*)&angle, 4);
+                    if(angle > 0)
+                    {
+                        flash_write_block(calibration_address[address-1], (uint8_t*)&angle, 4);
+                    }
+
                     arm_control[part_arm].off(side);
                     break;
                 }
@@ -87,7 +102,10 @@ void arm_calibration_start(void)
                 d_angle = arm_control[part_arm].read_encoder(side) - angle;
                 if(d_angle == 0.0f)
                 {
-                    flash_write_block(calibration_address[address-1], (uint8_t*)&angle, 4);
+                    if(angle > 0)
+                    {
+                        flash_write_block(calibration_address[address-1], (uint8_t*)&angle, 4);
+                    }
                     arm_control[part_arm].off(side);
                     break;
                 }

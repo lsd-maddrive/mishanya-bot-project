@@ -9,6 +9,6 @@
 
 void acs_init(joint_t* joint);
 void acs_update_angle(float dt, arm_side_t side, joint_t *joint);
-void acs_set_angle(float target_angle, arm_side_t side, arm_info_t *arm_driver);
+void acs_set_angle(float target_angle, arm_side_t side, arm_info_t *arm_driver, angle_lim_t* global_angle_lim, float working_interval);
 
 #endif

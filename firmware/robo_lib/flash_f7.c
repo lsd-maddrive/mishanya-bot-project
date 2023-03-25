@@ -1,4 +1,5 @@
 #include "flash_f7.h"
+#include "common.h"
 
 #define FLASH_KEY1                          0x45670123U // datasheet information
 #define FLASH_KEY2                          0xCDEF89ABU // datasheet information
@@ -49,6 +50,9 @@ static flash_errors_t flash_error_check(void)
 
 flash_errors_t flash_write_word(uint32_t flash_address, uint32_t data)
 {
+
+    FLASH->SR |= FLASH_SR_EOP | FLASH_SR_PGAERR | FLASH_SR_WRPERR | FLASH_SR_OPERR;
+
     __disable_irq();
 
     flash_unlock();
@@ -61,7 +65,14 @@ flash_errors_t flash_write_word(uint32_t flash_address, uint32_t data)
     // write with 4bytes
     FLASH->CR |= FLASH_CR_PSIZE_1;
 
+    while(flash_busy_status() == FLASH_BUSY)
+    {
+        ;
+    }
+
     *(uint32_t*)flash_address = data;
+
+    __DSB();
 
     while(flash_busy_status() == FLASH_BUSY)
     {

@@ -1,6 +1,7 @@
 #include <common.h>
 #include <test.h>
 #include "arm_tasks.h"
+#include "serial.h"
 
 static void testsRoutines(void)
 {
@@ -32,7 +33,7 @@ int main(void)
   halInit();
   chSysInit();
   init_low_level();
-  arm_tasks_init();
+
   #if(MAIN_PROGRAM != PROGRAM_MASTER)
     testsRoutines();
   #endif
