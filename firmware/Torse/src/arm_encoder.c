@@ -52,8 +52,3 @@ float encoder_read(arm_encoder_t* encoder)
   else
     return -1;
 }
-
-
-
-
-

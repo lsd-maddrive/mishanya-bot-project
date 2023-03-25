@@ -7,7 +7,6 @@
 #define SerialTX PAL_LINE(GPIOD, 8)
 #define SerialRX PAL_LINE(GPIOD, 9)
 
-
 static SerialDriver         *debug_serial = &SD3;
 static BaseSequentialStream *debug_stream = NULL;
 

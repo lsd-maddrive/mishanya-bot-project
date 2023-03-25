@@ -21,6 +21,24 @@ static void testsRoutines(void)
        testOdometryBase(ENCODER_3);
     #elif(MAIN_PROGRAM==PROGRAM_TEST_ODOMETRY_BASE_ALL)
        testOdometryBaseAll();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_1)
+       testlldMotor(MOTOR_1);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_2)
+       testlldMotor(MOTOR_2);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_3)
+       testlldMotor(MOTOR_3);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_ALL)
+       testlldMotorAll();
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_1);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_2);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPer(MOTOR_3);
+    #elif(MAIN_PROGRAM==PROGRAM_TEST_MOTOR_PER_1)
+       testlldMotorPerAll();
+    #elif(MAIN_PROGRAM==PROGRAMM_TEST_SPEED_FILTER_GRAPHS)
+        test_speed_filter_graphs();
     #endif
 }
 

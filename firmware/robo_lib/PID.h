@@ -29,4 +29,5 @@ void PID_err_calc (error_type_t *err_reg, float angle, float current_angle);
 void PID_set_coef(PID_t* reg, float kp, float kd, float ki);
 void PID_err_circle_calc (error_type_t *err_reg, float setpoint, float current_point, float working_interval, float min, float max);
 
+
 #endif
