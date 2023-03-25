@@ -81,6 +81,6 @@
 
 
 void init_low_level(void);
-
+uint32_t low_level_get_tcp_address(void);
 
 #endif //ARM_LOW_LEVEL_H

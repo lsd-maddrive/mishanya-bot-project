@@ -1,9 +1,13 @@
 #include "arm_tasks.h"
+#include <lwipthread.h>
+#include <lwip/api.h>
+
 
 static SerialDriver *uart_gui;
 
-static THD_WORKING_AREA(arm_task,256);
-static THD_WORKING_AREA(gui_task,256);
+static THD_WORKING_AREA(arm_task, 256);
+static THD_WORKING_AREA(serial_task, 256);
+static THD_WORKING_AREA(tcp_task, 1024);
 
 static THD_FUNCTION(arm_task_update,arg) {
     (void) arg;
@@ -16,7 +20,7 @@ static THD_FUNCTION(arm_task_update,arg) {
     }
 }
 
-static THD_FUNCTION(gui_task_update,arg) {
+static THD_FUNCTION(serial_task_update,arg) {
     (void) arg;
     static uint8_t gui_buffer[255];
     static size_t msg_offset = 0;
@@ -44,13 +48,38 @@ static THD_FUNCTION(gui_task_update,arg) {
 }
 
 
+static THD_FUNCTION(tcp_task_update,arg) {
+    (void)arg;
+
+    struct netconn *conn, *newconn;
+    err_t err;
+
+    conn = netconn_new(NETCONN_TCP);
+    struct ip4_addr ip;
+
+    ip.addr = low_level_get_tcp_address();
+
+    netconn_bind(conn, &ip, 8000);
+
+    netconn_listen(conn);
+
+
+}
+
+
 void arm_tasks_init(SerialDriver* serial_port)
 {
     chThdCreateStatic(arm_task,sizeof(arm_task),NORMALPRIO+1,
                       arm_task_update, NULL);
 
-    chThdCreateStatic(gui_task,sizeof(gui_task),NORMALPRIO+1,
-                      gui_task_update, NULL);
+    chThdCreateStatic(serial_task,sizeof(serial_task),NORMALPRIO+1,
+                      serial_task_update, NULL);
+
+    chThdCreateStatic(tcp_task,sizeof(tcp_task),NORMALPRIO+1,
+                      tcp_task_update, NULL);
 
     uart_gui = serial_port;
+
+
 }
+
