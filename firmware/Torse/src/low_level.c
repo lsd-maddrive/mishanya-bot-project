@@ -1,14 +1,36 @@
-////
-//// Created by Anton on 09.09.2022.
-////
 #include "low_level.h"
+#include "arms.h"
+#include "crc32.h"
+#include "arm_calibration.h"
+#include "arm_proto_gui.h"
+#include "arm_tasks.h"
 
-#define PWM_frequency		500000
-#define PWM_period			10000
+#define PWM_frequency		500000U
+#define PWM_period			10000U
 
 static void init_gpio(void);
 static void init_pwm(void);
 static void init_spi(void);
+static void uart_gui_init(void);
+static void uart_serial_init(void);
+
+// *******************serial uart config******************* //
+
+static const SerialConfig uart_serial_cnfg = {
+        .speed = 115200U,
+        .cr1 = 0, .cr2 = 0, .cr3 = 0
+};
+
+// *******************serial uart config******************* //
+
+// *******************serial uart config******************* //
+
+static const SerialConfig uart_radio_cnfg = {
+        .speed = 57600U,
+        .cr1 = 0, .cr2 = 0, .cr3 = 0
+};
+
+// *******************serial uart config******************* //
 
 // *******************arm spi config******************* //
 
@@ -57,15 +79,23 @@ const PWMConfig pwm8_config = {
 
 void init_low_level(void)
 {
-	init_gpio();
-  init_pwm();
-  init_spi();
+    init_gpio();
+    init_pwm();
+    init_spi();
+    arms_init();
+    crc32_init();
+    uart_gui_init();
+    uart_serial_init();
+
+    calibration_init();
+    arm_tasks_init(&SD3);
+    arm_proto_gui_init(&SD3);
 }
 
 static void init_gpio(void)
 {
   // elbow gpio
-	palSetLineMode(LEFT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(LEFT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(LEFT_DOWN_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
 
   palSetLineMode(CS_LEFT_ENCODER_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
@@ -102,6 +132,11 @@ static void init_gpio(void)
 
   palSetLineMode(CS_RIGHT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
   palWriteLine(CS_RIGHT_ENCODER_H_SHOULDER, PAL_HIGH);
+
+  // info led
+  palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
+  palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
 }
 
 static void init_pwm(void)
@@ -133,4 +168,19 @@ static void init_spi(void)
 
   spiStart(&SPID1, &spi1_conf);
   spiStart(&SPID2, &spi2_conf);
+}
+
+
+static void uart_gui_init(void)
+{
+  palSetLineMode(RADIO_RX,  PAL_MODE_ALTERNATE(7));
+  palSetLineMode(RADIO_TX,  PAL_MODE_ALTERNATE(7));
+  sdStart( &SD2, &uart_radio_cnfg);
+}
+
+static void uart_serial_init(void)
+{
+  palSetLineMode(SERIAL_RX,  PAL_MODE_ALTERNATE(7));
+  palSetLineMode(SERIAL_TX,  PAL_MODE_ALTERNATE(7));
+  sdStart( &SD3, &uart_serial_cnfg);
 }

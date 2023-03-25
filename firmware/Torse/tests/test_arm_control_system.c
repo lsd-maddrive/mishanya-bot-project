@@ -53,7 +53,6 @@ void test_arm_control_system(void)
   part_arm_type_t part_arm = NONE;
   acs_test_t acs[3];
 
-  debug_stream_init();
   elbow_init();
   h_shoulder_init();
   v_shoulder_init();
@@ -78,8 +77,8 @@ void test_arm_control_system(void)
 
   while(1)
   {
-    dbgprintf(
-            "///////////////////////////////////\r\n"
+    dbgprintf(&SD3,
+              "///////////////////////////////////\r\n"
             "//        choose part arm:       //\r\n"
             "//1 - elbow                      //\r\n"
             "//2 - vertical shoulder          //\r\n"
@@ -92,30 +91,30 @@ void test_arm_control_system(void)
     rcv_data[0] = sdGet(&SD3);
     switch (rcv_data[0]) {
       case '1': {
-        dbgprintf("elbow\r\n\r\n");
+        dbgprintf(&SD3, "elbow\r\n\r\n");
         part_arm = ELBOW;
       }
         break;
       case '2': {
-        dbgprintf("vertical shoulder\r\n\r\n");
+        dbgprintf(&SD3, "vertical shoulder\r\n\r\n");
         part_arm = V_SHOULDER;
       }
         break;
       case '3': {
-        dbgprintf("horizontal shoulder\r\n\r\n");
+        dbgprintf(&SD3, "horizontal shoulder\r\n\r\n");
         part_arm = H_SHOULDER;
       }
         break;
       default: {
-        dbgprintf("wrong\r\n\r\n");
+        dbgprintf(&SD3, "wrong\r\n\r\n");
         part_arm = NONE;
       }
         break;
     }
 
     while (part_arm != NONE) {
-      dbgprintf(
-              "///////////////////////////////////\r\n"
+      dbgprintf(&SD3,
+                "///////////////////////////////////\r\n"
               "//        choose side:           //\r\n"
               "//1 - left                       //\r\n"
               "//2 - right                      //\r\n"
@@ -127,17 +126,17 @@ void test_arm_control_system(void)
       rcv_data[0] = sdGet(&SD3);
       switch (rcv_data[0]) {
         case '1': {
-          dbgprintf("left side\r\n");
+          dbgprintf(&SD3, "left side\r\n");
           side = LEFT;
         }
           break;
         case '2': {
-          dbgprintf("right side\r\n");
+          dbgprintf(&SD3, "right side\r\n");
           side = RIGHT;
         }
           break;
         default: {
-          dbgprintf("back to choose part arm\r\n\r\n");
+          dbgprintf(&SD3, "back to choose part arm\r\n\r\n");
           part_arm = NONE;
           side = NONE_SIDE;
         }
@@ -145,10 +144,10 @@ void test_arm_control_system(void)
       }
       if(side != NONE_SIDE)
       {
-        dbgprintf("set angle(00-40):\r\n");
+        dbgprintf(&SD3, "set angle(00-40):\r\n");
         sdRead(&SD3, (uint8_t*)rcv_data, 2);
         angle = (uint8_t)atoi(rcv_data);
-        dbgprintf("goal angle = %d\r\n\r\n", angle);
+        dbgprintf(&SD3, "goal angle = %d\r\n\r\n", angle);
         acs[part_arm].set_angle((float)angle, side);
       }
     }

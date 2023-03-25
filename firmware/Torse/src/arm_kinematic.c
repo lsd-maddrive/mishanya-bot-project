@@ -50,9 +50,9 @@ uint8_t angle_calculation(arm_kinematic_t* arm, angles_t* angles, coord_t* coord
 
 uint8_t check_solution(angles_t* angles, arm_angle_limits_t* angles_limits)
 {
-  return CHECK_IN_RANGE(angles->th1, angles_limits->th1.theta_min, angles_limits->th1.theta_max) &
-         CHECK_IN_RANGE(angles->th2, angles_limits->th2.theta_min, angles_limits->th2.theta_max) &
-         CHECK_IN_RANGE(angles->th3, angles_limits->th3.theta_min, angles_limits->th3.theta_max);
+  return CHECK_IN_RANGE(angles->th1, angles_limits->th1->min_angle, angles_limits->th1->max_angle) &
+         CHECK_IN_RANGE(angles->th2, angles_limits->th2->min_angle, angles_limits->th2->max_angle) &
+         CHECK_IN_RANGE(angles->th3, angles_limits->th3->min_angle, angles_limits->th3->max_angle);
 }
 
 kinematic_error_t arm_direct_kinematic(arm_kinematic_t* arm, angles_t* angles, coord_t* coord_position, arm_side_t side)
@@ -149,8 +149,6 @@ kinematic_error_t arm_inverse_kinematic(arm_kinematic_t* arm, coord_t* coord, an
       {
         return ERROR_NONE;
       }
-
-
 
       return ERROR_FALSE_LENGTH;
 

@@ -10,6 +10,8 @@
 #include "PID.h"
 #include "joint.h"
 #include "arm_control_system.h"
+#include "string.h"
+#include "arm_calibration.h"
 
 
 void h_shoulder_init(void);
@@ -20,6 +22,7 @@ void h_shoulder_set_angle(float target_angle, arm_side_t side);
 void h_shoulder_update_angle(float dt);
 float h_shoulder_read_angle(arm_side_t side);
 bool h_shoulder_get_status(arm_side_t side);
+angle_lim_t* h_shoulder_get_global_angle_lim(void);
 
 
 #endif //HORIZONTAL_SHOULDER_DRIVER_H

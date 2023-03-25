@@ -34,8 +34,7 @@ void test_arm_high_function(void)
   high_func[H_SHOULDER].up = h_shoulder_up;
   high_func[H_SHOULDER].off = h_shoulder_off;
 
-	debug_stream_init();
-	elbow_init();
+    elbow_init();
   h_shoulder_init();
   v_shoulder_init();
 
@@ -46,8 +45,8 @@ void test_arm_high_function(void)
   }
 
 	while (1) {
-    dbgprintf(
-            "///////////////////////////////////\r\n"
+    dbgprintf(&SD3,
+              "///////////////////////////////////\r\n"
             "//        choose part arm:       //\r\n"
             "//1 - elbow                      //\r\n"
             "//2 - vertical shoulder          //\r\n"
@@ -60,30 +59,30 @@ void test_arm_high_function(void)
     rcv_data = sdGet(&SD3);
     switch (rcv_data) {
       case '1': {
-        dbgprintf("elbow\r\n\r\n");
+        dbgprintf(&SD3, "elbow\r\n\r\n");
         part_arm = ELBOW;
       }
         break;
       case '2': {
-        dbgprintf("vertical shoulder\r\n\r\n");
+        dbgprintf(&SD3, "vertical shoulder\r\n\r\n");
         part_arm = V_SHOULDER;
       }
         break;
       case '3': {
-        dbgprintf("horizontal shoulder\r\n\r\n");
+        dbgprintf(&SD3, "horizontal shoulder\r\n\r\n");
         part_arm = H_SHOULDER;
       }
         break;
       default: {
-        dbgprintf("wrong\r\n\r\n");
+        dbgprintf(&SD3, "wrong\r\n\r\n");
         part_arm = NONE;
       }
         break;
     }
 
     while (part_arm != NONE) {
-      dbgprintf(
-              "///////////////////////////////////\r\n"
+      dbgprintf(&SD3,
+                "///////////////////////////////////\r\n"
               "//        choose side:           //\r\n"
               "//1 - left                       //\r\n"
               "//2 - right                      //\r\n"
@@ -95,17 +94,17 @@ void test_arm_high_function(void)
       rcv_data = sdGet(&SD3);
       switch (rcv_data) {
         case '1': {
-          dbgprintf("left side\r\n");
+          dbgprintf(&SD3, "left side\r\n");
           side = LEFT;
         }
           break;
         case '2': {
-          dbgprintf("right side\r\n");
+          dbgprintf(&SD3, "right side\r\n");
           side = RIGHT;
         }
           break;
         default: {
-          dbgprintf("back to choose part arm\r\n\r\n");
+          dbgprintf(&SD3, "back to choose part arm\r\n\r\n");
           part_arm = NONE;
           side = NONE_SIDE;
         }
@@ -120,10 +119,11 @@ void test_arm_high_function(void)
           high_func[part_arm].off(side);
         }
 
-        dbgprintf("\r\n\r\n........................\r\n");
-        dbgprintf("PWM period=%d\r\n", period);
-        dbgprintf("........................\r\n");
-        dbgprintf("///////////////////////////////////\r\n"
+        dbgprintf(&SD3, "\r\n\r\n........................\r\n");
+        dbgprintf(&SD3, "PWM period=%d\r\n", period);
+        dbgprintf(&SD3, "........................\r\n");
+        dbgprintf(&SD3,
+                  "///////////////////////////////////\r\n"
                   "//            control:           //\r\n"
                   "//1 - pwm period +500            //\r\n"
                   "//2 - pwm period -500            //\r\n"
@@ -150,7 +150,7 @@ void test_arm_high_function(void)
           default: {
             high_func[part_arm].off(side);
             side = NONE_SIDE;
-            dbgprintf("back to choose side\r\n\r\n");
+            dbgprintf(&SD3, "back to choose side\r\n\r\n");
           }
             break;
         }

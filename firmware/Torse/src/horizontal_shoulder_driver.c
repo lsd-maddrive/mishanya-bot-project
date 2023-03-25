@@ -1,7 +1,11 @@
 #include "horizontal_shoulder_driver.h"
 
 #define DRIVER RED
-#define ENCODER_DEADZONE 1
+#define ENCODER_DEADZONE 1U
+
+// horizontal shoulder
+#define GLOBAL_MIN_ANGLE -5
+#define GLOBAL_MAX_ANGLE 47
 
 #define PID_P 6000U
 #define PID_I 500U
@@ -14,22 +18,6 @@ static SPIDriver *LEFT_SPI = &SPID1;
 static SPIDriver *RIGHT_SPI = &SPID2;
 
 
-// ***************************angle lim************************* //
-
-// todo necessary that the angles are recorded in flash memory during calibration
-
-const angle_lim_t right_angle_lim_h_shoulder = {
-        .max_angle = 291.0058f,
-        .min_angle = 240.2050f
-};
-
-const angle_lim_t left_angle_lim_h_shoulder = {
-        .max_angle = 25.5761f,
-        .min_angle = 325.8105f
-};
-
-// ***************************angle lim************************** //
-
 joint_t h_shoulder_driver;
 /**
  * @details initialize arm driver
@@ -39,14 +27,49 @@ void h_shoulder_init(void)
   static bool is_init   = false;
 
   if (is_init)
+  {
     return;
+  }
 
-  PID_set_coef(&h_shoulder_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
-  h_shoulder_driver.arm[LEFT].arm_angle.angle_lim = left_angle_lim_h_shoulder;
+  PID_set_coef(&h_shoulder_driver.arm[LEFT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
+  memcpy(&h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle,
+         (uint32_t *)LEFT_DOWN_H_SHOULDER_ADDRESS, sizeof(float));
+  memcpy(&h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle,
+         (uint32_t *)LEFT_UP_H_SHOULDER_ADDRESS, sizeof(float));
+
+
+//    if(h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle
+//       < h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle)
+//    {
+//        h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle -= 0.5f;
+//        h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle += 0.5f;
+//    }
+//    else
+//    {
+//        h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle += 0.5f;
+//        h_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle -= 0.5f;
+//    }
+
   h_shoulder_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
-  PID_set_coef(&h_shoulder_driver.arm[RIGHT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
-  h_shoulder_driver.arm[RIGHT].arm_angle.angle_lim = right_angle_lim_h_shoulder;
+  PID_set_coef(&h_shoulder_driver.arm[RIGHT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
+  memcpy(&h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle,
+         (uint32_t *)RIGHT_DOWN_H_SHOULDER_ADDRESS, sizeof(float));
+  memcpy(&h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle,
+         (uint32_t *)RIGHT_UP_H_SHOULDER_ADDRESS, sizeof(float));
+
+//    if(h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle
+//            < h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle)
+//    {
+//        h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle -= 0.5f;
+//        h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle += 0.5f;
+//    }
+//    else
+//    {
+//        h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle += 0.5f;
+//        h_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle -= 0.5f;
+//    }
+
   h_shoulder_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   lld_red_init_driver(&h_shoulder_driver.arm[LEFT].traking_cs.control,
@@ -71,6 +94,9 @@ void h_shoulder_init(void)
   h_shoulder_driver.down = &h_shoulder_down;
   h_shoulder_driver.up = &h_shoulder_up;
   h_shoulder_driver.off = &h_shoulder_off;
+  h_shoulder_driver.global_angle_lim.min_angle = GLOBAL_MIN_ANGLE;
+  h_shoulder_driver.global_angle_lim.max_angle = GLOBAL_MAX_ANGLE;
+  h_shoulder_driver.working_interval = GLOBAL_MAX_ANGLE - GLOBAL_MIN_ANGLE;
 
   acs_init(&h_shoulder_driver);
 
@@ -114,7 +140,7 @@ void h_shoulder_off(arm_side_t side)
  */
 void h_shoulder_set_angle(float target_angle, arm_side_t side)
 {
-  acs_set_angle(target_angle, side, h_shoulder_driver.arm);
+  acs_set_angle(target_angle, side, h_shoulder_driver.arm, &h_shoulder_driver.global_angle_lim, h_shoulder_driver.working_interval);
 }
 
 /**
@@ -140,4 +166,9 @@ void h_shoulder_update_angle(float dt)
 bool h_shoulder_get_status(arm_side_t side)
 {
   return h_shoulder_driver.arm[side].arm_angle.target_angle.reach_target_angle;
+}
+
+angle_lim_t* h_shoulder_get_global_angle_lim(void)
+{
+  return &h_shoulder_driver.global_angle_lim;
 }

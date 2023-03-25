@@ -1,7 +1,11 @@
 #include "elbow_driver.h"
 
 #define DRIVER RED
-#define ENCODER_DEADZONE 1
+#define ENCODER_DEADZONE 1U
+
+// elbow
+#define GLOBAL_MIN_ANGLE 46
+#define GLOBAL_MAX_ANGLE 86
 
 #define PID_P 6000U
 #define PID_I 500U
@@ -13,22 +17,6 @@ static PWMDriver *RIGHT_ELBOW_PWM_PTR = &PWMD8;
 static SPIDriver *LEFT_SPI = &SPID1;
 static SPIDriver *RIGHT_SPI = &SPID2;
 
-// ***************************angle lim************************* //
-
-// todo necessary that the angles are recorded in flash memory during calibration
-
-const angle_lim_t right_angle_lim_elbow= {
-  .max_angle = 63.0175f,
-  .min_angle = 22.8515f
-};
-
-const angle_lim_t left_angle_lim_elbow = {
-  .max_angle = 18.2812f,
-  .min_angle = 334.9511f
-};
-
-// ***************************angle lim************************** //
-
 joint_t elbow_driver;
 /**
  * @details initialize arm driver
@@ -37,15 +25,50 @@ void elbow_init(void)
 {
 	static bool is_init   = false;
 
-	if (is_init)
-		return;
+	if(is_init)
+  {
+    return;
+  }
 
-  PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
-  elbow_driver.arm[LEFT].arm_angle.angle_lim = left_angle_lim_elbow;
+
+  PID_set_coef(&elbow_driver.arm[LEFT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
+  memcpy(&elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle,
+         (uint32_t *)LEFT_DOWN_ELBOW_ADDRESS, sizeof(float));
+  memcpy(&elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle,
+         (uint32_t *)LEFT_UP_ELBOW_ADDRESS, sizeof(float));
+
+//  if(elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle < elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle)
+//  {
+//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle -= 0.5f;
+//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle += 0.5f;
+//  }
+//  else
+//  {
+//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle += 0.5f;
+//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle -= 0.5f;
+//  }
+
+
+
   elbow_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
-  PID_set_coef(&elbow_driver.arm[RIGHT].traking_cs.arm_PID, PID_P, PID_D, PID_I);
-  elbow_driver.arm[RIGHT].arm_angle.angle_lim = right_angle_lim_elbow;
+  PID_set_coef(&elbow_driver.arm[RIGHT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
+  memcpy(&elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle,
+         (uint32_t *)RIGHT_DOWN_ELBOW_ADDRESS, sizeof(float));
+  memcpy(&elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle,
+         (uint32_t *)RIGHT_UP_ELBOW_ADDRESS, sizeof(float));
+
+//    if(elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle < elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle)
+//    {
+//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle -= 0.5f;
+//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle += 0.5f;
+//    }
+//    else
+//    {
+//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle += 0.5f;
+//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle -= 0.5f;
+//    }
+
   elbow_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   lld_red_init_driver(&elbow_driver.arm[LEFT].traking_cs.control,
@@ -70,6 +93,9 @@ void elbow_init(void)
   elbow_driver.down = &elbow_down;
   elbow_driver.up = &elbow_up;
   elbow_driver.off = &elbow_off;
+  elbow_driver.global_angle_lim.min_angle = GLOBAL_MIN_ANGLE;
+  elbow_driver.global_angle_lim.max_angle = GLOBAL_MAX_ANGLE;
+  elbow_driver.working_interval = GLOBAL_MAX_ANGLE - GLOBAL_MIN_ANGLE;
 
 	acs_init(&elbow_driver);
 
@@ -122,7 +148,7 @@ float elbow_read_angle(arm_side_t side)
  */
 void elbow_set_angle(float target_angle, arm_side_t side)
 {
-  acs_set_angle(target_angle, side, elbow_driver.arm);
+  acs_set_angle(target_angle, side, elbow_driver.arm, &elbow_driver.global_angle_lim, elbow_driver.working_interval);
 }
 
 /**
@@ -138,4 +164,9 @@ void elbow_update_angle(float dt)
 bool elbow_get_status(arm_side_t side)
 {
   return elbow_driver.arm[side].arm_angle.target_angle.reach_target_angle;
+}
+
+angle_lim_t* elbow_get_global_angle_lim(void)
+{
+  return &elbow_driver.global_angle_lim;
 }

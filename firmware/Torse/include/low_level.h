@@ -55,19 +55,29 @@
 
 // *******************encoder pin config******************* //
 
-#define MISO_ENCODER_LEFT               PAL_LINE(GPIOA, 6)//SPI1
-#define CLK_ENCODER_LEFT                PAL_LINE(GPIOB, 3)//SPI1
-#define MISO_ENCODER_RIGHT			        PAL_LINE(GPIOC, 2)//SPI2
-#define CLK_ENCODER_RIGHT 			        PAL_LINE(GPIOD, 3)//SPI2
+#define MISO_ENCODER_LEFT          PAL_LINE(GPIOA, 6)//SPI1
+#define CLK_ENCODER_LEFT           PAL_LINE(GPIOB, 3)//SPI1
+#define MISO_ENCODER_RIGHT		     PAL_LINE(GPIOC, 2)//SPI2
+#define CLK_ENCODER_RIGHT 		     PAL_LINE(GPIOD, 3)//SPI2
 
-#define CS_LEFT_ENCODER_ELBOW 			    PAL_LINE(GPIOA, 3)
-#define CS_RIGHT_ENCODER_ELBOW 			    PAL_LINE(GPIOA, 4)
-#define CS_LEFT_ENCODER_V_SHOULDER 	    PAL_LINE(GPIOC, 0)
-#define CS_RIGHT_ENCODER_V_SHOULDER 	  PAL_LINE(GPIOG, 0)
-#define CS_LEFT_ENCODER_H_SHOULDER 	    PAL_LINE(GPIOG, 2)
-#define CS_RIGHT_ENCODER_H_SHOULDER 	  PAL_LINE(GPIOG, 3)
+#define CS_LEFT_ENCODER_ELBOW 	    PAL_LINE(GPIOA, 3)
+#define CS_RIGHT_ENCODER_ELBOW 	    PAL_LINE(GPIOA, 4)
+#define CS_LEFT_ENCODER_V_SHOULDER 	PAL_LINE(GPIOC, 0)
+#define CS_RIGHT_ENCODER_V_SHOULDER PAL_LINE(GPIOG, 0)
+#define CS_LEFT_ENCODER_H_SHOULDER 	PAL_LINE(GPIOG, 2)
+#define CS_RIGHT_ENCODER_H_SHOULDER PAL_LINE(GPIOG, 3)
 
 // *******************encoder pin config******************* //
+
+// *******************uart config******************* //
+#define SERIAL_TX                    PAL_LINE(GPIOD, 8)
+#define SERIAL_RX                    PAL_LINE(GPIOD, 9)
+
+#define RADIO_TX                     PAL_LINE(GPIOD, 5)
+#define RADIO_RX                     PAL_LINE(GPIOD, 6)
+// *******************uart config******************* //
+
+
 
 
 void init_low_level(void);

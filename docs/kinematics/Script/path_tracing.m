@@ -35,6 +35,7 @@ addBody(robot, body, 'forearm');
 
 showdetails(robot)
 
+
 ik = inverseKinematics('RigidBodyTree', robot);
 weights = [0, 0, 0, 1, 1, 1];
 endEffector = 'brush';
@@ -42,10 +43,12 @@ endEffector = 'brush';
 q0 = homeConfiguration(robot);
 qInitial = q0; % Use home configuration as the initial guess
 
-point = [0.3 0.2 0.1];
+point = [0.25 0.35 0.05];
 qSol = ik(endEffector,trvec2tform(point),weights,qInitial);
 
 
-show(robot,qSol,'PreservePlot',false);
+% show(robot,qSol,'PreservePlot',false);
+
+qSol = (180/pi)*qSol
 
 drawnow

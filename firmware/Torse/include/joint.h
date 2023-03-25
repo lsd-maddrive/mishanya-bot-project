@@ -42,10 +42,9 @@ typedef struct {
     volatile float target_angle;                 // value of target angle
 }target_angle_t;
 
+
 typedef struct {
-    angle_lim_t angle_lim;
-    angle_normalize_lim_t angle_norm_lim;
-    normalize_info_t angle_norm_info;
+    angle_lim_t local_angle_lim;
     target_angle_t target_angle;
     uint8_t angle_dead_zone;              // deadzone of encoder
 }arm_angle_t;
@@ -67,6 +66,8 @@ typedef struct {
   void (* down) (arm_side_t, uint16_t);           // ptr function down
   void (* off) (arm_side_t);                      // ptr function off arm
   arm_info_t arm[2];                              // two arms
+  angle_lim_t global_angle_lim;
+  float working_interval;
 } joint_t;
 
 

@@ -34,13 +34,12 @@ coord_t target_coordinates[5] = {
 
 void test_arm_kinematic(void)
 {
-  debug_stream_init();
   arms_init();
   size_t i = 0;
   char rcv_data;
   while (1) {
-    dbgprintf(
-            "///////////////////////////////////\r\n"
+    dbgprintf(&SD3,
+              "///////////////////////////////////\r\n"
             "//        choose:                //\r\n"
             "//1 - next point                 //\r\n"
             "//2 - stop                       //\r\n"
@@ -53,11 +52,11 @@ void test_arm_kinematic(void)
 
     switch (rcv_data) {
       case '1': {
-        dbgprintf("next point\r\n\r\n");
+        dbgprintf(&SD3, "next point\r\n\r\n");
       }
         break;
       case '2': {
-        dbgprintf("stop\r\n\r\n");
+        dbgprintf(&SD3, "stop\r\n\r\n");
         return;
       }
       default:
