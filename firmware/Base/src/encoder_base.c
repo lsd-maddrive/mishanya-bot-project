@@ -1,33 +1,34 @@
 #include <encoder_base.h>
 
-#define MAX_TIC 360
-int8_t status_phase_B = 0;
+#define MAX_TIC MAX_TICK_ENCODER
+
+int8_t  status_phase_B = 0;
 
 encoder_t encoder_1 =
 {
-     .line_phase_A = PAL_LINE(GPIOA,4), //GREEN
-     .line_phase_B = PAL_LINE(GPIOA,3), // WHITE
+     .line_phase_A       = ENCODER1_PHASE_A,
+     .line_phase_B       = ENCODER1_PHASE_B,
      .direction_rotation = 0,
-     .tic_count = 0,
-     .rev_count = 0
+     .tic_count          = 0,
+     .rev_count          = 0
 };
 
 encoder_t encoder_2 =
 {
-     .line_phase_A = PAL_LINE(GPIOF,3),
-     .line_phase_B = PAL_LINE(GPIOF,5),
+     .line_phase_A       = ENCODER2_PHASE_A,
+     .line_phase_B       = ENCODER2_PHASE_B,
      .direction_rotation = 0,
-     .tic_count = 0,
-     .rev_count = 0
+     .tic_count          = 0,
+     .rev_count          = 0
 };
 
 encoder_t encoder_3 =
 {
-     .line_phase_A = PAL_LINE(GPIOF,1),
-     .line_phase_B = PAL_LINE(GPIOF,2),
+     .line_phase_A       = ENCODER3_PHASE_A,
+     .line_phase_B       = ENCODER3_PHASE_B,
      .direction_rotation = 0,
-     .tic_count = 0,
-     .rev_count = 0
+     .tic_count          = 0,
+     .rev_count          = 0
 };
 
 /**
@@ -54,27 +55,29 @@ static void ExtEnc3(void* args)
 
 void ProcessEncoderData(encoder_t* enc_t)
 {
-    status_phase_B = palReadLine(enc_t->line_phase_B);
+    uint16_t prev_tick = 0;
+    status_phase_B     = palReadLine(enc_t->line_phase_B);
     if(status_phase_B == 0)
     {
         enc_t->direction_rotation = 1;
-        enc_t->tic_count+=1;
+        enc_t->tic_count += 1;
     }
     else if(status_phase_B == 1)
     {
         enc_t->direction_rotation = 0;
-        enc_t->tic_count-=1;
+        enc_t->tic_count -= 1;
     }
     if(abs(enc_t->tic_count) >= MAX_TIC)
     {
-        enc_t->tic_count=0;
+        prev_tick = abs(enc_t->tic_count) - MAX_TIC;
+        enc_t->tic_count = prev_tick;
         if(enc_t->direction_rotation == 1)
         {
-            enc_t->rev_count+=1;
+            enc_t->rev_count += 1;
         }
         else if(enc_t->direction_rotation == 0)
         {
-            enc_t->rev_count-=1;
+            enc_t->rev_count -= 1;
         }
     }
 }
@@ -114,7 +117,7 @@ int16_t GetEncoderRawTicks(type_encoder encoder_n)
     }
     else if(encoder_n == ENCODER_3)
     {
-         tc = encoder_3.tic_count;
+        tc = encoder_3.tic_count;
     }
     return tc;
 }
@@ -160,7 +163,7 @@ float GetEncoderRawRevs(type_encoder encoder_n)
 float getRevs(encoder_t* cur_encoder)
 {
     float revs = 0;
-    revs = cur_encoder->rev_count +(float)cur_encoder->tic_count/(float)MAX_TIC;
+    revs       = cur_encoder->rev_count +(float)cur_encoder->tic_count/(float)MAX_TIC;
     return revs;
 }
 

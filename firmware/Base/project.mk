@@ -3,6 +3,7 @@ PROJECT_MODULES = src/serial.c \
 		  src/odometry_base.c \
 		  src/cnfg_peripherals.c \
 		  src/motor.c \
+		  src/closed_system_drive.c \
 		  ../robo_lib/lld_red_driver.c \
 		  ../robo_lib/lld_bb_driver.c \
 
@@ -10,6 +11,7 @@ PROJECT_TESTS   = tests/test_encoder_base.c \
 				  tests/test_odometry_base.c \
 				  tests/test_lld_motor.c \
 				  tests/test_speed_filter_graphs.c \
+				  tests/test_closed_system_drive.c \
                   
 # C source files
 PROJECT_CSRC 	=  src/main.c \

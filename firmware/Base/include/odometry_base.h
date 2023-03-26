@@ -2,6 +2,7 @@
 #define INCLUDE_ODOMETRY_BASE_H_
 
 #include <common.h>
+#include "encoder_base.h"
 
 #define Wheel_Radius 0.065
 #define k 1
@@ -27,7 +28,7 @@ typedef struct
     float speed;
     float filtered_speed;
     float prev_filtered_speed;
-}odometry_var;
+} odometry_var;
 /**
  * @brief Initialization virtual timer
  * @note period 10ms
