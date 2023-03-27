@@ -4,8 +4,9 @@
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
-#include "stdint.h"
-#include "math.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
 
 #define PROGRAM_MASTER 0
 
@@ -25,9 +26,10 @@
 #define PROGRAM_TEST_MOTOR_PER_2 14
 #define PROGRAM_TEST_MOTOR_PER_3 15
 #define PROGRAM_TEST_MOTOR_PER_ALL 16
-#define PROGRAMM_TEST_SPEED_FILTER_GRAPHS 17
+#define PROGRAM_TEST_SPEED_FILTER_GRAPHS 17
+#define PROGRAM_TEST_CLOSED_SYSTEM_DRIVE 18
 
-#define MAIN_PROGRAM PROGRAMM_TEST_SPEED_FILTER_GRAPHS
+#define MAIN_PROGRAM PROGRAM_TEST_CLOSED_SYSTEM_DRIVE
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

@@ -1,8 +1,8 @@
 #include <encoder_base.h>
 #include <odometry_base.h>
 
-#define VTIME_PERIOD_MS 1
-#define MS_TO_SEC 1000
+#define VTIME_PERIOD_MS 10
+#define MS_TO_SEC 100
 #define FILTER TRUE
 #define Kf 0.9
 

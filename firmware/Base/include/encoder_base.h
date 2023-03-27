@@ -2,6 +2,7 @@
 #define INCLUDE_ENCODER_BASE
 
 #include <common.h>
+#include "cnfg_peripherals.h"
 
 typedef enum {ENCODER_1, ENCODER_2, ENCODER_3}type_encoder;
 
@@ -17,9 +18,9 @@ typedef struct
 {
     ioline_t line_phase_A;
     ioline_t line_phase_B;
-    int16_t tic_count;
-    float rev_count;
-    bool direction_rotation;
+    int16_t  tic_count;
+    float    rev_count;
+    bool     direction_rotation;
 }encoder_t;
 
 /**

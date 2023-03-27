@@ -21,10 +21,10 @@ void lldMotorInit(type_motor motor_n)
         }
         if (motor_n == MOTOR_2) {
 
-            lld_bb_init_driver(&motor_2, &PWMD8, M1_CH_H1L1, &PWMD8, M1_CH_H2L2);
+            lld_bb_init_driver(&motor_2, &PWMD8, M2_CH_H1L1, &PWMD8, M2_CH_H2L2);
         }
         if (motor_n == MOTOR_3) {
-            lld_bb_init_driver(&motor_3, &PWMD8, M1_CH_H1L1, &PWMD1, M1_CH_H2L2);
+            lld_bb_init_driver(&motor_3, &PWMD8, M3_CH_H1L1, &PWMD1, M3_CH_H2L2);
         }
 }
 void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent)

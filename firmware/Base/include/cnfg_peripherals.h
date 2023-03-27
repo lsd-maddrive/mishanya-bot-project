@@ -5,10 +5,11 @@
 
 // *******************pwm config******************* //
 #define PWM_FREQUENCY 8000000
-#define PWM_PERIOD 1000
+#define PWM_PERIOD    1000
 
 
 // *******************BB driver******************* //
+
 // *******************Motor1******************* //
 
 //pins
@@ -56,6 +57,24 @@
 //alternating functions
 #define M3_AF_H1L1 PAL_MODE_ALTERNATE(3)
 #define M3_AF_H2L2 PAL_MODE_ALTERNATE(1)
+
+// *******************Encoders******************* //
+#define MAX_TICK_ENCODER 360
+
+// *******************Encoder 1******************//
+
+#define ENCODER1_PHASE_A PAL_LINE(GPIOA, 4) //GREEN
+#define ENCODER1_PHASE_B PAL_LINE(GPIOA, 3) // WHITE
+
+// *******************Encoder 2******************//
+
+#define ENCODER2_PHASE_A PAL_LINE(GPIOF, 3) //GREEN
+#define ENCODER2_PHASE_B PAL_LINE(GPIOF, 5) // WHITE
+
+// *******************Encoder 3******************//
+
+#define ENCODER3_PHASE_A PAL_LINE(GPIOF, 1) //GREEN
+#define ENCODER3_PHASE_B PAL_LINE(GPIOF, 2) // WHITE
 
 /**
  * @brief Init peripherals
