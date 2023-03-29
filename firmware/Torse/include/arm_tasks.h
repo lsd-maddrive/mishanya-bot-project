@@ -9,7 +9,7 @@
 #include "elbow_driver.h"
 #include "horizontal_shoulder_driver.h"
 #include "vertical_shoulder_driver.h"
-#include "arm_proto_gui.h"
+#include "torse_proto.h"
 
 void arm_tasks_init(SerialDriver* serial_port);
 

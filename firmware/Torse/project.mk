@@ -10,7 +10,7 @@ PROJECT_MODULES = src/serial.c \
 	      src/arm_kinematic.c \
 	      src/arms.c \
 	      src/arm_calibration.c \
-	      src/arm_proto_gui.c \
+	      src/torse_proto.c \
 	      src/arm_tasks.c \
 	      ../robo_lib/PID.c \
 		  ../robo_lib/lld_bb_driver.c \

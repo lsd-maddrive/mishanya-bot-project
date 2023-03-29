@@ -2,9 +2,9 @@
 #include "arms.h"
 #include "crc32.h"
 #include "arm_calibration.h"
-#include "arm_proto_gui.h"
+#include "torse_proto.h"
 #include "arm_tasks.h"
-// Это связка lwip с chibios
+
 #include <lwipthread.h>
 
 // А это уже сам lwip. Там много всего есть, но я мало что понимаю
@@ -98,7 +98,7 @@ void init_low_level(void)
     tcp_init();
 
     calibration_init();
-    arm_proto_gui_init(&SD3);
+    torse_proto_init(&SD3);
     arm_tasks_init(&SD3);
 
 }
@@ -148,6 +148,8 @@ static void init_gpio(void)
   palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
+
+
 }
 
 static void init_pwm(void)
@@ -199,8 +201,8 @@ static void uart_serial_init(void)
 static void tcp_init(void)
 {
     struct ip4_addr ip, gateway, netmask;
-    IP4_ADDR(&ip, 172, 18, 193, 90);
-    IP4_ADDR(&gateway, 172, 18, 193, 1);
+    IP4_ADDR(&ip, 172, 18, 193, 10);
+    IP4_ADDR(&gateway, 172, 18, 193, 200);
     IP4_ADDR(&netmask, 255, 255, 255, 0);
 
     uint8_t macaddr[6] = {0xC2, 0xAF, 0x51, 0x03, 0xCF, 0x46};

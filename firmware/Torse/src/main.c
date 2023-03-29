@@ -32,9 +32,14 @@ int main(void)
 {
   halInit();
   chSysInit();
+
   init_low_level();
 
   #if(MAIN_PROGRAM != PROGRAM_MASTER)
     testsRoutines();
   #endif
+    while (true) {
+        chThdSleepMilliseconds(1000);
+        palToggleLine(LINE_LED3);
+    }
 }
