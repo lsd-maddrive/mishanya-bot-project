@@ -21,10 +21,10 @@ void test_encoder_base_all(void)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        if(sym == ' ')
+        if (sym == ' ')
         {
             ResetEncoder(ENCODER_1);
             ResetEncoder(ENCODER_2);
@@ -62,10 +62,10 @@ void test_encoder_base(type_encoder encoder)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        if(sym == ' ')
+        if (sym == ' ')
         {
             ResetEncoder(encoder);
         }
@@ -81,6 +81,3 @@ void test_encoder_base(type_encoder encoder)
         time = chThdSleepUntilWindowed(time, TIME_MS2I(300)+time);
     }
 }
-
-
-
