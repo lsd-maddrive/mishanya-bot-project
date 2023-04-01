@@ -4,7 +4,7 @@
 #include <common.h>
 #include "cnfg_peripherals.h"
 
-typedef enum {ENCODER_1, ENCODER_2, ENCODER_3}type_encoder;
+typedef enum {ENCODER_1, ENCODER_2, ENCODER_3} type_encoder;
 
 /**
  * @brief structure for encoder in base
