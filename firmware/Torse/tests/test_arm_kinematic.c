@@ -1,6 +1,6 @@
 #include "test.h"
 #include "serial.h"
-#include "arms.h"
+#include "control_system_handler.h"
 #include "stdbool.h"
 
 coord_t target_coordinates[5] = {
@@ -34,7 +34,6 @@ coord_t target_coordinates[5] = {
 
 void test_arm_kinematic(void)
 {
-  arms_init();
   size_t i = 0;
   char rcv_data;
   while (1) {
@@ -65,7 +64,7 @@ void test_arm_kinematic(void)
 
     if(elbow_get_status(RIGHT) && h_shoulder_get_status(RIGHT) && v_shoulder_get_status(RIGHT))
     {
-      arm_set_coordinates(RIGHT, &target_coordinates[i]);
+        control_system_handler_set_coordinates(RIGHT, &target_coordinates[i]);
       i++;
       if(i>4)
         i = 0;

@@ -1,6 +1,5 @@
 #include <common.h>
 #include <test.h>
-#include "arm_tasks.h"
 #include "serial.h"
 
 static void testsRoutines(void)

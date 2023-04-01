@@ -3,7 +3,8 @@
 #include "crc32.h"
 #include "arm_calibration.h"
 #include "torse_proto.h"
-#include "arm_tasks.h"
+#include "message_handler.h"
+#include "control_system_handler.h"
 
 #include <lwipthread.h>
 
@@ -91,15 +92,15 @@ void init_low_level(void)
     init_gpio();
     init_pwm();
     init_spi();
-    arms_init();
     crc32_init();
     uart_gui_init();
     uart_serial_init();
     tcp_init();
 
+    control_system_handler_init();
+    message_handler_init(&SD2, &SD3);
     calibration_init();
-    torse_proto_init(&SD3);
-    arm_tasks_init(&SD3);
+    torse_proto_init();
 
 }
 
