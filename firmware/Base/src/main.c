@@ -1,6 +1,7 @@
 #include <common.h>
 #include <test.h>
 
+
 static void testsRoutines(void)
 {
     #if(MAIN_PROGRAM   == PROGRAM_TEST_ENCODER_BASE_ALL)
