@@ -1,45 +1,45 @@
 #include "cnfg_peripherals.h"
 
 static bool init_cnfg = 0;
+
 /**
  * @brief Init pins and start PWM
  */
 static void InitPwmComplementary(void);
 
 static PWMConfig pwmcfg_m13 = {
-  .frequency = PWM_FREQUENCY,
-  .period = PWM_PERIOD,
-  .callback = NULL,
-  .channels = {
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_DISABLED, NULL}
-  },
-  .cr2 = 0,
-  .bdtr = 0b11010110, //2 mcs
-  .dier = 0
+    .frequency = PWM_FREQUENCY,
+    .period = PWM_PERIOD,
+    .callback = NULL,
+    .channels = {
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_DISABLED, NULL}
+    },
+    .cr2 = 0,
+    .bdtr = 0b11010110, //2 mcs
+    .dier = 0
 };
 
 static PWMConfig pwmcfg_m23 = {
-  .frequency = PWM_FREQUENCY,
-  .period = PWM_PERIOD,
-  .callback = NULL,
-  .channels = {
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
-   {PWM_OUTPUT_DISABLED, NULL}
-  },
-  .cr2 = 0,
-  .bdtr = 0b11010110, //2 mcs
-  .dier = 0
+    .frequency = PWM_FREQUENCY,
+    .period = PWM_PERIOD,
+    .callback = NULL,
+    .channels = {
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_ACTIVE_HIGH | PWM_COMPLEMENTARY_OUTPUT_ACTIVE_HIGH, NULL},
+        {PWM_OUTPUT_DISABLED, NULL}
+    },
+    .cr2 = 0,
+    .bdtr = 0b11010110, //2 mcs
+    .dier = 0
 };
 
 void cnfgInit(void)
 {
-    if(init_cnfg)
-        return;
+    if (init_cnfg) return;
     InitPwmComplementary();
     init_cnfg = 1;
 }

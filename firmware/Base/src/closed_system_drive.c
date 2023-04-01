@@ -1,6 +1,5 @@
 #include "closed_system_drive.h"
 
-
 /* 3.92 - 100%
  * 1    - 25.51% */
 #define COEF_SPEED (float)25.51
@@ -14,24 +13,24 @@ RegulatorValueMotor regulatorMotor2;
 RegulatorValueMotor regulatorMotor3;
 
 PIregulator motorForward ={
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
 };
 
 PIregulator motorRevs = {
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
 };
 
 PIregulator motorStop = {
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
 };
 
 
