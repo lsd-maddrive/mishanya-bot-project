@@ -26,14 +26,14 @@ void lld_bb_init_driver(
  */
 void lld_bb_driver_direct(control_driver_t* driver, float period)
 {
-  line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
-  line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
+    line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+    line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-  PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
-  PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
+    PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
+    PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
 
-  pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
-  pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, 0);
+    pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
+    pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, 0);
 }
 
 /**
@@ -42,14 +42,14 @@ void lld_bb_driver_direct(control_driver_t* driver, float period)
  */
 void lld_bb_driver_reverse(control_driver_t* driver, float period)
 {
-  line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
-  line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
+    line_driver_t left_shoulder = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].control;
+    line_driver_t right_shoulder = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].control;
 
-  PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
-  PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
+    PWMDriver* left_pwm_ptr = driver->control_bb.bb_pwm_ctx[LEFT_BRIDGE_SHOULDER].driver_ptr;
+    PWMDriver* right_pwm_ptr = driver->control_bb.bb_pwm_ctx[RIGHT_BRIDGE_SHOULDER].driver_ptr;
 
-  pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, 0);
-  pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
+    pwmEnableChannel(left_pwm_ptr, left_shoulder.ch_pwm_num, 0);
+    pwmEnableChannel(right_pwm_ptr, right_shoulder.ch_pwm_num, (uint16_t)(period*POWER_SATURATION));
 }
 
 /**
