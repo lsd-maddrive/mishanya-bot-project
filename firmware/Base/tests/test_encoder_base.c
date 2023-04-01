@@ -55,9 +55,9 @@ void test_encoder_base_all(void)
 void test_encoder_base(type_encoder encoder)
 {
     int16_t tic = 0;
-    bool dr = 0;
-    float revs = 0;
-    char sym = 0;
+    bool    dr = 0;
+    float   revs = 0;
+    char    sym = 0;
     lldEncoderInit(encoder);
     debug_stream_init();
     systime_t time = chVTGetSystemTime();

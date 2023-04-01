@@ -41,6 +41,10 @@ static void testsRoutines(void)
         test_speed_filter_graphs();
     #elif(MAIN_PROGRAM == PROGRAM_TEST_CLOSED_SYSTEM_DRIVE)
         testPISpeedMotor();
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_I2C)
+        testI2C();
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_GYROSCOPE)
+        testGyroscope();
     #endif
 }
 

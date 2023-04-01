@@ -4,6 +4,8 @@ PROJECT_MODULES = src/serial.c \
 		  src/cnfg_peripherals.c \
 		  src/motor.c \
 		  src/closed_system_drive.c \
+		  src/i2c.c                 \
+		  src/lld_gyroscope.c        \
 		  ../robo_lib/lld_red_driver.c \
 		  ../robo_lib/lld_bb_driver.c \
 
@@ -12,6 +14,8 @@ PROJECT_TESTS   = tests/test_encoder_base.c \
 				  tests/test_lld_motor.c \
 				  tests/test_speed_filter_graphs.c \
 				  tests/test_closed_system_drive.c \
+				  tests/test_i2c.c \
+				  tests/test_lld_gyroscope.c \
                   
 # C source files
 PROJECT_CSRC 	=  src/main.c \

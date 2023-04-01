@@ -21,9 +21,9 @@ void testPISpeedMotor(void) {
     debug_stream_init();
     ResetSpeedRegulator();
     #ifdef MATLAB_PI_REGULATOR
-        sdStart( &SD5, &sdcfg );
-        palSetPadMode(GPIOB,8, PAL_MODE_ALTERNATE(7) );
-        palSetPadMode(GPIOB,9, PAL_MODE_ALTERNATE(7) );
+        sdStart( &SD4, &sdcfg );
+        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(7) );
+        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(7) );
     #endif
     systime_t time = chVTGetSystemTime();
     while(1){
@@ -51,7 +51,7 @@ void testPISpeedMotor(void) {
 
 #ifdef MATLAB_PI_REGULATOR
         if(StartTransfer) {
-            sdWrite(&SD5,(uint8_t*)&speedOutput, 4);
+            sdWrite(&SD4,(uint8_t*)&speedOutput, 4);
         }
         time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
 #else
