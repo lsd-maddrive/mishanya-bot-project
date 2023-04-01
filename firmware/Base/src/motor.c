@@ -15,16 +15,16 @@ void SetMotor(control_driver_t* driver, float duty_cycle);
 
 void lldMotorInit(type_motor motor_n)
 {
-        cnfgInit();
-        if (motor_n == MOTOR_1) {
-            lld_bb_init_driver(&motor_1, &PWMD1, M1_CH_H1L1, &PWMD1, M1_CH_H2L2);
-        }
-        if (motor_n == MOTOR_2) {
-            lld_bb_init_driver(&motor_2, &PWMD8, M2_CH_H1L1, &PWMD8, M2_CH_H2L2);
-        }
-        if (motor_n == MOTOR_3) {
-            lld_bb_init_driver(&motor_3, &PWMD8, M3_CH_H1L1, &PWMD1, M3_CH_H2L2);
-        }
+    cnfgInit();
+    if (motor_n == MOTOR_1) {
+        lld_bb_init_driver(&motor_1, &PWMD1, M1_CH_H1L1, &PWMD1, M1_CH_H2L2);
+    }
+    if (motor_n == MOTOR_2) {
+        lld_bb_init_driver(&motor_2, &PWMD8, M2_CH_H1L1, &PWMD8, M2_CH_H2L2);
+    }
+    if (motor_n == MOTOR_3) {
+        lld_bb_init_driver(&motor_3, &PWMD8, M3_CH_H1L1, &PWMD1, M3_CH_H2L2);
+    }
 }
 
 void lldSetMotorPower(type_motor motor_n, float duty_cycle, int8_t flag_percent)
