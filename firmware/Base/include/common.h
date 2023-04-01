@@ -1,9 +1,9 @@
 #ifndef INCLUDE_COMMON_H
 #define INCLUDE_COMMON_H
 
-#include "ch.h"
-#include "hal.h"
-#include "chprintf.h"
+#include <ch.h>
+#include <hal.h>
+#include <chprintf.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>

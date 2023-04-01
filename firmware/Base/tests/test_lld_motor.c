@@ -13,10 +13,10 @@ void testlldMotor(type_motor motor_n)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym)
+        switch (sym)
         {
             case ' ':
                 duty_cycle = 0;
@@ -27,10 +27,10 @@ void testlldMotor(type_motor motor_n)
             case 's':
                 duty_cycle -= delta;
                 break;
-            default: ;
+            default: {}
         }
-        lldSetMotorPower(motor_n, duty_cycle,flag_percent);
-        dbgprintf("Speed:%d \n\r",(int)duty_cycle);
+        lldSetMotorPower(motor_n, duty_cycle, flag_percent);
+        dbgprintf("Speed:%d \n\r", (int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
 }
@@ -47,10 +47,10 @@ void testlldMotorAll(void)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym)
+        switch (sym)
         {
             case ' ':
                 duty_cycle = 0;
@@ -61,12 +61,12 @@ void testlldMotorAll(void)
             case 's':
                 duty_cycle -= delta;
                 break;
-            default: ;
+            default: {}
         }
-        lldSetMotorPower(MOTOR_1, duty_cycle,flag_percent);
-        lldSetMotorPower(MOTOR_2, duty_cycle,flag_percent);
-        lldSetMotorPower(MOTOR_3, duty_cycle,flag_percent);
-        dbgprintf("Speed:%d \n\r",(int)duty_cycle);
+        lldSetMotorPower(MOTOR_1, duty_cycle, flag_percent);
+        lldSetMotorPower(MOTOR_2, duty_cycle, flag_percent);
+        lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
+        dbgprintf("Speed:%d \n\r", (int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
 }
@@ -81,10 +81,10 @@ void testlldMotorPer(type_motor motor_n)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym)
+        switch (sym)
         {
             case ' ':
                 duty_cycle = 0;
@@ -95,14 +95,15 @@ void testlldMotorPer(type_motor motor_n)
             case 's':
                 duty_cycle -= delta_per;
                 break;
-            default: ;
+            default: {}
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
-        lldSetMotorPower(motor_n, duty_cycle,flag_percent);
-        dbgprintf("Speed:%d \n\r",(int)duty_cycle);
+        lldSetMotorPower(motor_n, duty_cycle, flag_percent);
+        dbgprintf("Speed:%d \n\r", (int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
 }
+
 void testlldMotorPerAll(void)
 {
     int8_t flag_percent = 1;
@@ -115,10 +116,10 @@ void testlldMotorPerAll(void)
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
 
-    while(1)
+    while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym)
+        switch (sym)
         {
             case ' ':
                 duty_cycle = 0;
@@ -129,13 +130,13 @@ void testlldMotorPerAll(void)
             case 's':
                 duty_cycle -= delta_per;
                 break;
-            default: ;
+            default: {}
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
-        lldSetMotorPower(MOTOR_1, duty_cycle,flag_percent);
-        lldSetMotorPower(MOTOR_2, duty_cycle,flag_percent);
-        lldSetMotorPower(MOTOR_3, duty_cycle,flag_percent);
-        dbgprintf("Speed:%d \n\r",(int)duty_cycle);
+        lldSetMotorPower(MOTOR_1, duty_cycle, flag_percent);
+        lldSetMotorPower(MOTOR_2, duty_cycle, flag_percent);
+        lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
+        dbgprintf("Speed:%d \n\r", (int)duty_cycle);
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
 }

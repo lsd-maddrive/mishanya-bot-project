@@ -21,7 +21,7 @@ static void flash_unlock(void)
 
 static flash_status_t flash_busy_status(void)
 {
-    if(FLASH->SR & FLASH_SR_BSY)
+    if (FLASH->SR & FLASH_SR_BSY)
     {
         return FLASH_BUSY;
     }
@@ -41,7 +41,7 @@ static void flash_lock(void)
 static flash_errors_t flash_error_check(void)
 {
     uint32_t errors = FLASH_SR_WRPERR | FLASH_SR_OPERR | FLASH_SR_PGAERR | FLASH_SR_PGPERR;
-    if(FLASH->SR & errors)
+    if (FLASH->SR & errors)
     {
         return FLASH_ERROR;
     }
@@ -50,39 +50,27 @@ static flash_errors_t flash_error_check(void)
 
 flash_errors_t flash_write_word(uint32_t flash_address, uint32_t data)
 {
-
     FLASH->SR |= FLASH_SR_EOP | FLASH_SR_PGAERR | FLASH_SR_WRPERR | FLASH_SR_OPERR;
 
     __disable_irq();
-
     flash_unlock();
 
-    while(flash_busy_status() == FLASH_BUSY)
-    {
-        ;
-    }
+    while (flash_busy_status() == FLASH_BUSY) {}
 
     // write with 4bytes
     FLASH->CR |= FLASH_CR_PSIZE_1;
 
-    while(flash_busy_status() == FLASH_BUSY)
-    {
-        ;
-    }
+    while (flash_busy_status() == FLASH_BUSY) {}
 
     *(uint32_t*)flash_address = data;
 
     __DSB();
 
-    while(flash_busy_status() == FLASH_BUSY)
-    {
-        ;
-    }
+    while (flash_busy_status() == FLASH_BUSY) {}
 
     flash_errors_t operation_status = flash_error_check();
 
     flash_lock();
-
     __enable_irq();
 
     return operation_status;
@@ -95,14 +83,14 @@ flash_errors_t flash_write_block(uint32_t flash_address, void* data, size_t size
     size_t amount_bytes_recorded = 0;
 
     // check address align
-    if(flash_address % address_align)
+    if (flash_address % address_align)
     {
         return FLASH_ERROR;
     }
 
-    while(size != amount_bytes_recorded)
+    while (size != amount_bytes_recorded)
     {
-        if(size >= (address_align + amount_bytes_recorded))
+        if (size >= (address_align + amount_bytes_recorded))
         {
             word_to_write = *(uint32_t*)(data+amount_bytes_recorded);
             amount_bytes_recorded += address_align;
@@ -114,10 +102,10 @@ flash_errors_t flash_write_block(uint32_t flash_address, void* data, size_t size
             // word = 4 bytes
             size_t shift_inside_word;
 
-            for(;amount_bytes_recorded < (shift_recorded + address_align); amount_bytes_recorded++)
+            for (; amount_bytes_recorded < (shift_recorded + address_align); amount_bytes_recorded++)
             {
                 shift_inside_word = (amount_bytes_recorded - shift_recorded);
-                if(amount_bytes_recorded < size)
+                if (amount_bytes_recorded < size)
                 {
                     word_to_write |= *(uint32_t*)(data + amount_bytes_recorded) << (8*shift_inside_word);
                 }
@@ -128,29 +116,23 @@ flash_errors_t flash_write_block(uint32_t flash_address, void* data, size_t size
             }
         }
 
-        if(flash_write_word(flash_address, word_to_write) == FLASH_ERROR)
+        if (flash_write_word(flash_address, word_to_write) == FLASH_ERROR)
         {
             return FLASH_ERROR;
         }
 
         flash_address += address_align;
-
     }
 
     return FLASH_ERROR_NONE;
 }
 
-
 flash_errors_t flash_erase_sector(uint32_t sector)
 {
     __disable_irq();
-
     flash_unlock();
 
-    while(flash_busy_status() == FLASH_BUSY)
-    {
-        ;
-    }
+    while (flash_busy_status() == FLASH_BUSY) {}
 
     // write with 2bytes
     FLASH->CR |= FLASH_CR_PSIZE_1;
@@ -164,10 +146,7 @@ flash_errors_t flash_erase_sector(uint32_t sector)
     // start erase
     FLASH->CR|= FLASH_CR_STRT;
 
-    while(flash_busy_status() == FLASH_BUSY)
-    {
-        ;
-    }
+    while (flash_busy_status() == FLASH_BUSY) {}
 
     flash_errors_t operation_status = flash_error_check();
 

@@ -17,7 +17,7 @@ float filtered_speed = 0;
 float prev_filtered_speed = 0;
 static bool init_tim = 0;
 
-odometry_var odmtr_enc1=
+odometry_var odmtr_enc1 =
 {
     .dist = 0,
     .prev_dist = 0,
@@ -26,7 +26,7 @@ odometry_var odmtr_enc1=
     .prev_filtered_speed = 0
 };
 
-odometry_var odmtr_enc2=
+odometry_var odmtr_enc2 =
 {
     .dist = 0,
     .prev_dist = 0,
@@ -35,7 +35,7 @@ odometry_var odmtr_enc2=
     .prev_filtered_speed = 0
 };
 
-odometry_var odmtr_enc3=
+odometry_var odmtr_enc3 =
 {
     .dist = 0,
     .prev_dist = 0,
@@ -43,13 +43,14 @@ odometry_var odmtr_enc3=
     .filtered_speed = 0,
     .prev_filtered_speed = 0
 };
+
 /**
  * @brief handler interrupt of virtual timer
  */
 static void tim_enc1(void* encdrs)
 {
     odometry_var *encdr = (odometry_var*)encdrs;
-    handler_odomety(encdr,CM,ENCODER_1);
+    handler_odomety(encdr, CM, ENCODER_1);
     chSysLockFromISR();
     chVTSetI(&odometr_1, TIME_MS2I(VTIME_PERIOD_MS), tim_enc1, &odmtr_enc1);
     chSysUnlockFromISR();
@@ -58,7 +59,7 @@ static void tim_enc1(void* encdrs)
 static void tim_enc2(void* encdrs)
 {
     odometry_var *encdr = (odometry_var*)encdrs;
-    handler_odomety(encdr, CM,ENCODER_2);
+    handler_odomety(encdr, CM, ENCODER_2);
     chSysLockFromISR();
     chVTSetI(&odometr_2, TIME_MS2I(VTIME_PERIOD_MS), tim_enc2, &odmtr_enc2);
     chSysUnlockFromISR();
@@ -67,7 +68,7 @@ static void tim_enc2(void* encdrs)
 static void tim_enc3(void* encdrs)
 {
     odometry_var *encdr = (odometry_var*)encdrs;
-    handler_odomety(encdr, CM,ENCODER_3);
+    handler_odomety(encdr, CM, ENCODER_3);
     chSysLockFromISR();
     chVTSetI(&odometr_3, TIME_MS2I(VTIME_PERIOD_MS), tim_enc3, &odmtr_enc3);
     chSysUnlockFromISR();
@@ -75,8 +76,7 @@ static void tim_enc3(void* encdrs)
 
 void odometryInit(void)
 {
-    if(init_tim)
-      return;
+    if (init_tim) return;
     lldEncoderInit(ENCODER_1);
     lldEncoderInit(ENCODER_2);
     lldEncoderInit(ENCODER_3);
@@ -95,17 +95,19 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits units, type_encoder encode
     return rev_count * Kw * units;
 }
 
-speedOdometry getRaw(SpeedUnits units,type_encoder encoder){
+speedOdometry getRaw(SpeedUnits units, type_encoder encoder)
+{
     float spdRaw = 0;
-    if(encoder == ENCODER_1){
+    if (encoder == ENCODER_1){
         spdRaw = odmtr_enc1.speed;
     }
     return spdRaw * units;
 }
-speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
+
+speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder)
 {
     float spd_wheel = 0;
-    if(encoder == ENCODER_1)
+    if (encoder == ENCODER_1)
     {
         #if(FILTER == FALSE)
             spd_wheel = odmtr_enc1.speed;
@@ -113,7 +115,7 @@ speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
             spd_wheel = odmtr_enc1.filtered_speed;
         #endif
     }
-    else if(encoder == ENCODER_2)
+    else if (encoder == ENCODER_2)
     {
         #if(FILTER == FALSE)
             spd_wheel = odmtr_enc2.speed;
@@ -121,7 +123,7 @@ speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
             spd_wheel = odmtr_enc2.filtered_speed;
         #endif
     }
-    else if(encoder == ENCODER_3)
+    else if (encoder == ENCODER_3)
     {
         #if(FILTER == FALSE)
             spd_wheel = odmtr_enc3.speed;
@@ -134,19 +136,19 @@ speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
 
 void odometryReset(type_encoder encoder)
 {
-    if(encoder == ENCODER_1)
+    if (encoder == ENCODER_1)
     {
         odmtr_enc1.speed = 0;
         odmtr_enc1.filtered_speed = 0;
         odmtr_enc1.prev_filtered_speed = 0;
     }
-    else if(encoder == ENCODER_2)
+    else if (encoder == ENCODER_2)
     {
         odmtr_enc2.speed = 0;
         odmtr_enc2.filtered_speed = 0;
         odmtr_enc2.prev_filtered_speed = 0;
     }
-    else if(encoder == ENCODER_3)
+    else if (encoder == ENCODER_3)
     {
         odmtr_enc3.speed = 0;
         odmtr_enc3.filtered_speed = 0;

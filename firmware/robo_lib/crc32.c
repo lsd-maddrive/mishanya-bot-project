@@ -1,6 +1,5 @@
 #include "crc32.h"
 
-
 static const uint32_t CRC32_POLY_R = 0xedb88320;
 uint32_t crc32_table[256];
 
@@ -19,7 +18,6 @@ void crc32_init(void)
         crc32_table[i] = cr;
     }
 }
-
 
 uint32_t crc32(uint32_t init_crc, const uint8_t *data, size_t length)
 {
