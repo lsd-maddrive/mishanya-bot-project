@@ -1,7 +1,7 @@
 #include "motor.h"
 #include "cnfg_peripherals.h"
 
-#define K_PERCENT PWM_PERIOD / 100
+#define K_PERCENT (PWM_PERIOD / 100)
 
 control_driver_t motor_1;
 control_driver_t motor_2;
