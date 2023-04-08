@@ -2,6 +2,7 @@
 #include "lld_gyroscope.h"
 #include "serial.h"
 
+bool StartTransfer = FALSE;
 typedef struct {
     float  X;
     float  Y;
@@ -21,6 +22,7 @@ void testGyroscope(void) {
     gyroscopeInit(1);
     debug_stream_init();
 
+
     systime_t time = chVTGetSystemTime();
     while(1) {
         angularSpeed.X = getAngularSpeedGyro(X);
@@ -31,12 +33,18 @@ void testGyroscope(void) {
         angle.Y        = getAngleGyro(Y);
         angle.Z        = getAngleGyro(Z);
 
-//        dbgprintf("speed X:%d speed Y:%d speed Z:%d\n\r", (int)angularSpeed.X,
-//                  (int)angularSpeed.Y, (int)angularSpeed.Z);
-//
-//        dbgprintf("angle  X:%d angle Y:%d angle Z:%d\n\r", (int)angle.X ,
-//                  (int)angle.Y , (int)angle.Z );
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+        char start_sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
+        if(start_sym == 'g'){
+            StartTransfer = TRUE;
+        }
+        else if(start_sym == 't'){
+            StartTransfer = FALSE;
+        }
+        if(StartTransfer)
+        {
+            sdWrite(&SD3, (uint8_t*)&angle.Z, 4);
+        }
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
 
     }
 }

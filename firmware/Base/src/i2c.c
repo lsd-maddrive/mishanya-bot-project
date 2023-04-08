@@ -1,8 +1,6 @@
 #include "i2c.h"
 #include "serial.h"
 
-static bool flagInitI2C = false;
-
 static I2CDriver* i2cDriver = &I2CD1;
 
 static const I2CConfig i2c1Conf = {
@@ -20,15 +18,11 @@ void i2cStopDriver(void) {
 
 void initI2C(void) {
     i2cStopDriver();
-    if(flagInitI2C){
-        return;
-    }
     palSetLineMode(SCL, PAL_MODE_ALTERNATE(AF_I2C) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP |
                         PAL_STM32_OSPEED_HIGHEST);
     palSetLineMode(SDA, PAL_MODE_ALTERNATE(AF_I2C) | PAL_STM32_OTYPE_OPENDRAIN | PAL_STM32_PUPDR_PULLUP |
-    PAL_STM32_OSPEED_HIGHEST);
+                        PAL_STM32_OSPEED_HIGHEST);
     i2cStart(i2cDriver, &i2c1Conf);
-    flagInitI2C = true;
 }
 
 msg_t i2cSimpleWrite(uint8_t address, uint8_t *txbuf, uint8_t length, uint16_t timeout) {

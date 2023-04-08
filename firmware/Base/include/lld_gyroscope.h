@@ -9,10 +9,14 @@ typedef enum  {X = 0, Y, Z}GyroAxis;
 
 void gyroscopeInit(uint8_t priority);
 
-msg_t gyroscopeRead(float* rawValues);
+msg_t gyroscopeRead(int16_t* rawValues);
 
 float getAngleGyro(GyroAxis axis);
 
 float getAngularSpeedGyro(GyroAxis axis);
+
+msg_t calculateDreifGyro(float* gyroRawData);
+
+msg_t readGyroSpeed(float *axisSpeed);
 
 #endif //BASE_LLD_GYROSCOPE_H

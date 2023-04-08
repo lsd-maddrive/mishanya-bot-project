@@ -26,14 +26,6 @@ PIregulator motorRevs = {
         .pDeadZone       = 0,
 };
 
-PIregulator motorStop = {
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
-};
-
-
 static THD_WORKING_AREA(regulator, 256);
 static THD_FUNCTION(CalculationReg, arg){
     arg = arg;

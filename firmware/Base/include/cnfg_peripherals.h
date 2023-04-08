@@ -87,7 +87,7 @@
 #define CTRL_REG2               0X11
 #define VALUE_CTRL_REG2         0x7C
 #define DATA_REGISTER           0x22
-#define DELTA_TIME_GYRO  (float)0.005
+#define DELTA_TIME_GYRO         5
 
 /**
  * @brief Init peripherals
