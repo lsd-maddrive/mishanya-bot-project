@@ -69,8 +69,14 @@ void test_speed_filter_graphs(void);
  */
 void testPISpeedMotor(void);
 
+/**
+ * @brief Test check efficiency i2c
+ */
 void testI2C(void);
 
+/**
+ * @brief Test check efficiency gyroscope
+ */
 void testGyroscope(void);
 
 #endif
