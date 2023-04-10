@@ -32,8 +32,8 @@ void test_speed_filter_graphs(void)
     lldMotorInit(MOTOR_3);
     #ifdef MATLAB_ODOMETRY
         sdStart( &SD4, &sdcfg );
-        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(7) );
-        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(7) );
+        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8) );
+        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8) );
     #endif
     systime_t time = chVTGetSystemTime();
     while(1)

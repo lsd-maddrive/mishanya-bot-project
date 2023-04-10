@@ -1,4 +1,5 @@
 #include "test.h"
+#include "serial.h"
 #include <closed_system_drive.h>
 
 #define MATLAB_PI_REGULATOR
@@ -22,8 +23,8 @@ void testPISpeedMotor(void) {
     ResetSpeedRegulator();
     #ifdef MATLAB_PI_REGULATOR
         sdStart( &SD4, &sdcfg );
-        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(7) );
-        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(7) );
+        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8) );
+        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8) );
     #endif
     systime_t time = chVTGetSystemTime();
     while(1){
