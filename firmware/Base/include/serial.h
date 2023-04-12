@@ -9,6 +9,6 @@ void debug_stream_init(void);
 /**
 * @brief    Print
 */
-void dbgprintf( const char* format, ... );
+void dbgprintf(const char* format, ...);
 
 #endif

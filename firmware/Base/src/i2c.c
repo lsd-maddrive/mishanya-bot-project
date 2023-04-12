@@ -26,16 +26,16 @@ void initI2C(void) {
 }
 
 msg_t i2cSimpleWrite(uint8_t address, uint8_t *txbuf, uint8_t length, uint16_t timeout) {
-    msg_t msg = i2cMasterTransmitTimeout( i2cDriver, address, txbuf, length, NULL, 0, timeout );
+    msg_t msg = i2cMasterTransmitTimeout(i2cDriver, address, txbuf, length, NULL, 0, timeout);
     return msg;
 }
 
 msg_t i2cSimpleRead(uint8_t address, uint8_t *rxbuf, uint8_t length, uint16_t timeout) {
-    msg_t msg = i2cMasterReceiveTimeout( i2cDriver, address, rxbuf, length, timeout );
+    msg_t msg = i2cMasterReceiveTimeout(i2cDriver, address, rxbuf, length, timeout);
     return msg;
 }
 
 msg_t i2cRegisterRead(uint8_t address, uint8_t register_addr, uint8_t *rxbuf, uint8_t length, uint16_t timeout) {
-    msg_t msg = i2cMasterTransmitTimeout( i2cDriver, address, &register_addr, 1, rxbuf, length, timeout );
+    msg_t msg = i2cMasterTransmitTimeout(i2cDriver, address, &register_addr, 1, rxbuf, length, timeout);
     return msg;
 }

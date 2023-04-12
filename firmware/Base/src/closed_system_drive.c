@@ -30,99 +30,110 @@ static THD_WORKING_AREA(regulator, 256);
 static THD_FUNCTION(CalculationReg, arg){
     arg = arg;
     systime_t time = chVTGetSystemTimeX();
-    while(1){
-
-        regulatorMotor1.realSpeed = odometryGetWheelSpeed(M_S,ENCODER_1);
+    while (1) {
+        regulatorMotor1.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_1);
         regulatorMotor1.pErrSpeed = regulatorMotor1.refSpeed - regulatorMotor1.realSpeed;
 
-        if(regulatorMotor1.refSpeed < 0){
+        if (regulatorMotor1.refSpeed < 0) {
             regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorRevs.ki;
-            regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-            regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed)            * COEF_SPEED;
+            regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
+                                                            -motorForward.integSaturation, motorForward.integSaturation);
+            regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
         }
-        else if (regulatorMotor1.refSpeed > 0){
+        else if (regulatorMotor1.refSpeed > 0) {
             regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorForward.ki;
-            regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
-            regulatorMotor1.speedControlValue  = (motorForward.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed)         * COEF_SPEED;
+            regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
+                                                            -motorRevs.integSaturation, motorRevs.integSaturation);
+            regulatorMotor1.speedControlValue  = (motorForward.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
         }
-        else if(regulatorMotor1.refSpeed == 0){
-            if(fabsf(regulatorMotor1.refSpeed - regulatorMotor1.realSpeed) > 5){
-                if(regulatorMotor1.realSpeed > 0){
+        else if (regulatorMotor1.refSpeed == 0) {
+            if (fabsf(regulatorMotor1.refSpeed - regulatorMotor1.realSpeed) > 5){
+                if (regulatorMotor1.realSpeed > 0) {
                     regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorRevs.ki;
-                    regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
-                    regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed)    * COEF_SPEED;
+                    regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
+                                                                    -motorRevs.integSaturation, motorRevs.integSaturation);
+                    regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
                 }
-                else{
+                else {
                     regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorForward.ki;
-                    regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorForward.integSaturation,
+                                                                    motorForward.integSaturation);
                     regulatorMotor1.speedControlValue  = (motorForward.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
                 }
             }
-            else{
+            else {
                 ResetSpeedRegulator();
                 regulatorMotor1.speedControlValue = 0;
             }
         }
 
-        regulatorMotor2.realSpeed = odometryGetWheelSpeed(M_S,ENCODER_2);
+        regulatorMotor2.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_2);
         regulatorMotor2.pErrSpeed = regulatorMotor2.refSpeed - regulatorMotor2.realSpeed;
 
-        if(regulatorMotor2.refSpeed < 0){
+        if (regulatorMotor2.refSpeed < 0) {
             regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorRevs.ki;
-            regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
+            regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
+                                                            -motorRevs.integSaturation, motorRevs.integSaturation);
             regulatorMotor2.speedControlValue  = (motorRevs.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
         }
-        else if (regulatorMotor2.refSpeed > 0){
+        else if (regulatorMotor2.refSpeed > 0) {
             regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorForward.ki;
-            regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-            regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed)   * COEF_SPEED;
+            regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
+                                                            -motorForward.integSaturation, motorForward.integSaturation);
+            regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
         }
-        else if(regulatorMotor2.refSpeed == 0){
-            if(fabsf(regulatorMotor2.refSpeed - regulatorMotor2.realSpeed) > 5){
-                if(regulatorMotor2.realSpeed > 0){
+        else if (regulatorMotor2.refSpeed == 0) {
+            if (fabsf(regulatorMotor2.refSpeed - regulatorMotor2.realSpeed) > 5) {
+                if (regulatorMotor2.realSpeed > 0) {
                     regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorRevs.ki;
-                    regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
+                    regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
+                                                                    -motorRevs.integSaturation, motorRevs.integSaturation);
                     regulatorMotor2.speedControlValue  = (motorRevs.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
                 }
-                else{
+                else {
                     regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorForward.ki;
-                    regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-                    regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed)   * COEF_SPEED;
+                    regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
+                                                                    -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
                 }
             }
-            else{
+            else {
                 ResetSpeedRegulator();
                 regulatorMotor2.speedControlValue = 0;
             }
         }
 
-        regulatorMotor3.realSpeed = odometryGetWheelSpeed(M_S,ENCODER_3);
+        regulatorMotor3.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_3);
         regulatorMotor3.pErrSpeed = regulatorMotor3.refSpeed - regulatorMotor3.realSpeed;
 
-        if(regulatorMotor3.refSpeed < 0){
+        if (regulatorMotor3.refSpeed < 0) {
             regulatorMotor3.intgSpeed        += regulatorMotor3.pErrSpeed * motorRevs.ki;
-            regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
+            regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed,
+                                                           -motorRevs.integSaturation, motorRevs.integSaturation);
             regulatorMotor3.speedControlValue = (motorRevs.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
         }
-        else if (regulatorMotor3.refSpeed > 0){
+        else if (regulatorMotor3.refSpeed > 0) {
             regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
-            regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-            regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed)   * COEF_SPEED;
+            regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed,
+                                                            -motorForward.integSaturation, motorForward.integSaturation);
+            regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
         }
-        else if(regulatorMotor3.refSpeed == 0){
-            if(fabsf(regulatorMotor3.refSpeed - regulatorMotor3.realSpeed) > 5){
-                if(regulatorMotor3.realSpeed > 0){
+        else if (regulatorMotor3.refSpeed == 0) {
+            if (fabsf(regulatorMotor3.refSpeed - regulatorMotor3.realSpeed) > 5) {
+                if (regulatorMotor3.realSpeed > 0) {
                     regulatorMotor3.intgSpeed        += regulatorMotor3.pErrSpeed * motorRevs.ki;
-                    regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed, -motorRevs.integSaturation, motorRevs.integSaturation);
-                    regulatorMotor3.speedControlValue = (motorRevs.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed)   * COEF_SPEED;
+                    regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed,
+                                                                   -motorRevs.integSaturation, motorRevs.integSaturation);
+                    regulatorMotor3.speedControlValue = (motorRevs.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
                 }
-                else{
+                else {
                     regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
-                    regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-                    regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed)   * COEF_SPEED;
+                    regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed,
+                                                                    -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
                 }
             }
-            else{
+            else {
                 ResetSpeedRegulator();
                 regulatorMotor3.speedControlValue = 0;
             }
@@ -145,7 +156,7 @@ void driveCSInit(uint8_t prio){
     lldMotorInit(MOTOR_3);
     odometryInit();
     debug_stream_init();
-    chThdCreateStatic(regulator,sizeof(regulator),NORMALPRIO+prio,
+    chThdCreateStatic(regulator, sizeof(regulator), NORMALPRIO+prio,
                       CalculationReg, NULL);
     driveInit = 1;
 }

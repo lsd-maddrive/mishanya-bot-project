@@ -1,6 +1,6 @@
 #include "test.h"
 #include "serial.h"
-#include <closed_system_drive.h>
+#include "closed_system_drive.h"
 
 #define MATLAB_PI_REGULATOR
 
@@ -22,18 +22,18 @@ void testPISpeedMotor(void) {
     debug_stream_init();
     ResetSpeedRegulator();
     #ifdef MATLAB_PI_REGULATOR
-        sdStart( &SD4, &sdcfg );
+        sdStart(&SD4, &sdcfg);
         palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8) );
         palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8) );
     #endif
     systime_t time = chVTGetSystemTime();
-    while(1){
+    while (1){
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-            if(sym == 's'){
+            if (sym == 's'){
                 StartTransfer = TRUE;
                 speedInput = 0.6;
             }
-        switch(sym) {
+        switch (sym) {
             case ' ':
                 speedInput = 0;
                 ResetSpeedRegulator();
@@ -44,21 +44,21 @@ void testPISpeedMotor(void) {
             case 'e':
                 speedInput = -0.4;
                 break;
-            default: ;
+            default: {}
         }
 
         setRefSpeed(speedInput, M_S);
-        speedOutput = odometryGetWheelSpeed(M_S,ENCODER_3);
+        speedOutput = odometryGetWheelSpeed(M_S, ENCODER_3);
 
 #ifdef MATLAB_PI_REGULATOR
-        if(StartTransfer) {
-            sdWrite(&SD4,(uint8_t*)&speedOutput, 4);
+        if (StartTransfer) {
+            sdWrite(&SD4, (uint8_t*)&speedOutput, 4);
         }
         time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
 #else
         //dbgprintf("In:%d Out:%d\n\r",(int)(speed_input*100),
         //(int)(speed_output));
-        time = chThdSleepUntilWindowed (time, MS2ST(100)+time);
+        time = chThdSleepUntilWindowed(time, MS2ST(100) + time);
 #endif
     }
 }

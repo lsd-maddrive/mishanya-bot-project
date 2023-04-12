@@ -7,8 +7,8 @@
 #define Wheel_Radius 0.065
 #define k 1
 
-typedef enum {MM = 1000, CM = 100, M = 1}DistUnits;
-typedef enum {MM_S = 1000, CM_S = 100, M_S = 1}SpeedUnits;
+typedef enum {MM = 1000, CM = 100, M = 1} DistUnits;
+typedef enum {MM_S = 1000, CM_S = 100, M_S = 1} SpeedUnits;
 typedef float coeffwheelshaft;
 typedef float distanceCrossWheel;
 typedef float speedOdometry;
@@ -47,7 +47,7 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits uints, type_encoder encode
  * @args units(MM_S, CM_S, M_S), encoder is value from enum
  * @return speed
  */
-speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder);
+speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder);
 
 /**
  * @brief Reset the value of speed
@@ -64,6 +64,6 @@ void odometryReset(type_encoder encoder);
  */
 void handler_odomety(odometry_var *encdr, DistUnits units, type_encoder encoder);
 
-speedOdometry getRaw(SpeedUnits units,type_encoder encoder);
+speedOdometry getRaw(SpeedUnits units, type_encoder encoder);
 
 #endif
