@@ -10,10 +10,9 @@
 static SerialDriver         *debug_serial = &SD3;
 static BaseSequentialStream *debug_stream = NULL;
 
-
 static const SerialConfig sd_st_cfg = {
-        .speed = 115200,
-        .cr1 = 0, .cr2 = 0, .cr3 = 0
+    .speed = 115200,
+    .cr1 = 0, .cr2 = 0, .cr3 = 0
 };
 
 /**
@@ -22,8 +21,13 @@ static const SerialConfig sd_st_cfg = {
 void debug_stream_init(void)
 {
     sdStart(debug_serial, &sd_st_cfg);
+<<<<<<< HEAD
     palSetLineMode(SerialRX, PAL_MODE_ALTERNATE(7));
     palSetLineMode(SerialTX, PAL_MODE_ALTERNATE(7));
+=======
+    palSetLineMode(SerialRX,  PAL_MODE_ALTERNATE(7));
+    palSetLineMode(SerialTX,  PAL_MODE_ALTERNATE(7));
+>>>>>>> develop
 
     debug_stream = (BaseSequentialStream *)debug_serial;
 }

@@ -81,7 +81,10 @@ void test_encoder_base(type_encoder encoder)
         time = chThdSleepUntilWindowed(time, TIME_MS2I(300) + time);
     }
 }
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> develop

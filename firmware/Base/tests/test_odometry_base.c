@@ -17,10 +17,17 @@ void testOdometryBase(type_encoder encoder)
         {
             odometryReset(encoder);
         }
+<<<<<<< HEAD
         dist = odometryGetWheelDistance(CM, encoder);
         speed = odometryGetWheelSpeed(CM_S, encoder);
         dbgprintf("Distance:%d Speed:%d \n\r", (int)dist, (int)(speed));
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
+=======
+        dist    = odometryGetWheelDistance(CM, encoder);
+        speed   = odometryGetWheelSpeed(CM_S, encoder);
+        dbgprintf("Distance:%d Speed:%d \n\r", (int)dist, (int)(speed));
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+>>>>>>> develop
     }
 }
 
@@ -44,11 +51,19 @@ void testOdometryBaseAll(void)
             odometryReset(ENCODER_2);
             odometryReset(ENCODER_3);
         }
+<<<<<<< HEAD
         dist_1 = odometryGetWheelDistance(CM, ENCODER_1);
         speed_1 = odometryGetWheelSpeed(CM_S, ENCODER_1);
         dist_2 = odometryGetWheelDistance(CM, ENCODER_2);
         speed_2 = odometryGetWheelSpeed(CM_S, ENCODER_2);
         dist_3 = odometryGetWheelDistance(CM, ENCODER_3);
+=======
+        dist_1  = odometryGetWheelDistance(CM, ENCODER_1);
+        speed_1 = odometryGetWheelSpeed(CM_S, ENCODER_1);
+        dist_2  = odometryGetWheelDistance(CM, ENCODER_2);
+        speed_2 = odometryGetWheelSpeed(CM_S, ENCODER_2);
+        dist_3  = odometryGetWheelDistance(CM, ENCODER_3);
+>>>>>>> develop
         speed_3 = odometryGetWheelSpeed(CM_S, ENCODER_3);
         dbgprintf("Wheel1: Dist1:%d Speed1:%d "
                   "Wheel2: Dist2:%d Speed2:%d "

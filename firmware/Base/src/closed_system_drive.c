@@ -13,47 +13,83 @@ RegulatorValueMotor regulatorMotor2;
 RegulatorValueMotor regulatorMotor3;
 
 PIregulator motorForward ={
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
 };
 
 PIregulator motorRevs = {
-        .kp              = 0.3,
-        .ki              = 0.1,
-        .integSaturation = 80 / COEF_SPEED,
-        .pDeadZone       = 0,
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
 };
 
+<<<<<<< HEAD
+=======
+PIregulator motorStop = {
+    .kp              = 0.3,
+    .ki              = 0.1,
+    .integSaturation = 80 / COEF_SPEED,
+    .pDeadZone       = 0,
+};
+
+
+>>>>>>> develop
 static THD_WORKING_AREA(regulator, 256);
 static THD_FUNCTION(CalculationReg, arg){
     arg = arg;
     systime_t time = chVTGetSystemTimeX();
+<<<<<<< HEAD
     while (1) {
         regulatorMotor1.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_1);
         regulatorMotor1.pErrSpeed = regulatorMotor1.refSpeed - regulatorMotor1.realSpeed;
 
         if (regulatorMotor1.refSpeed < 0) {
+=======
+    while (1)
+    {
+        regulatorMotor1.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_1);
+        regulatorMotor1.pErrSpeed = regulatorMotor1.refSpeed - regulatorMotor1.realSpeed;
+
+        if (regulatorMotor1.refSpeed < 0)
+        {
+>>>>>>> develop
             regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorRevs.ki;
             regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
                                                             -motorForward.integSaturation, motorForward.integSaturation);
             regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor1.refSpeed > 0) {
+=======
+        else if (regulatorMotor1.refSpeed > 0)
+        {
+>>>>>>> develop
             regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorForward.ki;
             regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
                                                             -motorRevs.integSaturation, motorRevs.integSaturation);
             regulatorMotor1.speedControlValue  = (motorForward.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor1.refSpeed == 0) {
             if (fabsf(regulatorMotor1.refSpeed - regulatorMotor1.realSpeed) > 5){
                 if (regulatorMotor1.realSpeed > 0) {
+=======
+        else if (regulatorMotor1.refSpeed == 0)
+        {
+            if (fabsf(regulatorMotor1.refSpeed - regulatorMotor1.realSpeed) > 5)
+            {
+                if (regulatorMotor1.realSpeed > 0)
+                {
+>>>>>>> develop
                     regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorRevs.ki;
                     regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed,
                                                                     -motorRevs.integSaturation, motorRevs.integSaturation);
                     regulatorMotor1.speedControlValue  = (motorRevs.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
                 }
+<<<<<<< HEAD
                 else {
                     regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorForward.ki;
                     regulatorMotor1.intgSpeed          = CLIP_VALUE(regulatorMotor1.intgSpeed, -motorForward.integSaturation,
@@ -62,6 +98,18 @@ static THD_FUNCTION(CalculationReg, arg){
                 }
             }
             else {
+=======
+                else
+                {
+                    regulatorMotor1.intgSpeed         += regulatorMotor1.pErrSpeed * motorForward.ki;
+                    regulatorMotor1.intgSpeed          = CLIP_VALUE(
+                        regulatorMotor1.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor1.speedControlValue  = (motorForward.kp * regulatorMotor1.pErrSpeed + regulatorMotor1.intgSpeed) * COEF_SPEED;
+                }
+            }
+            else
+            {
+>>>>>>> develop
                 ResetSpeedRegulator();
                 regulatorMotor1.speedControlValue = 0;
             }
@@ -70,26 +118,46 @@ static THD_FUNCTION(CalculationReg, arg){
         regulatorMotor2.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_2);
         regulatorMotor2.pErrSpeed = regulatorMotor2.refSpeed - regulatorMotor2.realSpeed;
 
+<<<<<<< HEAD
         if (regulatorMotor2.refSpeed < 0) {
+=======
+        if (regulatorMotor2.refSpeed < 0)
+        {
+>>>>>>> develop
             regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorRevs.ki;
             regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
                                                             -motorRevs.integSaturation, motorRevs.integSaturation);
             regulatorMotor2.speedControlValue  = (motorRevs.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor2.refSpeed > 0) {
+=======
+        else if (regulatorMotor2.refSpeed > 0)
+        {
+>>>>>>> develop
             regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorForward.ki;
             regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
                                                             -motorForward.integSaturation, motorForward.integSaturation);
             regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor2.refSpeed == 0) {
             if (fabsf(regulatorMotor2.refSpeed - regulatorMotor2.realSpeed) > 5) {
                 if (regulatorMotor2.realSpeed > 0) {
+=======
+        else if (regulatorMotor2.refSpeed == 0)
+        {
+            if (fabsf(regulatorMotor2.refSpeed - regulatorMotor2.realSpeed) > 5)
+            {
+                if (regulatorMotor2.realSpeed > 0)
+                {
+>>>>>>> develop
                     regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorRevs.ki;
                     regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
                                                                     -motorRevs.integSaturation, motorRevs.integSaturation);
                     regulatorMotor2.speedControlValue  = (motorRevs.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed) * COEF_SPEED;
                 }
+<<<<<<< HEAD
                 else {
                     regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorForward.ki;
                     regulatorMotor2.intgSpeed          = CLIP_VALUE(regulatorMotor2.intgSpeed,
@@ -98,6 +166,18 @@ static THD_FUNCTION(CalculationReg, arg){
                 }
             }
             else {
+=======
+                else
+                {
+                    regulatorMotor2.intgSpeed         += regulatorMotor2.pErrSpeed * motorForward.ki;
+                    regulatorMotor2.intgSpeed          = CLIP_VALUE(
+                        regulatorMotor2.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor2.speedControlValue  = (motorForward.kp * regulatorMotor2.pErrSpeed + regulatorMotor2.intgSpeed)   * COEF_SPEED;
+                }
+            }
+            else
+            {
+>>>>>>> develop
                 ResetSpeedRegulator();
                 regulatorMotor2.speedControlValue = 0;
             }
@@ -106,26 +186,46 @@ static THD_FUNCTION(CalculationReg, arg){
         regulatorMotor3.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_3);
         regulatorMotor3.pErrSpeed = regulatorMotor3.refSpeed - regulatorMotor3.realSpeed;
 
+<<<<<<< HEAD
         if (regulatorMotor3.refSpeed < 0) {
+=======
+        if (regulatorMotor3.refSpeed < 0)
+        {
+>>>>>>> develop
             regulatorMotor3.intgSpeed        += regulatorMotor3.pErrSpeed * motorRevs.ki;
             regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed,
                                                            -motorRevs.integSaturation, motorRevs.integSaturation);
             regulatorMotor3.speedControlValue = (motorRevs.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor3.refSpeed > 0) {
+=======
+        else if (regulatorMotor3.refSpeed > 0)
+        {
+>>>>>>> develop
             regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
             regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed,
                                                             -motorForward.integSaturation, motorForward.integSaturation);
             regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
         }
+<<<<<<< HEAD
         else if (regulatorMotor3.refSpeed == 0) {
             if (fabsf(regulatorMotor3.refSpeed - regulatorMotor3.realSpeed) > 5) {
                 if (regulatorMotor3.realSpeed > 0) {
+=======
+        else if (regulatorMotor3.refSpeed == 0)
+        {
+            if (fabsf(regulatorMotor3.refSpeed - regulatorMotor3.realSpeed) > 5)
+            {
+                if (regulatorMotor3.realSpeed > 0)
+                {
+>>>>>>> develop
                     regulatorMotor3.intgSpeed        += regulatorMotor3.pErrSpeed * motorRevs.ki;
                     regulatorMotor3.intgSpeed         = CLIP_VALUE(regulatorMotor3.intgSpeed,
                                                                    -motorRevs.integSaturation, motorRevs.integSaturation);
                     regulatorMotor3.speedControlValue = (motorRevs.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
                 }
+<<<<<<< HEAD
                 else {
                     regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
                     regulatorMotor3.intgSpeed          = CLIP_VALUE(regulatorMotor3.intgSpeed,
@@ -134,6 +234,18 @@ static THD_FUNCTION(CalculationReg, arg){
                 }
             }
             else {
+=======
+                else
+                {
+                    regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
+                    regulatorMotor3.intgSpeed          = CLIP_VALUE(
+                        regulatorMotor3.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
+                    regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed)   * COEF_SPEED;
+                }
+            }
+            else
+            {
+>>>>>>> develop
                 ResetSpeedRegulator();
                 regulatorMotor3.speedControlValue = 0;
             }
@@ -148,7 +260,12 @@ static THD_FUNCTION(CalculationReg, arg){
 }
 
 void driveCSInit(uint8_t prio){
+<<<<<<< HEAD
     if (driveInit){
+=======
+    if (driveInit)
+    {
+>>>>>>> develop
         return;
     }
     lldMotorInit(MOTOR_1);
@@ -156,6 +273,7 @@ void driveCSInit(uint8_t prio){
     lldMotorInit(MOTOR_3);
     odometryInit();
     debug_stream_init();
+<<<<<<< HEAD
     chThdCreateStatic(regulator, sizeof(regulator), NORMALPRIO+prio,
                       CalculationReg, NULL);
     driveInit = 1;
@@ -163,6 +281,15 @@ void driveCSInit(uint8_t prio){
 
 void setRefSpeed(float speed, SpeedUnits units) {
     if (units != M_S) {
+=======
+    chThdCreateStatic(regulator, sizeof(regulator), NORMALPRIO+prio, CalculationReg, NULL);
+    driveInit = 1;
+}
+
+void setRefSpeed(float speed, SpeedUnits units){
+    if (units != M_S)
+    {
+>>>>>>> develop
         speed = CLIP_VALUE(speed, MIN_SPEED, MAX_SPEED);
     }
     regulatorMotor1.refSpeed = speed * units;

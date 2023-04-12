@@ -2,8 +2,8 @@
 #define INCLUDE_SERIAL_H
 
 /**
- * @brief   Initialize serial port
- */
+* @brief   Initialize serial port
+*/
 void debug_stream_init(void);
 
 /**

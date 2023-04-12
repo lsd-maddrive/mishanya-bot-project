@@ -1,6 +1,7 @@
 #include <common.h>
 #include <test.h>
 
+
 static void testsRoutines(void)
 {
     #if(MAIN_PROGRAM   == PROGRAM_TEST_ENCODER_BASE_ALL)
@@ -8,13 +9,13 @@ static void testsRoutines(void)
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ENCODER_BASE_1)
         test_encoder_base(ENCODER_1);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ENCODER_BASE_2)
-       test_encoder_base(ENCODER_2);
+        test_encoder_base(ENCODER_2);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ENCODER_BASE_3)
-       test_encoder_base(ENCODER_3);
+        test_encoder_base(ENCODER_3);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ODOMETRY_BASE_ENC_1)
-       testOdometryBase(ENCODER_1);
+        testOdometryBase(ENCODER_1);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ODOMETRY_BASE_ENC_1)
-       testOdometryBase(ENCODER_1);
+        testOdometryBase(ENCODER_1);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ODOMETRY_BASE_ENC_2)
        testOdometryBase(ENCODER_2);
     #elif(MAIN_PROGRAM == PROGRAM_TEST_ODOMETRY_BASE_ENC_3)

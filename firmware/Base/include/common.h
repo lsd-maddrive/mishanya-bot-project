@@ -1,6 +1,12 @@
 #ifndef INCLUDE_COMMON_H
 #define INCLUDE_COMMON_H
 
+<<<<<<< HEAD
+=======
+#include <ch.h>
+#include <hal.h>
+#include <chprintf.h>
+>>>>>>> develop
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>

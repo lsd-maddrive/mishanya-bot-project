@@ -5,16 +5,15 @@
 
 #define POWER_SATURATION 0.8F
 
-#define    LEFT_BRIDGE_SHOULDER 0
-#define    RIGHT_BRIDGE_SHOULDER 1
+#define    LEFT_BRIDGE_SHOULDER     0
+#define    RIGHT_BRIDGE_SHOULDER    1
 
 typedef enum {
-	BB = 0,
-	RED = 1
+    BB = 0,
+    RED = 1
 } driver_t;
 
 typedef struct {
-
     union
     {
         struct {
@@ -28,13 +27,12 @@ typedef struct {
           ioline_t          reverse_line;
         }red_driver_line;
     };
-    
     uint8_t           ch_pwm_num;
 } line_driver_t;
 
 typedef struct {
-  PWMDriver         *driver_ptr;                        // PWM pointer
-  line_driver_t     control;                            // typedef (search for description in this file)
+    PWMDriver         *driver_ptr;                        // PWM pointer
+    line_driver_t     control;                            // typedef (search for description in this file)
 } pwm_ctx_t;
 
 typedef struct{

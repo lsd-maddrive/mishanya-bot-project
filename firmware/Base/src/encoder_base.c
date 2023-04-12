@@ -6,29 +6,29 @@ int8_t  status_phase_B = 0;
 
 encoder_t encoder_1 =
 {
-     .line_phase_A       = ENCODER1_PHASE_A,
-     .line_phase_B       = ENCODER1_PHASE_B,
-     .direction_rotation = 0,
-     .tic_count          = 0,
-     .rev_count          = 0
+    .line_phase_A       = ENCODER1_PHASE_A,
+    .line_phase_B       = ENCODER1_PHASE_B,
+    .direction_rotation = 0,
+    .tic_count          = 0,
+    .rev_count          = 0
 };
 
 encoder_t encoder_2 =
 {
-     .line_phase_A       = ENCODER2_PHASE_A,
-     .line_phase_B       = ENCODER2_PHASE_B,
-     .direction_rotation = 0,
-     .tic_count          = 0,
-     .rev_count          = 0
+    .line_phase_A       = ENCODER2_PHASE_A,
+    .line_phase_B       = ENCODER2_PHASE_B,
+    .direction_rotation = 0,
+    .tic_count          = 0,
+    .rev_count          = 0
 };
 
 encoder_t encoder_3 =
 {
-     .line_phase_A       = ENCODER3_PHASE_A,
-     .line_phase_B       = ENCODER3_PHASE_B,
-     .direction_rotation = 0,
-     .tic_count          = 0,
-     .rev_count          = 0
+    .line_phase_A       = ENCODER3_PHASE_A,
+    .line_phase_B       = ENCODER3_PHASE_B,
+    .direction_rotation = 0,
+    .tic_count          = 0,
+    .rev_count          = 0
 };
 
 /**
@@ -146,15 +146,15 @@ float GetEncoderRawRevs(type_encoder encoder_n)
      encoder_t cur_encoder;
      if (encoder_n == ENCODER_1)
      {
-         cur_encoder = encoder_1;
+        cur_encoder = encoder_1;
      }
      else if (encoder_n == ENCODER_2)
      {
-         cur_encoder = encoder_2;
+        cur_encoder = encoder_2;
      }
      else if (encoder_n == ENCODER_3)
      {
-         cur_encoder = encoder_3;
+        cur_encoder = encoder_3;
      }
      rev = getRevs(&cur_encoder);
      return rev;
@@ -171,6 +171,7 @@ void ResetEncoder(type_encoder encoder_n)
 {
      if (encoder_n == ENCODER_1)
      {
+<<<<<<< HEAD
          encoder_1.direction_rotation = 0;
          encoder_1.tic_count          = 0;
          encoder_1.rev_count          = 0;
@@ -186,6 +187,23 @@ void ResetEncoder(type_encoder encoder_n)
          encoder_3.direction_rotation = 0;
          encoder_3.tic_count          = 0;
          encoder_3.rev_count          = 0;
+=======
+        encoder_1.direction_rotation = 0;
+        encoder_1.tic_count = 0;
+        encoder_1.rev_count = 0;
+     }
+     else if (encoder_n == ENCODER_2)
+     {
+        encoder_2.direction_rotation = 0;
+        encoder_2.tic_count = 0;
+        encoder_2.rev_count = 0;
+     }
+     else if (encoder_n == ENCODER_3)
+     {
+        encoder_3.direction_rotation = 0;
+        encoder_3.tic_count = 0;
+        encoder_3.rev_count = 0;
+>>>>>>> develop
      }
 }
 

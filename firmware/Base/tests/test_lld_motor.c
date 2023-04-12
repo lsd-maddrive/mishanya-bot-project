@@ -31,7 +31,11 @@ void testlldMotor(type_motor motor_n)
         }
         lldSetMotorPower(motor_n, duty_cycle, flag_percent);
         dbgprintf("Speed:%d \n\r", (int)duty_cycle);
+<<<<<<< HEAD
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
+=======
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+>>>>>>> develop
     }
 }
 
@@ -67,7 +71,11 @@ void testlldMotorAll(void)
         lldSetMotorPower(MOTOR_2, duty_cycle, flag_percent);
         lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
         dbgprintf("Speed:%d \n\r", (int)duty_cycle);
+<<<<<<< HEAD
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
+=======
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+>>>>>>> develop
     }
 }
 
@@ -80,6 +88,10 @@ void testlldMotorPer(type_motor motor_n)
     lldMotorInit(motor_n);
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
     while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
@@ -99,7 +111,11 @@ void testlldMotorPer(type_motor motor_n)
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
         lldSetMotorPower(motor_n, duty_cycle, flag_percent);
         dbgprintf("Speed:%d \n\r", (int)duty_cycle);
+<<<<<<< HEAD
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
+=======
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+>>>>>>> develop
     }
 }
 
@@ -114,6 +130,10 @@ void testlldMotorPerAll(void)
     lldMotorInit(MOTOR_3);
     debug_stream_init();
     systime_t time = chVTGetSystemTime();
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
     while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
@@ -135,6 +155,10 @@ void testlldMotorPerAll(void)
         lldSetMotorPower(MOTOR_2, duty_cycle, flag_percent);
         lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
         dbgprintf("Speed:%d \n\r", (int)duty_cycle);
+<<<<<<< HEAD
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
+=======
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+>>>>>>> develop
     }
 }

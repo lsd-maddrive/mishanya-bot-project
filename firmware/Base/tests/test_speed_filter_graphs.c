@@ -8,11 +8,11 @@
 
 #ifdef MATLAB_ODOMETRY
 static const SerialConfig sdcfg = {
-            .speed  = 115200,
-            .cr1    = 0,
-            .cr2    = 0,
-            .cr3    = 0
-        };
+    .speed  = 115200,
+    .cr1    = 0,
+    .cr2    = 0,
+    .cr3    = 0
+};
 #endif
 
 void test_speed_filter_graphs(void)
@@ -31,9 +31,15 @@ void test_speed_filter_graphs(void)
     lldMotorInit(MOTOR_2);
     lldMotorInit(MOTOR_3);
     #ifdef MATLAB_ODOMETRY
+<<<<<<< HEAD
         sdStart(&SD4, &sdcfg);
         palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8));
         palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8));
+=======
+        sdStart(&SD5, &sdcfg);
+        palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(7));
+        palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(7));
+>>>>>>> develop
     #endif
     systime_t time = chVTGetSystemTime();
     while (1)
@@ -63,13 +69,26 @@ void test_speed_filter_graphs(void)
         spdRaw  = getRaw(CM_S, ENCODER_1);
         speed_2 = odometryGetWheelSpeed(CM_S, ENCODER_2);
         speed_3 = odometryGetWheelSpeed(CM_S, ENCODER_3);
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
         #ifdef MATLAB_ODOMETRY
             char start_sym = sdGetTimeout(&SD4, TIME_IMMEDIATE);
             time = chThdSleepUntilWindowed(time, TIME_MS2I(40) + time);
+<<<<<<< HEAD
             if (start_sym == 'g'){
                 StartTransfer = TRUE;
             }
             else if (start_sym == 't'){
+=======
+            if (start_sym == 'g')
+            {
+                StartTransfer = TRUE;
+            }
+            else if (start_sym == 't')
+            {
+>>>>>>> develop
                 StartTransfer = FALSE;
             }
             if (StartTransfer)
