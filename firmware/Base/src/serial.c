@@ -21,14 +21,8 @@ static const SerialConfig sd_st_cfg = {
 void debug_stream_init(void)
 {
     sdStart(debug_serial, &sd_st_cfg);
-<<<<<<< HEAD
-    palSetLineMode(SerialRX, PAL_MODE_ALTERNATE(7));
-    palSetLineMode(SerialTX, PAL_MODE_ALTERNATE(7));
-=======
     palSetLineMode(SerialRX,  PAL_MODE_ALTERNATE(7));
     palSetLineMode(SerialTX,  PAL_MODE_ALTERNATE(7));
->>>>>>> develop
-
     debug_stream = (BaseSequentialStream *)debug_serial;
 }
 

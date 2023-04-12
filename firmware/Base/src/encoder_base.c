@@ -171,23 +171,6 @@ void ResetEncoder(type_encoder encoder_n)
 {
      if (encoder_n == ENCODER_1)
      {
-<<<<<<< HEAD
-         encoder_1.direction_rotation = 0;
-         encoder_1.tic_count          = 0;
-         encoder_1.rev_count          = 0;
-     }
-     else if (encoder_n == ENCODER_2)
-     {
-         encoder_2.direction_rotation = 0;
-         encoder_2.tic_count          = 0;
-         encoder_2.rev_count          = 0;
-     }
-     else if (encoder_n == ENCODER_3)
-     {
-         encoder_3.direction_rotation = 0;
-         encoder_3.tic_count          = 0;
-         encoder_3.rev_count          = 0;
-=======
         encoder_1.direction_rotation = 0;
         encoder_1.tic_count = 0;
         encoder_1.rev_count = 0;
@@ -203,7 +186,6 @@ void ResetEncoder(type_encoder encoder_n)
         encoder_3.direction_rotation = 0;
         encoder_3.tic_count = 0;
         encoder_3.rev_count = 0;
->>>>>>> develop
      }
 }
 

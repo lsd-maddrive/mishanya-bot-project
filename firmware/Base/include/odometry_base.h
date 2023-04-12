@@ -44,17 +44,10 @@ void odometryInit(void);
 distanceCrossWheel odometryGetWheelDistance(DistUnits uints, type_encoder encoder);
 
 /**
-<<<<<<< HEAD
- * @brief Get speed of wheel
- * @args units(MM_S, CM_S, M_S), encoder is value from enum
- * @return speed
- */
-=======
 * @brief Get speed of wheel
 * @args units(MM_S, CM_S, M_S), encoder is value from enum
 * @return speed
 */
->>>>>>> develop
 speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder);
 
 /**

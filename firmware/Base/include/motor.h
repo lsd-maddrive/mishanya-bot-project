@@ -15,16 +15,8 @@ typedef enum {MOTOR_1, MOTOR_2, MOTOR_3} type_motor;
 void lldMotorInit(type_motor motor_n);
 
 /**
-<<<<<<< HEAD
- * @brief Set type motor and pwm duty cycle for control
- * @args motor_n is value from enum, duty cycle pwm for control motor, flag percent: 1 - percent value, 0 - raw value
- */
-void lldSetMotorPower(type_motor motor_n, float duty_cycle, int8_t flag_percent);
-=======
 * @brief Set type motor and pwm duty cycle for control
 * @args motor_n is value from enum, duty cycle pwm for control motor, flag percent: 1 - percent value, 0 - raw value
 */
 void lldSetMotorPower(type_motor motor_n, float duty_cycle, int8_t flag_percent);
-
->>>>>>> develop
 #endif

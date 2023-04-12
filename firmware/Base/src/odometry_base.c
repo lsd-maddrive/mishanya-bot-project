@@ -76,12 +76,7 @@ static void tim_enc3(void* encdrs)
 
 void odometryInit(void)
 {
-<<<<<<< HEAD
-    if (init_tim)
-      return;
-=======
     if (init_tim) return;
->>>>>>> develop
     lldEncoderInit(ENCODER_1);
     lldEncoderInit(ENCODER_2);
     lldEncoderInit(ENCODER_3);
@@ -100,24 +95,15 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits units, type_encoder encode
     return rev_count * Kw * units;
 }
 
-<<<<<<< HEAD
-speedOdometry getRaw(SpeedUnits units, type_encoder encoder) {
-    float spdRaw = 0;
-    if (encoder == ENCODER_1) {
-=======
 speedOdometry getRaw(SpeedUnits units, type_encoder encoder)
 {
     float spdRaw = 0;
     if (encoder == ENCODER_1){
->>>>>>> develop
         spdRaw = odmtr_enc1.speed;
     }
     return spdRaw * units;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> develop
 speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder)
 {
     float spd_wheel = 0;
