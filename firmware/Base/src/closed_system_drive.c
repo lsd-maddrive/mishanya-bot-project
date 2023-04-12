@@ -139,16 +139,16 @@ static THD_FUNCTION(CalculationReg, arg){
             }
         }
 
-        lldSetMotorPower(MOTOR_1,regulatorMotor1.speedControlValue,1);
-        lldSetMotorPower(MOTOR_2,regulatorMotor2.speedControlValue,1);
-        lldSetMotorPower(MOTOR_3,regulatorMotor3.speedControlValue,1);
+        lldSetMotorPower(MOTOR_1, regulatorMotor1.speedControlValue, 1);
+        lldSetMotorPower(MOTOR_2, regulatorMotor2.speedControlValue, 1);
+        lldSetMotorPower(MOTOR_3, regulatorMotor3.speedControlValue, 1);
 
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(20)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(20) + time);
     }
 }
 
 void driveCSInit(uint8_t prio){
-    if(driveInit){
+    if (driveInit){
         return;
     }
     lldMotorInit(MOTOR_1);
@@ -161,8 +161,8 @@ void driveCSInit(uint8_t prio){
     driveInit = 1;
 }
 
-void setRefSpeed(float speed, SpeedUnits units){
-    if(units != M_S){
+void setRefSpeed(float speed, SpeedUnits units) {
+    if (units != M_S) {
         speed = CLIP_VALUE(speed, MIN_SPEED, MAX_SPEED);
     }
     regulatorMotor1.refSpeed = speed * units;

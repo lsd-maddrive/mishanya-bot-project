@@ -66,10 +66,12 @@ void testGyroscope(void) {
         angle.Z        = getAngleGyro(Z);
 
         char start_sym = sdGetTimeout(&SD4, TIME_IMMEDIATE);
-        if (start_sym == 'g') {
+        if (start_sym == 'g')
+        {
             StartTransfer = TRUE;
         }
-        else if (start_sym == 't') {
+        else if (start_sym == 't')
+        {
             StartTransfer = FALSE;
         }
         if (StartTransfer)

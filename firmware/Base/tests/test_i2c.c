@@ -3,7 +3,7 @@
 #include "cnfg_peripherals.h"
 #include "serial.h"
 
-void testI2C(void){
+void testI2C(void) {
     uint8_t rxBuffer[0];
 
     initI2C();

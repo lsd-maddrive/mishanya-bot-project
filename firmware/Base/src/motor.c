@@ -26,7 +26,7 @@ void lldMotorInit(type_motor motor_n)
             lld_bb_init_driver(&motor_3, &PWMD8, M3_CH_H1L1, &PWMD1, M3_CH_H2L2);
         }
 }
-void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent)
+void lldSetMotorPower(type_motor motor_n, float duty_cycle, int8_t flag_percent)
 {
     if (flag_percent)
         duty_cycle = duty_cycle * K_PERCENT;
@@ -39,13 +39,16 @@ void lldSetMotorPower(type_motor motor_n, float duty_cycle,int8_t flag_percent)
 }
 void SetMotor(control_driver_t* driver, float duty_cycle)
 {
-    if (duty_cycle > 0) {
+    if (duty_cycle > 0)
+    {
         lld_bb_driver_direct(driver, duty_cycle);
     }
-    else if (duty_cycle < 0) {
+    else if (duty_cycle < 0)
+    {
         lld_bb_driver_reverse(driver, -duty_cycle);
     }
-    else if (duty_cycle == 0) {
+    else if (duty_cycle == 0)
+    {
         lld_bb_driver_off(driver);
     }
 }

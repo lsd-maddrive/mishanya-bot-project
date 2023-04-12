@@ -95,14 +95,14 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits units, type_encoder encode
     return rev_count * Kw * units;
 }
 
-speedOdometry getRaw(SpeedUnits units,type_encoder encoder){
+speedOdometry getRaw(SpeedUnits units, type_encoder encoder) {
     float spdRaw = 0;
     if (encoder == ENCODER_1) {
         spdRaw = odmtr_enc1.speed;
     }
     return spdRaw * units;
 }
-speedOdometry odometryGetWheelSpeed(SpeedUnits units,type_encoder encoder)
+speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder)
 {
     float spd_wheel = 0;
     if (encoder == ENCODER_1)
