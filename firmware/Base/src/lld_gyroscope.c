@@ -18,14 +18,14 @@ static THD_FUNCTION(CalculationAngle, arg)
         msg_t msg = readGyroSpeed(angularSpeed);
 
         if (msg == MSG_OK) {
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++)
+            {
                 angularSpeed[i] -= gyroDreif[i];
 
-                if (fabs(angularSpeed[i]) < 0.01)
+                if (fabs(angularSpeed[i]) < 0.01) {
                     angularSpeed[i] = 0;
-
+                }
                 angleGyroXYZ[i] += (angularSpeed[i] * DELTA_TIME_GYRO / 1000);
-
                 if (angleGyroXYZ[i] > 360) {
                     angleGyroXYZ[i] -= 360;
                 }
@@ -35,7 +35,8 @@ static THD_FUNCTION(CalculationAngle, arg)
             }
             palClearLine(LINE_LED3);
         }
-        else {
+        else
+        {
             initI2C();
             palSetLine(LINE_LED3);
         }
@@ -44,16 +45,14 @@ static THD_FUNCTION(CalculationAngle, arg)
 }
 
 void gyroscopeInit(uint8_t priority) {
-
-    if (flagInitGyro) {
+    if (flagInitGyro)
+    {
         return;
     }
-
     initI2C();
     uint8_t startBuf[2];
     startBuf[0] = CTRL_REG2;
     startBuf[1] = VALUE_CTRL_REG2;
-
     msg_t msg = i2cSimpleWrite(ADDRESS_GYROSCOPE, startBuf, sizeof(startBuf), 1000);
     if (msg != MSG_OK)
         palSetLine(LINE_LED1);
@@ -66,7 +65,6 @@ void gyroscopeInit(uint8_t priority) {
 msg_t gyroscopeRead(int16_t* rawValues) {
     uint8_t gyroValues[6] = {0};
     uint8_t i = 0;
-
     msg_t msg = i2cRegisterRead(ADDRESS_GYROSCOPE, DATA_REGISTER, gyroValues, sizeof(gyroValues), 10000);
     for (i = 0; i < 3; i++) {
         rawValues[i] = (int16_t)((uint16_t)(gyroValues[i * 2]) | ((uint16_t)(gyroValues[(i * 2) + 1]) << 8));
@@ -97,11 +95,11 @@ msg_t calculateDreifGyro(float* gyroRawData)
     for (i = 0; i < 15; i++)
     {
         msg = gyroscopeRead(superTemp);
-        if (msg == MSG_OK)
-            for (j = 0; j < 3; j++)
-            {
+        if (msg == MSG_OK) {
+            for (j = 0; j < 3; j++) {
                 tempBuf[i][j] = superTemp[j];
             }
+        }
     }
     for (i = 0; i < 15; i++)
     {
