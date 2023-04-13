@@ -26,10 +26,11 @@ static THD_FUNCTION(CalculationAngle, arg)
                     angularSpeed[i] = 0;
                 }
                 angleGyroXYZ[i] += (angularSpeed[i] * DELTA_TIME_GYRO / 1000);
-                if (angleGyroXYZ[i] > 360) {
+                if (angleGyroXYZ[i] > 360)    {
                     angleGyroXYZ[i] -= 360;
                 }
-                else if (angleGyroXYZ[i] < 0) {
+                else if (angleGyroXYZ[i] < 0)
+                {
                     angleGyroXYZ[i] += 360;
                 }
             }
