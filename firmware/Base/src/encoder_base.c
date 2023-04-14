@@ -55,7 +55,7 @@ static void ExtEnc3(void* args)
 
 void ProcessEncoderData(encoder_t* enc_t)
 {
-    uint16_t prev_tick = 0;
+    int16_t prev_tick = 0;
     status_phase_B     = palReadLine(enc_t->line_phase_B);
     if (status_phase_B == 0)
     {
@@ -69,7 +69,12 @@ void ProcessEncoderData(encoder_t* enc_t)
     }
     if (abs(enc_t->tic_count) >= MAX_TIC)
     {
-        prev_tick = abs(enc_t->tic_count) - MAX_TIC;
+        if(enc_t -> tic_count < 0) {
+            prev_tick = enc_t->tic_count + MAX_TIC;
+        }
+        else {
+            prev_tick = enc_t->tic_count - MAX_TIC;
+        }
         enc_t->tic_count = prev_tick;
         if (enc_t->direction_rotation == 1)
         {
@@ -163,7 +168,7 @@ float GetEncoderRawRevs(type_encoder encoder_n)
 float getRevs(encoder_t* cur_encoder)
 {
     float revs = 0;
-    revs       = cur_encoder->rev_count +(float)cur_encoder->tic_count/(float)MAX_TIC;
+    revs       = cur_encoder -> rev_count + (float)cur_encoder->tic_count/(float)MAX_TIC;
     return revs;
 }
 

@@ -50,7 +50,7 @@ void driveCSInit(uint8_t prio);
 * @brief Speed setting
 * @args speed and units
 */
-void setRefSpeed(float speed, SpeedUnits units);
+void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units);
 
 /**
 * @brief Reset the values of  PI regulator

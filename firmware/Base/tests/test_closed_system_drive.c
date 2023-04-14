@@ -51,8 +51,10 @@ void testPISpeedMotor(void) {
             default: {}
         }
 
-        setRefSpeed(speedInput, M_S);
-        speedOutput = odometryGetWheelSpeed(M_S, ENCODER_3);
+        setRefSpeed(MOTOR_1,speedInput, REVS_PER_SEC);
+        setRefSpeed(MOTOR_2,speedInput, REVS_PER_SEC);
+        setRefSpeed(MOTOR_3,speedInput, REVS_PER_SEC);
+        speedOutput = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
 
 #ifdef MATLAB_PI_REGULATOR
         if (StartTransfer)
@@ -63,11 +65,7 @@ void testPISpeedMotor(void) {
 #else
         //dbgprintf("In:%d Out:%d\n\r",(int)(speed_input*100),
         //(int)(speed_output));
-<<<<<<< HEAD
-        time = chThdSleepUntilWindowed(time, MS2ST(100) + time);
-=======
         time = chThdSleepUntilWindowed(time, MS2ST(100)+time);
->>>>>>> develop
 #endif
     }
 }

@@ -79,4 +79,6 @@ void testI2C(void);
  */
 void testGyroscope(void);
 
+void testKinematicsBase(void);
+
 #endif

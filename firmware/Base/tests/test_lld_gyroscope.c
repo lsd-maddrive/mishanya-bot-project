@@ -56,7 +56,9 @@ void testGyroscope(void) {
                 break;
             default: {}
         }
-        setRefSpeed(speedInput, M_S);
+        setRefSpeed(MOTOR_1,speedInput, REVS_PER_SEC);
+        setRefSpeed(MOTOR_2,speedInput, REVS_PER_SEC);
+        setRefSpeed(MOTOR_3,speedInput, REVS_PER_SEC);
         angularSpeed.X = getAngularSpeedGyro(X);
         angularSpeed.Y = getAngularSpeedGyro(Y);
         angularSpeed.Z = getAngularSpeedGyro(Z);

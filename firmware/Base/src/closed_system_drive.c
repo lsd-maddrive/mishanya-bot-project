@@ -1,6 +1,6 @@
 #include "closed_system_drive.h"
 
-/* 3.92 - 100%
+/* 3.92 - 100% // TODO пересчитать для об/сек
  * 1    - 25.51% */
 #define COEF_SPEED (float)25.51
 #define MAX_SPEED  (float)0.2
@@ -12,7 +12,7 @@ RegulatorValueMotor regulatorMotor1;
 RegulatorValueMotor regulatorMotor2;
 RegulatorValueMotor regulatorMotor3;
 
-PIregulator motorForward ={
+PIregulator motorForward = {
     .kp              = 0.3,
     .ki              = 0.1,
     .integSaturation = 80 / COEF_SPEED,
@@ -32,7 +32,7 @@ static THD_FUNCTION(CalculationReg, arg){
     systime_t time = chVTGetSystemTimeX();
     while (1)
     {
-        regulatorMotor1.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_1);
+        regulatorMotor1.realSpeed = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_1);
         regulatorMotor1.pErrSpeed = regulatorMotor1.refSpeed - regulatorMotor1.realSpeed;
 
         if (regulatorMotor1.refSpeed < 0)
@@ -75,7 +75,7 @@ static THD_FUNCTION(CalculationReg, arg){
             }
         }
 
-        regulatorMotor2.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_2);
+        regulatorMotor2.realSpeed = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_2);
         regulatorMotor2.pErrSpeed = regulatorMotor2.refSpeed - regulatorMotor2.realSpeed;
 
         if (regulatorMotor2.refSpeed < 0)
@@ -117,7 +117,7 @@ static THD_FUNCTION(CalculationReg, arg){
                 regulatorMotor2.speedControlValue = 0;
             }
         }
-        regulatorMotor3.realSpeed = odometryGetWheelSpeed(M_S, ENCODER_3);
+        regulatorMotor3.realSpeed = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
         regulatorMotor3.pErrSpeed = regulatorMotor3.refSpeed - regulatorMotor3.realSpeed;
         if (regulatorMotor3.refSpeed < 0)
         {
@@ -181,14 +181,17 @@ void driveCSInit(uint8_t prio){
     driveInit = 1;
 }
 
-void setRefSpeed(float speed, SpeedUnits units){
-    if (units != M_S)
+void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units){
+    if (units != REVS_PER_SEC)
     {
         speed = CLIP_VALUE(speed, MIN_SPEED, MAX_SPEED);
     }
-    regulatorMotor1.refSpeed = speed * units;
-    regulatorMotor2.refSpeed = speed * units;
-    regulatorMotor3.refSpeed = speed * units;
+    if (motor_n == MOTOR_1)
+        regulatorMotor1.refSpeed = speed * units;
+    else if (motor_n == MOTOR_2)
+        regulatorMotor2.refSpeed = speed * units;
+    else if (motor_n == MOTOR_3)
+        regulatorMotor3.refSpeed = speed * units;
 }
 
 void ResetSpeedRegulator(void)
