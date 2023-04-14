@@ -3,6 +3,7 @@
 
 #include <encoder_base.h>
 #include "motor.h"
+#include "cnfg_peripherals.h"
 
 /**
 * @testing the all encoders
@@ -67,5 +68,15 @@ void test_speed_filter_graphs(void);
 * @brief Test for for a closed speed system
 */
 void testPISpeedMotor(void);
+
+/**
+ * @brief Test check efficiency i2c
+ */
+void testI2C(void);
+
+/**
+ * @brief Test check efficiency gyroscope
+ */
+void testGyroscope(void);
 
 #endif

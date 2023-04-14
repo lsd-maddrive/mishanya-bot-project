@@ -1,7 +1,7 @@
-#include <test.h>
-#include <odometry_base.h>
-#include <serial.h>
-#include <encoder_base.h>
+#include "test.h"
+#include "odometry_base.h"
+#include "serial.h"
+#include "encoder_base.h"
 
 void testOdometryBase(type_encoder encoder)
 {
@@ -56,6 +56,7 @@ void testOdometryBaseAll(void)
                   (int)(dist_1), (int)(speed_1),
                   (int)(dist_2), (int)(speed_2),
                   (int)(dist_3), (int)speed_3);
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
     }
 }
+

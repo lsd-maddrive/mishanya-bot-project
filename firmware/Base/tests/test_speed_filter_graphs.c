@@ -18,12 +18,12 @@ static const SerialConfig sdcfg = {
 void test_speed_filter_graphs(void)
 {
     int8_t flag_percent = 1;
-    float delta_per = 10;
-    float duty_cycle = 0;
-    float speed_1 = 0;
-    float speed_2 = 0;
-    float speed_3 = 0;
-    float spdRaw  = 0;
+    float delta_per     = 10;
+    float duty_cycle    = 0;
+    float speed_1       = 0;
+    float speed_2       = 0;
+    float speed_3       = 0;
+    float spdRaw        = 0;
     bool StartTransfer = FALSE;
     debug_stream_init();
     odometryInit();
@@ -31,7 +31,7 @@ void test_speed_filter_graphs(void)
     lldMotorInit(MOTOR_2);
     lldMotorInit(MOTOR_3);
     #ifdef MATLAB_ODOMETRY
-        sdStart(&SD5, &sdcfg);
+        sdStart(&SD4, &sdcfg);
         palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(7));
         palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(7));
     #endif
@@ -65,7 +65,7 @@ void test_speed_filter_graphs(void)
         speed_3 = odometryGetWheelSpeed(CM_S, ENCODER_3);
 
         #ifdef MATLAB_ODOMETRY
-            char start_sym = sdGetTimeout(&SD5, TIME_IMMEDIATE);
+            char start_sym = sdGetTimeout(&SD4, TIME_IMMEDIATE);
             time = chThdSleepUntilWindowed(time, TIME_MS2I(40) + time);
             if (start_sym == 'g')
             {
@@ -79,10 +79,10 @@ void test_speed_filter_graphs(void)
             {
                 //sdWrite(&SD5, (uint8_t*)&speed_1, 4);
                 //sdWrite(&SD5, (uint8_t*)&speed_2, 4);
-               sdWrite(&SD5, (uint8_t*)&speed_3, 4);
+               sdWrite(&SD4, (uint8_t*)&speed_3, 4);
                 //sdWrite(&SD5, (uint8_t*)&spdRaw,  4);
             }
-            //time = chThdSleepUntilWindowed (time, TIME_MS2I(10)+time);
+            //time = chThdSleepUntilWindowed (time, TIME_MS2I(10) + time);
         #else
             dbgprintf("Wheel1: Speed1:%d ",
 //                      "Wheel2: Speed2:%d"
@@ -90,7 +90,7 @@ void test_speed_filter_graphs(void)
                       (int)(speed_1));
 //                      (int)(speed_2),
 //                      (int)(speed_3));
-            time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
         #endif
     }
 }

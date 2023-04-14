@@ -78,6 +78,7 @@ void test_encoder_base(type_encoder encoder)
         dbgprintf("ENC: Tic:%d Rev:%d Direct:%d\n\r",
                   tic, (int)revs, dr);
 
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(300)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(300) + time);
     }
 }
+

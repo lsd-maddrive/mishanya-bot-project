@@ -11,36 +11,36 @@ static virtual_timer_t odometr_2;
 static virtual_timer_t odometr_3;
 
 coeffwheelshaft Kw = 2 * M_PI * Wheel_Radius * k;
-float prev_dist = 0;
-float rev_count = 0;
-float filtered_speed = 0;
+float prev_dist           = 0;
+float rev_count           = 0;
+float filtered_speed      = 0;
 float prev_filtered_speed = 0;
-static bool init_tim = 0;
+static bool init_tim      = 0;
 
 odometry_var odmtr_enc1 =
 {
-    .dist = 0,
-    .prev_dist = 0,
-    .speed = 0,
-    .filtered_speed = 0,
+    .dist                = 0,
+    .prev_dist           = 0,
+    .speed               = 0,
+    .filtered_speed      = 0,
     .prev_filtered_speed = 0
 };
 
 odometry_var odmtr_enc2 =
 {
-    .dist = 0,
-    .prev_dist = 0,
-    .speed = 0,
-    .filtered_speed = 0,
+    .dist                = 0,
+    .prev_dist           = 0,
+    .speed               = 0,
+    .filtered_speed      = 0,
     .prev_filtered_speed = 0
 };
 
 odometry_var odmtr_enc3 =
 {
-    .dist = 0,
-    .prev_dist = 0,
-    .speed = 0,
-    .filtered_speed = 0,
+    .dist                = 0,
+    .prev_dist           = 0,
+    .speed               = 0,
+    .filtered_speed      = 0,
     .prev_filtered_speed = 0
 };
 

@@ -76,6 +76,19 @@
 #define ENCODER3_PHASE_A PAL_LINE(GPIOF, 1) //  GREEN
 #define ENCODER3_PHASE_B PAL_LINE(GPIOF, 2) //  WHITE
 
+// *******************Gyroscope******************//
+
+#define SCL                     PAL_LINE(GPIOB, 8)
+#define SDA                     PAL_LINE(GPIOB, 9)
+#define AF_I2C                  4
+#define ADDRESS_GYROSCOPE       0x6A
+#define REGISTER_WHO_I_AM       0x0F
+#define WHO_I_AM                0x6B
+#define CTRL_REG2               0X11
+#define VALUE_CTRL_REG2         0x7C
+#define DATA_REGISTER           0x22
+#define DELTA_TIME_GYRO         5
+
 /**
 * @brief Init peripherals
 */

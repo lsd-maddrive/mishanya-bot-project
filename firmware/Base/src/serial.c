@@ -23,7 +23,6 @@ void debug_stream_init(void)
     sdStart(debug_serial, &sd_st_cfg);
     palSetLineMode(SerialRX,  PAL_MODE_ALTERNATE(7));
     palSetLineMode(SerialTX,  PAL_MODE_ALTERNATE(7));
-
     debug_stream = (BaseSequentialStream *)debug_serial;
 }
 

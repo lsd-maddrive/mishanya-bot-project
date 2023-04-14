@@ -7,8 +7,8 @@
 #define Wheel_Radius 0.065
 #define k 1
 
-typedef enum {MM = 1000, CM = 100, M = 1}DistUnits;
-typedef enum {MM_S = 1000, CM_S = 100, M_S = 1}SpeedUnits;
+typedef enum {MM = 1000, CM = 100, M = 1} DistUnits;
+typedef enum {MM_S = 1000, CM_S = 100, M_S = 1} SpeedUnits;
 typedef float coeffwheelshaft;
 typedef float distanceCrossWheel;
 typedef float speedOdometry;
