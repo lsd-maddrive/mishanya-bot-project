@@ -58,16 +58,6 @@ void elbow_init(void)
   memcpy(&elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle,
          (uint32_t *)RIGHT_UP_ELBOW_ADDRESS, sizeof(float));
 
-//    if(elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle < elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle)
-//    {
-//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle -= 0.5f;
-//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle += 0.5f;
-//    }
-//    else
-//    {
-//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle += 0.5f;
-//        elbow_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle -= 0.5f;
-//    }
 
   elbow_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
@@ -97,7 +87,7 @@ void elbow_init(void)
   elbow_driver.global_angle_lim.max_angle = GLOBAL_MAX_ANGLE;
   elbow_driver.working_interval = GLOBAL_MAX_ANGLE - GLOBAL_MIN_ANGLE;
 
-	acs_init(&elbow_driver);
+  acs_init(&elbow_driver);
 
   is_init = true;
 }
@@ -170,3 +160,4 @@ angle_lim_t* elbow_get_global_angle_lim(void)
 {
   return &elbow_driver.global_angle_lim;
 }
+

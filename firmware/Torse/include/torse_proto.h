@@ -13,6 +13,8 @@ typedef enum
     TORSE_CALIB_ANGLE_VALUES = 1,
     TORSE_LEFT_ENCODERS_VALUES = 2,
     TORSE_RIGHT_ENCODERS_VALUES = 3,
+    TORSE_LEFT_SET_COOR = 4,
+    TORSE_RIGHT_SET_COOR = 5,
 }torse_proto_gui_cmd_t;
 
 

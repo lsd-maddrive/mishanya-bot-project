@@ -116,3 +116,17 @@ void arm_calibration_start(void)
 
     }
 }
+
+
+void arm_calibration_get_calibration_angle_values(uint8_t* data, size_t len)
+{
+    if(len < CALIBRATION_ANGLE_QTY*sizeof(float))
+    {
+        data = NULL;
+        len = 0;
+        return;
+    }
+
+    memcpy(data, (uint32_t*)BASE_CALIBRATION_ADDRESS, CALIBRATION_ANGLE_QTY*sizeof(float));
+}
+

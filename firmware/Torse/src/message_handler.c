@@ -12,7 +12,7 @@ static sockets_t sockets[SOCKETS_NUMBER];
 
 static void netcon_write_data(void* tcp_conn, uint8_t* data, size_t len)
 {
-    netconn_write((struct netconn *)tcp_conn, data, len, NETCONN_NOCOPY);
+    netconn_write((struct netconn *)tcp_conn, data, len, NETCONN_COPY);
 }
 
 static void serial_write_data(void* serial, uint8_t* data, size_t len)
@@ -27,37 +27,40 @@ static THD_FUNCTION(tcp_task_update,arg) {
     uint8_t *buf = NULL;
     uint16_t buflen;
 
-    conn = netconn_new(NETCONN_TCP);
-
-    netconn_bind(conn, IP_ADDR_ANY, 8000);
-
-    netconn_listen(conn);
-    err = netconn_accept(conn, &newconn);
-    if (err == ERR_OK)
+    while(1)
     {
-        sockets[MSG_TYPE_TCP].interface = newconn;
-        sockets[MSG_TYPE_TCP].msg = MSG_TYPE_TCP;
-        sockets[MSG_TYPE_TCP].write = netcon_write_data;
-        systime_t time = chVTGetSystemTimeX();
-        while (1)
-        {
-            err = netconn_recv(newconn, &inbuf);
-            if (err == ERR_OK)
-            {
-                err = netbuf_data(inbuf, (void **) &buf, &buflen);
+        conn = netconn_new(NETCONN_TCP);
 
+        netconn_bind(conn, IP_ADDR_ANY, 8000);
+        netconn_listen(conn);
+        err = netconn_accept(conn, &newconn);
+        if (err == ERR_OK)
+        {
+            sockets[MSG_TYPE_TCP].interface = newconn;
+            sockets[MSG_TYPE_TCP].msg = MSG_TYPE_TCP;
+            sockets[MSG_TYPE_TCP].write = netcon_write_data;
+            systime_t time = chVTGetSystemTimeX();
+            while (err != ERR_CONN)
+            {
+                err = netconn_recv(newconn, &inbuf);
                 if (err == ERR_OK)
                 {
-                    palToggleLine(LINE_LED1);
-                    torse_proto_put_msg(buf, buflen);
-                }
-            }
+                    err = netbuf_data(inbuf, (void **) &buf, &buflen);
 
-            netbuf_delete(inbuf);
-            time = chThdSleepUntilWindowed(time, TIME_MS2I(10)+time);
+                    if (err == ERR_OK)
+                    {
+                        palToggleLine(LINE_LED1);
+                        torse_proto_put_msg(buf, buflen);
+                    }
+                }
+
+                netbuf_delete(inbuf);
+                time = chThdSleepUntilWindowed(time, TIME_MS2I(10)+time);
+            }
         }
+        netconn_delete(conn);
     }
-    netconn_delete(conn);
+
 
 }
 

@@ -1,7 +1,6 @@
 #include "test.h"
 #include "serial.h"
 #include "control_system_handler.h"
-#include "stdbool.h"
 
 coord_t target_coordinates[5] = {
         {

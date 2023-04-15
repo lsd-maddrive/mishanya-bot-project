@@ -179,7 +179,7 @@ mproto_spin_result_t mproto_spin(mproto_ctx_t ctx, mptime_t spin_max_time)
         int16_t rcv_input = inctx->func_ctx->get_byte();
         if ( rcv_input < 0 )
             return MPROTO_SPIN_NO_DATA;
-        
+
         uint8_t rcv_byte = rcv_input;
 
         switch (inctx->cur_mode)
@@ -203,7 +203,7 @@ mproto_spin_result_t mproto_spin(mproto_ctx_t ctx, mptime_t spin_max_time)
                 inctx->cur_mode++;
                 break;
             }
-            
+
             /**
              * Obtain data length to know how much to read
              */
@@ -221,7 +221,7 @@ mproto_spin_result_t mproto_spin(mproto_ctx_t ctx, mptime_t spin_max_time)
             case M_HCHK:
             {
                 inctx->crc_buffer[inctx->crc_bytes++] = rcv_byte;
-                
+
                 if ( inctx->crc_bytes == sizeof(crc_t) ) {
                     crc_t *snd_crc = (crc_t *)inctx->crc_buffer;
                     crc_t clc_crc = calc_crc((uint8_t *)&(inctx->hdr), sizeof(inctx->hdr));
@@ -239,7 +239,7 @@ mproto_spin_result_t mproto_spin(mproto_ctx_t ctx, mptime_t spin_max_time)
                 }
                 break;
             }
-            
+
             /**
              * Data receive based on length
              */

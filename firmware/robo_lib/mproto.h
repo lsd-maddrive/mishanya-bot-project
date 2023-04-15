@@ -25,7 +25,7 @@
  * Affect:
  *      mproto_register_command()
  */
-#define MADPROTO_MAX_COMMANDS   20
+#define MADPROTO_MAX_COMMANDS   10
 
 /* 
  * Define size of input buffer [bytes]
@@ -36,7 +36,7 @@
  * Affect:
  *      mproto_spin()
  */
-#define MADPROTO_INPUT_BUFFER   50
+#define MADPROTO_INPUT_BUFFER   64
 
 /* 
  * Type for definition of time

@@ -14,8 +14,6 @@
 
 #define CALIBRATION_ANGLE_QTY           12U
 
-#define ENCODER_QTY                     3U
-
 #define BASE_CALIBRATION_ADDRESS 0x081C0000
 
 #define LEFT_UP_ELBOW_ADDRESS                  BASE_CALIBRATION_ADDRESS
@@ -35,6 +33,6 @@
 
 void arm_calibration_start(void);
 void calibration_init(void);
-
+void arm_calibration_get_calibration_angle_values(uint8_t* data, size_t len);
 
 #endif //TORSE_ARM_CALIBRATION_H

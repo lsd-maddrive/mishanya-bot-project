@@ -14,7 +14,7 @@ static THD_FUNCTION(control_system_task_update,arg) {
     }
 }
 
-void control_system_handler_set_coordinates(arm_side_t side, coord_t* target_coordinates)
+coordinates_set_t control_system_handler_set_coordinates(arm_side_t side, coord_t* target_coordinates)
 {
     angles_t target_angles;
     if(arm_inverse_kinematic(&arm_kinematic, target_coordinates, &target_angles, side) == ERROR_NONE)
@@ -23,10 +23,12 @@ void control_system_handler_set_coordinates(arm_side_t side, coord_t* target_coo
         v_shoulder_set_angle(target_angles.th1, side);
         elbow_set_angle(target_angles.th2, side);
         h_shoulder_set_angle(target_angles.th3, side);
+
+        return COORD_SET;
     }
     else
     {
-        return ;
+        return COORD_NOT_SET;
     }
 
 }
