@@ -86,6 +86,7 @@ static void torse_proto_get_right_encoder_angles_values(void)
 
 static void torse_proto_set_left_coor(uint8_t *data, size_t len)
 {
+    (void)len;
     coord_t* coord = (void*)data;
 
     coordinates_set_t status = control_system_handler_set_coordinates(LEFT, coord);
@@ -95,6 +96,7 @@ static void torse_proto_set_left_coor(uint8_t *data, size_t len)
 
 static void torse_proto_set_right_coor(uint8_t *data, size_t len)
 {
+    (void)len;
     coord_t* coord = (void*)data;
 
     coordinates_set_t status = control_system_handler_set_coordinates(RIGHT, coord);
