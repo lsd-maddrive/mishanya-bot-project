@@ -55,6 +55,10 @@ void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units);
 /**
 * @brief Reset the values of  PI regulator
 */
-void ResetSpeedRegulator(void);
+void ResetSpeedRegulatorWheel1(void);
+
+void ResetSpeedRegulatorWheel2(void);
+
+void ResetSpeedRegulatorWheel3(void);
 
 #endif //BASE_CLOSED_SYSTEM_DRIVE_H

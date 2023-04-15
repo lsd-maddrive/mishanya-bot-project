@@ -32,8 +32,8 @@ void test_speed_filter_graphs(void)
     lldMotorInit(MOTOR_3);
     #ifdef MATLAB_ODOMETRY
         sdStart(&SD4, &sdcfg);
-        palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(7));
-        palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(7));
+        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8));
+        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8));
     #endif
     systime_t time = chVTGetSystemTime();
     while (1)
@@ -56,17 +56,17 @@ void test_speed_filter_graphs(void)
             default: {}
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
-        lldSetMotorPower(MOTOR_1, duty_cycle, flag_percent);
+        //lldSetMotorPower(MOTOR_1, duty_cycle, flag_percent);
         lldSetMotorPower(MOTOR_2, duty_cycle, flag_percent);
-        lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
-        speed_1 = odometryGetWheelSpeed(CM_S, ENCODER_1);
-        spdRaw  = getRaw(CM_S, ENCODER_1);
-        speed_2 = odometryGetWheelSpeed(CM_S, ENCODER_2);
-        speed_3 = odometryGetWheelSpeed(CM_S, ENCODER_3);
+        //lldSetMotorPower(MOTOR_3, duty_cycle, flag_percent);
+        speed_1 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_1);
+        spdRaw  = getRaw(REVS_PER_SEC, ENCODER_1);
+        speed_2 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_2);
+        speed_3 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
 
         #ifdef MATLAB_ODOMETRY
             char start_sym = sdGetTimeout(&SD4, TIME_IMMEDIATE);
-            time = chThdSleepUntilWindowed(time, TIME_MS2I(40) + time);
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(20) + time);
             if (start_sym == 'g')
             {
                 StartTransfer = TRUE;
@@ -79,7 +79,7 @@ void test_speed_filter_graphs(void)
             {
                 //sdWrite(&SD5, (uint8_t*)&speed_1, 4);
                 //sdWrite(&SD5, (uint8_t*)&speed_2, 4);
-               sdWrite(&SD4, (uint8_t*)&speed_3, 4);
+               sdWrite(&SD4, (uint8_t*)&speed_2, 4);
                 //sdWrite(&SD5, (uint8_t*)&spdRaw,  4);
             }
             //time = chThdSleepUntilWindowed (time, TIME_MS2I(10) + time);

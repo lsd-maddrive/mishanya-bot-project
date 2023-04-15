@@ -1,10 +1,11 @@
 #include "closed_system_drive.h"
+#include "serial.h"
 
-/* 3.92 - 100% // TODO пересчитать для об/сек
- * 1    - 25.51% */
-#define COEF_SPEED (float)25.51
-#define MAX_SPEED  (float)0.2
-#define MIN_SPEED  (float)-0.2
+/* 5 - 100% // TODO пересчитать для об/сек
+ * 1    - 20% */
+#define COEF_SPEED (float)20
+#define MAX_SPEED  (float)5
+#define MIN_SPEED  (float)(-5)
 
 uint8_t driveInit         = 0;
 
@@ -70,7 +71,7 @@ static THD_FUNCTION(CalculationReg, arg){
             }
             else
             {
-                ResetSpeedRegulator();
+                ResetSpeedRegulatorWheel1();
                 regulatorMotor1.speedControlValue = 0;
             }
         }
@@ -113,7 +114,7 @@ static THD_FUNCTION(CalculationReg, arg){
             }
             else
             {
-                ResetSpeedRegulator();
+                ResetSpeedRegulatorWheel2();
                 regulatorMotor2.speedControlValue = 0;
             }
         }
@@ -149,12 +150,12 @@ static THD_FUNCTION(CalculationReg, arg){
                     regulatorMotor3.intgSpeed         += regulatorMotor3.pErrSpeed * motorForward.ki;
                     regulatorMotor3.intgSpeed          = CLIP_VALUE(
                         regulatorMotor3.intgSpeed, -motorForward.integSaturation, motorForward.integSaturation);
-                    regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed)   * COEF_SPEED;
+                    regulatorMotor3.speedControlValue  = (motorForward.kp * regulatorMotor3.pErrSpeed + regulatorMotor3.intgSpeed) * COEF_SPEED;
                 }
             }
             else
             {
-                ResetSpeedRegulator();
+                ResetSpeedRegulatorWheel3();
                 regulatorMotor3.speedControlValue = 0;
             }
         }
@@ -182,33 +183,37 @@ void driveCSInit(uint8_t prio){
 }
 
 void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units){
-    if (units != REVS_PER_SEC)
-    {
-        speed = CLIP_VALUE(speed, MIN_SPEED, MAX_SPEED);
-    }
-    if (motor_n == MOTOR_1)
+    speed = CLIP_VALUE(speed, MIN_SPEED, MAX_SPEED);
+    if (motor_n == MOTOR_1) {
         regulatorMotor1.refSpeed = speed * units;
-    else if (motor_n == MOTOR_2)
+    }
+    else if (motor_n == MOTOR_2) {
         regulatorMotor2.refSpeed = speed * units;
-    else if (motor_n == MOTOR_3)
+    }
+    else if (motor_n == MOTOR_3) {
         regulatorMotor3.refSpeed = speed * units;
+    }
 }
 
-void ResetSpeedRegulator(void)
+void ResetSpeedRegulatorWheel1(void)
 {
     regulatorMotor1.refSpeed          = 0;
     regulatorMotor1.speedControlValue = 0;
     regulatorMotor1.intgSpeed         = 0;
     regulatorMotor1.pErrSpeed         = 0;
+}
 
+void ResetSpeedRegulatorWheel2(void)
+{
     regulatorMotor2.refSpeed          = 0;
     regulatorMotor2.speedControlValue = 0;
     regulatorMotor2.intgSpeed         = 0;
     regulatorMotor2.pErrSpeed         = 0;
-
+}
+void ResetSpeedRegulatorWheel3(void)
+{
     regulatorMotor3.refSpeed          = 0;
     regulatorMotor3.speedControlValue = 0;
     regulatorMotor3.intgSpeed         = 0;
     regulatorMotor3.pErrSpeed         = 0;
 }
-

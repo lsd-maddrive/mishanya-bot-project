@@ -1,6 +1,7 @@
 #include "test.h"
 #include "kinematics.h"
 #include "serial.h"
+#include "lld_gyroscope.h"
 #include "odometry_base.h"
 
 static const SerialConfig sdcfg = {
@@ -12,20 +13,24 @@ static const SerialConfig sdcfg = {
 
 void testKinematicsBase(void) {
     char  sym           = 0;
-    float vX            = 0.5;
-    float vY            = 0.7;
+    float vX            = 0;
+    float vY            = 0;
     float angularSpeed  = 0;
     float speedWheel1   = 0;
     float speedWheel2   = 0;
     float speedWheel3   = 0;
     float realSpeed1    = 0;
+    float realSpeed2    = 0;
+    float realSpeed3    = 0;
+
+    float angle         = 0;
 
     bool  StartTransfer = false;
     debug_stream_init();
     initKinematics();
     sdStart(&SD4, &sdcfg);
-    palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(7));
-    palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(7));
+    palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8));
+    palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8));
 
     systime_t time = chVTGetSystemTime();
     while (1) {
@@ -33,11 +38,16 @@ void testKinematicsBase(void) {
         if (sym == 's')
         {
             StartTransfer = TRUE;
+            vX            = 0;
+            vY            = 0.7;
+            angularSpeed  = 0;
         }
         switch (sym)
         {
             case ' ':
-                ResetSpeedRegulator();
+                ResetSpeedRegulatorWheel1();
+                ResetSpeedRegulatorWheel2();
+                ResetSpeedRegulatorWheel3();
                 vX           = 0;
                 vY           = 0;
                 angularSpeed = 0;
@@ -45,25 +55,35 @@ void testKinematicsBase(void) {
             case 'q':
                 vX            = 0;
                 vY            = 0;
-                angularSpeed  = 10;
+                angularSpeed  = 0.5;
                 break;
             case 'e':
                 vX            = -0.6;
                 vY            = -0.2;
-                angularSpeed  = 0.5;
+                angularSpeed  =  0.5;
                 break;
             default: {}
         }
-        calculationSpeedWheelsRobots(vX, vY, angularSpeed);
+        setBaseSpeed(vX, vY, angularSpeed);
         speedWheel1 = getAngularSpeedWheel(WHEEL_1);
         speedWheel2 = getAngularSpeedWheel(WHEEL_2);
         speedWheel3 = getAngularSpeedWheel(WHEEL_3);
         realSpeed1  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_1);
+        realSpeed2  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_2);
+        realSpeed3  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
+
+        angle = getAngleGyro(Z);
+
 
         if (StartTransfer)
         {
-            sdWrite(&SD4, (uint8_t*)&speedWheel1, 4);
-            sdWrite(&SD4, (uint8_t*)&realSpeed1, 4);
+            sdWrite(&SD4, (uint8_t*)&angle, 4);
+            sdWrite(&SD4, (uint8_t*)&speedWheel2, 4);
+            sdWrite(&SD4, (uint8_t*)&speedWheel3, 4);
+            sdWrite(&SD4, (uint8_t*)&realSpeed1,  4);
+            sdWrite(&SD4, (uint8_t*)&realSpeed2,  4);
+            sdWrite(&SD4, (uint8_t*)&realSpeed3,  4);
+
             time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
         }
 //        else

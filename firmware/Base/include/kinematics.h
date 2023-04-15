@@ -7,7 +7,7 @@
 
 typedef enum {WHEEL_1, WHEEL_2, WHEEL_3} WheelNumber;
 
-void  calculationSpeedWheelsRobots(float vxGlobal, float vyGlobal, float angularSpeed);
+void  setBaseSpeed(float vxGlobal, float vyGlobal, float angularSpeed);
 void  initKinematics(void);
 float getAngularSpeedWheel(WheelNumber wheelNumber);
 

@@ -30,6 +30,7 @@ void testGyroscope(void) {
     float        speedInput    = 0;
 
     gyroscopeInit(1);
+    driveCSInit(1);
     debug_stream_init();
     sdStart(&SD4, &sdcfg);
     palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8) );
@@ -41,12 +42,14 @@ void testGyroscope(void) {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
         if (sym == 's'){
             StartTransfer = TRUE;
-            speedInput = 0.6;
+            speedInput = 0.9;
         }
         switch (sym) {
             case ' ':
                 speedInput = 0;
-                ResetSpeedRegulator();
+                ResetSpeedRegulatorWheel1();
+                ResetSpeedRegulatorWheel2();
+                ResetSpeedRegulatorWheel3();
                 break;
             case 'q':
                 speedInput = 0;
