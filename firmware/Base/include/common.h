@@ -49,8 +49,9 @@
 //radius wheel
 #define R (float)0.061
 // Wheel arrangement degrees
-#define THETA_1 (float)(M_PI/3)
-#define THETA_2 (float)(M_PI/6)
+//#define THETA_1 (float)(M_PI/3)
+//#define THETA_2 (float)(M_PI/6)
+#define THETA (float)(M_PI/3)
 
 /*============================================================================*/
 /* MACROS     MATH                                                            */
