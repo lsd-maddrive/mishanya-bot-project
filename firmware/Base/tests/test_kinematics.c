@@ -71,10 +71,7 @@ void testKinematicsBase(void) {
         realSpeed1  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_1);
         realSpeed2  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_2);
         realSpeed3  = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
-
-        angle = getAngleGyro(Z);
-
-
+        angle       = getAngleGyro(Z);
         if (StartTransfer)
         {
             sdWrite(&SD4, (uint8_t*)&speedWheel1, 4);
@@ -86,12 +83,5 @@ void testKinematicsBase(void) {
 
             time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
         }
-//        else
-//        {
-//            dbgprintf("w1:%d w2:%d w3:%d\n\r",(int)(speedWheel1 * 1000),
-//            (int)(speedWheel2 * 1000), (int)(speedWheel3 * 1000));
-//            time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
-//        }
-
     }
 }

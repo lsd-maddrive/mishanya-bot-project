@@ -6,9 +6,12 @@ float angularSpeedWheel3 = 0;
 
 void setBaseSpeed(float vxGlobal, float vyGlobal, float angularSpeed) {
     float realAngleZ   = getAngleGyro(Z);
-    angularSpeedWheel1 = (1/R) * ((-1) * vxGlobal * cosf(realAngleZ * GRAD_TO_RAD)  - vyGlobal * sinf(realAngleZ * GRAD_TO_RAD) + L * angularSpeed);
-    angularSpeedWheel2 = (1/R) * (vxGlobal * cosf(realAngleZ * GRAD_TO_RAD - THETA) + vyGlobal * sinf(realAngleZ * GRAD_TO_RAD - THETA) + L * angularSpeed);
-    angularSpeedWheel3 = (1/R) * (vxGlobal * cosf(realAngleZ * GRAD_TO_RAD + THETA) + vyGlobal * sinf(realAngleZ * GRAD_TO_RAD + THETA) + L * angularSpeed);
+    angularSpeedWheel1 = (1/R) * ((-1) * vxGlobal * cosf(realAngleZ * GRAD_TO_RAD)
+                         - vyGlobal * sinf(realAngleZ * GRAD_TO_RAD) + L * angularSpeed);
+    angularSpeedWheel2 = (1/R) * (vxGlobal * cosf(realAngleZ * GRAD_TO_RAD - THETA)
+                         + vyGlobal * sinf(realAngleZ * GRAD_TO_RAD - THETA) + L * angularSpeed);
+    angularSpeedWheel3 = (1/R) * (vxGlobal * cosf(realAngleZ * GRAD_TO_RAD + THETA)
+                         + vyGlobal * sinf(realAngleZ * GRAD_TO_RAD + THETA) + L * angularSpeed);
 
     setRefSpeed(MOTOR_1, RAD_TO_REVS  *  angularSpeedWheel1, REVS_PER_SEC);
     setRefSpeed(MOTOR_2, RAD_TO_REVS  *  angularSpeedWheel2, REVS_PER_SEC);

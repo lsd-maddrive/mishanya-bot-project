@@ -35,14 +35,14 @@ void testPISpeedMotor(void) {
     while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-            if (sym == 's')
-            {
-                StartTransfer = TRUE;
-                speedInput1   = 0.9;
-                speedInput2   = 0.9;
-                speedInput3   = 0.9;
+        if (sym == 's')
+        {
+            StartTransfer = TRUE;
+            speedInput1   = 0.9;
+            speedInput2   = 0.9;
+            speedInput3   = 0.9;
 
-            }
+        }
         switch (sym)
         {
             case ' ':
@@ -66,9 +66,9 @@ void testPISpeedMotor(void) {
             default: {}
         }
 
-        setRefSpeed(MOTOR_1,speedInput1, REVS_PER_SEC);
-        setRefSpeed(MOTOR_2,speedInput2, REVS_PER_SEC);
-        setRefSpeed(MOTOR_3,speedInput3, REVS_PER_SEC);
+        setRefSpeed(MOTOR_1, speedInput1, REVS_PER_SEC);
+        setRefSpeed(MOTOR_2, speedInput2, REVS_PER_SEC);
+        setRefSpeed(MOTOR_3, speedInput3, REVS_PER_SEC);
         speedOutput = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
 
 #ifdef MATLAB_PI_REGULATOR

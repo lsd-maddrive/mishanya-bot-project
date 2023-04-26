@@ -69,10 +69,12 @@ void ProcessEncoderData(encoder_t* enc_t)
     }
     if (abs(enc_t->tic_count) >= MAX_TIC)
     {
-        if(enc_t -> tic_count < 0) {
+        if (enc_t -> tic_count < 0)
+        {
             prev_tick = enc_t->tic_count + MAX_TIC;
         }
-        else {
+        else
+        {
             prev_tick = enc_t->tic_count - MAX_TIC;
         }
         enc_t->tic_count = prev_tick;

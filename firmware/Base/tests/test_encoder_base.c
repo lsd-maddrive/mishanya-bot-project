@@ -13,18 +13,18 @@ static const SerialConfig sdcfg = {
 void test_encoder_base_all(void)
 {
     bool StartTransfer = false;
-    int16_t tic_1 = 0;
-    bool dr_1 = 0;
-    float revs_1 = 0;
-    int16_t tic_2 = 0;
-    bool dr_2 = 0;
-    float revs_2 = 0;
-    int16_t tic_3 = 0;
-    bool dr_3 = 0;
-    float revs_3 = 0;
-    float duty_cycle = 0;
+    int16_t tic_1        = 0;
+    bool dr_1            = 0;
+    float revs_1         = 0;
+    int16_t tic_2        = 0;
+    bool dr_2            = 0;
+    float revs_2         = 0;
+    int16_t tic_3        = 0;
+    bool dr_3            = 0;
+    float revs_3         = 0;
+    float duty_cycle     = 0;
     float delta_percent  = 10;
-    char sym = 0;
+    char sym             = 0;
     lldEncoderInit(ENCODER_1);
     lldEncoderInit(ENCODER_2);
     lldEncoderInit(ENCODER_3);
@@ -37,7 +37,7 @@ void test_encoder_base_all(void)
     while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-        switch(sym) {
+        switch (sym) {
             case ' ':
                 duty_cycle = 0;
                 ResetEncoder(ENCODER_1);

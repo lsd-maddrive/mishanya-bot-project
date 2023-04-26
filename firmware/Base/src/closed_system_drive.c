@@ -187,10 +187,12 @@ void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units){
     if (motor_n == MOTOR_1) {
         regulatorMotor1.refSpeed = speed * units;
     }
-    else if (motor_n == MOTOR_2) {
+    else if (motor_n == MOTOR_2)
+    {
         regulatorMotor2.refSpeed = speed * units;
     }
-    else if (motor_n == MOTOR_3) {
+    else if (motor_n == MOTOR_3)
+    {
         regulatorMotor3.refSpeed = speed * units;
     }
 }
