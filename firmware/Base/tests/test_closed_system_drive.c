@@ -39,7 +39,7 @@ void testPISpeedMotor(void) {
             {
                 StartTransfer = TRUE;
                 speedInput1   = 0.9;
-                speedInput2   = 0;
+                speedInput2   = 0.9;
                 speedInput3   = 0.9;
 
             }
@@ -59,9 +59,9 @@ void testPISpeedMotor(void) {
                 speedInput3   = 0;
                 break;
             case 'e':
-                speedInput1   = 0.6;
-                speedInput2   = 0.6;
-                speedInput3   = 0.6;
+                speedInput1   = -0.9;
+                speedInput2   = -0.9;
+                speedInput3   = -0.9;
                 break;
             default: {}
         }
@@ -75,8 +75,9 @@ void testPISpeedMotor(void) {
         if (StartTransfer)
         {
             sdWrite(&SD4, (uint8_t*)&speedOutput, 4);
+            sdWrite(&SD4, (uint8_t*)&speedInput3, 4);
         }
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
 #else
         //dbgprintf("In:%d Out:%d\n\r",(int)(speed_input*100),
         //(int)(speed_output));

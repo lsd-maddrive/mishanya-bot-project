@@ -39,7 +39,7 @@ void testKinematicsBase(void) {
         {
             StartTransfer = TRUE;
             vX            = 0;
-            vY            = 0.7;
+            vY            = 0.3;
             angularSpeed  = 0;
         }
         switch (sym)
@@ -55,12 +55,12 @@ void testKinematicsBase(void) {
             case 'q':
                 vX            = 0;
                 vY            = 0;
-                angularSpeed  = 0.5;
+                angularSpeed  = 1.5;
                 break;
             case 'e':
                 vX            = -0.6;
                 vY            = -0.2;
-                angularSpeed  =  0.5;
+                angularSpeed  =  1;
                 break;
             default: {}
         }
@@ -77,14 +77,14 @@ void testKinematicsBase(void) {
 
         if (StartTransfer)
         {
-            sdWrite(&SD4, (uint8_t*)&angle, 4);
+            sdWrite(&SD4, (uint8_t*)&speedWheel1, 4);
             sdWrite(&SD4, (uint8_t*)&speedWheel2, 4);
             sdWrite(&SD4, (uint8_t*)&speedWheel3, 4);
             sdWrite(&SD4, (uint8_t*)&realSpeed1,  4);
             sdWrite(&SD4, (uint8_t*)&realSpeed2,  4);
             sdWrite(&SD4, (uint8_t*)&realSpeed3,  4);
 
-            time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
         }
 //        else
 //        {
