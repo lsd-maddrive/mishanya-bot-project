@@ -46,6 +46,8 @@ static void testsRoutines(void)
         testI2C();
     #elif(MAIN_PROGRAM == PROGRAM_TEST_GYROSCOPE)
         testGyroscope();
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_KINEMATICS)
+        testKinematicsBase();
     #endif
 }
 

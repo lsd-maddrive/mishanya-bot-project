@@ -31,13 +31,33 @@
 #define PROGRAM_TEST_CLOSED_SYSTEM_DRIVE 18
 #define PROGRAM_TEST_I2C                 19
 #define PROGRAM_TEST_GYROSCOPE           20
+#define PROGRAM_TEST_KINEMATICS          21
 
-#define MAIN_PROGRAM PROGRAM_TEST_GYROSCOPE
+#define MAIN_PROGRAM PROGRAM_TEST_KINEMATICS
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */
 /*============================================================================*/
 #define CLIP_VALUE(x, min, max) ((x) < (min) ? (min) :      \
                                  (x) > (max) ? (max) : (x))
+
+/*============================================================================*/
+/* MACROS     Parameters Robot                                                */
+/*============================================================================*/
+//radius base
+#define L (float)0.406
+//radius wheel
+#define R (float)0.061
+// Wheel arrangement degrees
+//#define THETA_1 (float)(M_PI/3)
+//#define THETA_2 (float)(M_PI/6)
+#define THETA (float)(M_PI/3)
+
+/*============================================================================*/
+/* MACROS     MATH                                                            */
+/*============================================================================*/
+
+#define GRAD_TO_RAD (float)(M_PI/180)
+#define RAD_TO_REVS (float)(1/(2 * M_PI))
 
 #endif

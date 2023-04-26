@@ -50,11 +50,21 @@ void driveCSInit(uint8_t prio);
 * @brief Speed setting
 * @args speed and units
 */
-void setRefSpeed(float speed, SpeedUnits units);
+void setRefSpeed(type_motor motor_n, float speed, SpeedUnits units);
 
 /**
-* @brief Reset the values of  PI regulator
+* @brief Reset the values of PI regulator wheel 1
 */
-void ResetSpeedRegulator(void);
+void ResetSpeedRegulatorWheel1(void);
+
+/**
+* @brief Reset the values of PI regulator wheel 2
+*/
+void ResetSpeedRegulatorWheel2(void);
+
+/**
+* @brief Reset the values of PI regulator wheel 3
+*/
+void ResetSpeedRegulatorWheel3(void);
 
 #endif //BASE_CLOSED_SYSTEM_DRIVE_H

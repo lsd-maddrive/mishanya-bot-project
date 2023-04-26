@@ -14,60 +14,74 @@ static const SerialConfig sdcfg = {
 #endif
 
 void testPISpeedMotor(void) {
-    float speedInput    = 0;
+    float speedInput1   = 0;
+    float speedInput2   = 0;
+    float speedInput3   = 0;
     float speedOutput   = 0;
     bool  StartTransfer = FALSE;
     char  sym           = 0;
 
     driveCSInit(1);
     debug_stream_init();
-    ResetSpeedRegulator();
+    ResetSpeedRegulatorWheel1();
+    ResetSpeedRegulatorWheel2();
+    ResetSpeedRegulatorWheel3();
     #ifdef MATLAB_PI_REGULATOR
         sdStart(&SD4, &sdcfg);
-        palSetPadMode(GPIOB, 8, PAL_MODE_ALTERNATE(7));
-        palSetPadMode(GPIOB, 9, PAL_MODE_ALTERNATE(7));
+        palSetPadMode(GPIOD, 0, PAL_MODE_ALTERNATE(8));
+        palSetPadMode(GPIOD, 1, PAL_MODE_ALTERNATE(8));
     #endif
     systime_t time = chVTGetSystemTime();
     while (1)
     {
         sym = sdGetTimeout(&SD3, TIME_IMMEDIATE);
-            if (sym == 's')
-            {
-                StartTransfer = TRUE;
-                speedInput = 0.6;
-            }
+        if (sym == 's')
+        {
+            StartTransfer = TRUE;
+            speedInput1   = 0.9;
+            speedInput2   = 0.9;
+            speedInput3   = 0.9;
+
+        }
         switch (sym)
         {
             case ' ':
-                speedInput = 0;
-                ResetSpeedRegulator();
+                speedInput1 = 0;
+                speedInput2 = 0;
+                speedInput3 = 0;
+                ResetSpeedRegulatorWheel1();
+                ResetSpeedRegulatorWheel2();
+                ResetSpeedRegulatorWheel3();
                 break;
             case 'q':
-                speedInput = 0;
+                speedInput1   = 0;
+                speedInput2   = 0;
+                speedInput3   = 0;
                 break;
             case 'e':
-                speedInput = -0.4;
+                speedInput1   = -0.9;
+                speedInput2   = -0.9;
+                speedInput3   = -0.9;
                 break;
             default: {}
         }
 
-        setRefSpeed(speedInput, M_S);
-        speedOutput = odometryGetWheelSpeed(M_S, ENCODER_3);
+        setRefSpeed(MOTOR_1, speedInput1, REVS_PER_SEC);
+        setRefSpeed(MOTOR_2, speedInput2, REVS_PER_SEC);
+        setRefSpeed(MOTOR_3, speedInput3, REVS_PER_SEC);
+        speedOutput = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
 
 #ifdef MATLAB_PI_REGULATOR
         if (StartTransfer)
         {
             sdWrite(&SD4, (uint8_t*)&speedOutput, 4);
+            sdWrite(&SD4, (uint8_t*)&speedInput3, 4);
         }
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(25)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
 #else
         //dbgprintf("In:%d Out:%d\n\r",(int)(speed_input*100),
         //(int)(speed_output));
-<<<<<<< HEAD
-        time = chThdSleepUntilWindowed(time, MS2ST(100) + time);
-=======
         time = chThdSleepUntilWindowed(time, MS2ST(100)+time);
->>>>>>> develop
 #endif
     }
 }

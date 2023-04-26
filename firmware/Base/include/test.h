@@ -65,7 +65,7 @@ void testlldMotorPerAll(void);
 void test_speed_filter_graphs(void);
 
 /**
-* @brief Test for for a closed speed system
+* @brief Test for a closed speed system
 */
 void testPISpeedMotor(void);
 
@@ -78,5 +78,10 @@ void testI2C(void);
  * @brief Test check efficiency gyroscope
  */
 void testGyroscope(void);
+
+/**
+ * @brief Test kinematics
+ */
+void testKinematicsBase(void);
 
 #endif
