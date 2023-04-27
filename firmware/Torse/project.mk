@@ -8,15 +8,16 @@ PROJECT_MODULES = src/serial.c \
 	      src/horizontal_shoulder_driver.c \
 	      src/low_level.c \
 	      src/arm_kinematic.c \
-	      src/arms.c \
 	      src/arm_calibration.c \
-	      src/arm_proto_gui.c \
-	      src/arm_tasks.c \
+	      src/torse_proto.c \
+	      src/message_handler.c \
+	      src/control_system_handler.c \
 	      ../robo_lib/PID.c \
 		  ../robo_lib/lld_bb_driver.c \
 		  ../robo_lib/lld_red_driver.c \
 		  ../robo_lib/flash_f7.c \
 		  ../robo_lib/crc32.c \
+		  ../robo_lib/mproto.c \
 
 PROJECT_TESTS   = tests/test_lld_control_servo.c tests/test_nonlinear_servo.c \
 		  tests/test_arm_high_function.c \

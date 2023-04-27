@@ -2,8 +2,15 @@
 #include "arms.h"
 #include "crc32.h"
 #include "arm_calibration.h"
-#include "arm_proto_gui.h"
-#include "arm_tasks.h"
+#include "torse_proto.h"
+#include "message_handler.h"
+#include "control_system_handler.h"
+
+#include <lwipthread.h>
+
+// А это уже сам lwip. Там много всего есть, но я мало что понимаю
+#include <lwip/netif.h>
+#include <lwip/api.h>
 
 #define PWM_frequency		500000U
 #define PWM_period			10000U
@@ -13,7 +20,10 @@ static void init_pwm(void);
 static void init_spi(void);
 static void uart_gui_init(void);
 static void uart_serial_init(void);
+static void tcp_init(void);
 
+
+static lwipthread_opts_t opts;
 // *******************serial uart config******************* //
 
 static const SerialConfig uart_serial_cnfg = {
@@ -82,14 +92,16 @@ void init_low_level(void)
     init_gpio();
     init_pwm();
     init_spi();
-    arms_init();
     crc32_init();
     uart_gui_init();
     uart_serial_init();
+    tcp_init();
 
+    control_system_handler_init();
+    message_handler_init(&SD2, &SD3);
     calibration_init();
-    arm_tasks_init(&SD3);
-    arm_proto_gui_init(&SD3);
+    torse_proto_init();
+
 }
 
 static void init_gpio(void)
@@ -137,6 +149,8 @@ static void init_gpio(void)
   palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
   palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
+
+
 }
 
 static void init_pwm(void)
@@ -183,4 +197,29 @@ static void uart_serial_init(void)
   palSetLineMode(SERIAL_RX,  PAL_MODE_ALTERNATE(7));
   palSetLineMode(SERIAL_TX,  PAL_MODE_ALTERNATE(7));
   sdStart( &SD3, &uart_serial_cnfg);
+}
+
+static void tcp_init(void)
+{
+    struct ip4_addr ip, gateway, netmask;
+    IP4_ADDR(&ip, 172, 18, 193, 10);
+    IP4_ADDR(&gateway, 172, 18, 193, 200);
+    IP4_ADDR(&netmask, 255, 255, 255, 0);
+
+    uint8_t macaddr[6] = {0xC2, 0xAF, 0x51, 0x03, 0xCF, 0x46};
+
+    opts.address = ip.addr;
+    opts.gateway = gateway.addr;
+    opts.netmask = netmask.addr;
+    opts.macaddress = macaddr;
+    opts.link_up_cb = NULL;
+    opts.link_down_cb = NULL;
+
+    lwipInit(&opts);
+    chThdSleepSeconds(2);
+}
+
+uint32_t low_level_get_tcp_address(void)
+{
+    return opts.address;
 }

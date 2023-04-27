@@ -15,36 +15,6 @@ typedef struct {
     void (* set_angle) (float target_angle, arm_side_t side);
 } acs_test_t;
 
-
-
-static THD_FUNCTION(elbow_update,arg) {
-  (void) arg;
-  systime_t time = chVTGetSystemTimeX();
-  while (1) {
-    elbow_update_angle(0.002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
-  }
-}
-
-static THD_FUNCTION(v_shoulder_update,arg) {
-  (void) arg;
-  systime_t time = chVTGetSystemTimeX();
-  while (1) {
-    v_shoulder_update_angle(0.002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
-  }
-}
-
-static THD_FUNCTION(h_shoulder_update,arg) {
-  (void) arg;
-  systime_t time = chVTGetSystemTimeX();
-  while (1) {
-    h_shoulder_update_angle(0.002f);
-    time = chThdSleepUntilWindowed(time, TIME_MS2I(2)+time);
-  }
-}
-
-
 void test_arm_control_system(void)
 {
   char rcv_data[2];
@@ -62,17 +32,6 @@ void test_arm_control_system(void)
   acs[V_SHOULDER].set_angle = v_shoulder_set_angle;
 
   acs[H_SHOULDER].set_angle = h_shoulder_set_angle;
-
-
-
-  chThdCreateStatic(traking_elbow,sizeof(traking_elbow),NORMALPRIO,
-                    elbow_update, NULL);
-
-  chThdCreateStatic(traking_v_shoulder,sizeof(traking_v_shoulder),NORMALPRIO,
-                    v_shoulder_update, NULL);
-
-  chThdCreateStatic(traking_h_shoulder,sizeof(traking_h_shoulder),NORMALPRIO,
-                    h_shoulder_update, NULL);
 
 
   while(1)
