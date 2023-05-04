@@ -18,6 +18,7 @@ PROJECT_TESTS   = tests/test_encoder_base.c \
 				  tests/test_i2c.c \
 				  tests/test_lld_gyroscope.c \
 				  tests/test_kinematics.c         \
+				  tests/test_joystick.c           \
                   
 # C source files
 PROJECT_CSRC 	=  src/main.c \

@@ -84,4 +84,5 @@ void testGyroscope(void);
  */
 void testKinematicsBase(void);
 
+void testJoystick(void);
 #endif

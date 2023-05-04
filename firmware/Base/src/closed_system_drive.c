@@ -1,8 +1,6 @@
 #include "closed_system_drive.h"
 #include "serial.h"
 
-/* 5 - 100% // TODO пересчитать для об/сек
- * 1    - 20% */
 #define COEF_SPEED (float)20
 #define MAX_SPEED  (float)5
 #define MIN_SPEED  (float)(-5)

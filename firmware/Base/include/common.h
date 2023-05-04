@@ -32,8 +32,9 @@
 #define PROGRAM_TEST_I2C                 19
 #define PROGRAM_TEST_GYROSCOPE           20
 #define PROGRAM_TEST_KINEMATICS          21
+#define PROGRAM_TEST_JOYSTICK            22
 
-#define MAIN_PROGRAM PROGRAM_TEST_KINEMATICS
+#define MAIN_PROGRAM PROGRAM_TEST_JOYSTICK
 
 /*============================================================================*/
 /* MACROS     Overflow protection                                             */

@@ -2,16 +2,15 @@
 #include <odometry_base.h>
 
 #define VTIME_PERIOD_MS 10
-//#define MS_TO_SEC 100
 #define REVS_PER_SEC 100
 #define FILTER TRUE
-#define Kf 0.9
+#define Kf (float)0.9
 
 static virtual_timer_t odometr_1;
 static virtual_timer_t odometr_2;
 static virtual_timer_t odometr_3;
 
-coeffwheelshaft Kw = 2 * M_PI * Wheel_Radius * k;
+coeffwheelshaft Kw        = 2 * M_PI * Wheel_Radius * k;
 float prev_dist           = 0;
 float rev_count           = 0;
 float filtered_speed      = 0;
@@ -94,9 +93,9 @@ distanceCrossWheel odometryGetWheelDistance(DistUnits units, type_encoder encode
 {
     rev_count = GetEncoderRawRevs(encoder);
     if (units == REVS)
-        return rev_count * units;
+        return rev_count * (float)units;
     else
-        return rev_count * Kw * units;
+        return rev_count * Kw * (float)units;
 }
 
 speedOdometry getRaw(SpeedUnits units, type_encoder encoder)
@@ -105,7 +104,7 @@ speedOdometry getRaw(SpeedUnits units, type_encoder encoder)
     if (encoder == ENCODER_1) {
         spdRaw = odmtr_enc1.speed;
     }
-    return spdRaw * units;
+    return spdRaw * (float)units;
 }
 
 speedOdometry odometryGetWheelSpeed(SpeedUnits units, type_encoder encoder)
@@ -162,8 +161,8 @@ void odometryReset(type_encoder encoder)
 
 void handler_odomety(odometry_var *encdr, DistUnits units, type_encoder encoder)
 {
-    encdr->dist = odometryGetWheelDistance(units, encoder)/units;
-    encdr->speed = (encdr->dist - encdr->prev_dist) * REVS_PER_SEC;
+    encdr->dist = odometryGetWheelDistance(units, encoder)/(float)units;
+    encdr->speed = (encdr->dist - encdr->prev_dist) * (float)REVS_PER_SEC;
     encdr->prev_dist = encdr->dist;
     #if(FILTER == TRUE)
         encdr->filtered_speed = encdr->speed * (1 - Kf) + Kf * encdr->prev_filtered_speed;

@@ -100,7 +100,7 @@ void testlldMotorPer(type_motor motor_n)
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
         lldSetMotorPower(motor_n, duty_cycle, flag_percent);
         dbgprintf("Speed:%d \n\r", (int)duty_cycle);
-        time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
+        time = chThdSleepUntilWindowed(time, TIME_MS2I(100) + time);
     }
 }
 
