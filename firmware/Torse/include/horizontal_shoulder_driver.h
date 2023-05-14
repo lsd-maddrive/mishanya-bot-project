@@ -14,7 +14,8 @@
 #include "arm_calibration.h"
 
 
-void h_shoulder_init(void);
+void h_shoulder_init(PWMDriver* left_h_shoulder_pwm_ptr, PWMDriver* right_h_shoulder_pwm_ptr,
+                     SPIDriver* left_h_shoulder_spi_ptr, SPIDriver* right_h_shoulder_spi_ptr);
 void h_shoulder_up(arm_side_t side, uint16_t period);
 void h_shoulder_down(arm_side_t side, uint16_t period);
 void h_shoulder_off(arm_side_t side);

@@ -34,10 +34,6 @@ void test_arm_high_function(void)
   high_func[H_SHOULDER].up = h_shoulder_up;
   high_func[H_SHOULDER].off = h_shoulder_off;
 
-    elbow_init();
-  h_shoulder_init();
-  v_shoulder_init();
-
   for(size_t i = 0; i<3; i++)
   {
     high_func[i].off(LEFT);

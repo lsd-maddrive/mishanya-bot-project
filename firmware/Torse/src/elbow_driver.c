@@ -3,7 +3,6 @@
 #define DRIVER RED
 #define ENCODER_DEADZONE 1U
 
-// elbow
 #define GLOBAL_MIN_ANGLE 46
 #define GLOBAL_MAX_ANGLE 86
 
@@ -11,17 +10,13 @@
 #define PID_I 500U
 #define PID_D 0U
 
-static PWMDriver *LEFT_ELBOW_PWM_PTR = &PWMD1;
-static PWMDriver *RIGHT_ELBOW_PWM_PTR = &PWMD8;
-
-static SPIDriver *LEFT_SPI = &SPID1;
-static SPIDriver *RIGHT_SPI = &SPID2;
-
 joint_t elbow_driver;
+
 /**
  * @details initialize arm driver
  */
-void elbow_init(void)
+void elbow_init(PWMDriver* left_elbow_pwm_ptr, PWMDriver* right_elbow_pwm_ptr,
+                SPIDriver* left_elbow_spi_ptr, SPIDriver* right_elbow_spi_ptr)
 {
 	static bool is_init   = false;
 
@@ -37,19 +32,6 @@ void elbow_init(void)
   memcpy(&elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle,
          (uint32_t *)LEFT_UP_ELBOW_ADDRESS, sizeof(float));
 
-//  if(elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle < elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle)
-//  {
-//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle -= 0.5f;
-//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle += 0.5f;
-//  }
-//  else
-//  {
-//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle += 0.5f;
-//      elbow_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle -= 0.5f;
-//  }
-
-
-
   elbow_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   PID_set_coef(&elbow_driver.arm[RIGHT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
@@ -63,21 +45,21 @@ void elbow_init(void)
 
   lld_red_init_driver(&elbow_driver.arm[LEFT].traking_cs.control,
                       LEFT_UP_ELBOW, LEFT_DOWN_ELBOW,
-                      LEFT_ELBOW_PWM_PTR, LEFT_PWM_ELBOW_CH_NUM);
+                      left_elbow_pwm_ptr, LEFT_PWM_ELBOW_CH_NUM);
 
   lld_red_init_driver(&elbow_driver.arm[RIGHT].traking_cs.control,
                       RIGHT_UP_ELBOW, RIGHT_DOWN_ELBOW,
-                      RIGHT_ELBOW_PWM_PTR, RIGHT_PWM_ELBOW_CH_NUM);
+                      right_elbow_pwm_ptr, RIGHT_PWM_ELBOW_CH_NUM);
 
 
   encoder_init(&elbow_driver.arm[LEFT].traking_cs.arm_encoder,
                CS_LEFT_ENCODER_ELBOW, CLK_ENCODER_LEFT, MISO_ENCODER_LEFT,
-               LEFT_SPI);
+               left_elbow_spi_ptr);
 
 
   encoder_init(&elbow_driver.arm[RIGHT].traking_cs.arm_encoder,
                CS_RIGHT_ENCODER_ELBOW, CLK_ENCODER_RIGHT, MISO_ENCODER_RIGHT,
-               RIGHT_SPI);
+               right_elbow_spi_ptr);
 
   elbow_driver.type = DRIVER;
   elbow_driver.down = &elbow_down;

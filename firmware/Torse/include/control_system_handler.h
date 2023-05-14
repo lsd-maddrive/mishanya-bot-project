@@ -7,12 +7,17 @@
 #include "vertical_shoulder_driver.h"
 #include "joint.h"
 #include "arm_kinematic.h"
+#include "servo_control_system.h"
 
+#define SHIFT           0.00
 #define SHOULDER_LENGTH 0.258f
-#define FOREARM_LENGTH 0.236f
-#define BASE_COOR_X 0
-#define BASE_COOR_Y 0
-#define BASE_COOR_Z 0
+#define FOREARM_LENGTH (0.236f + SHIFT)
+#define BASE_COOR_X (0.0f)
+#define BASE_COOR_Y (0.0f)
+#define BASE_COOR_Z (0.0f)
+//#define BASE_COOR_X (-0.32f)
+//#define BASE_COOR_Y 0.14f
+//#define BASE_COOR_Z (-0.16f)
 
 typedef enum
 {

@@ -7,8 +7,11 @@
 
 #include "common.h"
 
-#define LEFT_PWM_ALT_FUNC_NUM  1
-#define RIGHT_PWM_ALT_FUNC_NUM 3
+#define LEFT_MOTOR_ALT_FUNC_NUM  1
+#define RIGHT_MOTOR_ALT_FUNC_NUM 3
+
+#define LEFT_SERVO_ALT_FUNC_NUM  2
+#define RIGHT_SERVO_ALT_FUNC_NUM 2
 
 #define SPI_ALT_FUNC_NUM       5
 
@@ -51,6 +54,10 @@
 #define RIGHT_DOWN_H_SHOULDER  	  PAL_LINE(GPIOD, 12)
 #define RIGHT_PWM_H_SHOULDER_CH_NUM     1U
 
+// right capture
+#define RIGHT_CAPTURE   	        PAL_LINE(GPIOE, 6)
+#define LEFT_CAPTURE    	        PAL_LINE(GPIOE, 5)
+
 // *******************arm driver pin config******************* //
 
 // *******************encoder pin config******************* //
@@ -77,7 +84,16 @@
 #define RADIO_RX                     PAL_LINE(GPIOD, 6)
 // *******************uart config******************* //
 
-
+// *******************servo config******************* //
+#define LEFT_GRIP                   PAL_LINE(GPIOB,6)
+#define LEFT_GRIP_CH_NUM            0
+#define LEFT_WRIST                  PAL_LINE(GPIOB,8)
+#define LEFT_WRIST_CH_NUM           2
+#define RIGHT_GRIP                  PAL_LINE(GPIOB,9)
+#define RIGHT_GRIP_CH_NUM           3
+#define RIGHT_WRIST                 PAL_LINE(GPIOB,5)
+#define RIGHT_WRIST_CH_NUM          1
+// *******************servo config******************* //
 
 
 void init_low_level(void);

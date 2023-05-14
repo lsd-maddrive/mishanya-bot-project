@@ -6,17 +6,17 @@
 #include <elbow_driver.h>
 #include <arm_encoder.h>
 
-/*
- * @brief Test of servos
- * @note value raw duty cycle
- * @args servo is pointer to struct left/right_hand/wrist
- */
-void test_lld_servo(type_servo servo);
-/*
- * @brief measurement of the non-linearity of the servo
- * @args servo is pointer to struct left/right_hand/wrist
- */
-void test_lld_nonlinear(type_servo servo);
+///*
+// * @brief Test of servos
+// * @note value raw duty cycle
+// * @args servo is pointer to struct left/right_hand/wrist
+// */
+//void test_lld_servo(type_servo servo);
+///*
+// * @brief measurement of the non-linearity of the servo
+// * @args servo is pointer to struct left/right_hand/wrist
+// */
+//void test_lld_nonlinear(type_servo servo);
 
 /************* Elbow tests *************/
 

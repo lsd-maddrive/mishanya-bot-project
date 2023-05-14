@@ -12,6 +12,8 @@ PROJECT_MODULES = src/serial.c \
 	      src/torse_proto.c \
 	      src/message_handler.c \
 	      src/control_system_handler.c \
+	      src/servo_control_system.c \
+	      src/capture.c \
 	      ../robo_lib/PID.c \
 		  ../robo_lib/lld_bb_driver.c \
 		  ../robo_lib/lld_red_driver.c \

@@ -7,6 +7,15 @@
 #include "stdint.h"
 #include "low_level.h"
 
+#define ARM_QTY 2U
+#define DEGREE_OF_FREEDOM_QTY 3U
+
+typedef enum {
+    LEFT = 0,
+    RIGHT = 1,
+    NONE_SIDE = 2
+} arm_side_t;
+
 #define PROGRAM_MASTER 0
 #define PROGRAM_TEST_SERVO_LEFT_HAND 1
 #define PROGRAM_TEST_SERVO_LEFT_WRIST 2
@@ -26,6 +35,5 @@
 #define CLIP_VALUE(x, min, max) ((x) < (min) ? (min) :      \
                                  (x) > (max) ? (max) : (x))
 
-typedef enum {LEFT_HAND,LEFT_WRIST,RIGHT_HAND,RIGHT_WRIST}type_servo;
 
 #endif

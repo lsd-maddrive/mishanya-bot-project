@@ -13,7 +13,8 @@
 #include "string.h"
 #include "arm_calibration.h"
 
-void v_shoulder_init(void);
+void v_shoulder_init(PWMDriver* left_v_shoulder_pwm_ptr, PWMDriver* right_v_shoulder_pwm_ptr,
+                     SPIDriver* left_v_shoulder_spi_ptr, SPIDriver* right_v_shoulder_spi_ptr);
 void v_shoulder_up(arm_side_t side, uint16_t period);
 void v_shoulder_down(arm_side_t side, uint16_t period);
 void v_shoulder_off(arm_side_t side);

@@ -5,7 +5,6 @@
 #include "arm_calibration.h"
 #include "control_system_handler.h"
 
-#define ENCODER_QTY   3U
 #define M_BUFFER_SIZE 64
 uint8_t m_proto_in_buf[M_BUFFER_SIZE];
 mproto_ctx_t m_proto = NULL;
@@ -54,12 +53,12 @@ static void torse_proto_get_calibration_angles_values(void)
 
 static void torse_proto_get_left_encoder_angles_values(void)
 {
-    float angles[ENCODER_QTY];
+    float angles[DEGREE_OF_FREEDOM_QTY];
     angles[0] = elbow_read_angle(LEFT);
     angles[1] = h_shoulder_read_angle(LEFT);
     angles[2] = v_shoulder_read_angle(LEFT);
 
-    size_t encoder_size = sizeof(float)*ENCODER_QTY;
+    size_t encoder_size = sizeof(float)*DEGREE_OF_FREEDOM_QTY;
 
     uint8_t data[encoder_size];
 
@@ -70,12 +69,12 @@ static void torse_proto_get_left_encoder_angles_values(void)
 
 static void torse_proto_get_right_encoder_angles_values(void)
 {
-    float angles[ENCODER_QTY];
+    float angles[DEGREE_OF_FREEDOM_QTY];
     angles[0] = elbow_read_angle(RIGHT);
     angles[1] = h_shoulder_read_angle(RIGHT);
     angles[2] = v_shoulder_read_angle(RIGHT);
 
-    size_t encoder_size = sizeof(float)*ENCODER_QTY;
+    size_t encoder_size = sizeof(float)*DEGREE_OF_FREEDOM_QTY;
 
     uint8_t data[encoder_size];
 
@@ -104,6 +103,7 @@ static void torse_proto_set_right_coor(uint8_t *data, size_t len)
     mproto_send_data(m_proto, TORSE_RIGHT_SET_COOR, (uint8_t*)&status, sizeof(uint8_t));
 }
 
+
 static void torse_proto_parser(mpcmd_t cmd, uint8_t *data, size_t len)
 {
     switch (cmd)
@@ -126,6 +126,18 @@ static void torse_proto_parser(mpcmd_t cmd, uint8_t *data, size_t len)
             break;
         case TORSE_RIGHT_SET_COOR:
             torse_proto_set_right_coor(data, len);
+            break;
+        case TORSE_RIGHT_GRIP_APART:
+            servo_control_system_set_grip_cmd(RIGHT, GRIP_APART);
+            break;
+        case TORSE_LEFT_GRIP_APART:
+            servo_control_system_set_grip_cmd(LEFT, GRIP_APART);
+            break;
+        case TORSE_RIGHT_GRIP_TOGETHER:
+            servo_control_system_set_grip_cmd(RIGHT, GRIP_TOGETHER);
+            break;
+        case TORSE_LEFT_GRIP_TOGETHER:
+            servo_control_system_set_grip_cmd(LEFT, GRIP_TOGETHER);
             break;
         default:
             break;
@@ -150,7 +162,10 @@ void torse_proto_init(void)
     mproto_register_command( m_proto, TORSE_RIGHT_ENCODERS_VALUES, torse_proto_parser);
     mproto_register_command( m_proto, TORSE_LEFT_SET_COOR, torse_proto_parser);
     mproto_register_command( m_proto, TORSE_RIGHT_SET_COOR, torse_proto_parser);
-
+    mproto_register_command( m_proto, TORSE_LEFT_GRIP_TOGETHER, torse_proto_parser);
+    mproto_register_command( m_proto, TORSE_RIGHT_GRIP_TOGETHER, torse_proto_parser);
+    mproto_register_command( m_proto, TORSE_LEFT_GRIP_APART, torse_proto_parser);
+    mproto_register_command( m_proto, TORSE_RIGHT_GRIP_APART, torse_proto_parser);
 
     chThdCreateStatic(m_proto_task, sizeof(m_proto_task), NORMALPRIO+2,
                       m_proto_task_update, NULL);

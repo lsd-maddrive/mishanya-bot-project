@@ -34,21 +34,25 @@ void encoder_init(arm_encoder_t* encoder,
  */
 float encoder_read(arm_encoder_t* encoder)
 {
-  uint8_t rx_encoder_buf[3] = {0};
-  float angle = 0;
-  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_LOW);
-  spiReceive(encoder->encoder_ptr, 3, rx_encoder_buf);
-  palWriteLine(encoder->encoder_pins.cs_encoder, PAL_HIGH);
+    if(encoder->encoder_ptr->state != SPI_ACTIVE)
+    {
+        uint8_t rx_encoder_buf[3] = {0};
+        float angle = 0;
+        palWriteLine(encoder->encoder_pins.cs_encoder, PAL_LOW);
+        spiReceive(encoder->encoder_ptr, 3, rx_encoder_buf);
+        palWriteLine(encoder->encoder_pins.cs_encoder, PAL_HIGH);
 
-  /*** check data ***/
-  if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
-  {
-    rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
-    angle = (float)(rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5));
-    angle = (angle*360)/4096;
-    return angle;
-  }
-  /*** error data ***/
-  else
+        /*** check data ***/
+        if((rx_encoder_buf[1]&OCF) && !(rx_encoder_buf[1]&COF) && !(rx_encoder_buf[1]&LIN))
+        {
+            rx_encoder_buf[1]=(rx_encoder_buf[1] >> 3) & 0b00011111;
+            angle = (float)(rx_encoder_buf[1] | ((rx_encoder_buf[0] & 0b01111111) << 5));
+            angle = (angle*360)/4096;
+            return angle;
+        }
+            /*** error data ***/
+        else
+            return -1;
+    }
     return -1;
 }

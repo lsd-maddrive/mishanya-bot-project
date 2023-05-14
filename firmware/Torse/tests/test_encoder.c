@@ -26,10 +26,6 @@ void test_arm_encoder(void)
 
   enc_read[H_SHOULDER].encoder_read = h_shoulder_read_angle;
 
-  elbow_init();
-  h_shoulder_init();
-  v_shoulder_init();
-
   while (1) {
     dbgprintf(&SD3,
               "///////////////////////////////////\r\n"

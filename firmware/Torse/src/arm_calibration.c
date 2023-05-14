@@ -7,7 +7,7 @@ typedef struct {
     float (*read_encoder) (arm_side_t);
 } control_arm_t;
 
-static const uint32_t calibration_address[12] = {
+static const uint32_t calibration_address[2*DEGREE_OF_FREEDOM_QTY*ARM_QTY] = {
     LEFT_UP_ELBOW_ADDRESS,
     LEFT_DOWN_ELBOW_ADDRESS,
     RIGHT_UP_ELBOW_ADDRESS,
@@ -22,7 +22,7 @@ static const uint32_t calibration_address[12] = {
     RIGHT_DOWN_H_SHOULDER_ADDRESS
 };
 
-control_arm_t arm_control[3];
+control_arm_t arm_control[DEGREE_OF_FREEDOM_QTY];
 
 void calibration_init(void)
 {
@@ -68,10 +68,10 @@ void arm_calibration_start(void)
 
 
     // 3 joint on the one hand
-    for(size_t part_arm = 0; part_arm < 3; part_arm++)
+    for(size_t part_arm = 0; part_arm < DEGREE_OF_FREEDOM_QTY; part_arm++)
     {
         // 2 side (right and left)
-        for(size_t side = 0; side < 2; side++)
+        for(size_t side = 0; side < ARM_QTY; side++)
         {
             address++;
             angle = arm_control[part_arm].read_encoder(side);

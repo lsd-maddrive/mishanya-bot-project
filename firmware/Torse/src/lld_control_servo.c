@@ -1,176 +1,50 @@
 #include <lld_control_servo.h>
-#include <common.h>
 
-#define T 10000 //period pwm
-#define F 1000000 //frequency Tim
+#define DEFAULT_MIN_DUTY 900U
+#define DEFAULT_MAX_DUTY 2100U
 
-int16_t duty_cycle = 0;
-bool init = false;
 
-/*** PWM config***/
-PWMConfig pwm3conf = {
-    .frequency = F,
-    .period = T,
-    .callback = NULL,
-    .channels = {
-                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-                 {.mode = PWM_OUTPUT_DISABLED,  .callback = NULL}
-                 },
-    .cr2 = 0,
-    .dier = 0
-};
-PWMConfig pwm4conf = {
-    .frequency = F,
-    .period = T,
-    .callback = NULL,
-    .channels = {
-                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-                 {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
-                 {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
-                 {.mode = PWM_OUTPUT_ACTIVE_HIGH,  .callback = NULL}
-                 },
-    .cr2 = 0,
-    .dier = 0
-};
-/**
- *  @servo in the left hand
- */
-servo_arm left_hand =
+void servo_init(servo_t* servo, PWMDriver* pwm_ptr, uint8_t channel, ioline_t line)
 {
-      .channel = 0,
-      .line = PAL_LINE(GPIOB,6),
-      .low_hand_limit = 1110,
-      .high_hand_limit = 1620
-};
 
-/**
- *  @servo in the left wrist
- */
-servo_arm left_wrist =
-{
-      .channel = 2,
-      .line = PAL_LINE(GPIOB,8),
-      .low_hand_limit = 900,
-      .high_hand_limit = 2100
-};
-/**
- *  @servo in the right hand
- */
-servo_arm right_hand =
-{
-      .channel = 3,
-      .line = PAL_LINE(GPIOB,9),
-      .low_hand_limit = 1110,
-      .high_hand_limit = 1620
-};
+    servo->low_level.channel = channel;
+    servo->low_level.pwm_ptr = pwm_ptr;
+    servo->low_level.line = line;
 
-/**
- *  @servo in the right wrist
- */
-servo_arm right_wrist =
-{
-      .channel = 1,
-      .line = PAL_LINE(GPIOB,5),
-      .low_hand_limit = 900,
-      .high_hand_limit = 2100
-};
-
-void lld_control_servo_init(void)
-{
-    if(init)
-    return;
-
-    palSetLineMode(left_hand.line,PAL_MODE_ALTERNATE(2));
-    palSetLineMode(right_hand.line,PAL_MODE_ALTERNATE(2));
-    palSetLineMode(left_wrist.line,PAL_MODE_ALTERNATE(2));
-    palSetLineMode(right_wrist.line,PAL_MODE_ALTERNATE(2));
-    pwmStart(&PWMD3,&pwm3conf);
-    pwmStart(&PWMD4,&pwm4conf);
-
-    init = true;
+    servo->limits.high_hand_limit = DEFAULT_MAX_DUTY;
+    servo->limits.low_hand_limit = DEFAULT_MIN_DUTY;
 }
 
-void lld_control_servo(int16_t duty_cycle, servo_arm *servo)
+void servo_set_duty(servo_t* servo, uint16_t duty_cycle)
 {
-    duty_cycle = CLIP_VALUE(duty_cycle,servo->low_hand_limit,
-                            servo->high_hand_limit);
-    if(servo == &right_wrist)
-      pwmEnableChannel(&PWMD3,servo->channel,duty_cycle);
-    else
-      pwmEnableChannel(&PWMD4,servo->channel,duty_cycle);
+    duty_cycle = CLIP_VALUE(duty_cycle,servo->limits.low_hand_limit,
+                            servo->limits.high_hand_limit);
+
+    pwmEnableChannel(servo->low_level.pwm_ptr,servo->low_level.channel,duty_cycle);
+
 }
 
-void lld_set_dutycycle_servo(int16_t duty_cycle, type_servo servo_t)
+uint16_t servo_get_current_duty(servo_t* servo)
 {
-    switch(servo_t)
-    {
-        case LEFT_HAND:
-            lld_control_servo(duty_cycle, &left_hand);
-            break;
-        case LEFT_WRIST:
-            lld_control_servo(duty_cycle, &left_wrist);
-            break;
-        case RIGHT_HAND:
-            lld_control_servo(duty_cycle, &right_hand);
-            break;
-        case RIGHT_WRIST:
-            lld_control_servo(duty_cycle, &right_wrist);
-            break;
-        default: ;
-    }
+    return servo->low_level.pwm_ptr->tim->CCR[servo->low_level.channel];
 }
 
-uint16_t get_servo_low_limit(type_servo servo_t)
+uint16_t servo_get_low_duty(servo_t* servo)
 {
-    uint16_t low = 0;
-    servo_arm *servo;
-    switch(servo_t)
-    {
-        case LEFT_HAND:
-             servo = &left_hand;
-             low = servo->low_hand_limit;
-             break;
-        case LEFT_WRIST:
-             servo = &left_wrist;
-             low = servo->low_hand_limit;
-             break;
-        case RIGHT_WRIST:
-             servo = &right_wrist;
-             low = servo->low_hand_limit;
-             break;
-        case RIGHT_HAND:
-             servo = &right_hand;
-             low = servo->low_hand_limit;
-             break;
-
-    }
-    return low;
+    return servo->limits.low_hand_limit;
 }
 
-uint16_t get_servo_high_limit(type_servo servo_t)
+uint16_t servo_get_high_duty(servo_t* servo)
 {
-    uint16_t high = 0;
-    servo_arm *servo;
-    switch(servo_t)
-    {
-        case LEFT_HAND:
-             servo = &left_hand;
-             high = servo->high_hand_limit;
-             break;
-        case LEFT_WRIST:
-             servo = &left_wrist;
-             high = servo->high_hand_limit;
-             break;
-        case RIGHT_WRIST:
-             servo = &right_wrist;
-             high = servo->high_hand_limit;
-             break;
-        case RIGHT_HAND:
-             servo = &right_hand;
-             high = servo->high_hand_limit;
-             break;
-    }
-    return high;
+    return servo->limits.high_hand_limit;
+}
+
+void servo_set_low_duty(servo_t* servo, uint16_t low_duty)
+{
+    servo->limits.low_hand_limit = low_duty;
+}
+
+void servo_set_high_duty(servo_t* servo, uint16_t high_duty)
+{
+    servo->limits.high_hand_limit = high_duty;
 }

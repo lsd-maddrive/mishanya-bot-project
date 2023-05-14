@@ -8,7 +8,8 @@
 #include "string.h"
 #include "arm_calibration.h"
 
-void elbow_init(void);
+void elbow_init(PWMDriver* left_elbow_pwm_ptr, PWMDriver* right_elbow_pwm_ptr,
+                SPIDriver* left_elbow_spi_ptr, SPIDriver* right_elbow_spi_ptr);
 void elbow_up(arm_side_t side, uint16_t period);
 void elbow_down(arm_side_t side, uint16_t period);
 void elbow_off(arm_side_t side);

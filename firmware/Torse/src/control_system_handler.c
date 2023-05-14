@@ -1,7 +1,7 @@
 #include "control_system_handler.h"
 
 static arm_kinematic_t arm_kinematic;
-static THD_WORKING_AREA(control_system_task, 256);
+static THD_WORKING_AREA(control_system_task, 1024);
 
 static THD_FUNCTION(control_system_task_update,arg) {
     (void) arg;
@@ -10,6 +10,7 @@ static THD_FUNCTION(control_system_task_update,arg) {
         elbow_update_angle(0.1f);
         v_shoulder_update_angle(0.1f);
         h_shoulder_update_angle(0.1f);
+        servo_control_system_update_grip();
         time = chThdSleepUntilWindowed(time, TIME_MS2I(100)+time);
     }
 }
@@ -35,10 +36,6 @@ coordinates_set_t control_system_handler_set_coordinates(arm_side_t side, coord_
 
 void control_system_handler_init(void)
 {
-    elbow_init();
-    v_shoulder_init();
-    h_shoulder_init();
-
     arm_kinematic.arm_angle_limits.th1 = v_shoulder_get_global_angle_lim();
     arm_kinematic.arm_angle_limits.th2 = elbow_get_global_angle_lim();
     arm_kinematic.arm_angle_limits.th3 = h_shoulder_get_global_angle_lim();
@@ -50,6 +47,6 @@ void control_system_handler_init(void)
     arm_kinematic.coord_base.y = BASE_COOR_Y;
     arm_kinematic.coord_base.z = BASE_COOR_Z;
 
-    chThdCreateStatic(control_system_task, sizeof(control_system_task), NORMALPRIO,
+    chThdCreateStatic(control_system_task, sizeof(control_system_task), NORMALPRIO+2,
                       control_system_task_update, NULL);
 }

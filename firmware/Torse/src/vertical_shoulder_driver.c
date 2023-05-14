@@ -11,17 +11,12 @@
 #define PID_I 500U
 #define PID_D 0U
 
-static PWMDriver *LEFT_V_SHOULDER_PWM_PTR = &PWMD1;
-static PWMDriver *RIGHT_V_SHOULDER_PWM_PTR = &PWMD8;
-
-static SPIDriver *LEFT_SPI = &SPID1;
-static SPIDriver *RIGHT_SPI = &SPID2;
-
 joint_t v_shoulder_driver;
 /**
  * @details initialize arm driver
  */
-void v_shoulder_init(void)
+void v_shoulder_init(PWMDriver* left_v_shoulder_pwm_ptr, PWMDriver* right_v_shoulder_pwm_ptr,
+                    SPIDriver* left_v_shoulder_spi_ptr, SPIDriver* right_v_shoulder_spi_ptr)
 {
   static bool is_init   = false;
 
@@ -37,19 +32,6 @@ void v_shoulder_init(void)
   memcpy(&v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle,
          (uint32_t *)LEFT_UP_H_SHOULDER_ADDRESS, sizeof(float));
 
-//    if(v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle
-//       < v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle)
-//    {
-//        v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle -= 0.5f;
-//        v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle += 0.5f;
-//    }
-//    else
-//    {
-//        v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.min_angle += 0.5f;
-//        v_shoulder_driver.arm[LEFT].arm_angle.local_angle_lim.max_angle -= 0.5f;
-//    }
-
-
   v_shoulder_driver.arm[LEFT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   PID_set_coef(&v_shoulder_driver.arm[RIGHT].traking_cs.arm_PID, (float)PID_P, (float)PID_D, (float)PID_I);
@@ -58,38 +40,25 @@ void v_shoulder_init(void)
   memcpy(&v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle,
          (uint32_t *)RIGHT_UP_V_SHOULDER_ADDRESS, sizeof(float));
 
-//    if(v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle
-//       < v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle)
-//    {
-//        v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle -= 0.5f;
-//        v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle += 0.5f;
-//    }
-//    else
-//    {
-//        v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.min_angle += 0.5f;
-//        v_shoulder_driver.arm[RIGHT].arm_angle.local_angle_lim.max_angle -= 0.5f;
-//    }
-
-
   v_shoulder_driver.arm[RIGHT].arm_angle.angle_dead_zone = ENCODER_DEADZONE;
 
   lld_red_init_driver(&v_shoulder_driver.arm[LEFT].traking_cs.control,
                       LEFT_UP_V_SHOULDER, LEFT_DOWN_V_SHOULDER,
-                      LEFT_V_SHOULDER_PWM_PTR, LEFT_PWM_V_SHOULDER_CH_NUM);
+                      left_v_shoulder_pwm_ptr, LEFT_PWM_V_SHOULDER_CH_NUM);
 
   lld_red_init_driver(&v_shoulder_driver.arm[RIGHT].traking_cs.control,
                       RIGHT_UP_V_SHOULDER, RIGHT_DOWN_V_SHOULDER,
-                      RIGHT_V_SHOULDER_PWM_PTR, RIGHT_PWM_V_SHOULDER_CH_NUM);
+                      right_v_shoulder_pwm_ptr, RIGHT_PWM_V_SHOULDER_CH_NUM);
 
 
   encoder_init(&v_shoulder_driver.arm[LEFT].traking_cs.arm_encoder,
                CS_LEFT_ENCODER_V_SHOULDER, CLK_ENCODER_LEFT, MISO_ENCODER_LEFT,
-               LEFT_SPI);
+               left_v_shoulder_spi_ptr);
 
 
   encoder_init(&v_shoulder_driver.arm[RIGHT].traking_cs.arm_encoder,
                CS_RIGHT_ENCODER_V_SHOULDER, CLK_ENCODER_RIGHT, MISO_ENCODER_RIGHT,
-               RIGHT_SPI);
+               right_v_shoulder_spi_ptr);
 
   v_shoulder_driver.type = DRIVER;
   v_shoulder_driver.down = &v_shoulder_down;

@@ -1,19 +1,21 @@
 #include "low_level.h"
-#include "arms.h"
 #include "crc32.h"
 #include "arm_calibration.h"
 #include "torse_proto.h"
 #include "message_handler.h"
 #include "control_system_handler.h"
-
 #include <lwipthread.h>
 
 // А это уже сам lwip. Там много всего есть, но я мало что понимаю
 #include <lwip/netif.h>
 #include <lwip/api.h>
 
-#define PWM_frequency		500000U
-#define PWM_period			10000U
+
+#define SERVO_T 10000 //servo period pwm
+#define SERVO_F 1000000 //servo frequency Tim
+
+#define MOTOR_F		500000U
+#define MOTOR_T		10000U
 
 static void init_gpio(void);
 static void init_pwm(void);
@@ -56,11 +58,20 @@ const SPIConfig spi2_conf = {
 
 // *******************arm spi config******************* //
 
+// *******************right tenzo config******************* //
+
+const SPIConfig spi4_conf = {
+        .cr1 = SPI_CR1_BR_2 | SPI_CR1_BR_1 | SPI_CR1_BR_0,
+        .end_cb = NULL
+};
+
+// *******************right tenzo config******************* //
+
 // *******************arm pwm config******************* //
 
 const PWMConfig pwm1_config = {
-  .frequency = PWM_frequency,
-  .period    = PWM_period,
+  .frequency = MOTOR_F,
+  .period    = MOTOR_T,
   .callback  = NULL,
   .channels  = {
     {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},  // E8  - LEFT HORIZONTAL SHOULDER
@@ -73,8 +84,8 @@ const PWMConfig pwm1_config = {
 };
 
 const PWMConfig pwm8_config = {
-  .frequency = PWM_frequency,
-  .period    = PWM_period,
+  .frequency = MOTOR_F,
+  .period    = MOTOR_T,
   .callback  = NULL,
   .channels  = {
     {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},	// C6 - RIGHT HORIZONTAL SHOULDER
@@ -87,6 +98,36 @@ const PWMConfig pwm8_config = {
 };
 // *******************arm pwm config******************* //
 
+/*** PWM config***/
+const PWMConfig pwm3conf = {
+        .frequency = SERVO_F,
+        .period = SERVO_T,
+        .callback = NULL,
+        .channels = {
+                {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+                {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+                {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+                {.mode = PWM_OUTPUT_DISABLED,  .callback = NULL}
+        },
+        .cr2 = 0,
+        .dier = 0
+};
+
+const PWMConfig pwm4conf = {
+        .frequency = SERVO_F,
+        .period = SERVO_T,
+        .callback = NULL,
+        .channels = {
+                {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+                {.mode = PWM_OUTPUT_DISABLED, .callback = NULL},
+                {.mode = PWM_OUTPUT_ACTIVE_HIGH, .callback = NULL},
+                {.mode = PWM_OUTPUT_ACTIVE_HIGH,  .callback = NULL}
+        },
+        .cr2 = 0,
+        .dier = 0
+};
+
+
 void init_low_level(void)
 {
     init_gpio();
@@ -98,90 +139,104 @@ void init_low_level(void)
     tcp_init();
 
     control_system_handler_init();
+    elbow_init(&PWMD1, &PWMD8, &SPID1, &SPID2);
+    v_shoulder_init(&PWMD1, &PWMD8, &SPID1, &SPID2);
+    h_shoulder_init(&PWMD1, &PWMD8, &SPID1, &SPID2);
+    servo_control_system_init(&PWMD3, &PWMD4, &PWMD4, &PWMD4);
     message_handler_init(&SD2, &SD3);
     calibration_init();
     torse_proto_init();
-
 }
 
 static void init_gpio(void)
 {
-  // elbow gpio
-  palSetLineMode(LEFT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(LEFT_DOWN_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    // elbow gpio
+    palSetLineMode(LEFT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(LEFT_DOWN_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_LEFT_ENCODER_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_LEFT_ENCODER_ELBOW, PAL_HIGH);
+    palSetLineMode(CS_LEFT_ENCODER_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_LEFT_ENCODER_ELBOW, PAL_HIGH);
 
-  palSetLineMode(RIGHT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(RIGHT_DOWN_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_UP_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_DOWN_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_RIGHT_ENCODER_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_RIGHT_ENCODER_ELBOW, PAL_HIGH);
+    palSetLineMode(CS_RIGHT_ENCODER_ELBOW, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_RIGHT_ENCODER_ELBOW, PAL_HIGH);
 
-  // vertical shoulder gpio
-  palSetLineMode(LEFT_UP_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(LEFT_DOWN_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    // vertical shoulder gpio
+    palSetLineMode(LEFT_UP_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(LEFT_DOWN_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_LEFT_ENCODER_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_LEFT_ENCODER_V_SHOULDER, PAL_HIGH);
+    palSetLineMode(CS_LEFT_ENCODER_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_LEFT_ENCODER_V_SHOULDER, PAL_HIGH);
 
-  palSetLineMode(RIGHT_UP_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(RIGHT_DOWN_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_UP_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_DOWN_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_RIGHT_ENCODER_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_RIGHT_ENCODER_V_SHOULDER, PAL_HIGH);
+    palSetLineMode(CS_RIGHT_ENCODER_V_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_RIGHT_ENCODER_V_SHOULDER, PAL_HIGH);
 
-  // horizontal shoulder gpio
-  palSetLineMode(LEFT_UP_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(LEFT_DOWN_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    // horizontal shoulder gpio
+    palSetLineMode(LEFT_UP_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(LEFT_DOWN_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_LEFT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_LEFT_ENCODER_H_SHOULDER, PAL_HIGH);
+    palSetLineMode(CS_LEFT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_LEFT_ENCODER_H_SHOULDER, PAL_HIGH);
 
-  palSetLineMode(RIGHT_UP_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(RIGHT_DOWN_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_UP_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(RIGHT_DOWN_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
 
-  palSetLineMode(CS_RIGHT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
-  palWriteLine(CS_RIGHT_ENCODER_H_SHOULDER, PAL_HIGH);
+    palSetLineMode(CS_RIGHT_ENCODER_H_SHOULDER, PAL_MODE_OUTPUT_PUSHPULL);
+    palWriteLine(CS_RIGHT_ENCODER_H_SHOULDER, PAL_HIGH);
 
-  // info led
-  palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
-  palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
+    // info led
+    palSetLineMode(LINE_LED2, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(LINE_LED1, PAL_MODE_OUTPUT_PUSHPULL);
+    palSetLineMode(LINE_LED3, PAL_MODE_OUTPUT_PUSHPULL);
 
+
+    // tenzo
+    palSetLineMode(RIGHT_CAPTURE, PAL_MODE_INPUT_PULLUP | PAL_STM32_OSPEED_HIGHEST);
+    palSetLineMode(LEFT_CAPTURE, PAL_MODE_INPUT_PULLUP | PAL_STM32_OSPEED_HIGHEST);
 
 }
 
 static void init_pwm(void)
 {
-  // elbow PWM
-  palSetLineMode(LEFT_PWM_ELBOW, PAL_MODE_ALTERNATE(LEFT_PWM_ALT_FUNC_NUM));
-  palSetLineMode(RIGHT_PWM_ELBOW, PAL_MODE_ALTERNATE(RIGHT_PWM_ALT_FUNC_NUM));
+    // elbow PWM
+    palSetLineMode(LEFT_PWM_ELBOW, PAL_MODE_ALTERNATE(LEFT_MOTOR_ALT_FUNC_NUM));
+    palSetLineMode(RIGHT_PWM_ELBOW, PAL_MODE_ALTERNATE(RIGHT_MOTOR_ALT_FUNC_NUM));
 
-  // vertical shoulder PWM
-  palSetLineMode(LEFT_PWM_V_SHOULDER, PAL_MODE_ALTERNATE(LEFT_PWM_ALT_FUNC_NUM));
-  palSetLineMode(RIGHT_PWM_V_SHOULDER, PAL_MODE_ALTERNATE(RIGHT_PWM_ALT_FUNC_NUM));
+    // vertical shoulder PWM
+    palSetLineMode(LEFT_PWM_V_SHOULDER, PAL_MODE_ALTERNATE(LEFT_MOTOR_ALT_FUNC_NUM));
+    palSetLineMode(RIGHT_PWM_V_SHOULDER, PAL_MODE_ALTERNATE(RIGHT_MOTOR_ALT_FUNC_NUM));
 
-  // horizontal shoulder PWM
-  palSetLineMode(LEFT_PWM_H_SHOULDER, PAL_MODE_ALTERNATE(LEFT_PWM_ALT_FUNC_NUM));
-  palSetLineMode(RIGHT_PWM_H_SHOULDER, PAL_MODE_ALTERNATE(RIGHT_PWM_ALT_FUNC_NUM));
+    // horizontal shoulder PWM
+    palSetLineMode(LEFT_PWM_H_SHOULDER, PAL_MODE_ALTERNATE(LEFT_MOTOR_ALT_FUNC_NUM));
+    palSetLineMode(RIGHT_PWM_H_SHOULDER, PAL_MODE_ALTERNATE(RIGHT_MOTOR_ALT_FUNC_NUM));
 
-  pwmStart(&PWMD1, &pwm1_config);
-  pwmStart(&PWMD8, &pwm8_config);
+    palSetLineMode(RIGHT_WRIST,PAL_MODE_ALTERNATE(RIGHT_SERVO_ALT_FUNC_NUM));
+    palSetLineMode(RIGHT_GRIP,PAL_MODE_ALTERNATE(RIGHT_SERVO_ALT_FUNC_NUM));
+    palSetLineMode(LEFT_GRIP,PAL_MODE_ALTERNATE(LEFT_SERVO_ALT_FUNC_NUM));
+    palSetLineMode(LEFT_WRIST,PAL_MODE_ALTERNATE(LEFT_SERVO_ALT_FUNC_NUM));
+
+    pwmStart(&PWMD3,&pwm3conf);
+    pwmStart(&PWMD4,&pwm4conf);
+
+    pwmStart(&PWMD1, &pwm1_config);
+    pwmStart(&PWMD8, &pwm8_config);
 }
 
 static void init_spi(void)
 {
-  palSetLineMode(CLK_ENCODER_LEFT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
-  palSetLineMode(MISO_ENCODER_LEFT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
+    palSetLineMode(CLK_ENCODER_LEFT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
+    palSetLineMode(MISO_ENCODER_LEFT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
 
+    palSetLineMode(CLK_ENCODER_RIGHT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
+    palSetLineMode(MISO_ENCODER_RIGHT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
 
-  palSetLineMode(CLK_ENCODER_RIGHT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
-  palSetLineMode(MISO_ENCODER_RIGHT, PAL_MODE_ALTERNATE(SPI_ALT_FUNC_NUM) | PAL_STM32_OSPEED_HIGHEST);
-
-  spiStart(&SPID1, &spi1_conf);
-  spiStart(&SPID2, &spi2_conf);
+    spiStart(&SPID1, &spi1_conf);
+    spiStart(&SPID2, &spi2_conf);
 }
 
 

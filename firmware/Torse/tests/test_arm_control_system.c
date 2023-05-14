@@ -6,11 +6,6 @@
 #include "vertical_shoulder_driver.h"
 #include <stdlib.h>
 
-static THD_WORKING_AREA(traking_elbow,256);
-static THD_WORKING_AREA(traking_v_shoulder,256);
-static THD_WORKING_AREA(traking_h_shoulder,256);
-
-
 typedef struct {
     void (* set_angle) (float target_angle, arm_side_t side);
 } acs_test_t;
@@ -22,10 +17,6 @@ void test_arm_control_system(void)
   uint8_t angle = 0;
   part_arm_type_t part_arm = NONE;
   acs_test_t acs[3];
-
-  elbow_init();
-  h_shoulder_init();
-  v_shoulder_init();
 
   acs[ELBOW].set_angle = elbow_set_angle;
 

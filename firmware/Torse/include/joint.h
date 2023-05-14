@@ -8,13 +8,6 @@
 #include "lld_bb_driver.h"
 #include "lld_red_driver.h"
 
-
-typedef enum {
-    LEFT = 0,
-    RIGHT = 1,
-    NONE_SIDE = 2
-} arm_side_t;
-
 typedef enum {
     ELBOW = 0,
     V_SHOULDER = 1,
@@ -26,16 +19,6 @@ typedef struct {
     float min_angle;                              // min angle encored read
     float max_angle;                              // max angle encored read
 }angle_lim_t;
-
-typedef struct {
-    float min_norm_angle;                        // min angle encored read
-    float max_norm_angle;                        // max angle encored read
-}angle_normalize_lim_t;
-
-typedef struct {
-    float shift_from_zero;                      // offset of zero minimum angle
-    bool zero_between_angle;                    // flag indicating whether zero is betwenn the max and min angle
-}normalize_info_t;
 
 typedef struct {
     bool reach_target_angle;                     // target angle flag
@@ -65,7 +48,7 @@ typedef struct {
   void (* up) (arm_side_t, uint16_t);             // ptr function up
   void (* down) (arm_side_t, uint16_t);           // ptr function down
   void (* off) (arm_side_t);                      // ptr function off arm
-  arm_info_t arm[2];                              // two arms
+  arm_info_t arm[ARM_QTY];                              // two arms
   angle_lim_t global_angle_lim;
   float working_interval;
 } joint_t;
