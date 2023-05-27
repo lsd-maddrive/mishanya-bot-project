@@ -83,7 +83,7 @@ void test_speed_filter_graphs(void)
                sdWrite(&SD4, (uint8_t*)&speed_3, 4);
                 //sdWrite(&SD5, (uint8_t*)&spdRaw,  4);
             }
-            time = chThdSleepUntilWindowed (time, TIME_MS2I(10) + time);
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
         #else
             dbgprintf("Wheel1: Speed1:%d ",
 //                      "Wheel2: Speed2:%d"

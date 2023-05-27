@@ -29,17 +29,17 @@ void testJoystick(void) {
     float  valueSpeed[3]   ={0, 0, 0};
     uint8_t i              = 0;
     systime_t time         = chVTGetSystemTime();
-    while(1) {
-        for(i = 0; i < 3; ++i){
-            sdRead( &SD4, (uint8_t*)&readMagic, 1);
-            if(readMagic != MAGIC[i]){
+    while (1) {
+        for (i = 0; i < 3; ++i){
+            sdRead(&SD4, (uint8_t*)&readMagic, 1);
+            if (readMagic != MAGIC[i]){
                 i = 0;
             }
         }
         sdRead(&SD4, (uint8_t*)&buf, 12);
         sdRead(&SD4, (uint8_t *)&crcRead, 1);
         crc = Crc8((uint8_t*)buf, sizeof(buf));
-        if(crc == crcRead) {
+        if (crc == crcRead) {
             memcpy(valueSpeed, buf, sizeof(buf));
             setBaseSpeed(valueSpeed[0], valueSpeed[1], valueSpeed[2]);
            // dbgprintf("vx:%d vy:%d w:%d\n\r", (int32_t)(valueSpeed[0] * 100), (int32_t)(valueSpeed[1] * 100), (int32_t)(valueSpeed[2] * 100));
@@ -54,7 +54,7 @@ void testJoystick(void) {
             sdWrite(&SD3, (uint8_t*)&realSpeed3,  4);
             sdWrite(&SD3, (uint8_t*)&realAngle, 4);
 
-            time = chThdSleepUntilWindowed( time, time + TIME_MS2I(10));
+            time = chThdSleepUntilWindowed(time, time + TIME_MS2I(10));
         }
     }
 }

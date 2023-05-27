@@ -40,10 +40,9 @@ void testPISpeedMotor(void) {
         if (sym == 's')
         {
             StartTransfer = TRUE;
-            speedInput1   = 0.9;
-            speedInput2   = 0.9;
-            speedInput3   = 0.9;
-
+            speedInput1   = 0.9f;
+            speedInput2   = 0.9f;
+            speedInput3   = 0.9f;
         }
         switch (sym)
         {
@@ -61,9 +60,9 @@ void testPISpeedMotor(void) {
                 speedInput3   = 0;
                 break;
             case 'e':
-                speedInput1   = -0.9;
-                speedInput2   = -0.9;
-                speedInput3   = -0.9;
+                speedInput1   = -0.9f;
+                speedInput2   = -0.9f;
+                speedInput3   = -0.9f;
                 break;
             default: {}
         }
@@ -91,4 +90,5 @@ void testPISpeedMotor(void) {
 #endif
     }
 }
+
 
