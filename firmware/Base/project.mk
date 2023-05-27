@@ -7,6 +7,7 @@ PROJECT_MODULES = src/serial.c \
 		  src/i2c.c                 \
 		  src/lld_gyroscope.c        \
 		  src/kinematics.c            \
+		  src/crc8.c                \
 		  ../robo_lib/lld_red_driver.c \
 		  ../robo_lib/lld_bb_driver.c \
 

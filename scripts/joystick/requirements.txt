@@ -4,8 +4,9 @@ future==0.18.2
 iso8601==0.1.13
 PyYAML==5.4
 serial==0.0.97
+crc==4.2.0
 
-#code checkers and formatters
+# code checkers and formatters
 black~=21.6b0
 flake8~=3.9.2
 pre-commit~=2.13.0

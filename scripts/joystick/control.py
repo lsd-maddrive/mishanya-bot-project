@@ -24,5 +24,5 @@ if __name__ == "__main__":
             if joystick.status_button[CodeButtonsGamepad.X_BUTTON]:
                 start = False
                 #serial_port.close_serial()
-            #print("Vx = ", v_x, "Vy = ", v_y, "Angular speed = ", angular_speed)
+            print("Vx = ", v_x, "Vy = ", v_y, "Angular speed = ", angular_speed)
             time.sleep(0.01)

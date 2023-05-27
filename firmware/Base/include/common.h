@@ -4,10 +4,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
-
 
 #define PROGRAM_MASTER 0
 
