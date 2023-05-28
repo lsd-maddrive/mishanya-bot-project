@@ -53,6 +53,8 @@ void test_speed_filter_graphs(void)
             case 's':
                 duty_cycle -= delta_per;
                 break;
+            case 'f':
+                duty_cycle = 30;
             default: {}
         }
         duty_cycle = CLIP_VALUE(duty_cycle, -100, 100);
@@ -66,7 +68,6 @@ void test_speed_filter_graphs(void)
 
         #ifdef MATLAB_ODOMETRY
             char start_sym = sdGetTimeout(&SD4, TIME_IMMEDIATE);
-            time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
             if (start_sym == 'g')
             {
                 StartTransfer = TRUE;
@@ -79,10 +80,10 @@ void test_speed_filter_graphs(void)
             {
                 //sdWrite(&SD5, (uint8_t*)&speed_1, 4);
                 //sdWrite(&SD5, (uint8_t*)&speed_2, 4);
-               sdWrite(&SD4, (uint8_t*)&speed_1, 4);
+               sdWrite(&SD4, (uint8_t*)&speed_3, 4);
                 //sdWrite(&SD5, (uint8_t*)&spdRaw,  4);
             }
-            //time = chThdSleepUntilWindowed (time, TIME_MS2I(10) + time);
+            time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
         #else
             dbgprintf("Wheel1: Speed1:%d ",
 //                      "Wheel2: Speed2:%d"

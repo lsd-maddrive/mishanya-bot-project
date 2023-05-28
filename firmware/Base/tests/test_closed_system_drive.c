@@ -17,7 +17,9 @@ void testPISpeedMotor(void) {
     float speedInput1   = 0;
     float speedInput2   = 0;
     float speedInput3   = 0;
-    float speedOutput   = 0;
+    float speedOutput1  = 0;
+    float speedOutput2  = 0;
+    float speedOutput3  = 0;
     bool  StartTransfer = FALSE;
     char  sym           = 0;
 
@@ -38,10 +40,9 @@ void testPISpeedMotor(void) {
         if (sym == 's')
         {
             StartTransfer = TRUE;
-            speedInput1   = 0.9;
-            speedInput2   = 0.9;
-            speedInput3   = 0.9;
-
+            speedInput1   = 0.9f;
+            speedInput2   = 0.9f;
+            speedInput3   = 0.9f;
         }
         switch (sym)
         {
@@ -59,9 +60,9 @@ void testPISpeedMotor(void) {
                 speedInput3   = 0;
                 break;
             case 'e':
-                speedInput1   = -0.9;
-                speedInput2   = -0.9;
-                speedInput3   = -0.9;
+                speedInput1   = -0.9f;
+                speedInput2   = -0.9f;
+                speedInput3   = -0.9f;
                 break;
             default: {}
         }
@@ -69,13 +70,17 @@ void testPISpeedMotor(void) {
         setRefSpeed(MOTOR_1, speedInput1, REVS_PER_SEC);
         setRefSpeed(MOTOR_2, speedInput2, REVS_PER_SEC);
         setRefSpeed(MOTOR_3, speedInput3, REVS_PER_SEC);
-        speedOutput = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
+        speedOutput1 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_1);
+        speedOutput2 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_2);
+        speedOutput3 = odometryGetWheelSpeed(REVS_PER_SEC, ENCODER_3);
 
 #ifdef MATLAB_PI_REGULATOR
         if (StartTransfer)
         {
-            sdWrite(&SD4, (uint8_t*)&speedOutput, 4);
-            sdWrite(&SD4, (uint8_t*)&speedInput3, 4);
+            sdWrite(&SD4, (uint8_t*)&speedOutput1, 4);
+            sdWrite(&SD4, (uint8_t*)&speedOutput2, 4);
+            sdWrite(&SD4, (uint8_t*)&speedOutput3, 4);
+            sdWrite(&SD4, (uint8_t*)&speedInput3,  4);
         }
         time = chThdSleepUntilWindowed(time, TIME_MS2I(10) + time);
 #else
@@ -85,4 +90,5 @@ void testPISpeedMotor(void) {
 #endif
     }
 }
+
 

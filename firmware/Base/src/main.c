@@ -48,6 +48,8 @@ static void testsRoutines(void)
         testGyroscope();
     #elif(MAIN_PROGRAM == PROGRAM_TEST_KINEMATICS)
         testKinematicsBase();
+    #elif(MAIN_PROGRAM == PROGRAM_TEST_JOYSTICK)
+        testJoystick();
     #endif
 }
 
